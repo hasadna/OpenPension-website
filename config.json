@@ -1,0 +1,4 @@
+{
+    "db_mode": "pg",
+    "connection_string": "tcp://user:pass@localhost:5432/op"
+}
