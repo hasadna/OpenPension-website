@@ -1,1 +1,0 @@
-OpenPension Frontend
