@@ -1,0 +1,34 @@
+extends layout
+
+block content
+	div(class="container")
+		//- The title and filter button
+		div(class="row clearfix title-box")
+			h3(class='pull-left') #{entry.title}
+			a(class='btn btn-small inline-filter-button') סנן
+				i(class="icon-filter")
+		
+		div(class="row")
+			div(class="span12 text-center entry-total") #{entry.total_value}
+			
+		div(class="row")
+			div(class="span12 changes-box")
+				span
+					b שינויים ב-
+				select(class="inline-filter-select")
+					option שנה אחרונה
+					option כל הזמן
+			div(class="span12",style="background: white url(/img/graph.png); background-size: cover; height: 200px;") I'M A GRAPH!!!
+			
+		div(class="row")
+			each element in elements
+				div(class="span12 element-box")
+					span(class="title clearfix") חלוקה לפי #{element.name}
+						a(class="btn btn-link pull-right") למעלה ^
+				
+					div(class="bargraph")
+						each bar in element.bars
+							div(class="bargraph-entry")
+								a(class="bargraph-entry-name") #{bar.name}
+								div(class="bargraph-entry-value") #{bar.value}
+									div(class="bargraph-entry-bar",style="width: #{bar.percent}%;")
