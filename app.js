@@ -35,6 +35,7 @@ app.get('/data', data.list);
 app.get('/users', user.list);
 app.post('/json', json.list);
 app.get('/entry', entry.show);
+app.post('/group',json.post);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
