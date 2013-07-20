@@ -7,6 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , data = require('./routes/data')
+  , entry = require('./routes/entry')
   , http = require('http')
   , path = require('path')
   ,	json = require('./routes/json');
@@ -33,6 +34,7 @@ app.get('/', routes.index);
 app.get('/data', data.list);
 app.get('/users', user.list);
 app.post('/json', json.list);
+app.get('/entry', entry.show);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
