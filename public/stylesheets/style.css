@@ -1,8 +1,70 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  direction: rtl;
+}
+.entry-total {
+	padding: 5px;
+	background-color: lightgrey;
+	font-size: 1.3em;
+	font-weight: bold;
 }
 
-a {
-  color: #00B7FF;
+.title-box .inline-filter-button {
+	margin-top: 10px;
+	margin-right: 20px;	
+}
+
+.changes-box .inline-filter-select {
+	margin-top: 5px;
+	margin-right: 30px;
+}
+.element-box .title {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.bargraph .bargraph-entry {
+	width: 100%;
+	font-family: 'Alef Regular', 'Alef'; /* Labels are in Alef */
+}
+
+.bargraph .bargraph-entry a.bargraph-entry-name {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 50%;
+	margin: 0;
+	padding-top: 20px;
+	height: 40px;
+	padding-left: 5px;
+	border-left: 1px solid black;
+	text-align: left;
+	text-decoration: underline;
+	color: black;
+	
+}
+
+.bargraph .bargraph-entry:first-child .bargraph-entry-name {
+	padding-top: 0;
+	height: 20px;
+}
+
+.bargraph .bargraph-entry .bargraph-entry-value {
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	width: 50%;
+	margin: 0;
+	height: 20px;
+	text-align: right;
+	padding-right: 5px;
+}
+
+.bargraph .bargraph-entry .bargraph-entry-value .bargraph-entry-bar {
+	display: block;
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	right: 0;
+	height: 20px;
+	width: 30%;
+	background-color: lightgrey;
 }
