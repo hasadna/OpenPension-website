@@ -21,7 +21,22 @@ db.pg.prototype = {
       self.client.end();
     });
 
+  },
+  multiple_queries: function(sql,callback) {
+    this.client.query(sql, function(err, result) {
+      if(err) {
+        callback(err);
+        return;
+      }
+
+      callback(null, result.rows);
+    });
+
+  },
+  end: function(sql,callback) {
+	this.client.end();
   }
+
 };
 
 exports.open = function() {
