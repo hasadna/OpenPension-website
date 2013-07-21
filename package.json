@@ -8,6 +8,6 @@
     "express": "3.3.3",
     "jade": "*",
     "pg": "latest",
-	"squel": :1.1.3"
+    "squel": "1.1.3"
   }
 }
