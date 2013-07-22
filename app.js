@@ -10,7 +10,7 @@ var express = require('express')
   , entry = require('./routes/entry')
   , http = require('http')
   , path = require('path')
-  ,	json = require('./routes/json');
+  , json = require('./routes/json');
 
 var app = express();
 
@@ -33,9 +33,14 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/data', data.list);
 app.get('/users', user.list);
-app.post('/json', json.list);
+
 app.get('/entry', entry.show);
+
+app.post('/json', json.list);
+app.get('/json', json.list);
+
 app.post('/group',json.post);
+app.get('/group',json.get);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
