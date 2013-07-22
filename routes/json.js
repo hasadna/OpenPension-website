@@ -1,7 +1,8 @@
+var Filter = require('./filter.js');
 var squel = require('squel');
 
-var allowed_filters={'rating':simple_filter, 'managing_body':simple_filter, 'instrument_type':simple_filter, 'instrument_sub_type': simple_filter};
-var all_columns={"market_cap":"Market Cap","rating":"Rating","managing_body":"Managing Body","instrument_type":"Instrument Type", "instrument_sub_type": "instrument sub type"};
+var allowed_filters={'rating':simple_filter, 'managing_body':simple_filter, 'instrument_type':simple_filter, 'instrument_sub_type': simple_filter, 'currency' : simple_filter};
+var all_columns={"market_cap":"Market Cap","rating":"Rating","managing_body":"Managing Body","instrument_type":"Instrument Type", "instrument_sub_type": "instrument sub type", "currency": "Currency"};
 var summary_columns=["market_cap","fair_value"];
 
 function simple_filter(select, field, params)
@@ -73,7 +74,6 @@ function groupBySummaries(filter_spec,callback)
 	var wait=groups.length;
 
 	var db = require('../db.js').open();
-		
 	for (var index in groups)
 	{
 		var group=groups[index];
@@ -91,6 +91,7 @@ function groupBySummaries(filter_spec,callback)
 	
 }
 exports.groupBySummaries=groupBySummaries;
+
 exports.post = function(req, res)
 {
 	if (! req.is('json'))
@@ -100,6 +101,25 @@ exports.post = function(req, res)
 	}
 	var json=req.body;
 	groupBySummaries(json,res.end);
+}
+
+exports.get = function(req, res){
+
+	
+	var filter = new Filter();
+	var query = req.query;
+
+	//build filter from query string
+	for( var field in query){
+		query[field] = [].concat( query[field] );
+		for (var index in query[field]){
+			filter.addFilter(field, query[field][index]);
+		}
+	}
+
+	res.contentType('json');
+	groupBySummaries(filter,res.end);
+
 }
 
 exports.list = function(req, res){
