@@ -105,17 +105,7 @@ exports.post = function(req, res)
 
 exports.get = function(req, res){
 
-	
-	var filter = new Filter();
-	var query = req.query;
-
-	//build filter from query string
-	for( var field in query){
-		query[field] = [].concat( query[field] );
-		for (var index in query[field]){
-			filter.addFilter(field, query[field][index]);
-		}
-	}
+	var filter = Filter.fromRequest(req);
 
 	res.contentType('json');
 	groupBySummaries(filter,res.end);
