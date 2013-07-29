@@ -37,6 +37,13 @@
 
 		});
 
+		$('#clear').click(function(event){
+			$('#result').val("");
+			$('#query').val("");
+
+		});
+
+
 		var examples = {
 			'get': 'managing_body=fenix',
 			'post':'{"filters":{"managing_body":[{"data":"fenix"}]}}'
@@ -56,13 +63,14 @@
 </script>
 
 <div class="title"> Enter Query String </div><br/>
-<div class="title">Format exmaple:&nbsp&nbsp&nbsp&nbsp&nbsp</div><div id="example"></div>
+<div class="title">Format example:&nbsp&nbsp&nbsp&nbsp&nbsp</div><div id="example"></div>
 <input id="query" type="text"></input>
   <label for="male">Get</label>
   <input id="get" type="radio" name="posttype" value="Get" checked></input>
   <label for="male">Post</label>
   <input id="post" type="radio" name="posttype" value="Post"></input>
   <input id="send" type="button"  value="Send"></input>
+  <input id="clear" type="button"  value="Clear"></input>
 <br/>
 Result:
 <textarea id="result" ></textarea>
