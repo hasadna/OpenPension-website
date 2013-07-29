@@ -23,12 +23,10 @@ block content
 		div(class="row")
 			each element in elements
 				div(class="span12 element-box")
-					span(class="title clearfix") חלוקה לפי #{element.name}
+					span(class="title clearfix") חלוקה לפי #{element.group_field}
 						a(class="btn btn-link pull-right") למעלה ^
-				
-					div(class="bargraph")
-						each bar in element.bars
-							div(class="bargraph-entry")
-								a(class="bargraph-entry-name") #{bar.name}
-								div(class="bargraph-entry-value") #{bar.value}
-									div(class="bargraph-entry-bar",style="width: #{bar.percent}%;")
+							div(class="bargraph")
+								each result in element.result
+									div(class="bargraph-entry") 
+										a(class="bargraph-entry-name") 
+											div(class="bargraph-entry-value") #{result.sum_market_cap}
