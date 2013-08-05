@@ -19,17 +19,17 @@ columnDictionary['managing_body'] = 'גוף מנהל';
 columnDictionary['instrument_type'] = 'סוג נכס';
 columnDictionary['instrument_sub_type'] = 'תת סוג נכס';
 
-function normalizeData(data,res){
-	for(var i in data) //index of data
+function normalizeData(groups, res){
+	for(var i in groups) //index of groups
 	{
-		var groupField = data[i]['group_field'];
-		data[i]['group_field_heb'] = columnDictionary[groupField];	//get hebrew name for column
-		for (var j in data[i]['result']){ //index of result
-			data[i]['result'][j]['sum_market_cap'] = parseFloat(data[i]['result'][j]['sum_market_cap']).toFixed(2); //2 digits after dot
+		var groupField = groups[i]['group_field'];
+		groups[i]['group_field_heb'] = columnDictionary[groupField];	//get hebrew name for column
+		for (var j in groups[i]['result']){ //index of result
+			groups[i]['result'][j]['sum_market_cap'] = parseFloat(groups[i]['result'][j]['sum_market_cap']).toFixed(2); //2 digits after dot
 		}
 	}
 
-	return data;
+	return groups;
 }
 
 exports.show = function(req, res){
@@ -38,9 +38,9 @@ exports.show = function(req, res){
   var filter = Filter.fromRequest(req);
 
   jsonJS.groupBySummaries(filter,
-    function(data){
+    function(groups){
 	
-		data = normalizeData(data,res);
+		groups = normalizeData(groups,res);
 	//res.write(JSON.stringify(e));
 		
 
@@ -48,7 +48,7 @@ exports.show = function(req, res){
 		if (render)
 		res.render('entry',{
 	        entry: { title: "השקעות של הפניקס",total_value: "5.87 מיליארד ₪" },
-	        elements: data
+	        groups: groups
       	});
 	else res.end();
     }
