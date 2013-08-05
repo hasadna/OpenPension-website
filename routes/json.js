@@ -1,8 +1,7 @@
 var Filter = require('./filter.js');
 var squel = require('squel');
 
-var allowed_filters={'rating':simple_filter, 'managing_body':simple_filter, 'instrument_type':simple_filter, 'instrument_sub_type': simple_filter, 'currency' : simple_filter};
-var all_columns={"market_cap":"Market Cap","rating":"Rating","managing_body":"Managing Body","instrument_type":"Instrument Type", "instrument_sub_type": "instrument sub type", "currency": "Currency"};
+var allowed_filters={'report_year':simple_filter, 'report_qurater':simple_filter, 'industry':simple_filter, 'rating':simple_filter, 'managing_body':simple_filter, 'instrument_type':simple_filter, 'instrument_sub_type': simple_filter, 'currency' : simple_filter};
 var summary_columns=["market_cap","fair_value"];
 
 function simple_filter(select, field, params)
@@ -36,11 +35,15 @@ function prepareWheres(select, json)
 	}
 }
 
+/*
+ * Add select queries, group by every field which is in allowed_filters and not in filter
+ *
+ */
 function prepareGroupBy(select, json)
 {
 	var return_data=[];
 
-	for (var group_field in all_columns)
+	for (var group_field in allowed_filters)
 	{
 		if (group_field in json.filters)
 			continue;
@@ -54,7 +57,7 @@ function prepareGroupBy(select, json)
 		}
 		return_data.push({"group_field":group_field,"query":new_select})
 	}
-	return return_data
+	return return_data;
 }
 
 // Debug
@@ -84,7 +87,7 @@ function groupBySummaries(filter_spec,callback)
 			if(--wait<=0)
 			{
 				db.end();
-				callback(JSON.stringify(groups));
+				callback(groups);
 			}
 		}.bind(this, group));
 	}
@@ -100,7 +103,7 @@ exports.post = function(req, res)
 		return;
 	}
 	var json=req.body;
-	groupBySummaries(json,res.end);
+	groupBySummaries(json,function(data){res.end(JSON.stringify(data));} );
 }
 
 exports.get = function(req, res){
@@ -108,7 +111,7 @@ exports.get = function(req, res){
 	var filter = Filter.fromRequest(req);
 
 	res.contentType('json');
-	groupBySummaries(filter,res.end);
+	groupBySummaries(filter,function(data){ res.end(JSON.stringify(data));} );
 
 }
 
