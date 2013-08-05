@@ -102,8 +102,8 @@ exports.post = function(req, res)
 		res.end(require('util').inspect(req.body));
 		return;
 	}
-	var json=req.body;
-	groupBySummaries(json,function(data){res.end(JSON.stringify(data));} );
+	var filter=req.body;
+	groupBySummaries(filter,function(groups){ res.end(JSON.stringify(groups));} );
 }
 
 exports.get = function(req, res){
@@ -111,7 +111,7 @@ exports.get = function(req, res){
 	var filter = Filter.fromRequest(req);
 
 	res.contentType('json');
-	groupBySummaries(filter,function(data){ res.end(JSON.stringify(data));} );
+	groupBySummaries(filter,function(groups){ res.end(JSON.stringify(groups));} );
 
 }
 
