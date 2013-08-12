@@ -54,6 +54,7 @@ function prepareGroupBy(select, json)
 		{
 			col=summary_columns[idx];
 			new_select.field('sum('+col+')','sum_'+col);
+			new_select.order('sum_'+col,false);
 		}
 		return_data.push({"group_field":group_field,"query":new_select})
 	}
