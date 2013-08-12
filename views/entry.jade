@@ -22,7 +22,7 @@ block content
 			
 		div(class="row")
 			each group in groups
-				div(class="span12 element-box")
+				div(class="span12 element-box group")
 					span(class="title clearfix") חלוקה לפי #{group.group_field_heb}
 						a(class="btn btn-link pull-right") למעלה ^
 							
@@ -32,3 +32,5 @@ block content
 								a(class="bargraph-entry-name") #{result[group.group_field]}
 								div(class="bargraph-entry-value") #{result.sum_market_cap}
 										div(class="bargraph-entry-bar",style="width: 50%;")
+
+	script(src="/js/entry.js")
