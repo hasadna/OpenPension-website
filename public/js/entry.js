@@ -15,9 +15,8 @@ $(function(){
         var $btn = $(this);
         $btn.parent().find('.bargraph-entry:gt(2)').not('.more_less').slideToggle(400, 
         	function(){
-	   					$btnname = $btn.children('.bargraph-entry-name');
-				        $btnname.text($btnname.text() == 'הצג הכל' ? 'פחות' : 'הצג הכל');   
-				        hasDoneOnce = true;
+						$btnname = $btn.children('.bargraph-entry-name');
+						$btnname.text($btnname.text() == 'הצג הכל' ? 'פחות' : 'הצג הכל');   
 	        });    
 	   	
     });
