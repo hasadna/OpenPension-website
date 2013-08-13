@@ -20,4 +20,27 @@ $(function(){
 	        });    
 	   	
     });
-})
+});
+
+function addFilter(key,value){
+	var url = window.location;
+	var parameters = new Array();
+	parameters[key] = value;
+	location.href=buildUrl(url, parameters);
+}
+
+function buildUrl(url, parameters){
+  var qs = "";
+  for(var key in parameters) {
+    var value = parameters[key];
+    qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+  }
+  if (qs.length > 0){
+    qs = qs.substring(0, qs.length-1); //chop off last "&"
+    if (url.toString().indexOf("?") > 0 )
+    	url = url + "&" + qs;
+    else
+    	url = url + "?" + qs;
+  }
+  return url;
+}
