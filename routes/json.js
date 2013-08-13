@@ -1,5 +1,6 @@
 var Filter = require('./filter.js');
 var squel = require('squel');
+var config = require('../config')
 
 var allowed_filters={'report_year':simple_filter, 'report_qurater':simple_filter, 'industry':simple_filter, 'rating':simple_filter, 'managing_body':simple_filter, 'instrument_type':simple_filter, 'instrument_sub_type': simple_filter, 'currency' : simple_filter};
 var summary_columns=["market_cap","fair_value"];
@@ -64,7 +65,7 @@ function prepareGroupBy(select, json)
 // Debug
 function parseJson(json)
 {
-	var select = squel.select().from('data');
+	var select = squel.select().from(config.table);
 	prepareWheres(select, json);
 	select=select.toString();
 	return select;
@@ -72,7 +73,7 @@ function parseJson(json)
 
 function groupBySummaries(filter_spec,callback)
 {
-	var select = squel.select().from('data');
+	var select = squel.select().from(config.table);
 	prepareWheres(select, filter_spec);
 	var groups=prepareGroupBy(select, filter_spec);
 	var wait=groups.length;
