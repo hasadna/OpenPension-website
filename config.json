@@ -1,5 +1,5 @@
 {
     "db_mode": "pg",
     "connection_string": "tcp://opublic:public@54.217.236.50:5432/op", 
-    "table": "debug3"
+    "table": "debug4"
 }

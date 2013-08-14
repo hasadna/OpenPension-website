@@ -5,7 +5,7 @@ var metaTable = require('../common/MetaTable').getMetaTable();
  * GET home page.
  */
 
- //build column dictionary
+ //build column dictionary - TODO: refactor
 var hebrewColumns = metaTable.hebrewColumns;
 var englishColumns = metaTable.englishColumns;
 var columnDictionary = {};
@@ -24,8 +24,10 @@ function normalizeData(groups, res){
 	{
 		var groupField = groups[i]['group_field'];
 		groups[i]['group_field_heb'] = columnDictionary[groupField];	//get hebrew name for column
-		for (var j in groups[i]['result']){ //index of result
-			groups[i]['result'][j]['sum_market_cap'] = parseFloat(groups[i]['result'][j]['sum_market_cap']).toFixed(2); //2 digits after dot
+		groups[i]['total_sum'] = 0;
+		for (var j in groups[i]['result']){ //for j index of result, trim digits
+			groups[i]['result'][j]['sum_market_cap'] = +parseFloat(groups[i]['result'][j]['sum_market_cap']).toFixed(2) || 0; //2 digits after dot
+			groups[i]['total_sum'] += groups[i]['result'][j]['sum_market_cap'] 	// sum total results in group
 		}
 	}
 
@@ -34,23 +36,23 @@ function normalizeData(groups, res){
 
 exports.show = function(req, res){
 	
-	
   var filter = Filter.fromRequest(req);
 
   jsonJS.groupBySummaries(filter,
     function(groups){
 	
 		groups = normalizeData(groups,res);
-	//res.write(JSON.stringify(e));
+		//res.write(JSON.stringify(e));
 		
 
-		var render = true;
+		var render = true; //for debugging
 		if (render)
 		res.render('entry',{
 	        entry: { title: "השקעות של הפניקס",total_value: "5.87 מיליארד ₪" },
-	        groups: groups
+	        groups: groups,
+	        req: req
       	});
-	else res.end();
+		else res.end();
     }
   );
   
