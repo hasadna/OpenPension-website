@@ -1,5 +1,6 @@
 var Filter = require('./filter.js');
 var squel = require('squel');
+var config = require('../config')
 
 var allowed_filters={'report_year':simple_filter, 'report_qurater':simple_filter, 'industry':simple_filter, 'rating':simple_filter, 'managing_body':simple_filter, 'instrument_type':simple_filter, 'instrument_sub_type': simple_filter, 'currency' : simple_filter};
 var summary_columns=["market_cap","fair_value"];
@@ -54,6 +55,7 @@ function prepareGroupBy(select, json)
 		{
 			col=summary_columns[idx];
 			new_select.field('sum('+col+')','sum_'+col);
+			new_select.order('sum_'+col,false);
 		}
 		return_data.push({"group_field":group_field,"query":new_select})
 	}
@@ -63,7 +65,7 @@ function prepareGroupBy(select, json)
 // Debug
 function parseJson(json)
 {
-	var select = squel.select().from('data');
+	var select = squel.select().from(config.table);
 	prepareWheres(select, json);
 	select=select.toString();
 	return select;
@@ -71,7 +73,7 @@ function parseJson(json)
 
 function groupBySummaries(filter_spec,callback)
 {
-	var select = squel.select().from('data');
+	var select = squel.select().from(config.table);
 	prepareWheres(select, filter_spec);
 	var groups=prepareGroupBy(select, filter_spec);
 	var wait=groups.length;
@@ -102,8 +104,8 @@ exports.post = function(req, res)
 		res.end(require('util').inspect(req.body));
 		return;
 	}
-	var json=req.body;
-	groupBySummaries(json,function(data){res.end(JSON.stringify(data));} );
+	var filter=req.body;
+	groupBySummaries(filter,function(groups){ res.end(JSON.stringify(groups));} );
 }
 
 exports.get = function(req, res){
@@ -111,7 +113,7 @@ exports.get = function(req, res){
 	var filter = Filter.fromRequest(req);
 
 	res.contentType('json');
-	groupBySummaries(filter,function(data){ res.end(JSON.stringify(data));} );
+	groupBySummaries(filter,function(groups){ res.end(JSON.stringify(groups));} );
 
 }
 

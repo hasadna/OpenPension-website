@@ -5,7 +5,7 @@ var metaTable = require('../common/MetaTable').getMetaTable();
  * GET home page.
  */
 
- //build column dictionary
+ //build column dictionary - TODO: refactor
 var hebrewColumns = metaTable.hebrewColumns;
 var englishColumns = metaTable.englishColumns;
 var columnDictionary = {};
@@ -19,38 +19,40 @@ columnDictionary['managing_body'] = 'גוף מנהל';
 columnDictionary['instrument_type'] = 'סוג נכס';
 columnDictionary['instrument_sub_type'] = 'תת סוג נכס';
 
-function normalizeData(data,res){
-	for(var i in data) //index of data
+function normalizeData(groups, res){
+	for(var i in groups) //index of groups
 	{
-		var groupField = data[i]['group_field'];
-		data[i]['group_field_heb'] = columnDictionary[groupField];	//get hebrew name for column
-		for (var j in data[i]['result']){ //index of result
-			data[i]['result'][j]['sum_market_cap'] = parseFloat(data[i]['result'][j]['sum_market_cap']).toFixed(2); //2 digits after dot
+		var groupField = groups[i]['group_field'];
+		groups[i]['group_field_heb'] = columnDictionary[groupField];	//get hebrew name for column
+		groups[i]['total_sum'] = 0;
+		for (var j in groups[i]['result']){ //for j index of result, trim digits
+			groups[i]['result'][j]['sum_market_cap'] = +parseFloat(groups[i]['result'][j]['sum_market_cap']).toFixed(2) || 0; //2 digits after dot
+			groups[i]['total_sum'] += groups[i]['result'][j]['sum_market_cap'] 	// sum total results in group
 		}
 	}
 
-	return data;
+	return groups;
 }
 
 exports.show = function(req, res){
 	
-	
   var filter = Filter.fromRequest(req);
 
   jsonJS.groupBySummaries(filter,
-    function(data){
+    function(groups){
 	
-		data = normalizeData(data,res);
-	//res.write(JSON.stringify(e));
+		groups = normalizeData(groups,res);
+		//res.write(JSON.stringify(e));
 		
 
-		var render = true;
+		var render = true; //for debugging
 		if (render)
 		res.render('entry',{
 	        entry: { title: "השקעות של הפניקס",total_value: "5.87 מיליארד ₪" },
-	        elements: data
+	        groups: groups,
+	        req: req
       	});
-	else res.end();
+		else res.end();
     }
   );
   

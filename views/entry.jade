@@ -1,6 +1,7 @@
 extends layout
 
 block content
+	script(type='text/javascript', src='/js/entry.js')
 	div(class="container")
 		//- The title and filter button
 		div(class="row clearfix title-box")
@@ -21,14 +22,16 @@ block content
 			div(class="span12",style="background: white url(/img/graph.png); background-size: cover; height: 200px;") I'M A GRAPH!!!
 			
 		div(class="row")
-			each element in elements
-				div(class="span12 element-box")
-					span(class="title clearfix") חלוקה לפי #{element.group_field_heb}
+			each group in groups
+				div(class="span12 element-box group")
+					span(class="title clearfix") חלוקה לפי #{group.group_field_heb}
 						a(class="btn btn-link pull-right") למעלה ^
 							
 					div(class="bargraph")
-						each result in element.result
+						each result in group.result
 							div(class="bargraph-entry") 
-								a(class="bargraph-entry-name") #{result[element.group_field]}
+								//-a(class="bargraph-entry-name", href="#{req.url+ "&"+group.group_field+"="+result[group.group_field]}")) #{result[group.group_field]}
+								a(class="bargraph-entry-name", onclick="addFilter('#{group.group_field}','#{result[group.group_field]}')") #{result[group.group_field]}
 								div(class="bargraph-entry-value") #{result.sum_market_cap}
-										div(class="bargraph-entry-bar",style="width: 50%;")
+										div(class="bargraph-entry-bar",style="width: #{result.sum_market_cap / group.total_sum * 50}%;")
+
