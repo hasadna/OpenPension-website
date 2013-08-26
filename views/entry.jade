@@ -10,22 +10,22 @@ block content
 				i(class="icon-filter")
 		
 		div(class="row")
-			div(class="span12 text-center entry-total") #{entry.total_value}
+			div(class="span4 text-center entry-total") #{entry.total_value}
 			
 		div(class="row")
-			div(class="span12 changes-box")
+			div(class="span4 changes-box")
 				span
 					b שינויים ב-
 				select(class="inline-filter-select")
 					option שנה אחרונה
 					option כל הזמן
-			div(class="span12",style="background: white url(/img/graph.png); background-size: cover; height: 200px;") I'M A GRAPH!!!
+			div(class="span4",style="background: white url(/img/graph.png); background-size: cover; height: 200px;") I'M A GRAPH!!!
 			
 		div(class="row")
 			each group in groups
-				div(class="span12 element-box group")
+				div(class="span4 element-box group")
 					span(class="title clearfix") חלוקה לפי #{group.group_field_heb}
-						a(class="btn btn-link pull-right") למעלה ^
+						//-a(class="btn btn-link pull-right") למעלה ^
 							
 					div(class="bargraph")
 						each result in group.result
