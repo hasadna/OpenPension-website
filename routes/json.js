@@ -2,7 +2,7 @@ var Filter = require('./filter.js');
 var squel = require('squel');
 var config = require('../config')
 
-var allowed_filters={'report_year':simple_filter, 'report_qurater':simple_filter, 'industry':simple_filter, 'rating':simple_filter, 'managing_body':simple_filter, 'instrument_type':simple_filter, 'instrument_sub_type': simple_filter, 'currency' : simple_filter};
+var allowed_filters={ 'managing_body':simple_filter,  'instrument_type':simple_filter, 'industry':simple_filter, 'currency' : simple_filter, 'rating':simple_filter,  'instrument_sub_type': simple_filter,  'report_year':simple_filter, 'report_qurater':simple_filter};
 var summary_columns=["market_cap","fair_value"];
 
 function simple_filter(select, field, params)
