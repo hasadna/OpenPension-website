@@ -11,6 +11,12 @@ exports.post = function(req, res)
 		return;
 	}
 	var filter=req.body;
+
+	//if received empty object init empty filter
+	if (Object.keys(filter).length == 0){ 
+		filter = new Filter();
+	}
+
 	DAL.groupBySummaries(filter,
 							function(groups){ 
 								groups = DataNormalizer.normalizeData(groups);
