@@ -1,5 +1,5 @@
 var pg = require('pg');
-var config = require('./config')
+var config = require('../config')
 var db = {};
 
 db.pg = function() {

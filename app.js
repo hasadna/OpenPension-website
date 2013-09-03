@@ -8,7 +8,7 @@ var express = require('express')
   , entry = require('./routes/entry')
   , http = require('http')
   , path = require('path')
-  , json = require('./routes/json');
+  , test = require('./routes/test');
 
 var app = express();
 
@@ -32,11 +32,11 @@ app.get('/', routes.index);
 
 app.get('/entry', entry.show);
 
-app.post('/json', json.list);
-app.get('/json', json.list);
+app.post('/list', test.list);
+app.get('/list', test.list);
 
-app.post('/group',json.post);
-app.get('/group',json.get);
+app.post('/group',test.post);
+app.get('/group',test.get);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

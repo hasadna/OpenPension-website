@@ -23,9 +23,9 @@ function simple_filter(select, field, params)
 	select.where.apply(null,data);
 }
 
-function prepareWheres(select, json)
+function prepareWheres(select, filter)
 {
-	var filters=json['filters'];
+	var filters=filter['filters'];
 	for (var filter in filters)
 	{
 		if (!filter in allowed_filters)
@@ -40,13 +40,13 @@ function prepareWheres(select, json)
  * Add select queries, group by every field which is in allowed_filters and not in filter
  *
  */
-function prepareGroupBy(select, json)
+function prepareGroupBy(select, filter)
 {
 	var return_data=[];
 
 	for (var group_field in allowed_filters)
 	{
-		if (group_field in json.filters)
+		if (group_field in filter.filters)
 			continue;
 		var new_select=select.clone(); //Deep copy
 		new_select.group(group_field);
@@ -55,7 +55,6 @@ function prepareGroupBy(select, json)
 		{
 			col=summary_columns[idx];
 			new_select.field('sum('+col+')','sum_'+col);
-			new_select.order('sum_'+col,false);
 		}
 		return_data.push({"group_field":group_field,"query":new_select})
 	}
@@ -63,22 +62,22 @@ function prepareGroupBy(select, json)
 }
 
 // Debug
-function parseJson(json)
+function parseFilter(filter)
 {
 	var select = squel.select().from(config.table);
-	prepareWheres(select, json);
+	prepareWheres(select, filter);
 	select=select.toString();
 	return select;
 }
 
-function groupBySummaries(filter_spec,callback)
+function groupBySummaries(filter, callback)
 {
 	var select = squel.select().from(config.table);
-	prepareWheres(select, filter_spec);
-	var groups=prepareGroupBy(select, filter_spec);
+	prepareWheres(select, filter);
+	var groups=prepareGroupBy(select, filter);
 	var wait=groups.length;
 
-	var db = require('../db.js').open();
+	var db = require('./db.js').open();
 	for (var index in groups)
 	{
 		var group=groups[index];
@@ -96,40 +95,7 @@ function groupBySummaries(filter_spec,callback)
 	
 }
 exports.groupBySummaries=groupBySummaries;
+exports.parseFilter=parseFilter;
 
-exports.post = function(req, res)
-{
-	if (! req.is('json'))
-	{
-		res.end(require('util').inspect(req.body));
-		return;
-	}
-	var filter=req.body;
-	groupBySummaries(filter,function(groups){ res.end(JSON.stringify(groups));} );
-}
 
-exports.get = function(req, res){
-
-	var filter = Filter.fromRequest(req);
-
-	res.contentType('json');
-	groupBySummaries(filter,function(groups){ res.end(JSON.stringify(groups));} );
-
-}
-
-exports.list = function(req, res){
-	var json=req.body;
-	var db = require('../db.js').open();
-
-	console.log(json);
-
-	var query=parseJson(json);
-	db.querys(query,function(err, rows){
-		for (var i = 0; i < rows.length; i++){
-			res.write(JSON.stringify(rows[i]));
-		}
-		res.end();
-	});
-
-};
 
