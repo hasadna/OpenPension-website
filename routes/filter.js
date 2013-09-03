@@ -17,22 +17,32 @@ var Filter = function(){
     //returns : [ 'report_year', 'managing_body' ]
 	this.getFields = function(){
 		return Object.keys(this.filters);
-	}
+	}	
 
 	//returns array of the filter data applied to field
 	//example : filter.getFilter("report_year");
 	//returns : [ { data: '2012' }, { data: '2013' } ]
 	this.getFilter = function(field){
-		return this.filters[field];
+	    if (this.filters.hasOwnProperty(field)){
+			return this.filters[field];
+		}
+		
+		return [];
 	}
 
 	//returns array of data applied to filter
 	//example : filter.getFilterData("report_year");
 	//returns : [ '2012', '2013' ]
 	this.getFilterData = function(field){
-		var values = Object.keys(this.filters[field]).map(function (key) {
-   		 		return this.filters[field][key]['data'];
-		},this);
+
+		var values = [];
+
+	    if (this.filters.hasOwnProperty(field)){
+			values = Object.keys(this.filters[field]).map(function (key) {
+   		 				return this.filters[field][key]['data'];
+					},this);
+	    }
+	
 		return values;
 	}
 
