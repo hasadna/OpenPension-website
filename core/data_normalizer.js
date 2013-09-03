@@ -30,26 +30,31 @@ exports.normalizeData = function(groups){
 	}
 
 
-	//sum each group, translate
 	for(var i in groups){ //index of groups
 	
+		//translate
 		var groupTitle = groups[i]['group_field'];
 		groups[i]['group_field_heb'] = columnDictionary[groupTitle];	//get hebrew name for column
 
-		//sum values per group, used for calculating bars precentage
-		groups[i]['group_sum'] = 0; //init group_sum
-		for (var j in groups[i]['result']){ //for j index of result, trim digits 
+
+		for (var j in groups[i]['result']){ //for j index of result
 			
-			//verify that sum_market_cap is not NaN or undefined
 			//trim digits
 			groups[i]['result'][j]['sum_market_cap'] = Number(groups[i]['result'][j]['sum_market_cap']).toFixed(1);	
-			//summarize per group
-			groups[i]['group_sum'] += Number(groups[i]['result'][j]['sum_market_cap']);				
+					
 		}
+	
 	}
 
-	//set total sum to be group sum of group 0, all group sums assumed to be the same
-	groups['total_sum'] = groups[0]['group_sum'];
+	//sum values of group 0, all group sums assumed to be the same
+	//used for calculating bar size precentage
+
+	groups['total_sum'] = 0; //init 
+	for (var j in groups[0]['result']){ //for j index of result
+			
+			//summarize 
+			groups['total_sum'] += Number(groups[0]['result'][j]['sum_market_cap']);				
+	}
 
 	return groups;
 }
