@@ -1,3 +1,16 @@
+/*
+ * A Data Structure that describes the query to the database:
+ *  example:
+ *  { 
+ *    "filters":
+ *      {
+ *       "report_year": [ {"data":"2012"}, {"data":"2013"}],
+ *       "managing_body": [{"data":"migdal"}, {"data":"fenix"}]
+ *      }
+ *  }
+ *
+ *
+ */
 
 var Filter = function(){
     this.filters = {};
@@ -10,6 +23,20 @@ var Filter = function(){
 
 		this.filters[field].push({"data": value }) ;    
 	   
+	}
+
+
+	this.removeFilter = function (field, value){
+	    if (!this.filters.hasOwnProperty(field)){
+	    	return;
+	    }
+
+	    for (var fieldIndex in this.filters[field]){
+	    	if(this.filters[field][fieldIndex]["data"] == value){
+	       		this.filters[field].splice(fieldIndex,1);
+	    	}
+	    }
+	  
 	}
     
     //returns an array of the fields applied in filter
@@ -75,7 +102,18 @@ var Filter = function(){
 	}
 }
 
-Filter.fromRequest = function(req){
+
+Filter.fromPostRequest = function(req){
+
+	var filter = new Filter();
+
+	if (req.body.filters != null)
+		filter.filters = req.body.filters;
+	
+	return filter;
+};
+
+Filter.fromGetRequest = function(req){
 
 	var filter = new Filter();
 	var query = req.query;

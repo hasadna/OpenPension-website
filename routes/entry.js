@@ -10,7 +10,7 @@ exports.show = function(req, res){
 
   //var filterParams = new Array();
   
-  var filter = Filter.fromRequest(req);
+  var filter = Filter.fromGetRequest(req);
   
   //for(var key in filter) {
   //  var value = filterParams[key];

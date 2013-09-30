@@ -10,12 +10,8 @@ exports.post = function(req, res)
 		res.end(require('util').inspect(req.body));
 		return;
 	}
-	var filter=req.body;
+	var filter=Filter.fromPostRequest(req);
 
-	//if received empty object init empty filter
-	if (Object.keys(filter).length == 0){ 
-		filter = new Filter();
-	}
 
 	DAL.groupBySummaries(filter,
 							function(groups){ 
@@ -26,7 +22,7 @@ exports.post = function(req, res)
 
 exports.get = function(req, res){
 
-	var filter = Filter.fromRequest(req);
+	var filter = Filter.fromGetRequest(req);
 
 	res.contentType('json');
 	DAL.groupBySummaries(filter,

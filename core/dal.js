@@ -2,7 +2,7 @@ var Filter = require('./filter.js');
 var squel = require('squel');
 var config = require('../config')
 
-var allowed_filters={ 'managing_body':simple_filter,  'instrument_type':simple_filter, 'industry':simple_filter, 'currency' : simple_filter, 'rating':simple_filter,  'instrument_sub_type': simple_filter,  'report_year':simple_filter, 'report_qurater':simple_filter};
+var allowed_filters={ 'managing_body':simple_filter,  'instrument_type':simple_filter, 'industry':simple_filter, 'currency' : simple_filter, 'rating':simple_filter,  'instrument_sub_type': simple_filter,  'report_year':simple_filter, 'report_qurater':simple_filter,  'instrument_id':simple_filter};
 var summary_columns=["market_cap","fair_value"];
 
 function simple_filter(select, field, params)
@@ -28,35 +28,53 @@ function prepareWheres(select, filter)
 	var filters=filter['filters'];
 	for (var filter in filters)
 	{
-		if (!filter in allowed_filters)
+		if (!(filter in allowed_filters))
 		{
-			// Return error
+			continue;
+			// Return error? this skips group_by
 		}
 		allowed_filters[filter](select, filter, filters[filter])
 	}
 }
 
 /*
- * Add select queries, group by every field which is in allowed_filters and not in filter
+ * Creates select queries, 
+ * if filter contains "group_by" field, then group by filter configuration.
+ * else group by every field which is in allowed_filters and not in filter
  *
+ * sum queries by summary_columns
  */
 function prepareGroupBy(select, filter)
 {
 	var return_data=[];
 
-	for (var group_field in allowed_filters)
+	var all_groups;
+	var groups_in_filter = filter.getFilterData("group_by");
+
+	if (groups_in_filter.length > 0){
+
+		all_groups = groups_in_filter;
+	}
+	else{
+		all_groups = Object.keys(allowed_filters);
+	}
+
+
+	for (var group_index in all_groups)
 	{
-		if (group_field in filter.filters)
+
+		if (all_groups[group_index] in filter.filters)
 			continue;
 		var new_select=select.clone(); //Deep copy
-		new_select.group(group_field);
-		new_select.field(group_field);
+		
+		new_select.group(all_groups[group_index]);
+		new_select.field(all_groups[group_index]);
 		for (var idx in summary_columns)
 		{
 			col=summary_columns[idx];
 			new_select.field('sum('+col+')','sum_'+col);
 		}
-		return_data.push({"group_field":group_field,"query":new_select})
+		return_data.push({"group_field":all_groups[group_index],"query":new_select})
 	}
 	return return_data;
 }
@@ -76,6 +94,8 @@ function groupBySummaries(filter, callback)
 	prepareWheres(select, filter);
 	var groups=prepareGroupBy(select, filter);
 	var wait=groups.length;
+	if (wait == 0)
+		return;
 
 	var db = require('./db.js').open();
 	for (var index in groups)
@@ -94,8 +114,10 @@ function groupBySummaries(filter, callback)
 	}
 	
 }
+
+//exports
 exports.groupBySummaries=groupBySummaries;
 exports.parseFilter=parseFilter;
-
+exports.allowed_filters=Object.keys(allowed_filters);
 
 
