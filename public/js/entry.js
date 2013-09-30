@@ -24,7 +24,7 @@ $(function(){
     });
 });
 
-function addFilter(key,value){
+function addConstraint(key,value){
 	var url = window.location;
 	var parameters = new Array();
 	parameters[key] = value;

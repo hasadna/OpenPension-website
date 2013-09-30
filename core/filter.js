@@ -2,7 +2,7 @@
  * A Data Structure that describes the query to the database:
  *  example:
  *  { 
- *    "filters":
+ *    "constraints":
  *      {
  *       "report_year": [ {"data":"2012"}, {"data":"2013"}],
  *       "managing_body": [{"data":"migdal"}, {"data":"fenix"}]
@@ -13,60 +13,60 @@
  */
 
 var Filter = function(){
-    this.filters = {};
+    this.constraints = {};
 
 
-	this.addFilter = function (field, value){
-	    if (!this.filters.hasOwnProperty(field)){
-	      this.filters[field] = [];       
+	this.addConstraint = function (field, value){
+	    if (!this.constraints.hasOwnProperty(field)){
+	      this.constraints[field] = [];       
 	    }
 
-		this.filters[field].push({"data": value }) ;    
+		this.constraints[field].push({"data": value }) ;    
 	   
 	}
 
 
-	this.removeFilter = function (field, value){
-	    if (!this.filters.hasOwnProperty(field)){
+	this.removeConstraint = function (field, value){
+	    if (!this.constraints.hasOwnProperty(field)){
 	    	return;
 	    }
 
-	    for (var fieldIndex in this.filters[field]){
-	    	if(this.filters[field][fieldIndex]["data"] == value){
-	       		this.filters[field].splice(fieldIndex,1);
+	    for (var fieldIndex in this.constraints[field]){
+	    	if(this.constraints[field][fieldIndex]["data"] == value){
+	       		this.constraints[field].splice(fieldIndex,1);
 	    	}
 	    }
 	  
 	}
     
     //returns an array of the fields applied in filter
-    //example : filter.getFields();
+    //example : filter.getConstrainedFields();
     //returns : [ 'report_year', 'managing_body' ]
-	this.getFields = function(){
-		return Object.keys(this.filters);
+	this.getConstrainedFields = function(){
+		return Object.keys(this.constraints);
 	}	
 
-	//returns array of the filter data applied to field
-	//example : filter.getFilter("report_year");
+	//returns array of the constraint data applied to field
+	//example : filter.getConstraint("report_year");
 	//returns : [ { data: '2012' }, { data: '2013' } ]
-	this.getFilter = function(field){
-	    if (this.filters.hasOwnProperty(field)){
-			return this.filters[field];
+	this.getConstraint = function(field){
+	    if (this.constraints.hasOwnProperty(field)){
+			return this.constraints[field];
 		}
 		
 		return [];
 	}
 
 	//returns array of data applied to filter
-	//example : filter.getFilterData("report_year");
+	//example : filter.getConstraintData("report_year");
 	//returns : [ '2012', '2013' ]
-	this.getFilterData = function(field){
+	this.getConstraintData = function(field){
 
 		var values = [];
 
-	    if (this.filters.hasOwnProperty(field)){
-			values = Object.keys(this.filters[field]).map(function (key) {
-   		 				return this.filters[field][key]['data'];
+	    if (this.constraints.hasOwnProperty(field)){
+			values = Object.keys(this.constraints[field]).map(function (key) {
+   		 				return this.constraints[field][key]['data'];
 					},this);
 	    }
 	
@@ -75,22 +75,22 @@ var Filter = function(){
 
 	this.toString = function(){
 
-		var str = "{\"filters\":{"; //begin object, begin filters
+		var str = "{\"constraints\":{"; //begin object, begin constraints
 		var filter_index = 0;		
-		for (filter in this.filters){ // each filter in filters
-			str += "\"" + filter + "\"";
+		for (constraint in this.constraints){ // each constraint in constraints
+			str += "\"" + constraint + "\"";
 			str += ":["; //begin data array
-			for(data_index in this.filters[filter]){ // data_index of data array
+			for(data_index in this.constraints[constraint]){ // data_index of data array
 				str += "{\"data\":";
-				str += "\"" + this.filters[filter][data_index]['data'] + "\"";
+				str += "\"" + this.constraints[constraint][data_index]['data'] + "\"";
 				str += "}";
-				if (data_index < this.filters[filter].length-1){ // dont add after last
+				if (data_index < this.constraints[constraint].length-1){ // dont add after last
 					str += ",";
 				}
 			}
 
 			str += "]"; //end data array
-			if (filter_index < Object.keys(this.filters).length-1){ //dont add after last
+			if (filter_index < Object.keys(this.constraints).length-1){ //dont add after last
 					str += ",";
 			}
 			filter_index++;
@@ -107,8 +107,8 @@ Filter.fromPostRequest = function(req){
 
 	var filter = new Filter();
 
-	if (req.body.filters != null)
-		filter.filters = req.body.filters;
+	if (req.body.constraints != null)
+		filter.constraints = req.body.constraints;
 	
 	return filter;
 };
@@ -122,7 +122,7 @@ Filter.fromGetRequest = function(req){
 	for( var field in query){
 		query[field] = [].concat( query[field] );
 		for (var index in query[field]){
-			filter.addFilter(field, query[field][index]);
+			filter.addConstraint(field, query[field][index]);
 		}
 	}
 

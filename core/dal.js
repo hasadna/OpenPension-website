@@ -49,7 +49,7 @@ function prepareGroupBy(select, filter)
 	var return_data=[];
 
 	var all_groups;
-	var groups_in_filter = filter.getFilterData("group_by");
+	var groups_in_filter = filter.getConstraintData("group_by");
 
 	if (groups_in_filter.length > 0){
 
@@ -63,7 +63,7 @@ function prepareGroupBy(select, filter)
 	for (var group_index in all_groups)
 	{
 
-		if (all_groups[group_index] in filter.filters)
+		if (all_groups[group_index] in filter.constraints)
 			continue;
 		var new_select=select.clone(); //Deep copy
 		
