@@ -5,6 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , index = require('./routes/index')
   , entry = require('./routes/entry')
   , http = require('http')
   , path = require('path')
@@ -28,7 +29,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+app.get('/', index.show);
 
 app.get('/entry', entry.show);
 

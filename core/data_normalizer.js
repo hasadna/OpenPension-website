@@ -58,3 +58,32 @@ exports.normalizeData = function(groups){
 
 	return groups;
 }
+
+
+exports.convertNumberToWords = function(numberToConvert){
+	var number = Number(numberToConvert);
+	if (number > 1000000000){
+		return {
+			number: (number / 1000000000).toFixed(1),
+			scale: "מיליארד"
+		}
+	}
+	else if (number > 1000000){
+		return {
+			number: (number / 1000000).toFixed(1),
+			scale: "מליון"
+		}
+	}
+	else if (number > 1000){
+		return{
+			number: (number / 1000).toFixed(1),
+			scale: "אלפים"
+		}
+	}
+	else{
+		return{
+			number: number,
+			scale:""
+		}
+	}
+}
