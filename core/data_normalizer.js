@@ -71,7 +71,7 @@ exports.convertNumberToWords = function(numberToConvert){
 	else if (number > 1000000){
 		return {
 			number: (number / 1000000).toFixed(1),
-			scale: "מליון"
+			scale: "מיליון"
 		}
 	}
 	else if (number > 1000){

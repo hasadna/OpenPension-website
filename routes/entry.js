@@ -22,12 +22,15 @@ exports.show = function(req, res){
     function(groups){
 	
 		groups = DataNormalizer.normalizeData(groups);
+		total = DataNormalizer.convertNumberToWords(groups['total_sum']);
 		//res.write(JSON.stringify(e));
 	    // TBD : change to not 1. 	
 		var render = true; //for debugging
 		if (render)
 		res.render('entry',{
 	        entry: { title: "מופקדים בקופות הגמל", total_value: JSON.stringify(filter) },
+	        filter: filter,
+	        total: total,
 	        groups: groups,
 	        req: req	
       	});

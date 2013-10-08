@@ -3,7 +3,7 @@ extends layout
 block content
 	script(type='text/javascript', src='/js/entry.js')
 	div(class="container")
-		h2 #{ groups['total_sum'] }
+		h2 #{total.number} #{total.scale} &#8362;
 		//- The title and filter button
 		div(class="row clearfix title-box")
 			h3(class='pull-left') #{entry.title}
