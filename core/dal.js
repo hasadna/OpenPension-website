@@ -25,15 +25,15 @@ function simple_filter(select, field, params)
 
 function prepareWheres(select, filter)
 {
-	var filters=filter['filters'];
-	for (var filter in filters)
+	var constraints=filter['constraints'];
+	for (var constraint in constraints)
 	{
-		if (!(filter in allowed_filters))
+		if (!(constraint in allowed_filters))
 		{
 			continue;
 			// Return error? this skips group_by
 		}
-		allowed_filters[filter](select, filter, filters[filter])
+		allowed_filters[constraint](select, constraint, constraints[constraint])
 	}
 }
 
