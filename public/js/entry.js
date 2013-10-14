@@ -45,14 +45,27 @@ var all_categories = {
 
 
 
-function getGrouping(instrument_id, filter){
+/*
+ * Look for a category which is not in filter constraints
+ */
+function getGroupingCategory(instrument_id, filter){
 
-  for(category in all_categories[instrument_id]){
-    if(category in filter.getConstrainedFields()){
+  var constrainedFields = filter.getConstrainedFields();
+
+  //iterate over categories
+  for(categoryIndex in all_categories[instrument_id]){
+    var category = all_categories[instrument_id][categoryIndex];
+    //if category equals constrained fields
+    //OR 
+    //constrained fields is array AND
+    //constrained fileds contains category    
+    if( category == constrainedFields ||  
+      Object.prototype.toString.call( constrainedFields ) === '[object Array]' && 
+      constrainedFields.indexOf(category) != -1){ 
       continue;
     }
     else{
-      return all_categories[instrument_id][category];
+      return all_categories[instrument_id][categoryIndex];
     }
   }
 
@@ -62,14 +75,7 @@ function getGrouping(instrument_id, filter){
 function addConstraint(key,value){
   var filter = Filter.fromQueryString(window.location.search);
   filter.addConstraint(key,value);
-  var group_by = getGrouping("default",filter);
 
-  if(typeof group_by == "undefined"){
-    filter.removeField("group_by");
-  }
-  else{
-    filter.setConstraint("group_by",group_by);
-  }
   window.location.href = filter.toQueryString();
 }
 
