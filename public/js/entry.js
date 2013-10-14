@@ -22,28 +22,56 @@ $(function(){
 	        });    
 	   	
     });
+
+ 
+
 });
 
-function addConstraint(key,value){
-	var url = window.location;
-	var parameters = new Array();
-	parameters[key] = value;
-	location.href=buildUrl(url, parameters);
+
+var all_categories = {
+                      'default' : 
+                        [
+                        'managing_body', 
+                        'instrument_type', 
+                        'industry', 
+                        'currency', 
+                        'rating', 
+                        'instrument_sub_type' , 
+                        'report_year', 
+                        'report_qurater',  
+                        'instrument_id'
+                        ]
+                      };
+
+
+
+function getGrouping(instrument_id, filter){
+
+  for(category in all_categories[instrument_id]){
+    if(category in filter.getConstrainedFields()){
+      continue;
+    }
+    else{
+      return all_categories[instrument_id][category];
+    }
+  }
+
 }
 
-function buildUrl(url, parameters){
-  var qs = "";
-  for(var key in parameters) {
-    var value = parameters[key];
-    qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+
+function addConstraint(key,value){
+  var filter = Filter.fromQueryString(window.location.search);
+  filter.addConstraint(key,value);
+  var group_by = getGrouping("default",filter);
+
+  if(typeof group_by == "undefined"){
+    filter.removeField("group_by");
   }
-  if (qs.length > 0){
-    qs = qs.substring(0, qs.length-1); //chop off last "&"
-    if (url.toString().indexOf("?") > 0 )
-    	url = url + "&" + qs;
-    else
-    	url = url + "?" + qs;
+  else{
+    filter.setConstraint("group_by",group_by);
   }
-  return url;
+  window.location.href = filter.toQueryString();
 }
+
+
 

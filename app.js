@@ -3,15 +3,26 @@
  * Module dependencies.
  */
 
+
 var express = require('express')
   , routes = require('./routes')
   , index = require('./routes/index')
   , entry = require('./routes/entry')
   , http = require('http')
   , path = require('path')
+  , FSUtil = require('./util/FSUtil')
   , test = require('./routes/test');
 
+//enable use of Filter in client
+FSUtil.copyFile('./core/filter.js', './public/js/filter.js',
+			function(err){ 
+				console.log(err);
+				process.exit(1);
+			}
+		);
+
 var app = express();
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);

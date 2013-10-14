@@ -25,6 +25,13 @@ var Filter = function(){
 	   
 	}
 
+	this.setConstraint = function (field, value){
+
+		this.constraints[field] = [{"data": value }] ;    
+	   
+	}
+
+
 
 	this.removeConstraint = function (field, value){
 	    if (!this.constraints.hasOwnProperty(field)){
@@ -35,10 +42,26 @@ var Filter = function(){
 	    	if(this.constraints[field][fieldIndex]["data"] == value){
 	       		this.constraints[field].splice(fieldIndex,1);
 	    	}
+	    	if(this.constraints[field][fieldIndex] == undefined ){
+	    		
+	    		delete this.constraints[field];
+
+	    	}
 	    }
 	  
 	}
     
+
+    this.removeField = function (field){
+	    if (!this.constraints.hasOwnProperty(field)){
+	    	return;
+	    }
+
+   		delete this.constraints[field];
+	  
+	}
+    
+
     //returns an array of the fields applied in filter
     //example : filter.getConstrainedFields();
     //returns : [ 'report_year', 'managing_body' ]
@@ -73,10 +96,40 @@ var Filter = function(){
 		return values;
 	}
 
-	this.toString = function(){
+
+	this.toQueryString = function(){
+
+		var str = ""; 
+		var constraint_index = 0;		
+		for (constraint in this.constraints){ // each constraint in constraints
+			
+
+			for(data_index in this.constraints[constraint]){ // data_index of data array
+			
+				if (constraint_index == 0){
+					str += "?";
+				}
+				else{
+					str += "&";
+				}
+
+				str +=  constraint ;
+				str += "=";
+				str += this.constraints[constraint][data_index]['data'];
+
+				constraint_index++;
+			}
+
+
+		}
+		return str;
+	}
+
+
+	this.toJSON = function(){
 
 		var str = "{\"constraints\":{"; //begin object, begin constraints
-		var filter_index = 0;		
+		var constraint_index = 0;		
 		for (constraint in this.constraints){ // each constraint in constraints
 			str += "\"" + constraint + "\"";
 			str += ":["; //begin data array
@@ -90,33 +143,67 @@ var Filter = function(){
 			}
 
 			str += "]"; //end data array
-			if (filter_index < Object.keys(this.constraints).length-1){ //dont add after last
+			if (constraint_index < Object.keys(this.constraints).length-1){ //dont add after last
 					str += ",";
 			}
-			filter_index++;
+			constraint_index++;
 
 		}
 		str += "}"; // end filters
 		str += "}"; // end object
 		return str;
 	}
+
+
+	this.toString = function(){
+
+		return this.toJSON();
+	}
+
+
+}
+
+var parseQueryString = function(url){
+	
+    var result = {};
+	var searchIndex = url.indexOf("?");
+
+	if (searchIndex == -1 ) return result;
+
+    var sPageURL = url.substring(searchIndex +1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {    	
+        var sParameterName = sURLVariables[i].split('=');
+        if ( result[sParameterName[0]] == undefined){
+        	result[sParameterName[0]] = [];
+        }      
+        result[sParameterName[0]].push( sParameterName[1] );
+    }
+    return result;
+}
+
+Filter.fromJSON = function(json){
+	var filter = new Filter();
+
+	json = JSON.parse(json);
+	if (json.constraints != null)
+		filter.constraints = json.constraints;
+	
+	return filter;
+
 }
 
 
-Filter.fromPostRequest = function(req){
-
+Filter.fromQueryString = function(query){	
 	var filter = new Filter();
+	var parsed = parseQueryString(query);
+	return Filter.fromParsedQueryString(parsed);
 
-	if (req.body.constraints != null)
-		filter.constraints = req.body.constraints;
-	
-	return filter;
-};
+}
 
-Filter.fromGetRequest = function(req){
-
+Filter.fromParsedQueryString = function(query){
 	var filter = new Filter();
-	var query = req.query;
 
 	//build filter from query string
 	for( var field in query){
@@ -127,6 +214,28 @@ Filter.fromGetRequest = function(req){
 	}
 
 	return filter;
+
+}
+
+Filter.fromPostRequest = function(req){
+
+	var filter = new Filter();
+
+	if (req.body.constraints != null)
+		filter = this.fromJSON(req.body);
+	
+	return filter;
 };
 
-module.exports = Filter;
+Filter.fromGetRequest = function(req){
+
+	var filter = new Filter();
+	
+	if (req.query != null)
+		filter = this.fromParsedQueryString(req.query);
+	
+	return filter;
+};
+
+if(typeof module != 'undefined')
+	module.exports = Filter;
