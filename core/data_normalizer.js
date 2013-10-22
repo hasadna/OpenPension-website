@@ -31,11 +31,6 @@ exports.normalizeData = function(groups){
 
 
 	for(var i in groups){ //index of groups
-	
-		//translate
-		var groupTitle = groups[i]['group_field'];
-		groups[i]['group_field_heb'] = columnDictionary[groupTitle];	//get hebrew name for column
-
 
 		for (var j in groups[i]['result']){ //for j index of result
 			
@@ -46,7 +41,7 @@ exports.normalizeData = function(groups){
 	
 	}
 
-	//sum values of group 0, all group sums assumed to be the same
+	//sum values of groups[0], all group sums assumed to be the same
 	//used for calculating bar size precentage
 
 	groups['total_sum'] = 0; //init 
@@ -87,3 +82,5 @@ exports.convertNumberToWords = function(numberToConvert){
 		}
 	}
 }
+exports.columnDictionary = columnDictionary;
+

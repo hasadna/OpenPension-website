@@ -23,61 +23,44 @@ $(function(){
 	   	
     });
 
- 
+    var filter = Filter.fromQueryString(window.location.search);
+
+    $('#select_group_by').on('change', function() {
+      setConstraint("group_by",this.value);
+    });
 
 });
 
 
-var all_categories = {
-                      'default' : 
-                        [
-                        'managing_body', 
-                        'instrument_type', 
-                        'industry', 
-                        'currency', 
-                        'rating', 
-                        'instrument_sub_type' , 
-                        'report_year', 
-                        'report_qurater',  
-                        'instrument_id'
-                        ]
-                      };
-
-
-
-/*
- * Look for a category which is not in filter constraints
- */
-function getGroupingCategory(instrument_id, filter){
-
-  var constrainedFields = filter.getConstrainedFields();
-
-  //iterate over categories
-  for(categoryIndex in all_categories[instrument_id]){
-    var category = all_categories[instrument_id][categoryIndex];
-    //if category equals constrained fields
-    //OR 
-    //constrained fields is array AND
-    //constrained fileds contains category    
-    if( category == constrainedFields ||  
-      Object.prototype.toString.call( constrainedFields ) === '[object Array]' && 
-      constrainedFields.indexOf(category) != -1){ 
-      continue;
-    }
-    else{
-      return all_categories[instrument_id][categoryIndex];
-    }
-  }
-
-}
-
-
 function addConstraint(key,value){
+  //generate filter from query string
   var filter = Filter.fromQueryString(window.location.search);
+
+  //add constraint from user
   filter.addConstraint(key,value);
 
+  var group_by = Categories.getGroupingCategory("default",filter);
+
+  if(typeof group_by == "undefined"){
+    filter.removeField("group_by");
+  }
+  else{
+    filter.setConstraint("group_by",group_by);
+  }
+
+  //convert filter back to query string, and apply location
   window.location.href = filter.toQueryString();
 }
 
 
+function setConstraint(key,value){
+  //generate filter from query string
+  var filter = Filter.fromQueryString(window.location.search);
 
+  //add constraint from user
+  filter.setConstraint(key,value);
+
+  //convert filter back to query string, and apply location
+  window.location.href = filter.toQueryString();
+
+}

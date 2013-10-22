@@ -2,82 +2,51 @@ var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
-
-
-
-
-
-var all_categories = {
-                      'default' : 
-                        [
-                        'managing_body', 
-                        'instrument_type', 
-                        'industry', 
-                        'currency', 
-                        'rating', 
-                        'instrument_sub_type' , 
-                        'report_year', 
-                        'report_qurater',  
-                        'instrument_id'
-                        ]
-                      };
-
-
-
-/*
- * Look for a category which is not in filter constraints
- */
-function getGroupingCategory(instrument_id, filter){
-
-  var constrainedFields = filter.getConstrainedFields();
-
-  //iterate over categories
-  for(categoryIndex in all_categories[instrument_id]){
-    var category = all_categories[instrument_id][categoryIndex];
-    //if category equals constrained fields
-    //OR 
-    //constrained fields is array AND
-    //constrained fileds contains category    
-    if( category == constrainedFields ||  
-      Object.prototype.toString.call( constrainedFields ) === '[object Array]' && 
-      constrainedFields.indexOf(category) != -1){ 
-      continue;
-    }
-    else{
-      return all_categories[instrument_id][categoryIndex];
-    }
-  }
-
-}
-
+var Categories = require('../core/categories.js');
 
 exports.show = function(req, res){
 
-  
+  //create filter from request (search string)
   var filter = Filter.fromGetRequest(req);
 
-  var group_by = getGroupingCategory("default",filter);
+  var group_by = filter.getConstraintData("group_by")[0];
+  var instrument_sub_type = filter.getConstraintData("instrument_sub_type")[0];
+  
+  var availableCategories;
 
-  if(typeof group_by == "undefined"){
-    filter.removeField("group_by");
+  //get available categories, (by sub type, if defined)  
+  if (instrument_sub_type == undefined){
+   availableCategories = Categories.getAvailableCategories("default",filter);
   }
   else{
+    instrument_sub_type = instrument_sub_type.replace(/ /g,"%20");
+    availableCategories = Categories.getAvailableCategories(instrument_sub_type,filter); 
+  }
+
+
+  //group by is empty? set to default
+  if (group_by == undefined){
+    group_by = Categories.getGroupingCategory(instrument_sub_type, filter);
     filter.setConstraint("group_by",group_by);
   }
 
+
   DAL.groupBySummaries(filter,
     function(groups){
-	
-		groups = DataNormalizer.normalizeData(groups);
-		total = DataNormalizer.convertNumberToWords(groups['total_sum']);
 
-		res.render('entry',{
-	        entry: { title: "מופקדים בקופות הגמל", total_value: JSON.stringify(filter) },
-	        filter: filter,
-	        total: total,
-	        groups: groups,
-	        req: req	
-      	});
+    groups = DataNormalizer.normalizeData(groups);
+    total = DataNormalizer.convertNumberToWords(groups['total_sum']);
+
+    res.render('entry',{
+          entry: { title: "מופקדים בקופות הגמל", total_value: JSON.stringify(filter) },
+          filter: filter,
+          total: total,
+          groups: groups,
+          group_by: group_by,
+          availableCategories: availableCategories, 
+          columnDictionary: DataNormalizer.columnDictionary,
+          req: req	
+        });
     }
   );
   

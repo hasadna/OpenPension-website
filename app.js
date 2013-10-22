@@ -20,6 +20,13 @@ FSUtil.copyFile('./core/filter.js', './public/js/filter.js',
 				process.exit(1);
 			}
 		);
+//enable use of Categories in client
+FSUtil.copyFile('./core/categories.js', './public/js/categories.js',
+      function(err){ 
+        console.log(err);
+        process.exit(1);
+      }
+    );
 
 var app = express();
 

@@ -25,9 +25,14 @@ block content
 		div(class="row")
 			each group in groups
 				div(class="span4 element-box group")
-					span(class="title clearfix") חלוקה לפי #{group.group_field_heb}
-						//-a(class="btn btn-link pull-right") למעלה ^
-							
+					div(class="title clearfix" style="float:right") חלוקה לפי &nbsp&nbsp
+					select(id="select_group_by" style="float:right")
+						each category in availableCategories
+							- var select=null; if (group_by == category) select='selected';
+							option(value="#{category}", selected=select) #{columnDictionary[category]}	
+					br
+					br
+												
 					div(class="bargraph")
 						each result in group.result
 							div(class="bargraph-entry") 
