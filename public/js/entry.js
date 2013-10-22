@@ -23,8 +23,6 @@ $(function(){
 	   	
     });
 
-    var filter = Filter.fromQueryString(window.location.search);
-
     $('#select_group_by').on('change', function() {
       setConstraint("group_by",this.value);
     });
@@ -32,6 +30,7 @@ $(function(){
 });
 
 
+//add new constraint to filter and reload page
 function addConstraint(key,value){
   //generate filter from query string
   var filter = Filter.fromQueryString(window.location.search);
@@ -39,13 +38,14 @@ function addConstraint(key,value){
   //add constraint from user
   filter.addConstraint(key,value);
 
+  //get next grouping category
   var group_by = Categories.getGroupingCategory("default",filter);
 
   if(typeof group_by == "undefined"){
     filter.removeField("group_by");
   }
   else{
-    filter.setConstraint("group_by",group_by);
+  filter.setConstraint("group_by",group_by);
   }
 
   //convert filter back to query string, and apply location

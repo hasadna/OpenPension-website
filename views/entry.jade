@@ -3,41 +3,26 @@ extends layout
 block content
 	script(type='text/javascript', src='/js/entry.js')
 	div(class="container")
-		h2 #{total.number} #{total.scale} &#8362;
-		//- The title and filter button
-		div(class="row clearfix title-box")
-			h3(class='pull-left') #{entry.title}
-			a(class='btn btn-small inline-filter-button') סנן
-				i(class="icon-filter")
-		
-		div(class="row")
-			div(class="span4 text-center entry-total") #{entry.total_value}
-			
-		div(class="row")
-			div(class="span4 changes-box")
-				span
-					b שינויים ב-
-				select(class="inline-filter-select")
-					option שנה אחרונה
-					option כל הזמן
-			div(class="span4",style="background: white url(/img/graph.png); background-size: cover; height: 200px;") I'M A GRAPH!!!
-			
-		div(class="row")
+		div(id="entry" class="col-sm-6 pull-right")
+			div(id="info")  #{total.number} #{total.scale} &#8362; מושקעים על-ידי הפניקס באג"ח קונצרניות לא סחירות של בנק לאומי
+		div(class="col-sm-6 pull-right")
+			div(class="" style="float:right") 
+				div(style="float:right") חלוקה לפי &nbsp&nbsp
+				select(id="select_group_by" style="float:right")
+					each category in availableCategories
+						- var select=null; if (group_by == category) select='selected';
+						option(value="#{category}", selected=select) #{columnDictionary[category]}	
+				br
+				br
+					
 			each group in groups
-				div(class="span4 element-box group")
-					div(class="title clearfix" style="float:right") חלוקה לפי &nbsp&nbsp
-					select(id="select_group_by" style="float:right")
-						each category in availableCategories
-							- var select=null; if (group_by == category) select='selected';
-							option(value="#{category}", selected=select) #{columnDictionary[category]}	
-					br
-					br
-												
-					div(class="bargraph")
-						each result in group.result
-							div(class="bargraph-entry") 
-								//-a(class="bargraph-entry-name", href="#{req.url+ "&"+group.group_field+"="+result[group.group_field]}")) #{result[group.group_field]}
-								a(class="bargraph-entry-name", style="cursor:pointer", onclick="addConstraint('#{group.group_field}','#{result[group.group_field]}')") #{result[group.group_field]}
-								div(class="bargraph-entry-value") #{result.sum_market_cap}
-										div(class="bargraph-entry-bar",style="width: #{result.sum_market_cap / groups['total_sum'] * 50}%;")
-
+				div(class="")
+					each result in group.result
+						div(class="pull-right entry-box" style="")
+							a(class="entry-box-link", style="cursor:pointer", onclick="addConstraint('#{group.group_field}','#{result[group.group_field]}')")
+								div(class="") #{result[group.group_field]}
+								div(class="") #{result.sum_market_cap}
+									div(class="entry-bar",style="width: #{result.sum_market_cap / groups['total_sum'] * 100}%;")
+	
+								br
+		
