@@ -7,6 +7,7 @@
 var express = require('express')
   , routes = require('./routes')
   , index = require('./routes/index')
+  , staticpages = require('./routes/staticpages')
   , entry = require('./routes/entry')
   , http = require('http')
   , path = require('path')
@@ -50,6 +51,8 @@ if ('development' == app.get('env')) {
 app.get('/', index.show);
 
 app.get('/entry', entry.show);
+
+app.get('/about', staticpages.about);
 
 app.post('/list', test.list);
 app.get('/list', test.list);
