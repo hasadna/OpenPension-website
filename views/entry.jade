@@ -1,27 +1,51 @@
 extends layout
 
 block content
+
 	script(type='text/javascript', src='/js/entry.js')
+
+	//- HEADER
+	header(id="header" class="noselect")
+		div(id="header-top")
+			img(id="header-logo" src="/img/pension-logo.png")
+			div(id="header-title") 
+				a( href="/") פנסיה פתוחה
+			div(id="header-feedback") שלחו לנו פידבק
+			div(id="header-about") 
+				a( href="/about")אודות
+		div(id="header-bottom")
+			div(id="breadcrumbs") שוק הפנסיה > פניקס > בנקים
+			div(id="question") כמה כסף משקיעה הפניקס בבנקים?
+
+	//- BODY
 	div(class="container")
-		div(id="entry" class="col-sm-6 pull-right")
-			div(id="info")  #{total.number} #{total.scale} &#8362; מושקעים על-ידי הפניקס באג"ח קונצרניות לא סחירות של בנק לאומי
-		div(class="col-sm-6 pull-right")
-			div(class="" style="float:right") 
-				div(style="float:right") חלוקה לפי &nbsp&nbsp
-				select(id="select_group_by" style="float:right")
-					each category in availableCategories
-						- var select=null; if (group_by == category) select='selected';
-						option(value="#{category}", selected=select) #{columnDictionary[category]}	
-				br
-				br
+
+		//- RIGHT COLUMN
+		div(id="right-column" class="col-sm-6 pull-right")
+			div(id="info")  
+				div(id="total") #{total.number} #{total.scale} &#8362
+				
+
+
+
+
+		//- LEFT COLUMN
+		div(id="left-column" class="col-sm-6 pull-right")
+			div(id="group-by") חלוקה לפי &nbsp&nbsp
+			select(id="select_group_by" style="float:right"  data-width="120px")
+				each category in availableCategories
+					- var select=null; if (group_by == category) select='selected';
+					option(value="#{category}", selected=select) #{columnDictionary[category]}	
+			br
+			br
 					
 			each group in groups
 				div(class="")
 					each result in group.result
-						div(class="pull-right entry-box" style="")
-							a(class="entry-box-link", style="cursor:pointer", onclick="addConstraint('#{group.group_field}','#{result[group.group_field]}')")
-								div(class="") #{result[group.group_field]}
-								div(class="") #{result.sum_market_cap}
+						div(class="pull-right entry-box")
+							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{result[group.group_field]}')")
+								div(class="entry-box-title") #{result[group.group_field]}
+								div(class="entry-box-value") #{result.sum_market_cap}
 									div(class="entry-bar",style="width: #{result.sum_market_cap / groups['total_sum'] * 100}%;")
 	
 								br
