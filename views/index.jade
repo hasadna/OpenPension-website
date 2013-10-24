@@ -1,6 +1,19 @@
 extends layout
 
 block content
+
+	//- HEADER
+	header(id="header")
+		div(id="header-top")
+			img(id="header-logo" src="/img/pension-logo.png")
+			div(id="header-title") 
+				a( href="/") פנסיה פתוחה
+			div(id="header-feedback") שלחו לנו פידבק
+			div(id="header-about") אודות
+		div(id="header-bottom")
+			div(id="header-bottom-title") עמוד ראשי
+
+	//- BODY
 	div(class="container")
 		h2 #{total.number} #{total.scale} &#8362;
 		h2 מנוהלים בשוק הפנסיה
