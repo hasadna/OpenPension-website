@@ -24,8 +24,7 @@ block content
 		div(id="right-column" class="col-sm-6 pull-right")
 			div(id="info")  
 				div(id="total") #{total.number} #{total.scale} &#8362
-				
-
+		
 
 
 
@@ -42,11 +41,12 @@ block content
 			each group in groups
 				div(class="")
 					each result in group.result
+						- var sum = convertNumberToWords(result.sum_market_cap);
 						div(class="pull-right entry-box")
 							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{result[group.group_field]}')")
-								div(class="entry-box-title") #{ result[group.group_field] || '×©× ×—×¡×¨'}
-								div(class="entry-box-value") #{result.sum_market_cap}
-									div(class="entry-bar",style="width: #{result.sum_market_cap / groups['total_sum'] * 100}%;")
+								div(class="entry-box-title") #{ result[group.group_field] || '.'}
+								div(class="entry-box-value") #{sum.number +' ' + sum.scale} &#8362
+									div(class="entry-bar",style="width: #{result.sum_market_cap / groups['total_sum']* 103}%;")
 	
 								br
 		

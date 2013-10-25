@@ -38,6 +38,7 @@ exports.show = function(req, res){
           groups: groups,
           group_by: group_by,
           availableCategories: availableCategories, 
+          convertNumberToWords:DataNormalizer.convertNumberToWords,
           columnDictionary: DataNormalizer.columnDictionary,
           req: req	
         });
