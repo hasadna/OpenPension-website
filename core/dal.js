@@ -26,6 +26,7 @@ function simple_filter(select, field, params)
 function prepareWheres(select, filter)
 {
 	var constraints=filter['constraints'];
+	var data = constraints[constraint];
 	for (var constraint in constraints)
 	{
 		if (!(constraint in allowed_filters))
@@ -33,7 +34,7 @@ function prepareWheres(select, filter)
 			continue;
 			// Return error? this skips group_by
 		}
-		allowed_filters[constraint](select, constraint, constraints[constraint])
+		simple_filter(select, constraint, data);
 	}
 }
 

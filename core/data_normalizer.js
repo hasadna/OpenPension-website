@@ -36,7 +36,8 @@ exports.normalizeData = function(groups){
 			
 			//trim digits
 			groups[i]['result'][j]['sum_market_cap'] = Number(groups[i]['result'][j]['sum_market_cap']).toFixed(1);	
-					
+
+			
 		}
 	
 	}
@@ -72,7 +73,7 @@ exports.convertNumberToWords = function(numberToConvert){
 	else if (number > 1000){
 		return{
 			number: (number / 1000).toFixed(1),
-			scale: "אלפים"
+			scale: "אלף"
 		}
 	}
 	else{

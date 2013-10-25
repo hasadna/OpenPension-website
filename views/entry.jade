@@ -44,7 +44,7 @@ block content
 					each result in group.result
 						div(class="pull-right entry-box")
 							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{result[group.group_field]}')")
-								div(class="entry-box-title") #{result[group.group_field]}
+								div(class="entry-box-title") #{ result[group.group_field] || '×©× ×—×¡×¨'}
 								div(class="entry-box-value") #{result.sum_market_cap}
 									div(class="entry-bar",style="width: #{result.sum_market_cap / groups['total_sum'] * 100}%;")
 	

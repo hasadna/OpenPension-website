@@ -12,16 +12,10 @@ exports.show = function(req, res){
   var group_by = filter.getConstraintData("group_by")[0];
   var instrument_sub_type = filter.getConstraintData("instrument_sub_type")[0];
   
-  var availableCategories;
 
-  //get available categories, (by sub type, if defined)  
-  if (instrument_sub_type == undefined){
-   availableCategories = Categories.getAvailableCategories("default",filter);
-  }
-  else{
-    instrument_sub_type = instrument_sub_type.replace(/ /g,"%20");
-    availableCategories = Categories.getAvailableCategories(instrument_sub_type,filter); 
-  }
+  //get available categories, for selection menu
+  //(by instrument_sub_type, if defined)  
+  var availableCategories = Categories.getAvailableCategories(instrument_sub_type,filter);
 
 
   //group by is empty? set to default
