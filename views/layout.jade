@@ -13,4 +13,14 @@ html
     script(type='text/javascript', src='/js/filter.js')
     script(type='text/javascript', src='/js/categories.js')
   body
+        header(id="header" class="noselect")
+            div(id="header-top")
+                img(id="header-logo" src="/img/pension-logo.png")
+                div(id="header-title") 
+                    a( href="/") פנסיה פתוחה
+                div(id="header-feedback") שלחו לנו פידבק
+                div(id="header-about") 
+                    a( href="/about")אודות
+            block headerbottom
+
     block content

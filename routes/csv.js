@@ -20,7 +20,7 @@ exports.download = function(req, res){
         var line = cols.join(",") + "\n";
 
 		for (var i = 0; i < rows.length; i++){
-			var j = 0;
+			var j = 0; 
 			for(; j < cols.length - 1; j++){	
 				if (rows[i][cols[j]] != null)
 					line += rows[i][cols[j]];

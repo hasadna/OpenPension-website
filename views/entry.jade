@@ -1,22 +1,12 @@
 extends layout
 
-block content
-
-	script(type='text/javascript', src='/js/entry.js')
-
+block headerbottom
 	//- HEADER
-	header(id="header" class="noselect")
-		div(id="header-top")
-			img(id="header-logo" src="/img/pension-logo.png")
-			div(id="header-title") 
-				a( href="/") פנסיה פתוחה
-			div(id="header-feedback") שלחו לנו פידבק
-			div(id="header-about") 
-				a( href="/about")אודות
-		div(id="header-bottom")
-			div(id="breadcrumbs") שוק הפנסיה > פניקס > בנקים
-			div(id="question") כמה כסף משקיעה הפניקס בבנקים?
+	div(id="header-bottom")
+		div(id="breadcrumbs") שוק הפנסיה > פניקס > בנקים
+		div(id="question") כמה כסף משקיעה הפניקס בבנקים?
 
+block content
 	//- BODY
 	div(class="container")
 
@@ -24,7 +14,9 @@ block content
 		div(id="right-column" class="col-sm-6 pull-right")
 			div(id="info")  
 				div(id="total") #{total.number} #{total.scale} &#8362
-		
+				
+	
+
 			div(class="row pull-right")
 				a(href="/csv#{filter.toQueryString()}") 
 					div(id="csv") להורדת רשימת הנכסים המלאה
@@ -57,3 +49,4 @@ block content
 	
 								br
 		
+	script(type='text/javascript', src='/js/entry.js')

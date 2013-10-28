@@ -1,15 +1,9 @@
 extends layout
 
+block headerbottom
+	//- HEADER
+	div(id="header-bottom") 
+		div(id="header-bottom-title") אודות
+
 block content
 
-	//- HEADER
-	header(id="header" class="noselect")
-		div(id="header-top")
-			img(id="header-logo" src="/img/pension-logo.png")
-			div(id="header-title") 
-				a( href="/") פנסיה פתוחה
-			div(id="header-feedback") שלחו לנו פידבק
-			div(id="header-about")
-				a( href="/about")אודות
-		div(id="header-bottom")
-			div(id="header-bottom-title") אודות פנסיה פתוחה

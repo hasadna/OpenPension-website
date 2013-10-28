@@ -1,19 +1,10 @@
 extends layout
+block headerbottom
+	//- HEADER
+	div(id="header-bottom") 
+		div(id="header-bottom-title") עמוד ראשי
 
 block content
-
-	//- HEADER
-	header(id="header" class="noselect")
-		div(id="header-top")
-			img(id="header-logo" src="/img/pension-logo.png")
-			div(id="header-title") 
-				a( href="/") פנסיה פתוחה
-			div(id="header-feedback") שלחו לנו פידבק
-			div(id="header-about") 
-				a( href="/about")אודות
-		div(id="header-bottom")
-			div(id="header-bottom-title") עמוד ראשי
-
 	//- BODY
 	div(class="container")
 		h2 #{total.number} #{total.scale} &#8362;
@@ -23,6 +14,4 @@ block content
 			a(href="/entry?group_by=managing_body")איך הם מושקעים?
 		
 		div(id="about" class="row clearfix") 
-			אודות פנסיה פתוחה
-
-			
+			אודות פנסיה פתוחה			
