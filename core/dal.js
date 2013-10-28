@@ -89,6 +89,17 @@ function parseFilter(filter)
 	return select;
 }
 
+function singleQuery(filter, callback)
+{
+	var db = require('./db.js').open();
+	var query = parseFilter(filter);
+	
+	db.querys(query,function(err, rows){
+			callback(rows);
+	});
+}
+
+
 function groupBySummaries(filter, callback)
 {
 	var select = squel.select().from(config.table);
@@ -120,5 +131,5 @@ function groupBySummaries(filter, callback)
 exports.groupBySummaries=groupBySummaries;
 exports.parseFilter=parseFilter;
 exports.allowed_filters=Object.keys(allowed_filters);
-
+exports.singleQuery=singleQuery;
 

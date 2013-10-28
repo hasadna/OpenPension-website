@@ -12,6 +12,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , FSUtil = require('./util/FSUtil')
+  , csv = require('./routes/csv')
   , test = require('./routes/test');
 
 //enable use of Filter in client
@@ -59,6 +60,9 @@ app.get('/list', test.list);
 
 app.post('/group',test.post);
 app.get('/group',test.get);
+  
+app.get('/csv',csv.download);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
