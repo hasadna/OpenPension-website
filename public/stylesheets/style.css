@@ -1,5 +1,11 @@
 @import url(http://fonts.googleapis.com/earlyaccess/alefhebrew.css);
 
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
 body {
   font-family: "Alef Hebrew",
                “Helvetica Neue”,
@@ -199,4 +205,19 @@ body{
 	-ms-user-select: none;
 	user-select: none;
 
+}
+#csv{
+	border-width:1px;
+	border-style: solid;
+	border-color: black;
+	background-color: lightgrey;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 5px 10px 5px 10px;
+	border-radius: 5px;
+}
+
+#csv-icon{
+	float: right;
+	padding-left: 10px;
 }

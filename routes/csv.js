@@ -16,6 +16,7 @@ exports.download = function(req, res){
 		
 		//write column headers csv
 		var cols = Object.keys(rows[0]); 
+		cols.shift(); //discard 'id'
         var line = cols.join(",") + "\n";
 
 		for (var i = 0; i < rows.length; i++){
