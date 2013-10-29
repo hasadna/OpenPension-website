@@ -38,7 +38,7 @@ block content
 					
 			each group in groups
 				div(class="")
-					- var firstBar = group.result[0].sum_market_cap;
+					-if(group.result.length > 0)  var firstBar = group.result[0].sum_market_cap;
 					each result in group.result
 						- var sum = convertNumberToWords(result.sum_market_cap);
 						div(class="pull-right entry-box")
