@@ -47,6 +47,8 @@ Categories.all_categories = {
                         ]
                       };
 
+/* Get categories by filter */
+
 Categories.getCategories = function(instrument_sub_type){
 	if (this.all_categories.hasOwnProperty(instrument_sub_type)){
     	return this.all_categories[instrument_sub_type];
@@ -57,7 +59,7 @@ Categories.getCategories = function(instrument_sub_type){
 }
 
 /*
- * get categories which are not in filter constraints
+ * get all categories which are not in filter constraints
  */
 Categories.getAvailableCategories = function(instrument_sub_type, filter){
 
@@ -81,6 +83,7 @@ Categories.getAvailableCategories = function(instrument_sub_type, filter){
 
 /*
  * Look for next category which is not in filter constraints
+ * (first available category)
  */	
 Categories.getGroupingCategory = function(instrument_sub_type, filter){
 

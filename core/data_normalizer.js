@@ -1,21 +1,3 @@
-var metaTable = require('../common/MetaTable').getMetaTable();
-
- //build column dictionary - TODO: refactor
-var hebrewColumns = metaTable.hebrewColumns;
-var englishColumns = metaTable.englishColumns;
-var columnDictionary = {};
-
-
-for(var index in englishColumns)
-{
-	columnDictionary[englishColumns[index]] = hebrewColumns[index];
-}
-
-columnDictionary['managing_body'] = 'גוף מוסדי';
-columnDictionary['instrument_type'] = 'סוג נכס';
-columnDictionary['instrument_sub_type'] = 'תת סוג נכס';
-
-
 exports.normalizeData = function(groups){
 
 
@@ -85,6 +67,12 @@ exports.convertNumberToWords = function(numberToConvert){
 }
 
 //get last 4 quarters, including current, zero based
+//returns array
+// [
+//		{'quarter':'1','year:'2012'},
+//      ...
+// ]
+//
 exports.getLastFourQuarters = function(year,quarter){
 	if (quarter > 3){
 		throw "illegal quarter";
@@ -105,8 +93,6 @@ exports.getLastFourQuarters = function(year,quarter){
 	return res;
 }
 
-
-exports.columnDictionary = columnDictionary;
 
 
 

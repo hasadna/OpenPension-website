@@ -156,6 +156,10 @@ body{
 	width:100%;
 }
 
+.entry-box:first-child{
+	background-color:lightgrey;
+}
+
 
 .entry-box .entry-bar {
 	display: block;

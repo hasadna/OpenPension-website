@@ -3,13 +3,14 @@ var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
 var Categories = require('../core/categories.js');
+var translate = require('../core/dictionary.js').translate;
+
 
 //hello hello
 exports.show = function(req, res){
 
   //create filter from request (search string)
   var filter = Filter.fromGetRequest(req);
-
   var group_by = filter.getConstraintData("group_by")[0];
   var instrument_sub_type = filter.getConstraintData("instrument_sub_type")[0];
   
@@ -40,7 +41,7 @@ exports.show = function(req, res){
           group_by: group_by,
           availableCategories: availableCategories, 
           convertNumberToWords:DataNormalizer.convertNumberToWords,
-          columnDictionary: DataNormalizer.columnDictionary,
+          translate: translate,
           req: req	
         });
     }

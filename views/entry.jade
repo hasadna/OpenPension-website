@@ -32,7 +32,7 @@ block content
 			select(id="select_group_by" style="float:right"  data-width="120px")
 				each category in availableCategories
 					- var select=null; if (group_by == category) select='selected';
-					option(value="#{category}", selected=select) #{columnDictionary[category]}	
+					option(value="#{category}", selected=select) #{translate(category)}	
 			br
 			br
 					
