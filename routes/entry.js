@@ -4,6 +4,7 @@ var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
 var Categories = require('../core/categories.js');
 
+//hello hello
 exports.show = function(req, res){
 
   //create filter from request (search string)
