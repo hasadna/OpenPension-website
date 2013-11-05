@@ -27,24 +27,34 @@ exports.show = function(req, res){
   }
 
 
+
+  //show data only for last quarter
+  //TODO: get last quarter from DB
+  filter.addConstraint("report_year","2013");
+  filter.addConstraint("report_qurater","2");
+  
+
   DAL.groupBySummaries(filter,
     function(groups){
+    DAL.groupByQuarters(filter,
+      function(quarters, select){
+        groups = DataNormalizer.normalizeData(groups);
+        total = DataNormalizer.convertNumberToWords(groups['total_sum']);
 
-    groups = DataNormalizer.normalizeData(groups);
-    total = DataNormalizer.convertNumberToWords(groups['total_sum']);
-
-    res.render('entry',{
-          entry: { title: "מופקדים בקופות הגמל", total_value: JSON.stringify(filter) },
-          filter: filter,
-          total: total,
-          groups: groups,
-          group_by: group_by,
-          availableCategories: availableCategories, 
-          convertNumberToWords:DataNormalizer.convertNumberToWords,
-          translate: translate,
-          req: req	
-        });
-    }
-  );
+        res.render('entry',{
+              filter: filter,
+              quarters: quarters,
+              total: total,
+              groups: groups,
+              group_by: group_by,
+              availableCategories: availableCategories, 
+              convertNumberToWords:DataNormalizer.convertNumberToWords,
+              translate: translate,
+              fakeQuarterData: fakeQuarterData,
+              select:select,
+              req: req
+            });
+      });
+  });
   
 };

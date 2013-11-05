@@ -127,9 +127,50 @@ function groupBySummaries(filter, callback)
 	
 }
 
+/*
+ * Apply filter, group by last four quarters
+ */
+function groupByQuarters(filter, callback){
+
+	filter.removeField("group_by");
+
+	filter.removeField("report_year");
+	filter.removeField("report_qurater");
+	
+	var select = squel.select().from(config.table);
+	prepareWheres(select, filter);
+
+	select.field("report_year");
+	select.field("report_qurater");
+	
+	select.group("report_year");
+	select.group("report_qurater");
+	
+	select.order("report_year",false);
+	select.order("report_qurater",false);
+
+
+	select.limit(4);
+
+	for (var idx in summary_columns)
+	{
+		col=summary_columns[idx];
+		select.field('sum('+col+')','sum_'+col);
+	}
+
+
+	select=select.toString();
+	var db = require('./db.js').open();
+	db.querys(select,function(err, rows){
+			callback(rows,select);
+	});
+
+}
+
 //exports
 exports.groupBySummaries=groupBySummaries;
 exports.parseFilter=parseFilter;
 exports.allowed_filters=Object.keys(allowed_filters);
 exports.singleQuery=singleQuery;
+exports.groupByQuarters=groupByQuarters;
 

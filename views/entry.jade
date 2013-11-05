@@ -15,6 +15,11 @@ block content
 			div(id="info")  
 				div(id="total") #{total.number} #{total.scale} &#8362
 				
+			div(class="row" style="border:0;height:400px")
+				each quarter in quarters
+					div() #{quarter['report_year']} #{quarter['report_qurater']} #{quarter['sum_market_cap']} 
+					br
+				//- div() #{select} 
 	
 
 			div(class="row pull-right")

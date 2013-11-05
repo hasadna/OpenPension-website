@@ -9,7 +9,7 @@ exports.download = function(req, res){
   //create filter from request (search string)
   var filter = Filter.fromGetRequest(req);
 
-  filter.removeConstraint("group_by");
+  filter.removeField("group_by");
 
   DAL.singleQuery(filter,
     function(rows){
