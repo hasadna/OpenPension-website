@@ -5,6 +5,7 @@ var DataNormalizer = require('../core/data_normalizer.js');
 
 exports.post = function(req, res)
 {
+
 	if (! req.is('json'))
 	{
 		res.end(require('util').inspect(req.body));
@@ -13,9 +14,15 @@ exports.post = function(req, res)
 	var filter=Filter.fromPostRequest(req);
 
 
+	var start1 = new Date();
 	DAL.groupBySummaries(filter,
 							function(groups){ 
+								var groupBySummariesTime = new Date() - start1;
 								groups = DataNormalizer.normalizeData(groups);
+								var dataNormalizerTime = new Date() - start1 - groupBySummariesTime;
+								groups['groupBySummariesTime'] = groupBySummariesTime;
+								groups['dataNormalizerTime'] = dataNormalizerTime;
+								
 								res.end(JSON.stringify(groups));
 							});
 }
@@ -24,11 +31,20 @@ exports.get = function(req, res){
 
 	var filter = Filter.fromGetRequest(req);
 
+	var start1 = new Date();
 	res.contentType('json');
 	DAL.groupBySummaries(filter,
 							function(groups){ 
+								var response = {};
+								response['timing'] = {};
+
+								var groupBySummariesTime = new Date() - start1;
 								groups = DataNormalizer.normalizeData(groups);
-								res.end(JSON.stringify(groups));
+								var dataNormalizerTime = new Date() - start1 - groupBySummariesTime;
+								response['timing']['groupBySummariesTime'] = groupBySummariesTime;
+								response['timing']['dataNormalizerTime'] = dataNormalizerTime;
+								response['groups'] = groups;
+								res.end(JSON.stringify(response));
 							});
 
 }
