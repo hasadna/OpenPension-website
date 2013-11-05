@@ -23,6 +23,9 @@ a:visited {
   text-decoration: none;
 }
 
+a:hover{
+	text-decoration: underline;
+}
 body{
 
 }
@@ -80,7 +83,6 @@ body{
 	line-height:65px;
 	margin: 0 20px 0 20px;
 }
-
 
 #header-bottom{
 	background-color:#EAEAEA;

@@ -50,7 +50,6 @@ exports.show = function(req, res){
               availableCategories: availableCategories, 
               convertNumberToWords:DataNormalizer.convertNumberToWords,
               translate: translate,
-              fakeQuarterData: fakeQuarterData,
               select:select,
               req: req
             });
