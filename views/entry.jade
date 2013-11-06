@@ -15,7 +15,7 @@ block content
 			div(id="info")  
 				div(id="total") #{total.number} #{total.scale} &#8362
 				
-			div(class="row" style="border:0;height:400px")
+			div(class="row" style="border:0;height:300px")
 				each quarter in quarters
 					div() #{quarter['report_year']} #{quarter['report_qurater']} #{quarter['sum_market_cap']} 
 					br
@@ -47,7 +47,8 @@ block content
 					each result in group.result
 						- var sum = convertNumberToWords(result.sum_market_cap);
 						div(class="pull-right entry-box")
-							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{result[group.group_field]}')")
+							- var escapedVal = encodeURIComponent(result[group.group_field]);
+							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
 								div(class="entry-box-title") #{ result[group.group_field] || '.'}
 								div(class="entry-box-value") #{sum.number +' ' + sum.scale} &#8362
 									div(class="entry-bar",style="width: #{result.sum_market_cap / firstBar * 102}%;")
