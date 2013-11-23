@@ -2,7 +2,23 @@ var Filter = require('./filter.js');
 var squel = require('squel');
 var config = require('../config')
 
-var allowed_filters={ 'managing_body':simple_filter,  'instrument_type':simple_filter, 'industry':simple_filter, 'currency' : simple_filter, 'rating':simple_filter,  'instrument_sub_type': simple_filter,  'report_year':simple_filter, 'report_qurater':simple_filter,  'instrument_id':simple_filter};
+var allowed_filters={ 
+	'managing_body':simple_filter, 
+	'instrument_type':simple_filter, 
+	//'industry':simple_filter, 
+	'currency' : simple_filter, 
+	'rating':simple_filter, 
+	'instrument_sub_type': simple_filter, 
+	'report_year':simple_filter, 
+	'report_qurater':simple_filter, 
+	'instrument_id':simple_filter,
+	//EXT FIELDS
+	'issuer':simple_filter,
+	'instrument_name':simple_filter,
+	'activity_industry':simple_filter,
+	//'industry':simple_filter,
+	'reference_index':simple_filter
+};
 var summary_columns=["market_cap","fair_value"];
 
 function simple_filter(select, field, params)
@@ -70,6 +86,8 @@ function prepareGroupBy(select, filter)
 		
 		new_select.group(all_groups[group_index]);
 		new_select.field(all_groups[group_index]);
+		new_select.where(all_groups[group_index]+ " IS NOT NULL");
+		new_select.where(all_groups[group_index]+ " <> ''");
 		for (var idx in summary_columns)
 		{
 			col=summary_columns[idx];
@@ -132,6 +150,8 @@ function groupBySummaries(filter, callback)
  */
 function groupByQuarters(filter, callback){
 
+	var group_by_field = filter.getConstraintData("group_by");
+
 	filter.removeField("group_by");
 
 	filter.removeField("report_year");
@@ -140,16 +160,23 @@ function groupByQuarters(filter, callback){
 	var select = squel.select().from(config.table);
 	prepareWheres(select, filter);
 
+
 	select.field("report_year");
 	select.field("report_qurater");
 	
+	//group by year & quarter
 	select.group("report_year");
 	select.group("report_qurater");
-	
+
+	//ignore NULL and empty fields
+	select.where(group_by_field + " IS NOT NULL");
+	select.where(group_by_field + " <> ''");
+
+	//sort by descending order
 	select.order("report_year",false);
 	select.order("report_qurater",false);
 
-
+	//get last 4 quarters
 	select.limit(4);
 
 	for (var idx in summary_columns)
