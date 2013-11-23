@@ -29,7 +29,7 @@ function addConstraint(key,value){
   var instrument_sub_type = filter.getConstraintData("instrument_sub_type")[0];
  
   //get next grouping category
-  var group_by = Categories.getGroupingCategory(instrument_sub_type,filter);
+  var group_by = Categories.getNextGroupingCategory(filter);
 
   if (group_by !== undefined){
     filter.setConstraint("group_by",group_by);

@@ -6,7 +6,6 @@ var Categories = require('../core/categories.js');
 var translate = require('../core/dictionary.js').translate;
 
 
-//hello hello
 exports.show = function(req, res){
 
   //create filter from request (search string)
@@ -16,19 +15,15 @@ exports.show = function(req, res){
   
 
   //get available categories, for selection menu
-  //(by instrument_sub_type, if defined)  
-  var availableCategories = Categories.getAvailableCategories(instrument_sub_type,filter);
+  var availableCategories = Categories.getAvailableCategories(filter);
 
 
-  //group by is empty? set to default
+  //group by is not set? group by default field
   if (group_by == undefined){
-    group_by = Categories.getGroupingCategory(instrument_sub_type, filter);
+    group_by = Categories.getNextGroupingCategory(filter);
     filter.setConstraint("group_by",group_by);
   }
 
-
-
-					
   //show data only for last quarter
   //TODO: get last quarter from DB
   filter.addConstraint("report_year","2013");
