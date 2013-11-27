@@ -24,6 +24,7 @@ exports.normalizeData = function(groups){
 	
 	}
 
+	//calculate total_sum of groups
 	//sum values of groups[0], all group sums assumed to be the same
 	//used for calculating bar size precentage
 

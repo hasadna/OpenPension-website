@@ -71,7 +71,7 @@ exports.show = function(req, res){
     DAL.groupByQuarters(filter,
       function(quarters, select){
         groups = DataNormalizer.normalizeData(groups);
-        total = DataNormalizer.convertNumberToWords(groups['total_sum']);
+        var total = DataNormalizer.convertNumberToWords(groups['total_sum']);
 
         res.render('entry',{
 			  title : title,

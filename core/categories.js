@@ -122,7 +122,7 @@ Categories.getAvailableCategories = function(filter){
   var categoriesBySubType = this.getCategories(filter);
   var availableCategories = [];
 
-  //iterate over categories by instrument_sub_type
+  //iterate over categories by filter
   for(categoryIndex in categoriesBySubType ){
     var category = categoriesBySubType[categoryIndex];
     //constrained fileds contains category, continue   
@@ -137,7 +137,7 @@ Categories.getAvailableCategories = function(filter){
 }
 
 /*
- * Look for next category which is not in filter constraints
+ * Look for category which is not in filter constraints
  * (first available category)
  */ 
 Categories.getNextGroupingCategory = function(filter){

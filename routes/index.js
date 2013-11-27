@@ -13,7 +13,7 @@ exports.show = function(req, res){
 
   //for index page, group by is not set,
   //group by default field
-  group_by = Categories.getNextGroupingCategory(filter);
+  var group_by = Categories.getNextGroupingCategory(filter);
   filter.setConstraint("group_by",group_by);
 
 
@@ -29,12 +29,13 @@ exports.show = function(req, res){
     function(groups){	
 
         groups = DataNormalizer.normalizeData(groups);
-        total = DataNormalizer.convertNumberToWords(groups['total_sum']);
+        var total = DataNormalizer.convertNumberToWords(groups['total_sum']);
 
         res.render('index',{
           entry: { total_value: total },
           groups: groups,
-          req: req
+          req: req,
+          total: total
         });
 
     }
