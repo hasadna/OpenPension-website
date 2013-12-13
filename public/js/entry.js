@@ -16,13 +16,14 @@ $(function(){
 
 		var lastYearChangesText = (lastYearChanges > 0)? "עליה של " + lastYearChanges :"ירידה של " + lastYearChanges*(-1)
 		var lastQuarterChangesText = (lastQuarterChanges > 0)? "עליה של " + lastQuarterChanges :"ירידה של " + lastQuarterChanges*(-1)
-		var colorTitle = (lastYearChanges < 0)? "#f00" : "#0f0" ; 
+		var colorTitle = (lastYearChanges < 0)? "#f00" : "#090" ; 
 		
 		lastYearChangesText += "%" + " בשנה האחרונה"
 		lastQuarterChangesText += "%" + " ברבעון האחרון"
 				
         $('#imagraph').highcharts({
             chart: {
+				backgroundColor: '#F4F4F4'
                 //type: 'column'
             },
             title: {
@@ -31,7 +32,7 @@ $(function(){
             subtitle: {
 				//align: 'right',
 					style: {
-					fontFamily: 'monospace',
+					//fontFamily: 'monospace',
 					color: colorTitle
 				},
 				x:  150,
@@ -76,10 +77,10 @@ $(function(){
                 dataLabels: {
                     enabled: true,
                     //rotation: -90,
-                    color: '#FFFFFF',
+                    color: '090',
                     align: 'center',
-                    x: 0,
-                    y: 20,
+                    x: 15,
+                    y: 25,
                         style: {
                             fontSize: '13px',
                             fontFamily: 'Verdana, sans-serif'
@@ -95,7 +96,7 @@ $(function(){
 	
     $('#pieChart').highcharts({
         chart: {
-            plotBackgroundColor: null,
+            backgroundColor: '#F4F4F4',
             plotBorderWidth: null,
             plotShadow: false
         },
