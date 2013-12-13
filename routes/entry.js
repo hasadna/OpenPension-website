@@ -27,7 +27,7 @@ exports.show = function(req, res){
   //show data only for last quarter
   //TODO: get last quarter from DB
   filter.addConstraint("report_year","2013");
-  filter.addConstraint("report_qurater","2");
+  filter.addConstraint("report_qurater","3");
 
 						
   var title = "";
@@ -43,7 +43,9 @@ exports.show = function(req, res){
   var rating = filter.getConstraintData('rating');
   var instrument_sub_type = filter.getConstraintData('instrument_sub_type');
   var instrument_id = filter.getConstraintData('instrument_id');
-
+  var issuer = filter.getConstraintData('issuer');
+	
+	
   // nothing is chosen by the user
   if (managing_body== "" && instrument_type=="" && industry=="" && currency=="" && rating=="" && instrument_sub_type=="" && instrument_id==""  ) {
 	nothingIsChosen = 1; 
@@ -53,13 +55,16 @@ exports.show = function(req, res){
 	onlyManagingBody = 1; 
   }
   // If managing body or instrument is not chosen add the word 'instruments' (nechasim) to have a NOSSE 
-  if (managing_body== "" && instrument_type=="" ) {
-	addTheWordNechasim = 1; 
+  //if (managing_body== "" && instrument_type=="" ) {
+  if (instrument_type=="" && instrument_sub_type =="" && !onlyManagingBody) {
+	addTheWordNechasim = 1;  
   }
-  
+	
   title +=  (managing_body != "")?onlyManagingBody?"כמה כסף מנהלת " + managing_body : "כמה כסף משקיעה " + managing_body:"כמה כסף מושקע";
   title +=  (instrument_type != "")?" ב" + instrument_type :"";
-  title +=  (addTheWordNechasim)?" בנכסים" : "";
+  title +=  (instrument_sub_type != "")?(instrument_type != "")?" ו" + instrument_sub_type:" ב" + instrument_sub_type :"";  
+  title +=  (addTheWordNechasim)?" בנכסים" : "";  
+  title +=  (addTheWordNechasim && issuer != "" )?" של " + issuer :( (instrument_type != "" || instrument_sub_type != "") && issuer != "" )?" של " + issuer :(issuer != "" )?" ב" + issuer:"";  
   title +=  (industry != "")?" בענף ה" + industry :"";	
   title +=  (currency != "")?" שנקנו ב" + currency :"";
   title +=  (rating != "")?" בדירוג " + rating :"";
