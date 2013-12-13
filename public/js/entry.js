@@ -1,4 +1,5 @@
 $(function(){
+	
 
     $('#select_group_by').selectpicker();
 
@@ -6,13 +7,155 @@ $(function(){
         setConstraint("group_by",this.value);
 
     });
+		
+		
+		var moshe = 'רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text());
+		
+		var lastYearChanges = ((Number($('#graphdata3-sum_market_cap').text()) - Number($('#graphdata0-sum_market_cap').text()))*Number($('#graphdata3-sum_market_cap').text())/100).toFixed(2); 
+		var lastQuarterChanges = ((Number($('#graphdata3-sum_market_cap').text()) - Number($('#graphdata2-sum_market_cap').text()))*Number($('#graphdata3-sum_market_cap').text())/100).toFixed(2); 
 
+		var lastYearChangesText = (lastYearChanges > 0)? "עליה של " + lastYearChanges :"ירידה של " + lastYearChanges*(-1)
+		var lastQuarterChangesText = (lastQuarterChanges > 0)? "עליה של " + lastQuarterChanges :"ירידה של " + lastQuarterChanges*(-1)
+		var colorTitle = (lastYearChanges < 0)? "#f00" : "#0f0" ; 
+		
+		lastYearChangesText += "%" + " בשנה האחרונה"
+		lastQuarterChangesText += "%" + " ברבעון האחרון"
+				
+        $('#imagraph').highcharts({
+            chart: {
+                //type: 'column'
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+				//align: 'right',
+					style: {
+					fontFamily: 'monospace',
+					color: colorTitle
+				},
+				x:  150,
+				rtl: true,
+                text: lastYearChangesText
+				
+            },
+            xAxis: {
+                categories: ['רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text()),
+				             'רבעון ' + Number($('#graphdata1-report_qurater').text()) + ' ' + Number($('#graphdata1-report_year').text()),
+							 'רבעון ' + Number($('#graphdata2-report_qurater').text()) + ' ' + Number($('#graphdata2-report_year').text()),
+							 'רבעון ' + Number($('#graphdata3-report_qurater').text()) + ' ' + Number($('#graphdata3-report_year').text())],
+                title: {
+                    text: null
+                }
+            },
+			legend: {
+				enabled: false
+			},
+            yAxis: {
+                min: 0,
+                title: {
+					//rtl: true,
+                    text: '',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                //name: 'Year 1800',
+                data: [Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata1-sum_market_cap').text()).toFixed(1)), 
+				       Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1))],
+                pointWidth: 80,
+                dataLabels: {
+                    enabled: true,
+                    //rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'center',
+                    x: 0,
+                    y: 20,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }     
+                }
+            }]
+        });
+    
+
+	
+	
+	// PIE Chart
+	
+    $('#pieChart').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            enabled: false, 
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+		credits: {
+            enabled: false
+        },
+        series: [{
+            type: 'pie',
+            name: '',
+            data: [
+                //['Firefox',   45.0],
+                //['IE',       26.8],
+				['Others',   75],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                }
+                //['Safari',    8.5],
+                //['Opera',     6.2],
+            ]
+        }]
+    });
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 });
 
 
 //add new constraint to filter and reload page
 function addConstraint(key,value){
-
 
   //TODO: remove this and implement
   //instrument_details 

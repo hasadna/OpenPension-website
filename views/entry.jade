@@ -9,19 +9,40 @@ block headerbottom
 		div(id="question")  #{title} ?
 
 block content
-	//- BODY
+	//- BODYs
 	div(class="container")
 
 		//- RIGHT COLUMN
 		div(id="right-column" class="col-sm-6 pull-right")
 			div(id="info")  
 				div(id="total") #{total.number} #{total.scale} &#8362
-				
-			div(class="row" style="border:0;height:300px")
+
+						
+			//- Hidden quarters' data for js 
+			div(class="row" style="border:0;height:1px")
+				- var quarterIndex = 0;
 				each quarter in quarters
-					div() #{quarter['report_year']} #{quarter['report_qurater']} #{quarter['sum_market_cap']} 
+					div( id="graphdata#{quarterIndex}-report_year", style="display:none"   ) #{quarter['report_year'] } 
+					div( id="graphdata#{quarterIndex}-report_qurater", style="display:none") #{quarter['report_qurater']}
+					div( id="graphdata#{quarterIndex}-sum_market_cap", style="display:none") #{convertNumberToWords(quarter['sum_market_cap']).number} 
+					
+					div( id="graphdata#{quarterIndex}-precent_market_cap", style="display:none")  5+quarterIndex } 
+					
+					- quarterIndex++;
 					br
 				//- div() #{select} 
+			
+			
+			
+			
+
+
+			div( id="pieChart", style="min-width:80px;max-width: 100px;height: 80px;margin: 0xpx;float: right;")	
+			div(id="pieChartTitle", style="min-width: 200px;max-width: 300px;height: 40px;margin-top: 35px;float: right") שהם 26% מתיק ההשקעות של מגדל 
+			
+			div( id="imagraph", style="min-width: 500px; max-width: 1000px; height: 200px; margin: 50px auto")	
+				
+
 	
 
 			div(class="row pull-right")
@@ -43,7 +64,7 @@ block content
 					option(value="#{category}", selected=select) #{translate(category)}	
 			br
 			br
-					
+						
 			each group in groups
 				div(class="")
 					-if(group.result.length > 0)  var firstBar = group.result[0].sum_market_cap;
@@ -61,4 +82,6 @@ block content
 	
 								br
 		
-	script(type='text/javascript', src='/js/entry.js')
+	script(type='text/javascript', src='/js/entry.js', myVar = 200 )
+	script(type='text/javascript', src='http://code.highcharts.com/modules/exporting.js')
+	script(type='text/javascript', src='http://code.highcharts.com/highcharts.js')
