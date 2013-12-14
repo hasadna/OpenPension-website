@@ -75,8 +75,8 @@ exports.show = function(req, res){
 
   //show data only for last quarter
   //TODO: get last quarter from DB
-  filter.addConstraint("report_year","2012");
-  filter.addConstraint("report_qurater","2");
+  filter.addConstraint("report_year","2013");
+  filter.addConstraint("report_qurater","3");
 
   
   DAL.groupBySummaries(filter,
