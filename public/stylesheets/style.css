@@ -57,6 +57,11 @@ body{
 	height:50%;
 }
 
+#logo {
+	position: relative;
+	right: -14px;
+}
+
 #header-logo{
 	float:right;
 	height:45px;
