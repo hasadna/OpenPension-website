@@ -116,14 +116,16 @@ body{
 }
 
 
-#header-bottom #breadcrumbs{
+#breadcrumbs{
 	text-decoration: underline;
 	margin-top: 7px;
+	display: none;
 }
 
 
-#header-bottom #question{
+#question{
 	font-size: 30px;
+	line-height: 70px;
 }
 
 
