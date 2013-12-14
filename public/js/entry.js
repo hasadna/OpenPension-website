@@ -20,10 +20,17 @@ $(function(){
 		
 		lastYearChangesText += "%" + " בשנה האחרונה"
 		lastQuarterChangesText += "%" + " ברבעון האחרון"
-				
+		
+		minVal = Math.min(Number($('#graphdata0-sum_market_cap').text()), Number($('#graphdata1-sum_market_cap').text()), Number($('#graphdata2-sum_market_cap').text()), Number($('#graphdata3-sum_market_cap').text()))
+		maxVal = Math.max(Number($('#graphdata0-sum_market_cap').text()), Number($('#graphdata1-sum_market_cap').text()), Number($('#graphdata2-sum_market_cap').text()), Number($('#graphdata3-sum_market_cap').text()))
+
+
+
+
+		
         $('#imagraph').highcharts({
             chart: {
-				backgroundColor: '#F4F4F4'
+				//backgroundColor: '#F4F4F4'
                 //type: 'column'
             },
             title: {
@@ -31,9 +38,10 @@ $(function(){
             },
             subtitle: {
 				//align: 'right',
-					style: {
+				style: {
 					//fontFamily: 'monospace',
-					color: colorTitle
+					color: colorTitle, 
+					margin: "5px" 
 				},
 				x:  150,
 				rtl: true,
@@ -41,6 +49,11 @@ $(function(){
 				
             },
             xAxis: {
+			   lineWidth: 0,
+			   minorGridLineWidth: 0,
+			   lineColor: 'transparent',
+			   minorTickLength: 0,
+			   tickLength: 0,
                 categories: ['רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text()),
 				             'רבעון ' + Number($('#graphdata1-report_qurater').text()) + ' ' + Number($('#graphdata1-report_year').text()),
 							 'רבעון ' + Number($('#graphdata2-report_qurater').text()) + ' ' + Number($('#graphdata2-report_year').text()),
@@ -53,14 +66,18 @@ $(function(){
 				enabled: false
 			},
             yAxis: {
-                min: 0,
+				minPadding: 1,
+				gridLineColor: 'transparent',
+                min: minVal,
+				max: maxVal + 0.2,
                 title: {
 					//rtl: true,
                     text: '',
                     align: 'high'
                 },
                 labels: {
-                    overflow: 'justify'
+                    overflow: 'justify',
+					enabled: false 
                 }
             },
             tooltip: {
@@ -69,6 +86,15 @@ $(function(){
             credits: {
                 enabled: false
             },
+			plotOptions: {
+				series: {
+					marker: {
+						fillColor: '#FFFFFF',
+						lineWidth: 2,
+						lineColor: null // inherit from series
+					}
+				}
+			},
             series: [{
                 //name: 'Year 1800',
                 data: [Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata1-sum_market_cap').text()).toFixed(1)), 
@@ -80,7 +106,7 @@ $(function(){
                     color: '090',
                     align: 'center',
                     x: 15,
-                    y: 25,
+                    y: -30,
                         style: {
                             fontSize: '13px',
                             fontFamily: 'Verdana, sans-serif'
@@ -96,7 +122,7 @@ $(function(){
 	
     $('#pieChart').highcharts({
         chart: {
-            backgroundColor: '#F4F4F4',
+            //backgroundColor: '#F4F4F4',
             plotBorderWidth: null,
             plotShadow: false
         },
