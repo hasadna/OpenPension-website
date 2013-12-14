@@ -3,10 +3,11 @@ extends layout
 block headerbottom
 	//- HEADER
 	div(id="header-bottom")
-		
-		title
-		div(id="breadcrumbs") שוק הפנסיה > פניקס > בנקים
-		div(id="question")  #{title} ?
+		div(class="container")
+			div()
+				title
+				div(id="breadcrumbs") שוק הפנסיה > פניקס > בנקים
+				div(id="question")  #{title} ?
 
 block content
 	//- BODYs
@@ -16,6 +17,8 @@ block content
 		div(id="right-column" class="col-sm-6 pull-right")
 			div(id="info")  
 				div(id="total") #{total.number} #{total.scale} &#8362
+			- if (debug)
+				div(style="text-align:left;") #{quarterSelect} 
 
 						
 			//- Hidden quarters' data for js 
@@ -30,11 +33,6 @@ block content
 					
 					- quarterIndex++;
 					br
-				//- div() #{select} 
-			
-			
-			
-			
 
 
 			div( id="pieChart", style="min-width:80px;max-width: 100px;height: 80px;margin: 0xpx;float: right;")	
@@ -66,6 +64,8 @@ block content
 			br
 						
 			each group in groups
+				-if (debug)
+					div(style="text-align:left;") #{group.query} 
 				div(class="")
 					-if(group.result.length > 0)  var firstBar = group.result[0].sum_market_cap;
 					each result in group.result

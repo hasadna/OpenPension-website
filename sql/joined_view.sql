@@ -1,0 +1,32 @@
+CREATE OR REPLACE VIEW joined_view AS 
+ SELECT ext.activity_industry, 
+    ext.instrument_name, 
+    ext.reference_index, 
+    ext.issuer, 
+    debug.fair_value, 
+    debug.market_cap, 
+    debug.rate_of_ipo, 
+    debug.report_year, 
+    debug.intrest_rate, 
+    debug.rate_of_fund, 
+    debug.managing_body, 
+    debug.rating_agency, 
+    debug.type_of_asset, 
+    debug.report_qurater, 
+    debug.instrument_type, 
+    debug.date_of_purchase, 
+    debug.underlying_asset, 
+    debug.instrument_id, 
+    debug.instrument_symbol, 
+    debug.average_of_duration, 
+    debug.date_of_revaluation, 
+    debug.instrument_sub_type, 
+    debug.rate, 
+    debug.yield, 
+    debug.rating, 
+    debug.currency, 
+    debug.tmp_name, 
+    debug.par_value
+   FROM debug
+   LEFT JOIN ext ON debug.instrument_id::text = ext.instrument_id::text
+  WHERE debug.instrument_id::text <> ''::text AND debug.instrument_id IS NOT NULL;

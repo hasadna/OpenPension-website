@@ -20,65 +20,144 @@ Categories.all_categories =
                         ]
                       },
                       {
-                      'selection' : ['instrument_sub_type=מניות'],
+                      'selection' : ['instrument_type=מזומנים'],
                       'categories' :
                         [
-                        'activity_industry',
+                        'managing_body',
+                        'rating',
                         'issuer',
-                        'instrument_name'
-                        ]
-                      },
-                      {
-                      'selection' : ['instrument_sub_type=אג"ח%20ממשלתי'],    
-                      'categories' : 
-                        [
-                        ]
-                      },
-                      {
-                      'selection' : ['instrument_sub_type=אג"ח קונצרני'],    
-                      'categories' : 
-                        [
-                        'rating', 
-                        'activity_industry', 
-                        'issuer',
+                        'currency',
                         'instrument_id'
                         ]
                       },
                       {
-                      'selection' : ['instrument_sub_type=תעודות סל'],    
-                      'categories' : 
+                      'selection' : ['instrument_type=פקדונות'],
+                      'categories' :
                         [
-                        'reference_index',
-                        'issuer'
+                        'managing_body',
+                        'rating',
+                        'issuer',
+                        'currency',
+                        'instrument_id'
                         ]
                       },
                       {
-                      'selection' : ['instrument_sub_type=חו"ל'],    
-                      'categories' : 
-                        [
-                        'activity_industry'
-                        ]
-                      },
-                      {
-                      'selection' : ['instrument_sub_type=נגזרים'],    
-                      'categories' : 
-                        [
-                        ]
-                      },
-                      {
-                      'selection': ['instrument_sub_type=כתבי%20אופציה'],
+                      'selection' : ['managing_body='],
                       'categories' : [
+                        'managing_body',
+                        'instrument_type', 
+                        'activity_industry', 
                         'currency', 
-                        'industry', 
+                        'rating', 
+                        'issuer',
+                        'reference_index',
+                        'instrument_sub_type' ,  
                         'instrument_id'
                         ]
                       },
                       {
-                      'selection' : ['instrument_sub_type=תעודות%20התחייבות%20ממשלתיות'],
+                      'selection' : ['instrument_type='],
+                      'categories' : [
+                        'instrument_type',
+                        'activity_industry', 
+                        'currency', 
+                        'rating', 
+                        'issuer',
+                        'reference_index',
+                        'instrument_sub_type' ,  
+                        'instrument_id'
+                        ]
+                      },
+                      {
+                      'selection' : ['activity_industry='],
+                      'categories' : [
+                        'activity_industry',
+                        'currency', 
+                        'rating', 
+                        'issuer',
+                        'reference_index',
+                        'instrument_sub_type' ,  
+                        'instrument_id',
+                        'instrument_type'
+                        ]
+                      },
+                      {
+                      'selection' : ['currency='],
+                      'categories' : [
+                        'currency',
+                        'instrument_type',
+                        'activity_industry',
+                        'rating', 
+                        'issuer',
+                        'reference_index',
+                        'instrument_sub_type' ,  
+                        'instrument_id'
+                        ]
+                      },
+                      {
+                      'selection' : ['rating='],
+                      'categories' : [
+                        'rating',
+                        'issuer',
+                        'reference_index',
+                        'instrument_sub_type',
+                        'instrument_id',
+                        'instrument_type', 
+                        'activity_industry',
+                        'reference_index',
+                        'instrument_sub_type' ,  
+                        'instrument_id'
+                        ]
+                      },
+                      {
+                      'selection' : ['issuer='],
+                      'categories' : [
+                        'issuer',
+                        'instrument_type',
+                        'currency',
+                        'instrument_sub_type',
+                        'instrument_id',
+                        'managing_body'
+                        ]
+                      },
+                      {
+                      'selection' : ['reference_index='],
+                      'categories' : [
+                        'reference_index',
+                        'managing_body',
+                        'instrument_type',
+                        'currency',
+                        'issuer',
+                        'instrument_sub_type',
+                        'instrument_id'
+                        ]
+                      },
+                      {
+                      'selection' : ['instrument_sub_type='],
+                      'categories' : [
+                        'instrument_sub_type',
+                        'managing_body',
+                        'instrument_type',
+                        'activity_industry',
+                        'currency',
+                        'rating',
+                        'issuer',
+                        'reference_index',
+                        'instrument_sub_type',
+                        'instrument_id'
+                        ]
+                      },
+                      {
+                      'selection' : ['instrument_id='],
                       'categories' : [
                         'instrument_id',
-                        'rating', 
-                        'currency'
+                        'managing_body',
+                        'instrument_sub_type',
+                        'currency',
+                        'rating',
+                        'issuer',
+                        'reference_index',
+                        'instrument_sub_type'
                         ]
                       }
                     ] ;
@@ -93,7 +172,9 @@ Categories.getCategories = function(filter){
   for(category_index in Categories.all_categories){
 
     var category = Categories.all_categories[category_index];
-    
+  
+    console.log(JSON.stringify(category));
+
     if( category['selection'].length == 0 ){
         resArray[category_index] = 0;        
     }
@@ -109,7 +190,11 @@ Categories.getCategories = function(filter){
     }
   }
 
+  console.log(JSON.stringify(resArray));
+
   var pos_of_max = resArray.indexOf(Math.max.apply(Math, resArray));
+  console.log(JSON.stringify(pos_of_max));
+
   return Categories.all_categories[pos_of_max]['categories'];
 }
 
@@ -121,6 +206,9 @@ Categories.getAvailableCategories = function(filter){
   var constrainedFields = filter.getConstrainedFields();
   var categoriesBySubType = this.getCategories(filter);
   var availableCategories = [];
+
+  console.log("getCategories "+JSON.stringify(categoriesBySubType));
+
 
   //iterate over categories by filter
   for(categoryIndex in categoriesBySubType ){

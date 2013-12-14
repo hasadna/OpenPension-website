@@ -6,6 +6,17 @@
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 
+@font-face{
+			font-family:'almoni-tzar';
+			font-weight:700; /*(bold)*/
+			font-style: normal;
+			src: url('../fonts/almoni-tzar-aaa-700.eot'); 
+			src: url('../fonts/almoni-tzar-aaa-700.eot?#iefix') format('embedded-opentype'), 
+				url('../fonts/almoni-tzar-aaa-700.ttf') format('truetype'), 
+				url('../fonts/almoni-tzar-aaa-700.woff') format('woff'), 
+				url('../fonts/almoni-tzar-aaa-700.svg#almoni-tzar-bold') format('svg');
+}
+
 body {
   font-family: "Alef Hebrew",
                “Helvetica Neue”,
@@ -42,7 +53,7 @@ body{
 	background-color:#0855C7;
 	border-bottom-style: solid;
 	border-bottom-color: #053B83;
-	padding: 0 20px 0 20px;
+	xpadding: 0 20px 0 20px;
 	height:50%;
 }
 
@@ -59,6 +70,7 @@ body{
 	font-size:30px;
 	font-weight:900;
 	line-height:65px;
+	font-family:'almoni-tzar';
 }
 
 #header-feedback{
@@ -75,8 +87,9 @@ body{
 	border: 1px;
 	border-style: solid;
 	border-color: black;
-	margin: 0 20px 0 50px;
+	margin: 0 20px 0 15px;
 	padding: 0 10px 0 10px;
+	border-radius: 5px;
 }
 
 #header-about{
@@ -91,13 +104,16 @@ body{
 
 #header-bottom{
 	background-color:#FFFFFF;
-	height:50%;
+	xheight:50%;
+	height:80px;
 	padding: 5px 20px 0 20px;
+
 }
 
 
 #header-bottom #breadcrumbs{
 	text-decoration: underline;
+	margin-top: 7px;
 }
 
 
@@ -111,6 +127,7 @@ body{
 #right-column{
 	position: relative;
 	top: 50px;
+	background-color: white;
 }
 
 #right-column #info{
@@ -133,6 +150,7 @@ body{
 #info #total{
 	font-weight:bold;
 	color: #FFA202;
+	font-family:'almoni-tzar';
 }
 
 /*LEFT COLUMN*/
@@ -157,7 +175,7 @@ body{
 	border-bottom:2px;
 	border-bottom-color:#BEBEBE;
 	border-bottom-style:solid;
-	height:75px;
+	height:78px;
 	margin-bottom:10px;
 	padding-top:5px;
 	width:100%;
@@ -204,6 +222,8 @@ body{
 	color:black;
 	font-size: 16px;
 	padding-right: 12px;
+	line-height: 10px;
+	margin-bottom: 15px;
 }
 
 /* ABOUT */

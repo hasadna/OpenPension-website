@@ -13,8 +13,8 @@ for(var index in englishColumns)
 
 dictionary['activity_industry'] = 'ענף פעילות';
 dictionary['managing_body'] = 'גוף מוסדי';
-dictionary['instrument_type'] = 'סוג נכס';
-dictionary['instrument_sub_type'] = 'תת סוג נכס';
+dictionary['instrument_type'] = 'רמת נזילות';
+dictionary['instrument_sub_type'] = 'סוג נכס';
 dictionary['issuer'] = 'מנפיק';
 dictionary['instrument_name'] = 'שם נכס';
 dictionary['reference_index'] = 'מדד יחסי';
