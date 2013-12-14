@@ -11,8 +11,8 @@ $(function(){
 		
 		var moshe = 'רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text());
 		
-		var lastYearChanges = ((Number($('#graphdata3-sum_market_cap').text()) - Number($('#graphdata0-sum_market_cap').text()))*Number($('#graphdata3-sum_market_cap').text())/100).toFixed(2); 
-		var lastQuarterChanges = ((Number($('#graphdata3-sum_market_cap').text()) - Number($('#graphdata2-sum_market_cap').text()))*Number($('#graphdata3-sum_market_cap').text())/100).toFixed(2); 
+		var lastYearChanges = ((Number($('#graphdata3-sum_market_cap').text()) - Number($('#graphdata0-sum_market_cap').text()))/Number($('#graphdata3-sum_market_cap').text())*100).toFixed(1); 
+		var lastQuarterChanges = ((Number($('#graphdata3-sum_market_cap').text()) - Number($('#graphdata2-sum_market_cap').text()))/Number($('#graphdata3-sum_market_cap').text())*100).toFixed(1); 
 
 		var lastYearChangesText = (lastYearChanges > 0)? "עליה של " + lastYearChanges :"ירידה של " + lastYearChanges*(-1)
 		var lastQuarterChangesText = (lastQuarterChanges > 0)? "עליה של " + lastQuarterChanges :"ירידה של " + lastQuarterChanges*(-1)
@@ -98,7 +98,7 @@ $(function(){
             series: [{
                 //name: 'Year 1800',
                 data: [Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata1-sum_market_cap').text()).toFixed(1)), 
-				       Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1))],
+				       Number(Number($('#graphdata2-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata3-sum_market_cap').text()).toFixed(1))],
                 pointWidth: 80,
                 dataLabels: {
                     enabled: true,
