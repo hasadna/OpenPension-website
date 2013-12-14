@@ -84,9 +84,9 @@ body{
 	line-height:25px;
 	position: relative;
 	top:20px;
-	border: 1px;
-	border-style: solid;
-	border-color: black;
+	xborder: 1px;
+	xborder-style: solid;
+	xborder-color: black;
 	margin: 0 20px 0 15px;
 	padding: 0 10px 0 10px;
 	border-radius: 5px;

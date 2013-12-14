@@ -7,10 +7,10 @@ block headerbottom
 			div()
 				title
 				div(id="breadcrumbs") שוק הפנסיה > פניקס > בנקים
-				div(id="question")  #{title} ?
+				div(id="question")  #{title}?
 
 block content
-	//- BODYs
+	//- BODY
 	div(class="container")
 
 		//- RIGHT COLUMN
@@ -45,7 +45,7 @@ block content
 
 			div(class="row pull-right")
 				a(href="/csv#{filter.toQueryString()}") 
-					div(id="csv") רשימת נכסים מלאה
+					div(id="csv") רשימת נכסים
 						div(id="csv-icon" class="glyphicon glyphicon-download-alt")
 						div(id="csv-comment") (להורדה בקובץ CSV)
 
@@ -73,7 +73,7 @@ block content
 						div(class="pull-right entry-box")
 							- var escapedVal = encodeURIComponent(result[group.group_field]);
 							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
-								div(class="entry-box-title") #{ result[group.group_field] || '.'}
+								div(class="entry-box-title") #{ translate(result[group.group_field]) || '.'}
 									div(id="play-icon" class="icon-flipped glyphicon glyphicon-play")
 								div(class="entry-box-value") #{sum.number +' ' + sum.scale} &#8362
 								div(class="entry-bar-empty",style="width: 100%;")

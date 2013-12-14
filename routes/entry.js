@@ -15,7 +15,7 @@ function createTitle(filter){
   var addTheWordNechasim =0;
   
   // TBD add categories 
-  var managing_body = filter.getConstraintData('managing_body');
+  var managing_body = translate(filter.getConstraintData('managing_body'));
   var instrument_type = filter.getConstraintData('instrument_type');
   var industry = filter.getConstraintData('industry');
   var currency = filter.getConstraintData('currency');

@@ -19,6 +19,9 @@ dictionary['issuer'] = 'מנפיק';
 dictionary['instrument_name'] = 'שם נכס';
 dictionary['reference_index'] = 'מדד יחסי';
 
+dictionary['Migdal'] = 'מגדל';
+
+
 var translate = function(word){
 	if (dictionary.hasOwnProperty(word)){
 		return dictionary[word];
