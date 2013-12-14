@@ -97,6 +97,10 @@ body{
 	border-radius: 5px;
 }
 
+#header-feedback a{
+	text-decoration: none;
+}
+
 #header-about{
 	float:left;
 	color:#FAF9F3;
@@ -209,6 +213,7 @@ body{
 
 .entry-box-link{
 	cursor:pointer;
+	text-decoration: none;
 }
 
 .entry-box-title,
@@ -269,7 +274,11 @@ body{
 	text-align: center;
 }
 
-#csv{
+#downloadDataButton {
+	text-decoration: none;e
+}
+
+#downloadDataButton{
 	border-bottom-width:1px;
 	border-bottom-style: solid;
 	border-bottom-color: #053B83;
