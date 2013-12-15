@@ -17,7 +17,8 @@ var allowed_filters={
 	'instrument_name':simple_filter,
 	'activity_industry':simple_filter,
 	//'industry':simple_filter,
-	'reference_index':simple_filter
+	'reference_index':simple_filter,
+	'fund_name' : simple_filter
 };
 var summary_columns=["market_cap","fair_value"];
 

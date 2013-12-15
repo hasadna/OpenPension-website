@@ -50,6 +50,7 @@ Categories.all_categories =
                         'currency', 
                         'rating', 
                         'issuer',
+                        'fund_name',
                         'reference_index',
                         'instrument_sub_type' ,  
                         'instrument_id'
