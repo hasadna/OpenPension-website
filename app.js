@@ -49,7 +49,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', index.show);
+//app.get('/', index.show);
+app.get('/', entry.show);
 
 app.get('/entry', entry.show);
 
