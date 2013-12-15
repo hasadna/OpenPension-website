@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW pention_data_all AS 
+CREATE OR REPLACE VIEW pension_data_all AS 
  SELECT 
     debug.managing_body,
     debug.fund,
