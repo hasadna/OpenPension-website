@@ -11,8 +11,8 @@ $(function(){
 		
 		var moshe = 'רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text());
 		
-		var lastYearChanges = ((Number($('#graphdata3-sum_market_cap').text()) - Number($('#graphdata0-sum_market_cap').text()))/Number($('#graphdata3-sum_market_cap').text())*100).toFixed(1); 
-		var lastQuarterChanges = ((Number($('#graphdata3-sum_market_cap').text()) - Number($('#graphdata2-sum_market_cap').text()))/Number($('#graphdata3-sum_market_cap').text())*100).toFixed(1); 
+		var lastYearChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata3-sum_market_cap').text()))/Number($('#graphdata0-sum_market_cap').text())*100).toFixed(1); 
+		var lastQuarterChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata1-sum_market_cap').text()))/Number($('#graphdata0-sum_market_cap').text())*100).toFixed(1); 
 
 		var lastYearChangesText = (lastYearChanges > 0)? "עליה של " + lastYearChanges :"ירידה של " + lastYearChanges*(-1)
 		var lastQuarterChangesText = (lastQuarterChanges > 0)? "עליה של " + lastQuarterChanges :"ירידה של " + lastQuarterChanges*(-1)
@@ -39,7 +39,8 @@ $(function(){
             subtitle: {
 				//align: 'right',
 				style: {
-					//fontFamily: 'monospace',
+					fontFamily: '"Alef Hebrew",“Helvetica Neue”,Helvetica,Arial,sans-serif',
+					fontSize : "16px", 
 					color: colorTitle, 
 					margin: "5px" 
 				},
@@ -54,10 +55,19 @@ $(function(){
 			   lineColor: 'transparent',
 			   minorTickLength: 0,
 			   tickLength: 0,
-                categories: ['רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text()),
-				             'רבעון ' + Number($('#graphdata1-report_qurater').text()) + ' ' + Number($('#graphdata1-report_year').text()),
-							 'רבעון ' + Number($('#graphdata2-report_qurater').text()) + ' ' + Number($('#graphdata2-report_year').text()),
-							 'רבעון ' + Number($('#graphdata3-report_qurater').text()) + ' ' + Number($('#graphdata3-report_year').text())],
+				labels: {
+					style: {
+						fontFamily: '"Alef Hebrew",“Helvetica Neue”,Helvetica,Arial,sans-serif',
+						fontSize: "16px",
+					},
+					formatter: function () {
+						return this.value;
+					}
+				},
+                categories: ['רבעון ' + Number($('#graphdata3-report_qurater').text()) + ' ' + Number($('#graphdata3-report_year').text()),
+				             'רבעון ' + Number($('#graphdata2-report_qurater').text()) + ' ' + Number($('#graphdata2-report_year').text()),
+							 'רבעון ' + Number($('#graphdata1-report_qurater').text()) + ' ' + Number($('#graphdata1-report_year').text()),
+							 'רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text())],
                 title: {
                     text: null
                 }
@@ -88,17 +98,19 @@ $(function(){
             },
 			plotOptions: {
 				series: {
+				    enableMouseTracking: false,
 					marker: {
 						fillColor: '#FFFFFF',
 						lineWidth: 2,
+						radius: 8,						
 						lineColor: null // inherit from series
 					}
 				}
 			},
             series: [{
                 //name: 'Year 1800',
-                data: [Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata1-sum_market_cap').text()).toFixed(1)), 
-				       Number(Number($('#graphdata2-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata3-sum_market_cap').text()).toFixed(1))],
+                data: [Number(Number($('#graphdata3-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata2-sum_market_cap').text()).toFixed(1)), 
+				       Number(Number($('#graphdata1-sum_market_cap').text()).toFixed(1)), Number(Number($('#graphdata0-sum_market_cap').text()).toFixed(1))],
                 pointWidth: 80,
                 dataLabels: {
                     enabled: true,
@@ -106,10 +118,10 @@ $(function(){
                     color: '090',
                     align: 'center',
                     x: 15,
-                    y: -30,
+                    y: -35,
                         style: {
-                            fontSize: '13px',
-                            fontFamily: 'Verdana, sans-serif'
+                            fontSize: '16px',
+							fontFamily: '"Alef Hebrew",“Helvetica Neue”,Helvetica,Arial,sans-serif',
                         }     
                 }
             }]
@@ -148,18 +160,26 @@ $(function(){
 		credits: {
             enabled: false
         },
+
         series: [{
             type: 'pie',
             name: '',
             data: [
+				{
+					name: 'others',
+					y: 76,
+					color : '#F4F4F4' 									
+					
                 //['Firefox',   45.0],
                 //['IE',       26.8],
-				['Others',   75],
+				//['Others',   75],
+				},
                 {
                     name: 'Chrome',
-                    y: 12.8,
-                    sliced: true,
-                    selected: true
+                    y: 24,
+                    sliced: false,
+                    selected: false,
+					color : '#0000FF' 									
                 }
                 //['Safari',    8.5],
                 //['Opera',     6.2],
