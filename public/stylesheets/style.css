@@ -319,3 +319,7 @@ transform: scaleX(-1);
 -webkit-transform: scaleX(-1);
 -ms-transform: scaleX(-1);
 }
+
+#highcharts-0{
+	overflow: visible !important;
+}
