@@ -15,10 +15,11 @@ block content
 
 		//- RIGHT COLUMN
 		div(id="right-column" class="col-sm-6 pull-right")
-			div(id="info")  
-				div(id="total") #{total.number} #{total.scale} &#8362
-			- if (debug)
-				div(style="text-align:left;") #{quarterSelect} 
+			div()
+				div(id="info")  
+					div(id="total") #{total.number} #{total.scale} &#8362
+				- if (debug)
+					div(style="text-align:left;") #{quarterSelect} 
 
 						
 			//- Hidden quarters' data for js 
@@ -43,11 +44,12 @@ block content
 
 	
 
-			div(class="row pull-right")
-				a(href="/csv#{filter.toQueryString()}", id="downloadDataLink") 
-					div(id="downloadDataButton") רשימת נכסים
-						div(id="csv-icon" class="glyphicon glyphicon-download-alt")
-						div(id="csv-comment") (להורדה בקובץ CSV)
+
+		div(class="row pull-right" style="position:absolute;bottom:10px;right:78px;")
+			a(href="/csv#{filter.toQueryString()}") 
+				div(id="downloadDataButton") רשימת נכסים
+					div(id="csv-icon" class="glyphicon glyphicon-download-alt")
+					div(id="csv-comment") (להורדה בקובץ CSV)
 
 
 
