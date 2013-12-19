@@ -86,7 +86,7 @@ block content
 								- var groupName = translate(result[group.group_field])
 								
 								//- remove remaining escaped doubleqoutes
-								- groupName = groupName.replace(/""/g, "shakhal").replace(/"/g, "").replace(/shakhal/g, "\"");
+								- groupName = groupName.replace(/""/g, '"').replace(/^\"/, "").replace(/"$/, "");
 
 								div(class="entry-box-title") #{ groupName}
 									div(id="play-icon" class="icon-flipped glyphicon glyphicon-play")
