@@ -69,20 +69,40 @@ block content
 				-if (debug)
 					div(style="text-align:left;") #{group.query} 
 				div(class="")
-					-if(group.result.length > 0)  var firstBar = group.result[0].sum_market_cap;
-					each result in group.result
-						- var sum = convertNumberToWords(result.sum_market_cap);
+					-if(group.result.length > 0)  var firstBar = group.result[0].group_sum;
+
+					each result in group.result					
+						//- skip groups with empty name (shouldnt happen)
+						- if (result[group.group_field] == null || result[group.group_field] == '') continue
+						//- skip NULL box if sum is 0
+						- if (result[group.group_field] == 'NULL' && result.group_sum == 0) continue
+						
+
+						- var sum = convertNumberToWords(result.group_sum);
 						div(class="pull-right entry-box")
+							
 							- var escapedVal = encodeURIComponent(result[group.group_field]);
 							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
-								div(class="entry-box-title") #{ translate(result[group.group_field]) || '.'}
+								- var groupName = translate(result[group.group_field])
+								
+								//- remove remaining escaped doubleqoutes
+								- groupName = groupName.replace(/""/g, "shakhal").replace(/"/g, "").replace(/shakhal/g, "\"");
+
+								div(class="entry-box-title") #{ groupName}
 									div(id="play-icon" class="icon-flipped glyphicon glyphicon-play")
 								div(class="entry-box-value") #{sum.number +' ' + sum.scale} &#8362
-								div(class="entry-bar-empty",style="width: 100%;")
-									div(class="entry-bar",style="width: #{result.sum_market_cap / firstBar * 100}%;")
-
-	
+					
+								- if (result[group.group_field] == 'NULL') 
+									div(class="entry-bar-empty",style="width: 100%;")
+										div(class="entry-bar",style="width:0px")	
+								
+								- if (result[group.group_field] != 'NULL')
+									div(class="entry-bar-empty",style="width: 100%;")
+										div(class="entry-bar",style="width: #{Math.max(result.group_sum / firstBar,0.001) * 100}%;")	
+								
 								br
+
+
 		
 	script(type='text/javascript', src='/js/entry.js', myVar = 200 )
 	script(type='text/javascript', src='http://code.highcharts.com/modules/exporting.js')

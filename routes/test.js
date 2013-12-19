@@ -29,7 +29,15 @@ exports.post = function(req, res)
 
 exports.get = function(req, res){
 
+	
 	var filter = Filter.fromGetRequest(req);
+
+	
+  	//show data only for last quarter
+  	//TODO: get last quarter from DB
+  	filter.addConstraint("report_year","2013");
+  	filter.addConstraint("report_qurater","3");
+
 
 	var start1 = new Date();
 	res.contentType('json');

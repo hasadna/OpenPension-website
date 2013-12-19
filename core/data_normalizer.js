@@ -7,31 +7,36 @@ exports.normalizeData = function(groups){
 
 	//set nulls to zeros and sort 
 	for(var i in groups){ //go over index of groups
-		for (var j in groups[i]['result']){ //for j index of result
+		var sum_null = 0;
+		var j = groups[i]['result'].length
+		while (j--) {
+
 			if (groups[i]['result'][j]['sum_market_cap'] == null){
 				groups[i]['result'][j]['sum_market_cap'] = 0;
 			}
 
-			//put fair_value in market_cap if market_cap is 0
-			if (groups[i]['result'][j]['sum_market_cap'] == 0
-					&& groups[i]['result'][j]['sum_fair_value'] > 0){
-				groups[i]['result'][j]['sum_market_cap'] = groups[i]['result'][j]['sum_fair_value'];
+			var group_field = groups[i]['group_field'];
+			if (groups[i]['result'][j][group_field] == null ||
+				groups[i]['result'][j][group_field] == ''){
+				sum_null +=  Number(groups[i]['result'][j]['sum_market_cap']) + Number(groups[i]['result'][j]['sum_fair_value']);
+				groups[i]['result'].splice(j,1);
+
 			}
-		}
-		groups[i]['result'].sort(function(a,b) { return parseFloat(b['sum_market_cap']) - parseFloat(a['sum_market_cap']) } );
-	}
+			else{
+				groups[i]['result'][j]['group_sum'] = Number(groups[i]['result'][j]['sum_market_cap']) + Number(groups[i]['result'][j]['sum_fair_value']);
+			}
 
-
-	for(var i in groups){ //index of groups
-
-		for (var j in groups[i]['result']){ //for j index of result
-			
-			//trim digits
-			groups[i]['result'][j]['sum_market_cap'] = Number(groups[i]['result'][j]['sum_market_cap']).toFixed(1);	
 
 		}
-	
+		groups[i]['result'].sort(function(a,b) { return parseFloat(b['group_sum']) - parseFloat(a['group_sum']) } );
+
+		var nullGroup = {};
+		nullGroup[group_field] = "NULL";		
+		nullGroup['group_sum'] = sum_null;		
+
+		groups[i]['result'].push(nullGroup);
 	}
+
 
 	//calculate total_sum of groups
 	//sum values of groups[0], all group sums assumed to be the same
@@ -39,9 +44,8 @@ exports.normalizeData = function(groups){
 
 	groups['total_sum'] = 0; //init 
 	for (var j in groups[0]['result']){ //for j index of result
-			
 			//summarize 
-			groups['total_sum'] += Number(groups[0]['result'][j]['sum_market_cap']);
+			groups['total_sum'] += Number(groups[0]['result'][j]['group_sum']);
 	}
 
 	return groups;

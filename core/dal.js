@@ -87,8 +87,6 @@ function prepareGroupBy(select, filter)
 		
 		new_select.group(all_groups[group_index]);
 		new_select.field(all_groups[group_index]);
-		new_select.where(all_groups[group_index]+ " IS NOT NULL");
-		new_select.where(all_groups[group_index]+ " <> ''");
 		for (var idx in summary_columns)
 		{
 			col=summary_columns[idx];
@@ -168,10 +166,6 @@ function groupByQuarters(filter, callback){
 	//group by year & quarter
 	select.group("report_year");
 	select.group("report_qurater");
-
-	//ignore NULL and empty fields
-	select.where(group_by_field + " IS NOT NULL");
-	select.where(group_by_field + " <> ''");
 
 	//sort by descending order
 	select.order("report_year",false);

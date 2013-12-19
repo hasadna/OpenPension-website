@@ -1,10 +1,8 @@
 var metaTable = require('../common/MetaTable').getMetaTable();
 
- //build column dictionary - TODO: refactor
 var hebrewColumns = metaTable.hebrewColumns;
 var englishColumns = metaTable.englishColumns;
 var dictionary = {};
-
 
 for(var index in englishColumns)
 {
@@ -20,12 +18,15 @@ dictionary['instrument_name'] = 'שם נכס';
 dictionary['fund_name'] = 'שם קופה';
 dictionary['reference_index'] = 'מדד יחסי';
 
-dictionary['Migdal'] = 'מגדל';
+dictionary['migdal'] = 'מגדל';
 
+dictionary['null'] = 'לא נמצא בקטגוריה';
 
+//dictionary holds lower case keys
 var translate = function(word){
-	if (dictionary.hasOwnProperty(word)){
-		return dictionary[word];
+	var wordLC = String(word).toLowerCase();
+	if (dictionary.hasOwnProperty(wordLC)){
+		return dictionary[wordLC];
 	}
 	else{
 		return word;
