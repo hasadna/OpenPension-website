@@ -45,6 +45,10 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(function(req, res, next) {
+  if (toobusy()) res.send(503, "I'm busy right now, sorry.");
+  else next();
+});
 
 // development only
 if ('development' == app.get('env')) {
