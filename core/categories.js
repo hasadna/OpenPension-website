@@ -174,7 +174,6 @@ Categories.getCategories = function(filter){
 
     var category = Categories.all_categories[category_index];
   
-    console.log(JSON.stringify(category));
 
     if( category['selection'].length == 0 ){
         resArray[category_index] = 0;        
@@ -191,10 +190,8 @@ Categories.getCategories = function(filter){
     }
   }
 
-  console.log(JSON.stringify(resArray));
 
   var pos_of_max = resArray.indexOf(Math.max.apply(Math, resArray));
-  console.log(JSON.stringify(pos_of_max));
 
   return Categories.all_categories[pos_of_max]['categories'];
 }
@@ -208,8 +205,7 @@ Categories.getAvailableCategories = function(filter){
   var categoriesBySubType = this.getCategories(filter);
   var availableCategories = [];
 
-  console.log("getCategories "+JSON.stringify(categoriesBySubType));
-
+ 
 
   //iterate over categories by filter
   for(categoryIndex in categoriesBySubType ){
