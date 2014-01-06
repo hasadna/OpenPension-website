@@ -80,18 +80,17 @@ body{
 
 #header-feedback{
 	height:30px;
-	background-color:#FFFFFF;
 	float:left;
-	color:#10110B;
+	color:white;
 	font-size:18px;
 	font-weight:600;
 	text-decoration:none;
 	line-height:25px;
 	position: relative;
 	top:20px;
-	xborder: 1px;
-	xborder-style: solid;
-	xborder-color: black;
+	border: 1px;
+	border-style: solid;
+	border-color: white;
 	margin: 0 20px 0 15px;
 	padding: 0 10px 0 10px;
 	border-radius: 5px;
