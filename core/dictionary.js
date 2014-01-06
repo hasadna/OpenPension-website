@@ -16,7 +16,7 @@ dictionary['instrument_sub_type'] = 'סוג נכס';
 dictionary['issuer'] = 'מנפיק';
 dictionary['instrument_name'] = 'שם נכס';
 dictionary['fund_name'] = 'שם קופה';
-dictionary['reference_index'] = 'מדד יחסי';
+dictionary['reference_index'] = 'מדד ייחוס';
 
 dictionary['migdal'] = 'מגדל';
 
