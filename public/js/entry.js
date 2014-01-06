@@ -11,8 +11,8 @@ $(function(){
 		
 		var moshe = 'רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text());
 		
-		var lastYearChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata3-sum_market_cap').text()))/Number($('#graphdata0-sum_market_cap').text())*100).toFixed(1); 
-		var lastQuarterChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata1-sum_market_cap').text()))/Number($('#graphdata0-sum_market_cap').text())*100).toFixed(1); 
+		var lastYearChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata3-sum_market_cap').text()))/Number($('#graphdata3-sum_market_cap').text())*100).toFixed(1); 
+		var lastQuarterChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata1-sum_market_cap').text()))/Number($('#graphdata3-sum_market_cap').text())*100).toFixed(1); 
 
 		var lastYearChangesText = (lastYearChanges > 0)? "עליה של " + lastYearChanges :"ירידה של " + lastYearChanges*(-1)
 		var lastQuarterChangesText = (lastQuarterChanges > 0)? "עליה של " + lastQuarterChanges :"ירידה של " + lastQuarterChanges*(-1)
@@ -98,6 +98,7 @@ $(function(){
             },
 			plotOptions: {
 				series: {
+					animation :false,
 				    enableMouseTracking: false,
 					marker: {
 						fillColor: '#FFFFFF',
@@ -146,6 +147,9 @@ $(function(){
     	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
+			series: {
+				animation: false
+			},	
             pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
