@@ -236,6 +236,33 @@ function addConstraint(key,value){
   window.location.href = filter.toQueryString();
 }
 
+function breadCrumbs(key){
+
+  //generate filter from query string
+  var f = Filter.fromQueryString(window.location.search);
+  // remove group by field 
+  f.removeField("group_by");
+  // The Bread Crumb - encoded to URI Component ( incase hebrew bread crumb was chosen) 
+  var BC = encodeURIComponent(key);
+  // remove from stop=1 fields from array 
+  stop=0; 
+  
+  for(var index in f.getConstrainedFields()) {
+	// from here remove all fields from the filter. (always remove the last element from array in each iteration) 
+	if (stop==1) {
+	  f.removeField(f.getConstrainedFields()[f.getConstrainedFields().length -1]);
+	}
+	// if bread crumb is equal to field data remove all fields from here and on. 
+	if (BC== f.getConstraintData(f.getConstrainedFields()[index])) {
+		stop=1;
+	}
+  }
+  
+  // create from new filter
+   window.location.href = f.toQueryString();
+
+}
+
 
 function setConstraint(key,value){
   //generate filter from query string

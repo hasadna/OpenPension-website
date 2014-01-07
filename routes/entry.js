@@ -78,6 +78,15 @@ exports.show = function(req, res){
   filter.addConstraint("report_year","2013");
   filter.addConstraint("report_qurater","3");
 
+  // BREAD CRUMBS
+  var filterParams = new Array();
+  var f = Filter.fromGetRequest(req);
+  f.removeField("group_by");
+  
+  for(var key in f.getConstrainedFields()) {
+    var value = decodeURI(f.getConstraintData(f.getConstrainedFields()[key])) ;
+	 filterParams.push(value);
+  }
   
   DAL.groupBySummaries(filter,
     function(groups){
@@ -98,6 +107,7 @@ exports.show = function(req, res){
               translate: translate,
               quarterSelect:quarterSelect,
               debug: debug == 'true',
+			  params: filterParams,
               req: req
             });
       });

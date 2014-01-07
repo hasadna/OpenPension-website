@@ -6,7 +6,12 @@ block headerbottom
 		div(class="container")
 			div()
 				title
-				div(id="breadcrumbs") שוק הפנסיה > פניקס > בנקים
+				div(id="breadcrumbs") 
+					each param in params
+						span  >
+						a(class="try", style="cursor:pointer", onclick="breadCrumbs('#{param}')")
+							span  #{param} 
+							
 				div(id="question")  #{title}?
 
 block content
