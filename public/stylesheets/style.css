@@ -119,16 +119,14 @@ body{
 }
 
 
-#breadcrumbs{
+#breadcrumbs a{
 	text-decoration: underline;
-	margin-top: 7px;
-	//display: none;
 }
 
 
 #question{
 	font-size: 30px;
-	line-height: 70px;
+	line-height: 45px;
 }
 
 
