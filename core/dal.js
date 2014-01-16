@@ -92,6 +92,9 @@ function prepareGroupBy(select, filter)
 			col=summary_columns[idx];
 			new_select.field('sum('+col+')','sum_'+col);
 		}
+		// group_sum as sum of summary columns
+		new_select.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
+
 		return_data.push({"group_field":all_groups[group_index],"query":new_select})
 	}
 	return return_data;
@@ -141,23 +144,41 @@ function groupBySummaries(filter, callback)
 			}
 		}.bind(this, group));
 	}
-	
 }
+
+
+/*
+ * group by managing body, if managing body is in the filter
+ * and by last four quarters
+ */
+
+function groupByManagingBody(filter, callback){
+	
+  var mFilter = new Filter();
+
+  if (filter.getConstraintData("managing_body") != "") {
+	mFilter.addConstraint("managing_body", filter.getConstraintData("managing_body"));
+  } 
+
+  groupByQuarters(mFilter, callback);
+
+}
+
+
 
 /*
  * Apply filter, group by last four quarters
  */
 function groupByQuarters(filter, callback){
 
-	var group_by_field = filter.getConstraintData("group_by");
-
-	filter.removeField("group_by");
-
-	filter.removeField("report_year");
-	filter.removeField("report_qurater");
+	var mFilter = filter.clone();
+	
+	mFilter.removeField("group_by");
+	mFilter.removeField("report_year");
+	mFilter.removeField("report_qurater");
 	
 	var select = squel.select().from(config.table);
-	prepareWheres(select, filter);
+	prepareWheres(select, mFilter);
 
 
 	select.field("report_year");
@@ -174,14 +195,19 @@ function groupByQuarters(filter, callback){
 	//get last 4 quarters
 	select.limit(4);
 
+
 	for (var idx in summary_columns)
 	{
 		col=summary_columns[idx];
 		select.field('sum('+col+')','sum_'+col);
 	}
 
+	select.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
+
 
 	select=select.toString();
+
+	console.log(select);
 	var db = require('./db.js').open();
 	db.querys(select,function(err, rows){
 			callback(rows,select);
@@ -195,4 +221,6 @@ exports.parseFilter=parseFilter;
 exports.allowed_filters=Object.keys(allowed_filters);
 exports.singleQuery=singleQuery;
 exports.groupByQuarters=groupByQuarters;
+exports.groupByManagingBody=groupByManagingBody;
+
 

@@ -1,6 +1,6 @@
 
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+function numberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 exports.normalizeData = function(groups){
@@ -11,10 +11,6 @@ exports.normalizeData = function(groups){
 		var j = groups[i]['result'].length
 		while (j--) {
 
-			if (groups[i]['result'][j]['sum_market_cap'] == null){
-				groups[i]['result'][j]['sum_market_cap'] = 0;
-			}
-
 			var group_field = groups[i]['group_field'];
 			if (groups[i]['result'][j][group_field] == null ||
 				groups[i]['result'][j][group_field] == ''){
@@ -22,17 +18,15 @@ exports.normalizeData = function(groups){
 				groups[i]['result'].splice(j,1);
 
 			}
-			else{
-				groups[i]['result'][j]['group_sum'] = Number(groups[i]['result'][j]['sum_market_cap']) + Number(groups[i]['result'][j]['sum_fair_value']);
-			}
-
 
 		}
+
+		//sort by group sum in descending order
 		groups[i]['result'].sort(function(a,b) { return parseFloat(b['group_sum']) - parseFloat(a['group_sum']) } );
 
 		var nullGroup = {};
 		nullGroup[group_field] = "NULL";		
-		nullGroup['group_sum'] = sum_null;		
+		nullGroup['group_sum'] = sum_null;
 
 		groups[i]['result'].push(nullGroup);
 	}

@@ -56,7 +56,8 @@ exports.show = function(req, res){
   var filter = Filter.fromGetRequest(req);
   
   var group_by = filter.getConstraintData("group_by")[0];
-  
+
+  //check for debug flag  
   var debug = filter.getConstraintData("debug")[0];
   filter.removeField("debug");
 
@@ -88,29 +89,41 @@ exports.show = function(req, res){
 	 filterParams.push(value);
   }
   
-  DAL.groupBySummaries(filter,
+   DAL.groupBySummaries(filter,
     function(groups){
     DAL.groupByQuarters(filter,
       function(quarters, quarterSelect){
+      DAL.groupByManagingBody(filter,
+        function(groupByManagingBody,aa){
+
+        console.log(groupByManagingBody);
+
         groups = DataNormalizer.normalizeData(groups);
+
+        console.log(groups);  
+
         var total = DataNormalizer.convertNumberToWords(groups['total_sum']);
+        var totalByManagingBody = DataNormalizer.convertNumberToWords(groupByManagingBody['0']['group_sum']);
 
         res.render('entry',{
-			  title : createTitle(filter),
-              filter: filter,
-              quarters: quarters,
-              total: total,
-              groups: groups,
-              group_by: group_by,
-              availableCategories: availableCategories, 
-              convertNumberToWords:DataNormalizer.convertNumberToWords,
-              translate: translate,
-              quarterSelect:quarterSelect,
-              debug: debug == 'true',
-			  params: filterParams,
-              req: req
-            });
+            title : createTitle(filter),
+            filter: filter,
+            quarters: quarters,
+            total:total,
+            groups: groups,
+            group_by: group_by,
+            availableCategories: availableCategories, 
+            convertNumberToWords:DataNormalizer.convertNumberToWords,
+            translate: translate,
+            quarterSelect:quarterSelect,
+            debug: debug == 'true',
+            params: filterParams,
+            req: req
+          });
+        
+      });
+    
+
       });
   });
-  
 };
