@@ -28,7 +28,7 @@ var Filter = function(){
 	this.setConstraint = function (field, value){
 
 		this.constraints[field] = [{"data": value }] ;    
-	   
+		   
 	}
 
 
@@ -96,6 +96,10 @@ var Filter = function(){
 		return values;
 	}
 
+	this.clone = function(){
+		var res = Filter.fromQueryString(this.toQueryString());
+		return res;
+	}
 
 	this.toQueryString = function(){
 
@@ -124,6 +128,7 @@ var Filter = function(){
 		}
 		return str;
 	}
+
 
 
 	this.toJSON = function(){
