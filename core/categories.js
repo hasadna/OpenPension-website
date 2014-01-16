@@ -3,197 +3,69 @@ var Categories = function(){
 
 }
 
-Categories.all_categories = 
-                    [
-                      {
-                      'selection' : [],
-                      'categories' : [
-                        'managing_body', 
-                        'instrument_type', 
-                        'activity_industry', 
-                        'currency', 
-                        'rating', 
-                        'issuer',
-                        'reference_index',
-                        'instrument_sub_type' ,  
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['instrument_type=מזומנים'],
-                      'categories' :
-                        [
-                        'managing_body',
-                        'rating',
-                        'issuer',
-                        'currency',
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['instrument_type=פקדונות'],
-                      'categories' :
-                        [
-                        'managing_body',
-                        'rating',
-                        'issuer',
-                        'currency',
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['managing_body='],
-                      'categories' : [
-                        'managing_body',
-                        'instrument_type', 
-                        'activity_industry', 
-                        'currency', 
-                        'rating', 
-                        'issuer',
-                        'fund_name',
-                        'reference_index',
-                        'instrument_sub_type' ,  
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['instrument_type='],
-                      'categories' : [
-                        'instrument_type',
-                        'activity_industry', 
-                        'currency', 
-                        'rating', 
-                        'issuer',
-                        'reference_index',
-                        'instrument_sub_type' ,  
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['activity_industry='],
-                      'categories' : [
-                        'activity_industry',
-                        'currency', 
-                        'rating', 
-                        'issuer',
-                        'reference_index',
-                        'instrument_sub_type' ,  
-                        'instrument_id',
-                        'instrument_type'
-                        ]
-                      },
-                      {
-                      'selection' : ['currency='],
-                      'categories' : [
-                        'currency',
-                        'instrument_type',
-                        'activity_industry',
-                        'rating', 
-                        'issuer',
-                        'reference_index',
-                        'instrument_sub_type' ,  
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['rating='],
-                      'categories' : [
-                        'rating',
-                        'issuer',
-                        'reference_index',
-                        'instrument_sub_type',
-                        'instrument_id',
-                        'instrument_type', 
-                        'activity_industry',
-                        'reference_index',
-                        'instrument_sub_type' ,  
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['issuer='],
-                      'categories' : [
-                        'issuer',
-                        'instrument_type',
-                        'currency',
-                        'instrument_sub_type',
-                        'instrument_id',
-                        'managing_body'
-                        ]
-                      },
-                      {
-                      'selection' : ['reference_index='],
-                      'categories' : [
-                        'reference_index',
-                        'managing_body',
-                        'instrument_type',
-                        'currency',
-                        'issuer',
-                        'instrument_sub_type',
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['instrument_sub_type='],
-                      'categories' : [
-                        'instrument_sub_type',
-                        'managing_body',
-                        'instrument_type',
-                        'activity_industry',
-                        'currency',
-                        'rating',
-                        'issuer',
-                        'reference_index',
-                        'instrument_sub_type',
-                        'instrument_id'
-                        ]
-                      },
-                      {
-                      'selection' : ['instrument_id='],
-                      'categories' : [
-                        'instrument_id',
-                        'managing_body',
-                        'instrument_sub_type',
-                        'currency',
-                        'rating',
-                        'issuer',
-                        'reference_index',
-                        'instrument_sub_type'
-                        ]
-                      }
-                    ] ;
+Categories.all_categories = [
+                              'managing_body', 
+                              'instrument_type', 
+                              'activity_industry', 
+                              'currency', 
+                              'rating',
+                              'issuer',
+                              'fund_name',
+                              'reference_index',
+                              'instrument_sub_type',
+                              'instrument_id'
+                            ];
 
 /* Get categories by filter */
 Categories.getCategories = function(filter){
+
+  //clone all_categories
+  var resArray = Categories.all_categories.slice(0); 
   
-  var decodedURI = decodeURI(filter.toQueryString());
+  var constrainedFields = filter.getConstrainedFields();
+  var instrument_type = filter.getConstraintData('instrument_type')[0];
+  var instrument_sub_type = filter.getConstraintData('instrument_sub_type')[0];
+  var group_by = filter.getConstraintData('group_by')[0];
 
-  var resArray = [];
+  console.log(instrument_sub_type);
 
-  for(category_index in Categories.all_categories){
+  //by filtered constriants
 
-    var category = Categories.all_categories[category_index];
-  
-
-    if( category['selection'].length == 0 ){
-        resArray[category_index] = 0;        
-    }
-    for(selection_index in category['selection']){
-      var selection = category['selection'][selection_index];
-      if (decodedURI.indexOf(selection) == -1){
-        resArray[category_index] = 0;
-        continue;
-      }
-      else{
-        resArray[category_index] == undefined ? resArray[category_index] = 1 : resArray[category_index]++;
-      }
-    }
+  //if managing body is not in constraints remove fund_name
+  if (constrainedFields.indexOf("managing_body") == -1){
+    delete resArray[resArray.indexOf("fund_name")];
   }
 
 
-  var pos_of_max = resArray.indexOf(Math.max.apply(Math, resArray));
+  if (constrainedFields.indexOf("reference_index") > -1){
+    delete resArray[resArray.indexOf("activity_industry")];
+    delete resArray[resArray.indexOf("rating")];
+  }
 
-  return Categories.all_categories[pos_of_max]['categories'];
+  if (constrainedFields.indexOf("rating") > -1){
+    delete resArray[resArray.indexOf("activity_industry")];
+    delete resArray[resArray.indexOf("issuer")];
+    delete resArray[resArray.indexOf("reference_index")];
+  }
+
+
+
+  //by instrument type
+  if (instrument_type == "מזומנים"){
+    delete resArray[resArray.indexOf("activity_industry")];
+    delete resArray[resArray.indexOf("reference_index")];
+    delete resArray[resArray.indexOf("fund_name")];
+  }    
+
+  //by instrument sub type
+  if (instrument_sub_type == "תעודות סל"){
+    delete resArray[resArray.indexOf("activity_industry")];
+    delete resArray[resArray.indexOf("reference_index")];
+    delete resArray[resArray.indexOf("rating")];
+  }    
+
+
+  return resArray;
 }
 
 /*
