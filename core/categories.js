@@ -13,7 +13,7 @@ Categories.all_categories = [
                               'fund_name',
                               'reference_index',
                               'instrument_sub_type',
-                              'instrument_id'
+                              'instrument_name'
                             ];
 
 /* Get categories by filter */
