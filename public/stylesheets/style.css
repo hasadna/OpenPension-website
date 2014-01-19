@@ -112,17 +112,22 @@ body{
 
 #header-bottom{
 	background-color:#FFFFFF;
-	xheight:50%;
 	height:80px;
 	padding: 5px 20px 0 20px;
-
 }
 
 
 #breadcrumbs a{
 	text-decoration: underline;
+	float:right;
+	cursor:pointer
 }
 
+
+#breadcrumbs_seperator{
+	float: right;
+	padding: 0 5px 0 5px;
+}
 
 #question{
 	font-size: 30px;

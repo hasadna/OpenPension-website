@@ -8,10 +8,10 @@ block headerbottom
 				title
 				div(id="breadcrumbs") 
 					each param in params
-						span  >
-						a(class="try", style="cursor:pointer", onclick="breadCrumbs('#{param}')")
-							span  #{translate(param)} 
-							
+						span(id="breadcrumbs_seperator") >
+						a(onclick="breadCrumbs('#{param}')")
+							span() #{translate(param)} 
+				br
 				div(id="question")  #{title}?
 
 block content
