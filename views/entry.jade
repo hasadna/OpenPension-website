@@ -33,8 +33,7 @@ block content
 				each quarter in quarters
 					div( id="graphdata#{quarterIndex}-report_year", style="display:none"   ) #{quarter['report_year'] } 
 					div( id="graphdata#{quarterIndex}-report_qurater", style="display:none") #{quarter['report_qurater']}
-					div( id="graphdata#{quarterIndex}-sum_market_cap", style="display:none") #{convertNumberToWords(quarter['sum_market_cap']).number} 
-					
+					div( id="graphdata#{quarterIndex}-sum_market_cap", style="display:none") #{convertNumberToWords(quarter['group_sum']).number} 			
 					div( id="graphdata#{quarterIndex}-precent_market_cap", style="display:none")  5+quarterIndex } 
 					
 					- quarterIndex++;
