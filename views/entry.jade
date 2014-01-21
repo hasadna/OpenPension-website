@@ -1,6 +1,7 @@
 extends layout
 
 block headerbottom
+
 	//- HEADER
 	div(id="header-bottom")
 		div(class="container")
@@ -8,12 +9,9 @@ block headerbottom
 				title
 				div(id="breadcrumbs") 
 					each param in params
-						- var breadcrumbText = translate(param);
-						- breadcrumbText = breadcrumbText.replace(/""/g, '"').replace(/^\"/, "").replace(/"$/, "");
-
 						span(id="breadcrumbs_seperator") >
 						a(onclick="breadCrumbs('#{param}')")
-							span() #{breadcrumbText} 
+							span() #{removeQoutes(translate(param))} 
 
 				br
 				div(id="question")  #{title}?
@@ -90,11 +88,8 @@ block content
 							
 							- var escapedVal = encodeURIComponent(result[group.group_field]);
 							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
-								- var groupName = translate(result[group.group_field])
+								- var groupName = removeQoutes(translate(result[group.group_field]));
 								
-								//- remove remaining escaped doubleqoutes
-								- groupName = groupName.replace(/""/g, '"').replace(/^\"/, "").replace(/"$/, "");
-
 								div(class="entry-box-title") #{ groupName}
 									div(id="play-icon" class="icon-flipped glyphicon glyphicon-play")
 								div(class="entry-box-value") #{sum.number +' ' + sum.scale} &#8362

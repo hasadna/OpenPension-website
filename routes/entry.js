@@ -4,6 +4,7 @@ var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
 var Categories = require('../core/categories.js');
 var translate = require('../core/dictionary.js').translate;
+var removeQoutes = DataNormalizer.removeQoutes;
 
 
 function createTitle(filter){
@@ -40,8 +41,8 @@ function createTitle(filter){
   }
         
   title +=  (managing_body != "")?onlyManagingBody?"כמה כסף מנהלת " + managing_body : "כמה כסף משקיעה " + managing_body:"כמה כסף מושקע";
-  title +=  (instrument_type != "")?" ב" + instrument_type :"";
-  title +=  (instrument_sub_type != "")?(instrument_type != "")?" ו" + instrument_sub_type:" ב" + instrument_sub_type :"";  
+  title +=  (instrument_type != "")?" ב" + removeQoutes(instrument_type) :"";
+  title +=  (instrument_sub_type != "")?(instrument_type != "")?" ו" + removeQoutes(instrument_sub_type):" ב" + removeQoutes(instrument_sub_type) :"";  
   title +=  (addTheWordNechasim)?" בנכסים" : "";  
   title +=  (addTheWordNechasim && issuer != "" )?" של " + issuer :( (instrument_type != "" || instrument_sub_type != "") && issuer != "" )?" של " + issuer :(issuer != "" )?" ב" + issuer:"";  
   title +=  (industry != "")?" בענף ה" + industry :"";        
@@ -115,6 +116,7 @@ exports.show = function(req, res){
             availableCategories: availableCategories, 
             convertNumberToWords:DataNormalizer.convertNumberToWords,
             translate: translate,
+            removeQoutes: DataNormalizer.removeQoutes,
             quarterSelect:quarterSelect,
             debug: debug == 'true',
             params: filterParams,

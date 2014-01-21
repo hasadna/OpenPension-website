@@ -101,3 +101,8 @@ exports.getLastFourQuarters = function(year,quarter){
 	};
 	return res;
 }
+
+
+ exports.removeQoutes = function(s){ 
+ 	return String(s).replace(/""/g, '"').replace(/^\"/, "").replace(/"$/, "");
+ }
