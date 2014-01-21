@@ -8,9 +8,13 @@ block headerbottom
 				title
 				div(id="breadcrumbs") 
 					each param in params
+						- var breadcrumbText = translate(param);
+						- breadcrumbText = breadcrumbText.replace(/""/g, '"').replace(/^\"/, "").replace(/"$/, "");
+
 						span(id="breadcrumbs_seperator") >
 						a(onclick="breadCrumbs('#{param}')")
-							span() #{translate(param)} 
+							span() #{breadcrumbText} 
+
 				br
 				div(id="question")  #{title}?
 
@@ -25,7 +29,7 @@ block content
 					div(id="total") #{total.number} #{total.scale} &#8362
 				- if (debug)
 					div(style="text-align:left;") #{quarterSelect} 
-
+ 
 						
 			//- Hidden quarters' data for js 
 			div(class="row" style="border:0;height:1px")
@@ -81,7 +85,6 @@ block content
 						//- skip NULL box if sum is 0
 						- if (result[group.group_field] == 'NULL' && result.group_sum == 0) continue
 						
-
 						- var sum = convertNumberToWords(result.group_sum);
 						div(class="pull-right entry-box")
 							
