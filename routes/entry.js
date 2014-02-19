@@ -116,6 +116,8 @@ exports.show = function(req, res){
             availableCategories: availableCategories, 
             convertNumberToWords:DataNormalizer.convertNumberToWords,
             translate: translate,
+            escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
+            rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,  
             removeQoutes: DataNormalizer.removeQoutes,
             quarterSelect:quarterSelect,
             debug: debug == 'true',

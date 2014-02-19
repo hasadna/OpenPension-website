@@ -1,6 +1,5 @@
 $(function(){
 	
-
     $('#select_group_by').selectpicker();
 
     $('#select_group_by').on('change', function() {
@@ -8,8 +7,6 @@ $(function(){
 
     });
 		
-		
-		var moshe = 'רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text());
 		
 		var lastYearChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata3-sum_market_cap').text()))/Number($('#graphdata3-sum_market_cap').text())*100).toFixed(1); 
 		var lastQuarterChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata1-sum_market_cap').text()))/Number($('#graphdata3-sum_market_cap').text())*100).toFixed(1); 
@@ -189,19 +186,7 @@ $(function(){
                 //['Opera',     6.2],
             ]
         }]
-    });
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+    });	
 });
 
 
@@ -239,32 +224,36 @@ function addConstraint(key,value){
 function breadCrumbs(key){
 
   //generate filter from query string
-  var f = Filter.fromQueryString(window.location.search);
-  // remove group by field 
-  f.removeField("group_by");
-  // The Bread Crumb - encoded to URI Component ( incase hebrew bread crumb was chosen) 
-  var BC = encodeURIComponent(key);
-  // remove from stop=1 fields from array 
-  stop=0; 
+  var filter = Filter.fromQueryString(window.location.search);
   
-  for(var index in f.getConstrainedFields()) {
-	// from here remove all fields from the filter. (always remove the last element from array in each iteration) 
-	if (stop==1) {
-	  f.removeField(f.getConstrainedFields()[f.getConstrainedFields().length -1]);
-	}
-	// if bread crumb is equal to field data remove all fields from here and on. 
-	if (BC== f.getConstraintData(f.getConstrainedFields()[index])) {
-		stop=1;
-	}
+  // remove group by field 
+  filter.removeField("group_by");
+    
+  // remove from stop=1 fields from array 
+  var stop = 0; 
+  
+  for(var index in filter.getConstrainedFields()) {
+
+    // from here remove all fields from the filter. (always remove the last element from array in each iteration) 
+  	if (stop==1) {
+      var lastField = filter.getConstrainedFields().pop();
+  	  filter.removeField(lastField);
+  	}
+  	// if bread crumb is equal to field data remove all fields from here and on. 
+  	var field = filter.getConstrainedFields()[index];
+    if (key == filter.getConstraintData(field)) {
+  		stop=1;
+  	}
   }
   
-  // create from new filter
-   window.location.href = f.toQueryString();
+  // browse to new filter
+  window.location.href = filter.toQueryString();
 
 }
 
 
 function setConstraint(key,value){
+
   //generate filter from query string
   var filter = Filter.fromQueryString(window.location.search);
 

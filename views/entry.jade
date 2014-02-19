@@ -10,7 +10,8 @@ block headerbottom
 				div(id="breadcrumbs") 
 					each param in params
 						span(id="breadcrumbs_seperator") >
-						a(onclick="breadCrumbs('#{param}')")
+						- var escapedParam = rfc3986EncodeURIComponent(param);
+						a(onclick="breadCrumbs('#{escapedParam}')")
 							span() #{removeQoutes(translate(param))} 
 
 				br
@@ -58,9 +59,6 @@ block content
 						div(id="csv-comment") (להורדה בקובץ CSV)
 
 
-
-
-
 		//- LEFT COLUMN
 		div(id="left-column" class="col-sm-6 pull-right")
 			div(id="group-by") חלוקה לפי &nbsp&nbsp
@@ -85,8 +83,8 @@ block content
 						
 						- var sum = convertNumberToWords(result.group_sum);
 						div(class="pull-right entry-box")
-							
-							- var escapedVal = encodeURIComponent(result[group.group_field]);
+						
+							- var escapedVal = rfc3986EncodeURIComponent(result[group.group_field]);
 							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
 								- var groupName = removeQoutes(translate(result[group.group_field]));
 								

@@ -22,45 +22,79 @@ var allowed_filters={
 };
 var summary_columns=["market_cap","fair_value"];
 
-function simple_filter(select, field, params)
+/**
+ * Escape single qoutes ' => ''
+ * for SQL query
+ * @param str: String to be escaped
+ */
+function escapeChars(str){
+    return String(str).replace(/'/g, '\'\'');  
+}
+
+/**
+ * Appends WHERE clause to squel select object
+ * for specific field and data
+ *
+ * @param select: squel query
+ * @param constraintField: a field in filter, 'managing_body'
+ * @param constraintDataArr: the filter of constraintField,
+ *         [ { data: 'migdal' }, { data: 'harel' } ]
+ * 
+ */
+function simple_filter(select, constraintField, constraintDataArr)
 {
 	var expr=squel.expr();
-	var data=[expr];
-	
-	for (var i in params)
+	var values=[expr];
+
+	// go over array of constratint data
+	for (var i in constraintDataArr)
 	{
-		filter_instance=params[i];
-		if ( 'data' in filter_instance)
-		{
-			//return error
-		}
-		expr.or(field + '= ?');
-		data=data.concat(filter_instance['data']);
+		constraintData = constraintDataArr[i];
+		
+		expr.or(constraintField + '= ?');
+
+		//escape string
+		var escapedConstraintData = escapeChars(constraintData['data']);
+		values=values.concat(escapedConstraintData);
 	}
-	select.where.apply(null,data);
+	select.where.apply(null,values);
 }
 
+/**
+ * Appends the WHERE clause to squel select object
+ * according to the constraints in the filter
+ * @param select: squel query
+ * @param filter: filter object
+ *
+ */
 function prepareWheres(select, filter)
 {
-	var constraints=filter['constraints'];
-	for (var constraint in constraints)
+	var constrainedFields = filter.getConstrainedFields();
+	for (var index in constrainedFields)
 	{
-		if (!(constraint in allowed_filters))
+		var constraintField = constrainedFields[index];
+		if (!(constraintField in allowed_filters))
 		{
 			continue;
-			// Return error? this skips group_by
+			// Return error? no, this skips group_by
+			// which is not in allowed filters
 		}
-		var data = constraints[constraint];
-		simple_filter(select, constraint, data);
+
+		var constraintDataArr = filter.getConstraint(constraintField);
+		simple_filter(select, constraintField, constraintDataArr);
 	}
 }
 
-/*
- * Creates select queries, 
- * if filter contains "group_by" field, then group by filter configuration.
- * else group by every field which is in allowed_filters and not in filter
+/**
+ * Create multiple select queries by groups
+ * one query for each group.
+ * if filter contains "group_by" field, then group by groups in filter.
+ * else group by every field which is in allowed_filters and not in filter.
  *
- * sum queries by summary_columns
+ * adds sum queries by summary_columns
+ * @param select: Squel select, is duplicated for each select group
+ * @param filter: Filter object with constraints
+ * @returns [Squel]: array of Squel select objects 
  */
 function prepareGroupBy(select, filter)
 {
@@ -100,7 +134,11 @@ function prepareGroupBy(select, filter)
 	return return_data;
 }
 
-// Debug
+/**
+ * Convert Filter object to SQL Query
+ * @param filter : Filter object
+ * @return string : SQL query
+ */
 function parseFilter(filter)
 {
 	var select = squel.select().from(config.table);
@@ -109,12 +147,18 @@ function parseFilter(filter)
 	return select;
 }
 
+/**
+ * Perform query and pass result rows
+ * to callback function
+ * @param filter: Filter object with constraints
+ * @param callback : function to handle result rows
+ */
 function singleQuery(filter, callback)
 {
 	var db = require('./db.js').open();
-	var query = parseFilter(filter);
+	var sqlQuery = parseFilter(filter);
 	
-	db.querys(query,function(err, rows){
+	db.querys(sqlQuery,function(err, rows){
 			callback(rows);
 	});
 }
@@ -165,9 +209,9 @@ function groupByManagingBody(filter, callback){
 }
 
 
-
 /*
- * Apply filter, group by last four quarters
+ * Query by filter constraint, group by last four quarters
+ * pass result rows to callback function
  */
 function groupByQuarters(filter, callback){
 
@@ -207,7 +251,7 @@ function groupByQuarters(filter, callback){
 
 	select=select.toString();
 
-	console.log(select);
+	//console.log(select);
 	var db = require('./db.js').open();
 	db.querys(select,function(err, rows){
 			callback(rows,select);

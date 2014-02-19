@@ -103,6 +103,19 @@ exports.getLastFourQuarters = function(year,quarter){
 }
 
 
+//escape special chars
+//duplicate single qoutes ' => ''
+ exports.escapeSpecialChars = function(s) {  
+    return String(s).replace(/'/g, '\'\'');  
+ }
+
+//encodes string, including special chars !'()*
+ exports.rfc3986EncodeURIComponent = function(s) {  
+    return encodeURIComponent(s).replace(/[!'()*]/g, escape);  
+ }
+
+//remove duplicate double qoutes 
+//and enclosing (start - end) double qoutes 
  exports.removeQoutes = function(s){ 
  	return String(s).replace(/""/g, '"').replace(/^\"/, "").replace(/"$/, "");
  }
