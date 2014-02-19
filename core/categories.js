@@ -27,8 +27,6 @@ Categories.getCategories = function(filter){
   var instrument_sub_type = filter.getConstraintData('instrument_sub_type')[0];
   var group_by = filter.getConstraintData('group_by')[0];
 
-  console.log(instrument_sub_type);
-
   //by filtered constriants
 
   //if managing body is not in constraints remove fund_name
@@ -36,19 +34,18 @@ Categories.getCategories = function(filter){
     delete resArray[resArray.indexOf("fund_name")];
   }
 
-
+  //filter contains reference index
   if (constrainedFields.indexOf("reference_index") > -1){
     delete resArray[resArray.indexOf("activity_industry")];
     delete resArray[resArray.indexOf("rating")];
   }
 
+  //filter contains rating
   if (constrainedFields.indexOf("rating") > -1){
     delete resArray[resArray.indexOf("activity_industry")];
     delete resArray[resArray.indexOf("issuer")];
     delete resArray[resArray.indexOf("reference_index")];
   }
-
-
 
   //by instrument type
   if (instrument_type == "מזומנים"){
@@ -57,12 +54,17 @@ Categories.getCategories = function(filter){
     delete resArray[resArray.indexOf("fund_name")];
   }    
 
-  //by instrument sub type
-  if (instrument_sub_type == "תעודות סל"){
-    delete resArray[resArray.indexOf("activity_industry")];
-    delete resArray[resArray.indexOf("reference_index")];
-    delete resArray[resArray.indexOf("rating")];
-  }    
+  //filter contains instrument sub type
+  if (constrainedFields.indexOf("instrument_sub_type") > -1){
+    if (instrument_sub_type == "תעודות סל"){
+      delete resArray[resArray.indexOf("fund_name")];
+      delete resArray[resArray.indexOf("rating")];
+    }
+    else{
+      delete resArray[resArray.indexOf("fund_name")];
+      delete resArray[resArray.indexOf("reference_index")];
+    }
+  }
 
 
   return resArray;
