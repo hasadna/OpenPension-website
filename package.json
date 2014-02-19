@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "express": "3.3.3",
-    "jade": "*",
+    "jade": "1.1.5",
     "pg": "latest",
     "squel": "1.1.3",
     "toobusy" : "0.2.4"

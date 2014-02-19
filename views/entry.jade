@@ -43,10 +43,10 @@ block content
 					br
 
 
-			div( id="pieChart", style="min-width:80px;max-width: 100px;height: 80px;margin: 0px;float: right;")	
+			div( id="pieChart", style="min-width:80px;max-width: 100px;height: 80px;margin: 0px;float: right;")
 			div(id="pieChartTitle", style="min-width: 200px;max-width: 300px;height: 40px;margin-top: 25px;float: right; font-size: 16px; ") שהם 26% מתיק ההשקעות של מגדל 
 			
-			div( id="imagraph", style="min-width: 500px; max-width: 1000px; height: 200px; margin: 50px auto")	
+			div( id="imagraph", style="min-width: 500px; max-width: 1000px; height: 200px; margin: 50px auto")
 				
 
 	
@@ -94,11 +94,11 @@ block content
 					
 								- if (result[group.group_field] == 'NULL') 
 									div(class="entry-bar-empty",style="width: 100%;")
-										div(class="entry-bar",style="width:0px")	
+										div(class="entry-bar",style="width:0px")
 								
 								- if (result[group.group_field] != 'NULL')
 									div(class="entry-bar-empty",style="width: 100%;")
-										div(class="entry-bar",style="width: #{Math.max(result.group_sum / firstBar,0.001) * 100}%;")	
+										div(class="entry-bar",style="width: #{Math.max(result.group_sum / firstBar,0.001) * 100}%;")
 								
 								br
 
