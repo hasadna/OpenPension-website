@@ -31,7 +31,9 @@ var Filter = function(){
 		   
 	}
 
-
+	this.hasConstraint = function(field){
+		return this.constraints.hasOwnProperty(field);
+	}
 
 	this.removeConstraint = function (field, value){
 	    if (!this.constraints.hasOwnProperty(field)){
@@ -67,7 +69,7 @@ var Filter = function(){
     //returns : [ 'report_year', 'managing_body' ]
 	this.getConstrainedFields = function(){
 		return Object.keys(this.constraints);
-	}	
+	}
 
 	//returns array of the constraint data applied to field
 	//example : filter.getConstraint("report_year");

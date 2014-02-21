@@ -45,15 +45,17 @@ block content
 					br
 
 				div( id="graphdata-sum-managingbody-percent", style="display:none")  #{(total_sum/sumByManagingBody * 100).toFixed(1)}
-			
+
+			//- le pie chart, relative to managing_body if selected
 			div( id="pieChart", style="min-width:80px;max-width: 100px;height: 80px;margin: 0px;float: right;")
-			div(id="pieChartTitle", style="min-width: 200px;max-width: 300px;height: 40px;margin-top: 25px;float: right; font-size: 16px; ") שהם #{(total_sum/sumByManagingBody * 100).toFixed(1)}% מתיק ההשקעות של מגדל 
-			
+				//- check if filter contains managing body and more than 4 fields: (managing_body, group_by, year, quarter)
+			- if (filter.hasConstraint("managing_body") && filter.getConstrainedFields().length > 4) 
+				- var managing_body = filter.getConstraintData("managing_body")[0];
+				div(id="pieChartTitle", style="min-width: 200px;max-width: 300px;height: 40px;margin-top: 25px;float: right; font-size: 16px; ") שהם #{(total_sum/sumByManagingBody * 100).toFixed(1)}% מתיק ההשקעות של #{translate(managing_body)}
+			- else 
+				div(id="pieChartTitle", style="min-width: 200px;max-width: 300px;height: 40px;margin-top: 25px;float: right; font-size: 16px; ") שהם #{(total_sum/sumByManagingBody * 100).toFixed(1)}% מסך ההשקעות בשוק הפנסיה
 			div( id="imagraph", style="min-width: 500px; max-width: 1000px; height: 200px; margin: 50px auto")
 				
-
-	
-
 
 			div(class="row pull-right" style="position:relative;top:100px;")
 				a(href="/csv#{filter.toQueryString()}") 
