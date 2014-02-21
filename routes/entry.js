@@ -101,7 +101,8 @@ exports.show = function(req, res){
             title : createTitle(filter),
             filter: filter,
             quarters: quarters,
-            total:total,
+            total:total,      // total sum normalized (scaled)
+            total_sum: groups['total_sum'], //total sum number
             groups: groups,
             group_by: group_by,
             availableCategories: availableCategories, 

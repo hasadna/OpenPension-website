@@ -87,13 +87,14 @@ block content
 						- var sum = convertNumberToWords(result.group_sum);
 						div(class="pull-right entry-box")
 						
+							- var groupPercentage = (result.group_sum / total_sum * 100 ).toFixed(2);
 							- var escapedVal = rfc3986EncodeURIComponent(result[group.group_field]);
 							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
 								- var groupName = removeQoutes(translate(result[group.group_field]));
 								
 								div(class="entry-box-title") #{ groupName}
 									div(id="play-icon" class="icon-flipped glyphicon glyphicon-play")
-								div(class="entry-box-value") #{sum.number +' ' + sum.scale} &#8362
+								div(class="entry-box-value") #{sum.number +' ' + sum.scale } &#8362 (#{groupPercentage}%)
 					
 								- if (result[group.group_field] == 'NULL') 
 									div(class="entry-bar-empty",style="width: 100%;")
