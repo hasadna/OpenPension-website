@@ -88,8 +88,8 @@ exports.show = function(req, res){
       DAL.groupByManagingBody(filter,
         function(groupByManagingBody,aa){
 
-        console.log(groupByManagingBody);
-
+        console.log(groupByManagingBody[0]['group_sum']);
+        var sumByManagingBody = groupByManagingBody[0]['group_sum'];
         groups = DataNormalizer.normalizeData(groups);
 
         console.log(groups);  
@@ -103,6 +103,7 @@ exports.show = function(req, res){
             quarters: quarters,
             total:total,      // total sum normalized (scaled)
             total_sum: groups['total_sum'], //total sum number
+            sumByManagingBody : sumByManagingBody,
             groups: groups,
             group_by: group_by,
             availableCategories: availableCategories, 

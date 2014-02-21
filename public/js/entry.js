@@ -14,15 +14,14 @@ $(function(){
 		var lastYearChangesText = (lastYearChanges > 0)? "עליה של " + lastYearChanges :"ירידה של " + lastYearChanges*(-1)
 		var lastQuarterChangesText = (lastQuarterChanges > 0)? "עליה של " + lastQuarterChanges :"ירידה של " + lastQuarterChanges*(-1)
 		var colorTitle = (lastYearChanges < 0)? "#f00" : "#090" ; 
+
+		var percentageByManagingBody = Number($('#graphdata-sum-managingbody-percent').text());
 		
 		lastYearChangesText += "%" + " בשנה האחרונה"
 		lastQuarterChangesText += "%" + " ברבעון האחרון"
 		
 		minVal = Math.min(Number($('#graphdata0-sum_market_cap').text()), Number($('#graphdata1-sum_market_cap').text()), Number($('#graphdata2-sum_market_cap').text()), Number($('#graphdata3-sum_market_cap').text()))
 		maxVal = Math.max(Number($('#graphdata0-sum_market_cap').text()), Number($('#graphdata1-sum_market_cap').text()), Number($('#graphdata2-sum_market_cap').text()), Number($('#graphdata3-sum_market_cap').text()))
-
-
-
 
 		
         $('#imagraph').highcharts({
@@ -61,30 +60,32 @@ $(function(){
 						return this.value;
 					}
 				},
-                categories: ['רבעון ' + Number($('#graphdata3-report_qurater').text()) + ' ' + Number($('#graphdata3-report_year').text()),
-				             'רבעון ' + Number($('#graphdata2-report_qurater').text()) + ' ' + Number($('#graphdata2-report_year').text()),
-							 'רבעון ' + Number($('#graphdata1-report_qurater').text()) + ' ' + Number($('#graphdata1-report_year').text()),
-							 'רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text())],
-                title: {
-                    text: null
-                }
+      categories: [
+            'רבעון ' + Number($('#graphdata3-report_qurater').text()) + ' ' + Number($('#graphdata3-report_year').text()),
+            'רבעון ' + Number($('#graphdata2-report_qurater').text()) + ' ' + Number($('#graphdata2-report_year').text()),
+            'רבעון ' + Number($('#graphdata1-report_qurater').text()) + ' ' + Number($('#graphdata1-report_year').text()),
+            'רבעון ' + Number($('#graphdata0-report_qurater').text()) + ' ' + Number($('#graphdata0-report_year').text())
+            ],
+      title: {
+              text: null
+              }
             },
 			legend: {
-				enabled: false
-			},
-            yAxis: {
-				minPadding: 1,
-				gridLineColor: 'transparent',
-                min: minVal,
-				max: maxVal + 0.2,
-                title: {
+              enabled: false
+		         },
+      yAxis: {
+              minPadding: 1,
+              gridLineColor: 'transparent',
+              min: minVal,
+				      max: maxVal + 0.2,
+              title: {
 					//rtl: true,
                     text: '',
                     align: 'high'
                 },
-                labels: {
+              labels: {
                     overflow: 'justify',
-					enabled: false 
+				            enabled: false 
                 }
             },
             tooltip: {
@@ -168,7 +169,7 @@ $(function(){
             data: [
 				{
 					name: 'others',
-					y: 76,
+					y: 100 - percentageByManagingBody,
 					color : '#F4F4F4' 									
 					
                 //['Firefox',   45.0],
@@ -177,7 +178,7 @@ $(function(){
 				},
                 {
                     name: 'Chrome',
-                    y: 24,
+                    y: percentageByManagingBody,
                     sliced: false,
                     selected: false,
 					color : '#0000FF' 									
