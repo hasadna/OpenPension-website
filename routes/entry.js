@@ -75,20 +75,11 @@ exports.show = function(req, res){
     filter.setConstraint("group_by",group_by);
   }
 
+
   //show data only for last quarter
   //TODO: get last quarter from DB
   filter.addConstraint("report_year","2013");
   filter.addConstraint("report_qurater","3");
-
-  // BREAD CRUMBS
-  var filterParams = new Array();
-  var f = Filter.fromGetRequest(req);
-  f.removeField("group_by");
-  
-  for(var key in f.getConstrainedFields()) {
-    var value = decodeURI(f.getConstraintData(f.getConstrainedFields()[key])) ;
-	 filterParams.push(value);
-  }
   
    DAL.groupBySummaries(filter,
     function(groups){
@@ -121,7 +112,6 @@ exports.show = function(req, res){
             removeQoutes: DataNormalizer.removeQoutes,
             quarterSelect:quarterSelect,
             debug: debug == 'true',
-            params: filterParams,
             req: req
           });
         

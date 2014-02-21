@@ -8,11 +8,14 @@ block headerbottom
 			div()
 				title
 				div(id="breadcrumbs") 
-					each param in params
+					each field in filter.getConstrainedFields()
+						- if (field == "group_by" || field == "report_year" || field == "report_qurater" ) continue;
+						- var value = filter.getConstraintData(field) ;
+
 						span(id="breadcrumbs_seperator") >
-						- var escapedParam = rfc3986EncodeURIComponent(param);
-						a(onclick="breadCrumbs('#{escapedParam}')")
-							span() #{removeQoutes(translate(param))} 
+						- var escapedParam = rfc3986EncodeURIComponent(value);
+						a(onclick="breadCrumbs('#{escapedParam}')" title="#{translate(field)}")
+							span() #{removeQoutes(translate(value))} 
 
 				br
 				div(id="question")  #{title}?
