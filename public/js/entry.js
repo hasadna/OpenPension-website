@@ -199,6 +199,11 @@ function addConstraint(key,value){
      alert("אין יותר חלוקות");
      return;
   }
+
+  if (value == "NULL"){
+    return;
+  }
+
   //generate filter from query string
   var filter = Filter.fromQueryString(window.location.search);
 
