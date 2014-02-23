@@ -67,10 +67,10 @@ exports.show = function(req, res){
 
   //get available categories, for selection menu
   var availableCategories = Categories.getAvailableCategories(filter);
-
-
+  
   //group by is not set? group by default field
   if (group_by == undefined){
+    //console.log("group_by is undefined");
     group_by = Categories.getNextGroupingCategory(filter);
     filter.setConstraint("group_by",group_by);
   }
@@ -88,11 +88,11 @@ exports.show = function(req, res){
       DAL.groupByManagingBody(filter,
         function(groupByManagingBody,aa){
 
-        console.log(groupByManagingBody[0]['group_sum']);
+//        console.log(groupByManagingBody[0]['group_sum']);
         var sumByManagingBody = groupByManagingBody[0]['group_sum'];
         groups = DataNormalizer.normalizeData(groups);
 
-        console.log(groups);  
+ //       console.log(groups);  
 
         var total = DataNormalizer.convertNumberToWords(groups['total_sum']);
         var totalByManagingBody = DataNormalizer.convertNumberToWords(groupByManagingBody['0']['group_sum']);
