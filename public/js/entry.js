@@ -211,7 +211,6 @@ function addConstraint(key, value) {
     var filter = Filter.fromQueryString(window.location.search);
 
     //add constraint from user
-    value=decodeURIComponent(value);
     filter.addConstraint(key, value);
     var instrument_sub_type = filter.getConstraintData("instrument_sub_type")[0];
 
