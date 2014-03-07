@@ -1,0 +1,85 @@
+extends layout_v2
+
+block headerbottom
+
+
+block content
+
+	//- BODY
+	div(class="container")
+		
+		//- RIGHT COLUMN
+		div(id="right-column" class="col-sm-8 pull-right" style="padding-right: 0px;")
+
+			//- HEADER
+			div(id="header-bottom" style="padding-right: 0px;")
+				div(class="container" style="padding-right: 0px;")
+					div(id="question" class="title2")  #{title}
+						div(class="title1") מגדל חברה לביטוח
+
+			hr()
+			div() החלף רבעון והורד CSV
+			hr()
+
+			div(style="padding:10px 0px 30px 0px;")
+				div(class="title3") גודל התיק
+				div(class="title2") 51 מליארד שקל
+	
+			div(class="title3") חלוקת הנכסים בתיק
+		
+			each group in groups
+				-if (debug)
+					div(style="text-align:left;") #{group.query} 
+				- if (group.group_field == 'fund_name' )continue;
+
+				div()
+					span(style="padding-top:15px;" class="title4") לפי&nbsp
+						b() #{translate(group.group_field)}
+				div(class="")
+					each result in group.result
+						- if (result[group.group_field] === 'NULL' ) continue;
+
+						div(class="pull-right entry-box")
+							- var sum = convertNumberToWords(result.group_sum);					
+							- var groupPercentage = (result.group_sum / total_sum * 100 ).toFixed(2);
+							- var escapedVal = rfc3986EncodeURIComponent(result[group.group_field]);
+							- var groupName = removeQoutes(translate(result[group.group_field]));
+
+							
+							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
+								
+								div(style="float:right;width:280px" class="entry-box-title") #{ groupName} 
+								div(style="float:right" class="entry-box-title") #{groupPercentage}% 
+											
+		//- LEFT COLUMN
+		div(id="left-column" class="col-sm-4 pull-right")
+			div(style="padding:15px 0 0 0")
+				div(class="title3") עוד על מגדל חברה לביטוח
+				each group in groups
+					- if (group.group_field != 'fund_name' )continue;
+
+					each result in group.result
+						- if (result[group.group_field] === 'NULL' ) continue;
+
+						div(class="pull-right entry-box")
+							- var sum = convertNumberToWords(result.group_sum);					
+							- var groupPercentage = (result.group_sum / total_sum * 100 ).toFixed(2);
+							- var escapedVal = rfc3986EncodeURIComponent(result[group.group_field]);
+							- var groupName = removeQoutes(translate(result[group.group_field]));
+
+							
+							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
+								
+								div(style="float:right;width:280px" class="entry-box-title") #{ groupName} 
+								div(style="float:right" class="entry-box-title") #{groupPercentage}% 
+											
+								
+
+
+
+
+		
+	script(type='text/javascript', src='/js/entry.js', myVar = 200 )
+	script(type='text/javascript', src='http://code.highcharts.com/highcharts.js')
+	script(type='text/javascript', src='http://code.highcharts.com/modules/exporting.js')
+

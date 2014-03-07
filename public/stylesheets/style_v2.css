@@ -1,0 +1,348 @@
+@import url(http://fonts.googleapis.com/earlyaccess/alefhebrew.css);
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+@font-face{
+			font-family:'almoni-tzar';
+			font-weight:700; /*(bold)*/
+			font-style: normal;
+			src: url('../fonts/almoni-tzar-aaa-700.eot'); 
+			src: url('../fonts/almoni-tzar-aaa-700.eot?#iefix') format('embedded-opentype'), 
+				url('../fonts/almoni-tzar-aaa-700.ttf') format('truetype'), 
+				url('../fonts/almoni-tzar-aaa-700.woff') format('woff'), 
+				url('../fonts/almoni-tzar-aaa-700.svg#almoni-tzar-bold') format('svg');
+}
+
+body {
+  font-family: "Alef Hebrew",
+               “Helvetica Neue”,
+               Helvetica,
+               Arial,
+               sans-serif;
+  direction: rtl;
+  background-color: #F4F4F4;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  color:inherit;
+  text-decoration: none;
+}
+
+a:hover{
+	text-decoration: underline;
+}
+body{
+
+}
+
+
+
+/* HEADER */
+#header{
+	height:48px;
+}
+
+#header-top{
+	background-color:#0855C7;
+	height:100%;
+}
+
+#logo {
+}
+
+#header-logo{
+	float:right;
+	height:28px;
+	width:auto;
+	margin: 10px 0 0 10px;
+}
+
+#header-title{
+	float:right;
+	color:#FAF9F3;
+	font-size:18px;
+	font-weight:900;
+	line-height:47px;
+	font-family:"Alef Hebrew";
+}
+
+#header-feedback{
+	height:30px;
+	float:left;
+	color:white;
+	font-size:18px;
+	font-weight:600;
+	text-decoration:none;
+	line-height:25px;
+	position: relative;
+	top:10px;
+	border: 1px;
+	border-style: solid;
+	border-color: white;
+	margin: 0 20px 0 15px;
+	padding: 0 10px 0 10px;
+	border-radius: 5px;
+}
+
+#header-feedback a{
+	text-decoration: none;
+}
+
+#header-about{
+	float:left;
+	color:#FAF9F3;
+	font-size:18px;
+	font-weight:600;
+	text-decoration:none;
+	line-height:48px;
+	margin: 0 20px 0 20px;
+}
+
+#header-bottom{
+	background-color:#FFFFFF;
+	height:80px;
+	padding: 15px 20px 0 20px;
+}
+
+
+#breadcrumbs a{
+	text-decoration: underline;
+	float:right;
+	cursor:pointer
+}
+
+
+#breadcrumbs_seperator{
+	float: right;
+	padding: 0 5px 0 5px;
+}
+
+#question{
+	font-size: 24px;
+	line-height: 30px;
+	float:right;
+}
+
+
+#quarterSelection{
+	font-size: 30px;
+	line-height: 45px;
+	float:left;
+}
+
+/*RIGHT COLUMN*/
+
+#right-column{
+	position: relative;
+	background-color: white;
+	padding-right: 0px;
+}
+
+#right-column #info{
+	font-size: 50px;
+}
+
+.quarter-bar {
+	display: block;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	z-index: -1;
+	top: 0px;
+	right: 0px;
+	height: 250px;
+	background-color: #0855C7;
+}
+
+#info #total{
+	font-weight:bold;
+	color: #FFA202;
+	font-family:'almoni-tzar';
+}
+
+/*LEFT COLUMN*/
+#left-column{
+	position: relative;
+	padding-right: 0px;
+}
+
+#group-by{
+	position: relative;
+	float:right;
+	font-size:19px;
+	top:3px;
+}
+
+
+
+
+/* ENTRY */
+
+.entry-box{
+	border-width:1px 1px 0 1px;
+	border-color:#EFEFEF;
+	border-style:solid;
+	height:48px;
+	padding-top:12px;
+	width:100%;
+}
+
+
+.entry-box:last-child{
+	border-width:1px 1px 1px 1px;
+	margin-bottom: 15px;
+}
+
+.entry-box .entry-bar {
+	display: block;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	z-index: -1;
+	height: 15px;
+	background-color: #0855C7;
+	z-index: 1;
+}
+
+.entry-bar-empty{
+	background-color: #E6EEF9;
+	z-index: -1;
+}
+
+.entry-box-link{
+	cursor:pointer;
+	text-decoration: none;
+}
+
+.entry-box-title,
+.entry-box-title:hover,
+.entry-box-title:active,
+.entry-box-title:link{
+	color:#686868;
+	font-size: 16px;
+	font-weight: normal;
+	padding-right: 12px;
+}
+
+.entry-box-value,
+.entry-box-value:hover,
+.entry-box-value:active,
+.entry-box-value:link{
+	text-decoration: none;
+	color:black;
+	font-size: 16px;
+	padding-right: 12px;
+	line-height: 10px;
+	margin-bottom: 15px;
+}
+
+/* ABOUT */
+#header-bottom-title{
+	margin-top: 8px;
+	font-size: 30px;
+}
+
+/* GENERAL */
+.noselect{
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+
+/* QUERY BUILDER */
+#qb-container{
+	height:600px;
+	width: 600px;
+	background-color:grey;
+	float:right;
+}
+
+.qb-category{
+	color: white;
+	border-width:1px;
+	border-style: solid;
+	border-color: black;
+	padding: 5px 10px 5px 10px;
+	width: 120px;
+	float: right;
+	text-align: center;
+}
+
+#downloadDataButton {
+	text-decoration: none;e
+}
+
+#downloadDataButton{
+	border-bottom-width:1px;
+	border-bottom-style: solid;
+	border-bottom-color: #053B83;
+	background-color: #0855C7;
+	font-size: 25px;
+	font-weight: bold;
+	padding: 5px 10px 5px 10px;
+	border-radius: 5px;
+	color: #FFFFFF;
+}
+
+#csv-comment{
+	font-size: 16px;
+	font-weight: normal;
+}
+#csv-icon{
+	float: left;
+	padding-right: 40px;
+	padding-top: 10px;
+}
+
+
+#play-icon{
+	float: left;
+	font-size: 15px;
+	color: #C1BFBF;
+	padding-right: 20px;
+	padding-top: 15px;
+}
+
+.entry-box:hover #play-icon{
+	color: black;
+}
+
+.icon-flipped {
+transform: scaleX(-1);
+-moz-transform: scaleX(-1);
+-webkit-transform: scaleX(-1);
+-ms-transform: scaleX(-1);
+}
+
+#highcharts-0{
+	overflow: visible !important;
+}
+
+.gray{
+	color: #999999;
+}
+
+body{
+	background-color: white;
+	line-height: 24px;
+}
+
+.title1 { font-size: 36px;line-height: 24px;font-family: "Alef Hebrew";font-weight: bold}
+.title2 { font-size: 24px;line-height: 24px;font-family: "Alef Hebrew";}
+.title3 { font-size: 21px;line-height: 24px;font-family: "Alef Hebrew";color: #999999;}
+.title4 { font-size: 18px;line-height: 24px;font-family: "Alef Hebrew";color: #999999;}
+.title5 { font-size: 16px;line-height: 24px;font-family: "Alef Hebrew";}
+.title6 { font-size: 14px;line-height: 24px;font-family: "Alef Hebrew";}

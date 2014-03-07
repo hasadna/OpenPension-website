@@ -163,11 +163,22 @@ function singleQuery(filter, callback)
 	});
 }
 
-
 function groupBySummaries(filter, callback)
+{
+	groupBySummariesLimited(filter,null, callback);
+}
+
+function groupBySummariesLimited(filter, limit, callback)
 {
 	var select = squel.select().from(config.table);
 	prepareWheres(select, filter);
+	select.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
+	select.order('sum('+(summary_columns.join('+')+')'),false);
+	
+	if (limit != null){
+		select.limit(limit)
+	}
+
 	var groups=prepareGroupBy(select, filter);
 	var wait=groups.length;
 	if (wait == 0)
@@ -191,8 +202,8 @@ function groupBySummaries(filter, callback)
 }
 
 
-/*
- * group by managing body, if managing body is in the filter
+/**
+ * Group by managing body, if managing body is in the filter
  * and by last four quarters
  */
 
@@ -247,7 +258,7 @@ function groupByQuarters(filter, callback){
 	}
 
 	select.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
-
+	select.order('sum('+(summary_columns.join('+')+')'),false);
 
 	select=select.toString();
 
@@ -266,5 +277,5 @@ exports.allowed_filters=Object.keys(allowed_filters);
 exports.singleQuery=singleQuery;
 exports.groupByQuarters=groupByQuarters;
 exports.groupByManagingBody=groupByManagingBody;
-
+exports.groupBySummariesLimited=groupBySummariesLimited;
 

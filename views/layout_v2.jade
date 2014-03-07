@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title= title
+    script(type='text/javascript', src='/js/jquery-1.11.0.min.js')
+
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')  
+    link(rel='stylesheet', href='/stylesheets/bootstrap-select.rtl.min.css')
+    link(rel='stylesheet', href='/stylesheets/style_v2.css')
+    // Le HTML5 shim, for IE6-8 support of HTML5 elements 
+    //if lt IE 9
+    script(src='/js/html5.js')
+    script(src='/js/respond.min.js')
+    // Le fav and touch icons
+    script(type='text/javascript', src='/js/bootstrap.min.js')
+    script(type='text/javascript', src='/js/bootstrap-select.min.js')
+    script(type='text/javascript', src='/js/filter.js')
+    script(type='text/javascript', src='/js/categories.js')
+  body
+    header(id="header" class="noselect")
+          div(id="header-top")
+            div(class="container")
+              div()
+                div(id="logo")
+                    img(id="header-logo" src="/img/pension-logo.png")
+                    div(id="header-title") 
+                        a( href="/" ) פנסיה פתוחה
+                div(id="header-feedback")
+                    a(href="mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה") שלחו לנו פידבק
+                div(id="header-about")
+                    a( href="/about")אודות
+        block headerbottom
+
+    block content

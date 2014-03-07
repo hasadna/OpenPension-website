@@ -55,6 +55,7 @@ Categories.getCategories = function(filter){
     delete resArray[resArray.indexOf("activity_industry")];
     delete resArray[resArray.indexOf("reference_index")];
     delete resArray[resArray.indexOf("fund_name")];
+    delete resArray[resArray.indexOf("instrument_sub_type")];
   }    
 
   //filter contains instrument sub type
