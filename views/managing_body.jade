@@ -18,7 +18,16 @@ block content
 						div(class="title1") מגדל חברה לביטוח
 
 			hr()
-			div() החלף רבעון והורד CSV
+
+			div(style="font-family:FontAwesome;") החלף רבעון והורד CSV
+				div(id="group-by") חלוקה לפי &nbsp&nbsp
+				select(id="select_quarter" style="float:right;"  data-width="160px" )
+					each quarter in lastQuarters
+						- var select=null;
+						- if (report_year == quarter.year && report_qurater == quarter.quarter)
+							- select='selected';
+						option(value="#{JSON.stringify(quarter)}",
+						selected=select) &#xf073 רבעון #{quarter.quarter}, #{quarter.year}
 			hr()
 
 			div(style="padding:10px 0px 30px 0px;")
@@ -79,7 +88,7 @@ block content
 
 
 		
-	script(type='text/javascript', src='/js/entry.js', myVar = 200 )
+	script(type='text/javascript', src='/js/managing_body_clientside.js', myVar = 200 )
 	script(type='text/javascript', src='http://code.highcharts.com/highcharts.js')
 	script(type='text/javascript', src='http://code.highcharts.com/modules/exporting.js')
 

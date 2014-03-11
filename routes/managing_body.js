@@ -63,11 +63,15 @@ exports.show = function(req, res){
   filter.removeField("debug");
 
   var instrument_sub_type = filter.getConstraintData("instrument_sub_type")[0];
+  var report_year = filter.getConstraintData("report_year")[0];
+  var report_qurater = filter.getConstraintData("report_qurater")[0];
   
+
 
   //get available categories, for selection menu
   var availableCategories = Categories.getAvailableCategories(filter);
   
+
   //group by is not set? group by default field
   if (group_by == undefined){
     //console.log("group_by is undefined");
@@ -76,10 +80,13 @@ exports.show = function(req, res){
   }
 
 
+
   //show data only for last quarter
   //TODO: get last quarter from DB
 //  filter.addConstraint("report_year","2013");
 //  filter.addConstraint("report_qurater","3");
+
+  var lastQuarters = DataNormalizer.getLastFourQuarters("2013","3");
   
   DAL.groupBySummariesLimited(filter,5,
     function(groups){
@@ -114,7 +121,10 @@ exports.show = function(req, res){
             removeQoutes: DataNormalizer.removeQoutes,
             // quarterSelect:quarterSelect,
             debug: debug == 'true',
-            req: req
+            req: req,
+            lastQuarters: lastQuarters,
+            report_qurater: report_qurater,
+            report_year: report_year
           });
         
       });
