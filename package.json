@@ -9,6 +9,7 @@
     "jade": "1.1.5",
     "pg": "latest",
     "squel": "1.1.3",
-    "toobusy" : "0.2.4"
+    "toobusy" : "0.2.4",
+    "memjs" : "0.8.4"
   }
 }
