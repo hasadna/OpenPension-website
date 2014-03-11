@@ -18,6 +18,8 @@ dictionary['instrument_name'] = 'שם נכס';
 dictionary['fund_name'] = 'שם קופה';
 dictionary['reference_index'] = 'מדד ייחוס';
 
+
+dictionary['harel'] = 'הראל';
 dictionary['migdal'] = 'מגדל';
 
 dictionary['null'] = 'לא נמצא בקטגוריה';
