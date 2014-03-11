@@ -76,19 +76,30 @@ exports.show = function(req, res){
   }
 
 
+
+
   //show data only for last quarter
   //TODO: get last quarter from DB
   filter.addConstraint("report_year","2013");
   filter.addConstraint("report_qurater","3");
+
+
+  //special case for managing body page
+  //where we want to show precentage of total market sum
+  var gfilter = filter.clone();
+
+  if (filter.hasConstraint("managing_body") && 
+        filter.getConstrainedFields().length == 4){
+      gfilter.removeField("managing_body");
+  }
   
-   DAL.groupBySummaries(filter,
+  DAL.groupBySummaries(filter,
     function(groups){
     DAL.groupByQuarters(filter,
       function(quarters, quarterSelect){
-      DAL.groupByManagingBody(filter,
-        function(groupByManagingBody,aa){
+      DAL.groupByManagingBody(gfilter,
+        function(groupByManagingBody){
 
-//        console.log(groupByManagingBody[0]['group_sum']);
         var sumByManagingBody = groupByManagingBody[0]['group_sum'];
         groups = DataNormalizer.normalizeData(groups);
 
