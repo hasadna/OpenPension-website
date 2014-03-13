@@ -38,7 +38,7 @@ block content
 				- for(var i = 0; i < 4; i++)
 					div( id="graphdata#{i}-report_year", style="display:none"   ) #{quarters[i]['report_year'] } 
 					div( id="graphdata#{i}-report_qurater", style="display:none") #{quarters[i]['report_qurater']}
-					-if( drillDownDepth <= 1)
+					-if( drillDownDepth == 0)
 						div( id="graphdata#{i}-sum_market_cap", style="display:none") #{convertNumberToWords(quarters[i]['group_sum']).number}
 					-else
 						div( id="graphdata#{i}-sum_market_cap", style="display:none") #{qPercentage[i]} 			
@@ -49,8 +49,8 @@ block content
 
 			//- le pie chart, relative to managing_body if selected
 			div( id="pieChart", style="min-width:80px;max-width: 100px;height: 80px;margin: 0px;float: right;")
-				//- check if filter contains managing body and more than 4 fields: (managing_body, group_by, year, quarter)
-			- if (filter.hasConstraint("managing_body") && filter.getConstrainedFields().length > 4) 
+				//- check if filter contains managing body
+			- if (filter.hasConstraint("managing_body")) 
 				- var managing_body = filter.getConstraintData("managing_body")[0];
 				div(id="pieChartTitle", style="min-width: 200px;max-width: 300px;height: 40px;margin-top: 25px;float: right; font-size: 16px; ") שהם #{(total_sum/sumByManagingBody * 100).toFixed(1)}% מתיק ההשקעות של #{translate(managing_body)}
 			- else 
@@ -114,4 +114,3 @@ block content
 	script(type='text/javascript', src='/js/entry.js', myVar = 200 )
 	script(type='text/javascript', src='http://code.highcharts.com/highcharts.js')
 	script(type='text/javascript', src='http://code.highcharts.com/modules/exporting.js')
-

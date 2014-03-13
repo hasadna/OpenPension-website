@@ -87,10 +87,11 @@ exports.show = function(req, res){
   //special case for managing body page
   //where we want to show precentage of total market sum
   var gfilter = filter.clone();
-  var drillDownDepth = filter.getConstrainedFields().length - 2;
+  var drillDownDepth = filter.getDrillDownDepth();
+
 
   if (filter.hasConstraint("managing_body") && 
-        drillDownDepth == 2){
+        drillDownDepth == 1){
       gfilter.removeField("managing_body");
   }
   

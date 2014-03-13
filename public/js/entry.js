@@ -9,8 +9,7 @@ $(function () {
 
     var filter = Filter.fromQueryString(window.location.search);
 
-    //TODO: when quarter and year are added to filter, subtract 2
-    var drillDownDepth = filter.getConstrainedFields().length;
+    var drillDownDepth = filter.getDrillDownDepth();
 
     var lastYearChanges = (Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata3-sum_market_cap').text())).toFixed(1);
     var lastQuarterChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata1-sum_market_cap').text())) / Number($('#graphdata3-sum_market_cap').text()) * 100).toFixed(1);
@@ -22,7 +21,7 @@ $(function () {
     var percentageByManagingBody = Number($('#graphdata-sum-managingbody-percent').text());
 
 
-    if (drillDownDepth <= 1){
+    if (drillDownDepth == 0){
         dataLabelClass = " מ'";
     }
     else{
