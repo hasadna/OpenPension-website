@@ -35,15 +35,16 @@ block content
 						
 			//- Hidden quarters' data for js 
 			div(class="row" style="border:0;height:1px")
-				- var quarterIndex = 0;
-				each quarter in quarters
-					div( id="graphdata#{quarterIndex}-report_year", style="display:none"   ) #{quarter['report_year'] } 
-					div( id="graphdata#{quarterIndex}-report_qurater", style="display:none") #{quarter['report_qurater']}
-					div( id="graphdata#{quarterIndex}-sum_market_cap", style="display:none") #{convertNumberToWords(quarter['group_sum']).number} 			
+				- for(var i = 0; i < 4; i++)
+					div( id="graphdata#{i}-report_year", style="display:none"   ) #{quarters[i]['report_year'] } 
+					div( id="graphdata#{i}-report_qurater", style="display:none") #{quarters[i]['report_qurater']}
+					-if( drillDownDepth <= 1)
+						div( id="graphdata#{i}-sum_market_cap", style="display:none") #{convertNumberToWords(quarters[i]['group_sum']).number}
+					-else
+						div( id="graphdata#{i}-sum_market_cap", style="display:none") #{qPercentage[i]} 			
 
-					- quarterIndex++;
 					br
-
+				
 				div( id="graphdata-sum-managingbody-percent", style="display:none")  #{(total_sum/sumByManagingBody * 100).toFixed(1)}
 
 			//- le pie chart, relative to managing_body if selected

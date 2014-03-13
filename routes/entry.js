@@ -87,9 +87,10 @@ exports.show = function(req, res){
   //special case for managing body page
   //where we want to show precentage of total market sum
   var gfilter = filter.clone();
+  var drillDownDepth = filter.getConstrainedFields().length - 2;
 
   if (filter.hasConstraint("managing_body") && 
-        filter.getConstrainedFields().length == 4){
+        drillDownDepth == 2){
       gfilter.removeField("managing_body");
   }
   
@@ -108,6 +109,14 @@ exports.show = function(req, res){
         var total = DataNormalizer.convertNumberToWords(groups['total_sum']);
         var totalByManagingBody = DataNormalizer.convertNumberToWords(groupByManagingBody['0']['group_sum']);
 
+        var qPercentage = [];
+        
+        for (var i = 0; i < 4 ; i++){
+            qPercentage[i] = Number(quarters[i]['group_sum'])/
+              Number(groupByManagingBody[i]['group_sum']) * 100;
+        }
+
+
         res.render('entry',{
             title : createTitle(filter),
             filter: filter,
@@ -125,7 +134,10 @@ exports.show = function(req, res){
             removeQoutes: DataNormalizer.removeQoutes,
             quarterSelect:quarterSelect,
             debug: debug == 'true',
-            req: req
+            req: req,
+            groupByManagingBody: groupByManagingBody,
+            qPercentage: qPercentage,
+            drillDownDepth: drillDownDepth
           });
         
       });

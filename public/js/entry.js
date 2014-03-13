@@ -1,3 +1,4 @@
+var dataLabelClass; 
 $(function () {
 
     $('#select_group_by').selectpicker();
@@ -6,8 +7,12 @@ $(function () {
         setConstraint("group_by", this.value);
     });
 
+    var filter = Filter.fromQueryString(window.location.search);
 
-    var lastYearChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata3-sum_market_cap').text())) / Number($('#graphdata3-sum_market_cap').text()) * 100).toFixed(1);
+    //TODO: when quarter and year are added to filter, subtract 2
+    var drillDownDepth = filter.getConstrainedFields().length;
+
+    var lastYearChanges = (Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata3-sum_market_cap').text())).toFixed(1);
     var lastQuarterChanges = ((Number($('#graphdata0-sum_market_cap').text()) - Number($('#graphdata1-sum_market_cap').text())) / Number($('#graphdata3-sum_market_cap').text()) * 100).toFixed(1);
 
     var lastYearChangesText = (lastYearChanges > 0) ? "עליה של " + lastYearChanges : "ירידה של " + lastYearChanges * (-1)
@@ -16,8 +21,16 @@ $(function () {
 
     var percentageByManagingBody = Number($('#graphdata-sum-managingbody-percent').text());
 
-    lastYearChangesText += "%" + " בשנה האחרונה"
-    lastQuarterChangesText += "%" + " ברבעון האחרון"
+
+    if (drillDownDepth <= 1){
+        dataLabelClass = " מ'";
+    }
+    else{
+        dataLabelClass = "%";
+    }
+
+    lastYearChangesText += dataLabelClass + " בשנה האחרונה"
+    lastQuarterChangesText += dataLabelClass + " ברבעון האחרון"
 
     minVal = Math.min(Number($('#graphdata0-sum_market_cap').text()), Number($('#graphdata1-sum_market_cap').text()), Number($('#graphdata2-sum_market_cap').text()), Number($('#graphdata3-sum_market_cap').text()))
     maxVal = Math.max(Number($('#graphdata0-sum_market_cap').text()), Number($('#graphdata1-sum_market_cap').text()), Number($('#graphdata2-sum_market_cap').text()), Number($('#graphdata3-sum_market_cap').text()))
@@ -190,6 +203,11 @@ $(function () {
             ]
         }]
     });
+
+    $(".highcharts-data-labels tspan").each(
+        function(index,elem){
+            $(elem).html($(elem).html()+" "+dataLabelClass)
+        });
 });
 
 
