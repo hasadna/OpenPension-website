@@ -111,9 +111,20 @@ exports.show = function(req, res){
 
         var qPercentage = [];
         
+        //calculate quarter percentage
+        //and put dummy data in missing quarters
         for (var i = 0; i < 4 ; i++){
-            qPercentage[i] = Number(quarters[i]['group_sum'])/
-              Number(groupByManagingBody[i]['group_sum']) * 100;
+            if (quarters[i] != undefined){
+              qPercentage[i] = Number(quarters[i]['group_sum'])/
+                Number(groupByManagingBody[i]['group_sum']) * 100;
+            }
+            else{
+              quarters[i] = {};
+              quarters[i]['report_year'] = "0";
+              quarters[i]['report_qurater'] = "0";
+              qPercentage[i] = -1;
+          
+            }
         }
 
 

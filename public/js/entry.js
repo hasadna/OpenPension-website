@@ -204,10 +204,26 @@ $(function () {
         }]
     });
 
+    //manually add classifier to data label
     $(".highcharts-data-labels tspan").each(
         function(index,elem){
             $(elem).html($(elem).html()+" "+dataLabelClass)
         });
+
+    //handle missing data
+    $(".highcharts-data-labels tspan").each(
+        function(index,elem){
+            if ($(elem).html().indexOf("-1") >= 0 ){
+                $(elem).html("חסר מידע");
+        
+                if (index == 0 || index == 3){
+                    $("text.highcharts-subtitle tspan").html("חסר מידע");
+                }
+            }
+
+        });
+
+
 });
 
 
