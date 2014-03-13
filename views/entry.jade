@@ -50,7 +50,7 @@ block content
 			//- le pie chart, relative to managing_body if selected
 			div( id="pieChart", style="min-width:80px;max-width: 100px;height: 80px;margin: 0px;float: right;")
 				//- check if filter contains managing body
-			- if (filter.hasConstraint("managing_body")) 
+			- if (filter.hasConstraint("managing_body") && drillDownDepth > 1) 
 				- var managing_body = filter.getConstraintData("managing_body")[0];
 				div(id="pieChartTitle", style="min-width: 200px;max-width: 300px;height: 40px;margin-top: 25px;float: right; font-size: 16px; ") שהם #{(total_sum/sumByManagingBody * 100).toFixed(1)}% מתיק ההשקעות של #{translate(managing_body)}
 			- else 

@@ -17,7 +17,7 @@ db.pg.prototype = {
     mc.get(sql, function(val) {
 
         if (val == undefined || val.toString().indexOf("Error") == 0){ // value not found in cache
-          console.error("miss");
+          //console.error("miss");
           self.client.query(sql, function(err, result) {
             if(err) {
               callback(err);
@@ -31,7 +31,7 @@ db.pg.prototype = {
           });
         }
         else{//value found in cache
-          console.error("hit");
+          //console.error("hit");
           callback(null, val);
         }
       });
