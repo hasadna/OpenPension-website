@@ -25,7 +25,7 @@ CREATE OR REPLACE VIEW pension_data_all AS
 		when production.instrument_type in ('מזומנים','פקדונות')	then 'ללא סיווג'::character varying(128)
 		else 							     'ללא סיווג'::character varying(128)
     end					as activity_industry,
-    production.currency,     
+    COALESCE(production.currency,'NIS'::character varying(128)) 	as currency,     
     (COALESCE(production.fair_value,0))*1000 	as fair_value, 
     (COALESCE(production.market_cap,0))*1000 	as market_cap, 
     production.rate_of_fund, 
