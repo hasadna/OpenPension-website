@@ -9,7 +9,7 @@ block content
 	div(class="container")
 		
 		//- RIGHT COLUMN
-		div(id="right-column" class="col-sm-8 pull-right" style="padding-right: 0px;")
+		div(id="right-column" class="col-sm-12 pull-right" style="padding-right: 0px;")
 
 			//- HEADER
 			div(id="header-bottom" style="padding-right: 0px;")
@@ -19,8 +19,8 @@ block content
 
 			hr()
 
-			div(style="font-family:FontAwesome;") החלף רבעון והורד CSV
-				div(id="group-by") חלוקה לפי &nbsp&nbsp
+			div(style="font-family:FontAwesome;")
+				//- div(id="group-by") חלוקה לפי &nbsp&nbsp
 				select(id="select_quarter" style="float:right;"  data-width="160px" )
 					each quarter in lastQuarters
 						- var select=null;
@@ -61,8 +61,8 @@ block content
 								div(style="float:right" class="entry-box-title") #{groupPercentage}% 
 											
 		//- LEFT COLUMN
-		div(id="left-column" class="col-sm-4 pull-right")
-			div(style="padding:15px 0 0 0")
+		//- div(id="left-column" class="col-sm-4 pull-right")
+		//-	div(style="padding:15px 0 0 0")
 				div(class="title3") עוד על מגדל חברה לביטוח
 				each group in groups
 					- if (group.group_field != 'fund_name' )continue;

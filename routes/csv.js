@@ -10,6 +10,8 @@ exports.download = function(req, res){
   var filter = Filter.fromGetRequest(req);
 
   filter.removeField("group_by");
+  filter.removeField("report_qurater");
+  filter.removeField("report_year");
 
   DAL.singleQuery(filter,
     function(rows){

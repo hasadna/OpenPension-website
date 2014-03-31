@@ -1,6 +1,4 @@
 var pg = require('pg');
-var memjs = require('memjs')
-var mc = memjs.Client.create()
 var config = require('../config')
 var db = {};
 
@@ -11,60 +9,32 @@ db.pg = function() {
 
 db.pg.prototype = {
   querys: function(sql,callback) {
-
     var self = this;
+    this.client.query(sql, function(err, result) {
+      if(err) {
+        callback(err);
+        return;
+      }
 
-    mc.get(sql, function(val) {
+      callback(null, result.rows);
 
-        if (val == undefined || val.toString().indexOf("Error") == 0){ // value not found in cache
-          //console.error("miss");
-          self.client.query(sql, function(err, result) {
-            if(err) {
-              callback(err);
-              return;
-            }
+      self.client.end();
+    });
 
-            mc.set(sql,result.rows);
-            callback(null, result.rows);
-
-            self.client.end();
-          });
-        }
-        else{//value found in cache
-          //console.error("hit");
-          callback(null, val);
-        }
-      });
   },
   multiple_queries: function(sql,callback) {
+    this.client.query(sql, function(err, result) {
+      if(err) {
+        callback(err);
+        return;
+      }
 
-    var self = this;
-  
-    mc.get(sql, function(val) {
+      callback(null, result.rows);
+    });
 
-        if (val == undefined || val.toString().indexOf("Error") == 0){ // value not found in cache
-          console.error("miss");
-
-          self.client.query(sql, function(err, result) {
-            if(err) {
-              callback(err);
-              return;
-            }
-
-            mc.set(sql,result.rows);
-            callback(null, result.rows);
-          });
-
-        }
-        else{//value found in cache
-          console.error("hit");
-          callback(null, val);
-        }
-      });
-  
   },
   end: function(sql,callback) {
-	   this.client.end();
+    this.client.end();
   }
 
 };
