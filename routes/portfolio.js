@@ -104,7 +104,7 @@ exports.show = function(req, res){
         // res.end();
 
 
-        res.render('managing_body',{
+        res.render('portfolio',{
             title : createTitle(filter),
             filter: filter,
             // quarters: quarters,
