@@ -17,34 +17,34 @@ function createTitle(filter){
   
   // TBD add categories 
   var managing_body = translate(filter.getConstraintData('managing_body'));
-  var instrument_type = filter.getConstraintData('instrument_type');
+  var liquidity = filter.getConstraintData('liquidity');
   var industry = filter.getConstraintData('industry');
   var currency = filter.getConstraintData('currency');
   var rating = filter.getConstraintData('rating');
-  var instrument_sub_type = filter.getConstraintData('instrument_sub_type');
+  var asset_type = filter.getConstraintData('asset_type');
   var instrument_id = filter.getConstraintData('instrument_id');
   var issuer = filter.getConstraintData('issuer');
         
         
   // nothing is chosen by the user
-  if (managing_body== "" && instrument_type=="" && industry=="" && currency=="" && rating=="" && instrument_sub_type=="" && instrument_id==""  ) {
+  if (managing_body== "" && liquidity=="" && industry=="" && currency=="" && rating=="" && asset_type=="" && instrument_id==""  ) {
         nothingIsChosen = 1; 
   }  
   // only managing body is active 
-  if (managing_body!= "" && instrument_type=="" && industry=="" && currency=="" && rating=="" && instrument_sub_type=="" && instrument_id==""  ) {
+  if (managing_body!= "" && liquidity=="" && industry=="" && currency=="" && rating=="" && asset_type=="" && instrument_id==""  ) {
         onlyManagingBody = 1; 
   }
   // If managing body or instrument is not chosen add the word 'instruments' (nechasim) to have a NOSSE 
-  //if (managing_body== "" && instrument_type=="" ) {
-  if (instrument_type=="" && instrument_sub_type =="" && !onlyManagingBody) {
+  //if (managing_body== "" && liquidity=="" ) {
+  if (liquidity=="" && asset_type =="" && !onlyManagingBody) {
         addTheWordNechasim = 1;  
   }
         
   title +=  (managing_body != "")?onlyManagingBody?"כמה כסף מנהלת " + managing_body : "כמה כסף משקיעה " + managing_body:"כמה כסף מושקע";
-  title +=  (instrument_type != "")?" ב" + removeQoutes(instrument_type) :"";
-  title +=  (instrument_sub_type != "")?(instrument_type != "")?" ו" + removeQoutes(instrument_sub_type):" ב" + removeQoutes(instrument_sub_type) :"";  
+  title +=  (liquidity != "")?" ב" + removeQoutes(liquidity) :"";
+  title +=  (asset_type != "")?(liquidity != "")?" ו" + removeQoutes(asset_type):" ב" + removeQoutes(asset_type) :"";  
   title +=  (addTheWordNechasim)?" בנכסים" : "";  
-  title +=  (addTheWordNechasim && issuer != "" )?" של " + issuer :( (instrument_type != "" || instrument_sub_type != "") && issuer != "" )?" של " + issuer :(issuer != "" )?" ב" + issuer:"";  
+  title +=  (addTheWordNechasim && issuer != "" )?" של " + issuer :( (liquidity != "" || asset_type != "") && issuer != "" )?" של " + issuer :(issuer != "" )?" ב" + issuer:"";  
   title +=  (industry != "")?" בענף ה" + industry :"";        
   title +=  (currency != "")?" שנקנו ב" + currency :"";
   title +=  (rating != "")?" בדירוג " + rating :"";
@@ -62,8 +62,7 @@ exports.show = function(req, res){
   var debug = filter.getConstraintData("debug")[0];
   filter.removeField("debug");
 
-  var instrument_sub_type = filter.getConstraintData("instrument_sub_type")[0];
-  
+  var asset_type = filter.getConstraintData("asset_type")[0];
 
   //get available categories, for selection menu
   var availableCategories = Categories.getAvailableCategories(filter);
@@ -112,7 +111,7 @@ exports.show = function(req, res){
 
         var qPercentage = [];
         
-        //calculate quarter percentage
+        //calculate quarter percentage (for graph)
         //and put dummy data in missing quarters
         for (var i = 0; i < 4 ; i++){
             if (quarters[i] != undefined){

@@ -4,11 +4,8 @@ var config = require('../config')
 
 var allowed_filters={ 
 	'managing_body':simple_filter, 
-	'instrument_type':simple_filter, 
-	//'industry':simple_filter, 
 	'currency' : simple_filter, 
 	'rating':simple_filter, 
-	'instrument_sub_type': simple_filter, 
 	'report_year':simple_filter, 
 	'report_qurater':simple_filter, 
 	'instrument_id':simple_filter,
@@ -16,10 +13,12 @@ var allowed_filters={
 	'issuer':simple_filter,
 	'instrument_name':simple_filter,
 	'activity_industry':simple_filter,
-	//'industry':simple_filter,
 	'reference_index':simple_filter,
-	'fund_name' : simple_filter
+	'fund_name' : simple_filter,
+	'liquidity' : simple_filter,
+	'asset_type' : simple_filter
 };
+
 var summary_columns=["market_cap","fair_value"];
 
 /**

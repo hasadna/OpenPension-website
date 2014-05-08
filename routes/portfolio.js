@@ -15,40 +15,54 @@ function createTitle(filter){
   var nothingIsChosen = 0;
   var addTheWordNechasim =0;
   
-  // TBD add categories 
+  // TBD add groups 
   var managing_body = translate(filter.getConstraintData('managing_body'));
-  var instrument_type = filter.getConstraintData('instrument_type');
+  var liquidity = filter.getConstraintData('liquidity');
   var industry = filter.getConstraintData('industry');
   var currency = filter.getConstraintData('currency');
   var rating = filter.getConstraintData('rating');
-  var instrument_sub_type = filter.getConstraintData('instrument_sub_type');
+  var asset_type = filter.getConstraintData('asset_type');
   var instrument_id = filter.getConstraintData('instrument_id');
   var issuer = filter.getConstraintData('issuer');
         
         
   // nothing is chosen by the user
-  if (managing_body== "" && instrument_type=="" && industry=="" && currency=="" && rating=="" && instrument_sub_type=="" && instrument_id==""  ) {
+  if (managing_body== "" && liquidity=="" && industry=="" && currency=="" && rating=="" && instrument_sub_type=="" && instrument_id==""  ) {
         nothingIsChosen = 1; 
   }  
   // only managing body is active 
-  if (managing_body!= "" && instrument_type=="" && industry=="" && currency=="" && rating=="" && instrument_sub_type=="" && instrument_id==""  ) {
+  if (managing_body!= "" && liquidity=="" && industry=="" && currency=="" && rating=="" && asset_type=="" && instrument_id==""  ) {
         onlyManagingBody = 1; 
   }
   // If managing body or instrument is not chosen add the word 'instruments' (nechasim) to have a NOSSE 
-  //if (managing_body== "" && instrument_type=="" ) {
-  if (instrument_type=="" && instrument_sub_type =="" && !onlyManagingBody) {
+  //if (managing_body== "" && liquidity=="" ) {
+  if (liquidity=="" && asset_type =="" && !onlyManagingBody) {
         addTheWordNechasim = 1;  
   }
         
   title +=  (managing_body != "")?onlyManagingBody?"תיק ההשקעות של " + managing_body : "כמה כסף משקיעה " + managing_body:"כמה כסף מושקע";
-  title +=  (instrument_type != "")?" ב" + removeQoutes(instrument_type) :"";
-  title +=  (instrument_sub_type != "")?(instrument_type != "")?" ו" + removeQoutes(instrument_sub_type):" ב" + removeQoutes(instrument_sub_type) :"";  
+  title +=  (liquidity != "")?" ב" + removeQoutes(liquidity) :"";
+  title +=  (asset_type != "")?(liquidity != "")?" ו" + removeQoutes(asset_type):" ב" + removeQoutes(asset_type) :"";  
   title +=  (addTheWordNechasim)?" בנכסים" : "";  
-  title +=  (addTheWordNechasim && issuer != "" )?" של " + issuer :( (instrument_type != "" || instrument_sub_type != "") && issuer != "" )?" של " + issuer :(issuer != "" )?" ב" + issuer:"";  
+  title +=  (addTheWordNechasim && issuer != "" )?" של " + issuer :( (liquidity != "" || asset_type != "") && issuer != "" )?" של " + issuer :(issuer != "" )?" ב" + issuer:"";  
   title +=  (industry != "")?" בענף ה" + industry :"";        
   title +=  (currency != "")?" שנקנו ב" + currency :"";
   title +=  (rating != "")?" בדירוג " + rating :"";
   return title;  
+}
+
+var plurals = {
+  'managing_body': 'הגופים המוסדיים', 
+  'currency' : 'סוגי המטבעות', 
+  'rating':'הדירוגים', 
+  'instrument_id':'מספרי הנכסים',
+  'issuer':'המנפיקים',
+  'instrument_name':'שמות הנכסים',
+  'activity_industry':'ענפי הפעילות',
+  'reference_index':'המדדים',
+  'fund_name' : 'הקופות',
+  'liquidity' : 'רמות הנזילות',
+  'asset_type' : 'סוגי הנכסים'
 }
 
 exports.show = function(req, res){
@@ -62,7 +76,7 @@ exports.show = function(req, res){
   var debug = filter.getConstraintData("debug")[0];
   filter.removeField("debug");
 
-  var instrument_sub_type = filter.getConstraintData("instrument_sub_type")[0];
+  var asset_type = filter.getConstraintData("asset_type")[0];
   var report_year = filter.getConstraintData("report_year")[0];
   var report_qurater = filter.getConstraintData("report_qurater")[0];
   
