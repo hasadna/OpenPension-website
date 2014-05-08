@@ -221,6 +221,8 @@ body{
 .entry-box-link{
 	cursor:pointer;
 	text-decoration: none;
+	direction: ltr;
+	text-align: right;
 }
 
 .entry-box-title,

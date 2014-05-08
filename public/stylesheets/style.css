@@ -226,6 +226,8 @@ body{
 	font-size: 22px;
 	font-weight: bold;
 	padding-right: 12px;
+	direction: ltr;
+	text-align: right;
 }
 
 .entry-box-value,
