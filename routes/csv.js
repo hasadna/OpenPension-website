@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
@@ -16,29 +17,23 @@ exports.download = function(req, res){
   DAL.singleQuery(filter,
     function(rows){
 		
+    	if (!_.isObject(rows)){
+			res.end(); 
+    	}
+
 		//write column headers csv
 		var cols = Object.keys(rows[0]); 
-		cols.shift(); //discard 'id'
-        var line = cols.join(",") + "\n";
+		var line = cols.join(",") + "\n";
 
-		for (var i = 0; i < rows.length; i++){
-			var j = 0; 
-			for(; j < cols.length - 1; j++){	
-				if (rows[i][cols[j]] != null)
-					line += rows[i][cols[j]];
+		res.writeHead(200, {
+			'Content-Type': 'text/csv; charset=utf8',
+			'Content-Disposition' : 'attachment; filename="pension.csv"'
+		});
 
-				line += ",";
-			}
-			line += rows[i][cols[j]] ;
-			line += "\n";
-		}
-
-  		res.setHeader('Content-disposition', 'attachment; filename=op.csv');   
-    	res.writeHead(200, {
-        	'Content-Type': 'text/csv'
-	    });
 		res.write(line);
-	
+
+		_.each(rows,function(v,k,l){res.write(_.values(v).join(",")+"\n")})
+
 		res.end();    
 	}
 	
