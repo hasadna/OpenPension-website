@@ -136,7 +136,7 @@ var origGroups = JSON.parse(JSON.stringify(groups));
 _.each(groups, 
     function(value,key,list){
         value['result'] = 
-            _.groupBy(value['result'],v['group_field'])
+            _.groupBy(value['result'],value['group_field'])
     }
 );
 
