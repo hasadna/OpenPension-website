@@ -75,33 +75,6 @@ exports.convertNumberToWords = function(numberToConvert){
 }
 
 
-//get last 4 quarters, including current, zero based
-//returns array
-// [
-//		{'quarter':'1','year:'2012'},
-//      ...
-// ]
-//
-exports.getLastFourQuarters = function(year,quarter){
-	if (quarter > 3){
-		throw "illegal quarter";
-	}
-
-	var res = [];
-	var q = quarter;
-	for (var i = 0; i < 4; i++) {
-
-		res.push({'quarter':q--,'year':year});
-
-		if (q == 0){
-			year--;
-			q = 3;
-		} 
-			
-	};
-	return res;
-}
-
 
 //escape special chars
 //duplicate single qoutes ' => ''

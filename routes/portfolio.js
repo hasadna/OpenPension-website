@@ -1,8 +1,9 @@
+var _ = require('underscore');
 var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
-var Categories = require('../core/categories.js');
+var Groups = require('../core/groups.js');
 var translate = require('../core/dictionary.js').translate;
 var removeQoutes = DataNormalizer.removeQoutes;
 
@@ -83,48 +84,88 @@ exports.show = function(req, res){
 
 
   //get available categories, for selection menu
-  var availableCategories = Categories.getAvailableCategories(filter);
+  var availableCategories = Groups.getAvailableGroups(filter);
   
 
-  //group by is not set? group by default field
-  if (group_by == undefined){
-    //console.log("group_by is undefined");
-    // group_by = Categories.getNextGroupingCategory(filter);
-    // filter.setConstraint("group_by",group_by);
+  for(i in availableCategories){
+    filter.addConstraint('group_by',availableCategories[i]);
   }
 
 
+  var lastQuarters = DAL.getLastQuarters("2013","3",4);
+  //console.log(lastQuarters);
 
-  //show data only for last quarter
-  //TODO: get last quarter from DB
-//  filter.addConstraint("report_year","2013");
-//  filter.addConstraint("report_qurater","3");
+  //special case for managing body page
+  //where we want to show precentage of total market sum
+  var totalPensionFundFilter = filter.clone();
+  var drillDownDepth = filter.getDrillDownDepth();
 
-  var lastQuarters = DataNormalizer.getLastFourQuarters("2013","3");
-  
-  DAL.groupBySummariesLimited(filter,5,
-    function(groups){
 
-        // console.log(groupByManagingBody[0]['group_sum']);
-        // var sumByManagingBody = groupByManagingBody[0]['group_sum'];
-        groups = DataNormalizer.normalizeData(groups);
+  if (totalPensionFundFilter.hasConstraint("managing_body") && 
+        drillDownDepth == 1){
+      totalPensionFundFilter.removeField("managing_body");
+  }
 
-        console.log(groups);  
+//relative to total fund or current managing_body
+DAL.groupByManagingBody(totalPensionFundFilter,
+  function(totalPensionFundQuarters, totalPensionFundQuery){
 
+
+    console.log(JSON.stringify(totalPensionFundQuarters));  
+    console.log("===============================");  
+
+
+    //group filter by quarters
+  DAL.groupByQuarters(filter,
+      function(quarters){
+
+    DAL.groupByPortfolio(filter,
+        function(groups){
+
+        console.log("managing_body="+filter.getConstraintData('managing_body'));
+
+      DAL.getFundsByManagingBody(filter.getConstraintData('managing_body'),
+        function(funds){
+
+        console.log(funds);
+        
+
+var origGroups = JSON.parse(JSON.stringify(groups));
+
+//group results by group_field (e.g. issuer)
+_.each(groups, 
+    function(value,key,list){
+        value['result'] = 
+            _.groupBy(value['result'],v['group_field'])
+    }
+);
+
+
+//group result items by year and quarter
+_.each(groups,
+  function(v,k,l){
+  _.each(v['result'],
+    function(v1,k1,l1){ 
+      l1[k1] = _.groupBy(l1[k1],
+          function(v2,k2,l2){
+            return v2['report_year']+"_"+v2['report_qurater'];
+          }
+      )
+    }
+  );
+});
+
+
+
+        //console.log(JSON.stringify(groups));  
+        
         var total = DataNormalizer.convertNumberToWords(groups['total_sum']);
-        // var totalByManagingBody = DataNormalizer.convertNumberToWords(groupByManagingBody['0']['group_sum']);
-
-        // res.write(JSON.stringify(groups));
-        // res.end();
-
+        
 
         res.render('portfolio',{
             title : createTitle(filter),
             filter: filter,
-            // quarters: quarters,
-            total:total,      // total sum normalized (scaled)
-            total_sum: groups['total_sum'], //total sum number
-            // sumByManagingBody : sumByManagingBody,
+            total_sum_words:DataNormalizer.convertNumberToWords(quarters[0]['group_sum']),      // total sum normalized (scaled)
             groups: groups,
             group_by: group_by,
             availableCategories: availableCategories, 
@@ -133,15 +174,20 @@ exports.show = function(req, res){
             escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
             rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,  
             removeQoutes: DataNormalizer.removeQoutes,
-            // quarterSelect:quarterSelect,
             debug: debug == 'true',
             req: req,
             lastQuarters: lastQuarters,
             report_qurater: report_qurater,
-            report_year: report_year
-          });
-        
+            report_year: report_year,
+            totalPensionFundQuarters: totalPensionFundQuarters,
+            plurals: plurals,
+            totalPensionFundQuery:totalPensionFundQuery,
+            quarters:quarters,
+            funds:funds,
+            origGroups:origGroups
+          });        
+        });
       });
-    
-
+    });
+  });
 };

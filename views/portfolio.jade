@@ -14,8 +14,17 @@ block content
 			//- HEADER
 			div(id="header-bottom" style="padding-right: 0px;")
 				div(class="container" style="padding-right: 0px;")
-					div(id="question" class="title2")  #{title}
-						div(class="title1") מגדל חברה לביטוח
+					div(id="question" class="title2")  תיק השקעות
+						div(id="breadcrumbs") 
+								each field in filter.getConstrainedFields()
+									- if (field == "group_by" || field == "report_year" || field == "report_qurater" ) continue;
+									- var value = filter.getConstraintData(field) ;
+									- var escapedValue = rfc3986EncodeURIComponent(value);
+									
+									span(id="breadcrumbs_seperator") >
+									a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
+										span() #{removeQoutes(translate(value))} 
+
 
 			hr()
 
@@ -28,67 +37,137 @@ block content
 							- select='selected';
 						option(value="#{JSON.stringify(quarter)}",
 						selected=select) &#xf073 רבעון #{quarter.quarter}, #{quarter.year}
-			hr()
 
-			div(style="padding:10px 0px 30px 0px;")
+				div(style="float:left")
+					a(href="/csv#{filter.toQueryString()}") 
+						button(class="btn btn-default") &#xf0f6 הורד את דו"ח הנכס הבודד
+			hr()
+			div(class="row")
+			div(class="col-sm-4 pull-right" style="text-align:center")
 				div(class="title3") גודל התיק
-				div(class="title2") 51 מליארד שקל
+				div(class="title2") #{total_sum_words.number}  #{total_sum_words.scale} שקל
+
+			div(class="col-sm-4 pull-right" style="text-align:center")
+				div(class="title3") חלק משוק הפנסיה 
+				-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
+				div(style="direction:ltr" class="title2") #{percentageOfTotalFund} %
+
+			div(class="col-sm-4 pull-right" style="text-align:center")
+				div(class="title3") שינוי ב-4 רבעונים אחרונים
+				-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
+				-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
+				-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
+				-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
+
+				- var diffQ0Q3 = (diffQ0 - diffQ3).toFixed(1);
+				- if (diffQ0Q3 > 0) diffQ0Q3 = "+" +diffQ0Q3
+
+				div(style="direction:ltr" class="title2") #{diffQ0Q3} %
 	
-			div(class="title3") חלוקת הנכסים בתיק
 		
 			each group in groups
-				-if (debug)
-					div(style="text-align:left;") #{group.query} 
+				- if (debug)
+					div(style="text-align:left;direction:ltr") #{group.query} 
 				- if (group.group_field == 'fund_name' )continue;
 
+				- var visiblePercentage = 0;
+
 				div()
-					span(style="padding-top:15px;" class="title4") לפי&nbsp
+					span(style="padding-top:15px;" class="title4") חלוקה לפי&nbsp
 						b() #{translate(group.group_field)}
-				div(class="")
-					each result in group.result
-						- if (result[group.group_field] === 'NULL' ) continue;
+				
+					table( style="text-align:right;width:100%")
+						colgroup()
+							col(class="col-sm-3")
+							col(class="col-sm-3")
+							col(class="col-sm-3")
+							col(class="col-sm-3")
+						thead()
+							tr() 
+								th(style="text-align: right") #{translate(group.group_field)}
+								th(style="text-align: right") היקף ההשקעה בשקלים
+								th(style="text-align: right") % מתיק ההשקעות
+								th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
+						tbody()
+							each result in group.result
+								- if (result[group.group_field] === 'NULL' ) continue;
 
-						div(class="pull-right entry-box")
-							- var sum = convertNumberToWords(result.group_sum);					
-							- var groupPercentage = (result.group_sum / total_sum * 100 ).toFixed(2);
-							- var escapedVal = rfc3986EncodeURIComponent(result[group.group_field]);
-							- var groupName = removeQoutes(translate(result[group.group_field]));
+								- if ( result[lastQuarters[0]['string']] != undefined )
+									- var lastQResult = result[lastQuarters[0]['string']][0];
+								- else
+									div() UNDEFINED for #{group.group_field} #{removeQoutes(translate(lastQResult[group.group_field]))} #{lastQuarters[0]['string']}
+									
+									- result[lastQuarters[0]['string']] = [{'group_sum':'0'}];
+									- var lastQResult = result[lastQuarters[0]['string']][0];
 
-							
-							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
-								
-								div(style="float:right;width:280px" class="entry-box-title") #{ groupName} 
-								div(style="float:right" class="entry-box-title") #{groupPercentage}% 
-											
-		//- LEFT COLUMN
-		//- div(id="left-column" class="col-sm-4 pull-right")
-		//-	div(style="padding:15px 0 0 0")
-				div(class="title3") עוד על מגדל חברה לביטוח
-				each group in groups
-					- if (group.group_field != 'fund_name' )continue;
+									- continue
 
-					each result in group.result
-						- if (result[group.group_field] === 'NULL' ) continue;
+								- var lastQResultWords = convertNumberToWords(lastQResult.group_sum);
+								- var groupPercentage = (lastQResult.group_sum / quarters[0]['group_sum'] * 100 ).toFixed(2);
+								- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group.group_field]);
+								- var groupName = removeQoutes(translate(lastQResult[group.group_field]));
+								- visiblePercentage += Number(groupPercentage);
 
-						div(class="pull-right entry-box")
-							- var sum = convertNumberToWords(result.group_sum);					
-							- var groupPercentage = (result.group_sum / total_sum * 100 ).toFixed(2);
-							- var escapedVal = rfc3986EncodeURIComponent(result[group.group_field]);
-							- var groupName = removeQoutes(translate(result[group.group_field]));
+								tr()
+									td()
+										div(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')") #{ groupName}
+									td()
+										div() #{lastQResultWords.number}  #{lastQResultWords.scale}
+									td()
+										div(style="background-color:blue;width:#{groupPercentage*(75/100)}%")
+											div() #{groupPercentage}% 
+									
+										- var sparkline = [];
+										- for(var i = 0;i<4;i++){
+											- var qStr = lastQuarters[i]['string'];
+											- if (result[qStr] == undefined) 
+												div() result[#{qStr}] is undefined
+												- continue;
+											- if (quarters[i] == undefined) 
+												div() quarters[i] is undefined
+												- continue;
+											- sparkline.push( (Number(result[qStr][0]['group_sum']) / Number(quarters[i]['group_sum']) * 100).toFixed(2) );
+										- }
 
-							
-							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
-								
-								div(style="float:right;width:280px" class="entry-box-title") #{ groupName} 
-								div(style="float:right" class="entry-box-title") #{groupPercentage}% 
-											
-								
-
-
+										td(data-sparkline="#{sparkline.reverse().join(', ')}")
 
 
 		
-	script(type='text/javascript', src='/js/managing_body_clientside.js', myVar = 200 )
-	script(type='text/javascript', src='http://code.highcharts.com/highcharts.js')
-	script(type='text/javascript', src='http://code.highcharts.com/modules/exporting.js')
+							- if (visiblePercentage < 100){
+								tr()
+									td()
+										div() כל #{plurals[group.group_field]}...
+							- }
+							- if (visiblePercentage > 100){
+								tr()
+									td()
+										div() סהכ גדול מ100%!! #{visiblePercentage }
+							- }
+							
+
+
+
+		div(class="row") 
+			div() עוד בפנסיה פתוחה
+				ul(id = "linksList") 
+					each fund in funds
+						- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
+							li()
+								a(class="entry-box-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
+							br()
+
+
+	<!-- DEGBUGGING -->
+	script() var groups = !{JSON.stringify(groups)};
+	script() var quarters = !{JSON.stringify(quarters)};
+	script() var lastQuarters = !{JSON.stringify(lastQuarters)};
+	script() var totalPensionFundQuarters = !{JSON.stringify(totalPensionFundQuarters)};
+	script() var quartersQuery = !{JSON.stringify(quartersQuery)};
+	script() var totalPensionFundQuery = !{JSON.stringify(totalPensionFundQuery)};
+	script() var origGroups = !{JSON.stringify(origGroups)};
+		
+	script(type='text/javascript', src='/js/portfolio_clientside.js', myVar = 200 )
+	script(type='text/javascript', src='/js/underscore-min.js')
+	script(type='text/javascript', src='/js/highcharts.js')
+
 
