@@ -11,12 +11,12 @@ exports.normalizeData = function(groups){
 		var j = groups[i]['result'].length
 		while (j--) {
 
+			//create the null group
 			var group_field = groups[i]['group_field'];
 			if (groups[i]['result'][j][group_field] == null ||
 				groups[i]['result'][j][group_field] == ''){
-				sum_null +=  Number(groups[i]['result'][j]['sum_market_cap']) + Number(groups[i]['result'][j]['sum_fair_value']);
+				sum_null +=  Number(groups[i]['result'][j]['group_sum']) ;
 				groups[i]['result'].splice(j,1);
-
 			}
 
 		}
