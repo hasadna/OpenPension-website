@@ -44,16 +44,16 @@ block content
 			hr()
 			div(class="row")
 			div(class="col-sm-4 pull-right" style="text-align:center")
-				div(class="title3") גודל התיק
+				div(class="title4") גודל התיק
 				div(class="title2") #{total_sum_words.number}  #{total_sum_words.scale} שקל
 
 			div(class="col-sm-4 pull-right" style="text-align:center")
-				div(class="title3") חלק משוק הפנסיה 
+				div(class="title4") חלק משוק הפנסיה 
 				-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
 				div(style="direction:ltr" class="title2") #{percentageOfTotalFund} %
 
 			div(class="col-sm-4 pull-right" style="text-align:center")
-				div(class="title3") שינוי ב-4 רבעונים אחרונים
+				div(class="title4") שינוי ב-4 רבעונים אחרונים
 				-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
 				-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
 				-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
@@ -73,10 +73,9 @@ block content
 				- var visiblePercentage = 0;
 
 				div()
-					span(style="padding-top:15px;" class="title4") חלוקה לפי&nbsp
-						b() #{translate(group.group_field)}
+					span(style="padding-top:15px;" class="title4") חלוקה לפי&nbsp #{translate(group.group_field)}
 				
-					table( style="text-align:right;width:100%")
+					table( class="table table-striped" style="text-align:right;width:100%")
 						colgroup()
 							col(class="col-sm-3")
 							col(class="col-sm-3")
@@ -110,7 +109,7 @@ block content
 
 								tr()
 									td()
-										div(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')") #{ groupName}
+										div(class="table-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')") #{ groupName}
 									td()
 										div() #{lastQResultWords.number}  #{lastQResultWords.scale}
 									td()
@@ -135,7 +134,7 @@ block content
 		
 							- if (visiblePercentage < 100){
 								tr()
-									td()
+									td(class="listAll")
 										div() כל #{plurals[group.group_field]}...
 							- }
 							- if (visiblePercentage > 100){
@@ -153,8 +152,11 @@ block content
 					each fund in funds
 						- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
 							li()
-								a(class="entry-box-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
+								a(class="table-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
 							br()
+
+		div(class="row") 
+			div() עוד בפנסיה פתוחה
 
 
 	<!-- DEGBUGGING -->
