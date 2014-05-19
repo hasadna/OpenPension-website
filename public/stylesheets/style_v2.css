@@ -6,6 +6,17 @@
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 
+}
+@font-face{
+	font-family:'almoni-tzar';
+	font-weight:400; /*(regular)*/
+	font-style: normal;
+	src: url('../fonts/almoni-tzar-aaa-400.eot?'); 
+	src: url('../fonts/almoni-tzar-aaa-400.eot?#iefix') format('embedded-opentype'), 
+		url('../fonts/almoni-tzar-aaa-400.woff?') format('woff'), 
+		url('../fonts/almoni-tzar-aaa-400.ttf?') format('truetype');
+}
+
 @font-face{
 			font-family:'almoni-tzar';
 			font-weight:700; /*(bold)*/
@@ -17,6 +28,12 @@
 				url('../fonts/almoni-tzar-aaa-700.svg#almoni-tzar-bold') format('svg');
 }
 
+
+
+*{
+	vertical-align: middle;
+}
+
 body {
   font-family: "Alef Hebrew",
                “Helvetica Neue”,
@@ -24,7 +41,8 @@ body {
                Arial,
                sans-serif;
   direction: rtl;
-  background-color: #F4F4F4;
+	font-size: 16px;
+	line-height: 1.5em;
 }
 
 a,
@@ -38,23 +56,28 @@ a:visited {
 a:hover{
 	text-decoration: underline;
 }
-body{
 
+.btn {
+	border: 1px solid #EEE;
+	border-radius: 0;
+	padding: 10px;
+	font-family: "Alef Hebrew";
+	margin: 0;
+	width: 100%;
+	height: 46px; /** could not convert into ems for some reason! Should be 2ems, equivalent of 48px including borders **/
+	font-size: 1em;
 }
 
 
 
 /* HEADER */
 #header{
-	height:48px;
+	height:3em;
 }
 
 #header-top{
 	background-color:#0855C7;
-	height:100%;
-}
-
-#logo {
+	height:3em;
 }
 
 #header-logo{
@@ -66,11 +89,11 @@ body{
 
 #header-title{
 	float:right;
-	color:#FAF9F3;
-	font-size:18px;
-	font-weight:900;
-	line-height:47px;
-	font-family:"Alef Hebrew";
+	color:#FFFFFF;
+	font-size:1.5em;
+	font-weight:700;
+	font-family:"almoni-tzar";
+	line-height: 2em;
 }
 
 #header-feedback{
@@ -114,30 +137,43 @@ body{
 
 #breadcrumbs a{
 	text-decoration: underline;
-	float:right;
 	cursor:pointer
 }
 
 
 #breadcrumbs_seperator{
-	float: right;
 	padding: 0 5px 0 5px;
 }
 
 #question{
 	font-size: 24px;
 	line-height: 30px;
-	float:right;
 	font-family:'almoni-tzar';
 	color: #999999;
 }
 
+#btn-bar{
+	line-height: 4.5em;
+	border-top: 1px solid #EEE;
+	border-bottom: 1px solid #EEE;
+	width: 100%;
+	margin-bottom: 1.5em;
+}
+
+.btn-group{
+	margin: 0 !important;
+}
 
 #quarterSelection{
 	font-size: 30px;
 	line-height: 45px;
 	float:left;
 }
+
+#download{
+	float: left;
+}
+
 
 /*RIGHT COLUMN*/
 
@@ -225,7 +261,8 @@ body{
 	text-decoration: none;
 	direction: ltr;
 	text-align: right;
-	color: #0855C7;	
+	color: #0855C7;
+	line-height: 2em;
 }
 
 .entry-box-title,
@@ -340,9 +377,17 @@ transform: scaleX(-1);
 	color: #999999;
 }
 
-body{
-	background-color: white;
-	line-height: 24px;
+.table{
+	margin-bottom: 1.5em;
+}
+
+th, tr, td{
+	height: 3em;
+}
+
+th, td{
+	padding: 0 10px !important;
+	vertical-align: middle !important;
 }
 
 th{
@@ -351,12 +396,25 @@ th{
 	border-color: #E4E4E4;
 	border-style: solid;
 	border-width: 1px;
-	padding: 10px;
-
 }
 
 td{
 	border-top: none !important;
+}
+
+th>div, td>div, td>span{
+	line-height: 3em;
+}
+
+td>span{
+	width: 25%;
+	display: inline-block;
+}
+
+#bar{
+	height: 1.5em;
+	background-color:#7FB2FF;
+	display: inline-block;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td, 
@@ -375,7 +433,7 @@ td{
 }
 
 .title1 { font-size: 36px;line-height: 24px;font-family: "Alef Hebrew";font-weight: bold}
-.title2 { font-size: 24px;line-height: 24px;font-family: "Alef Hebrew";}
+.title2 { font-size: 24px;line-height: 24px;font-family: "Alef Hebrew";margin-bottom:}
 .title3 { font-size: 21px;line-height: 24px;font-family: "Alef Hebrew";color: #999999;}
 .title4 { font-size: 21px;line-height: 24px;font-family: "almoni-tzar";color: #999999;}
 .title5 { font-size: 16px;line-height: 24px;font-family: "Alef Hebrew";}

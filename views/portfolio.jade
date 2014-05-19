@@ -14,8 +14,7 @@ block content
 			//- HEADER
 			div(id="header-bottom" style="padding-right: 0px;")
 				div(class="container" style="padding-right: 0px;")
-					div(id="question" class="title2")  תיק השקעות
-						div(id="breadcrumbs") 
+					div(id="breadcrumbs") 
 								each field in filter.getConstrainedFields()
 									- if (field == "group_by" || field == "report_year" || field == "report_qurater" ) continue;
 									- var value = filter.getConstraintData(field) ;
@@ -24,12 +23,11 @@ block content
 									span(id="breadcrumbs_seperator") >
 									a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
 										span() #{removeQoutes(translate(value))} 
+					
+					div(id="question" class="title2")  תיק השקעות
+						
 
-
-			hr()
-
-			div(style="font-family:FontAwesome;")
-				//- div(id="group-by") חלוקה לפי &nbsp&nbsp
+			div(id="btn-bar" class="row btn-group" style="font-family:FontAwesome;")
 				select(id="select_quarter" style="float:right;"  data-width="160px" )
 					each quarter in lastQuarters
 						- var select=null;
@@ -37,11 +35,9 @@ block content
 							- select='selected';
 						option(value="#{JSON.stringify(quarter)}",
 						selected=select) &#xf073 רבעון #{quarter.quarter}, #{quarter.year}
-
-				div(style="float:left")
-					a(href="/csv#{filter.toQueryString()}") 
-						button(class="btn btn-default") &#xf0f6 הורד את דו"ח הנכס הבודד
-			hr()
+				a(id="download" href="/csv#{filter.toQueryString()}") 
+					button(class="btn btn-default") &#xf0f6 הורד נתונים גולמיים
+						
 			div(class="row")
 			div(class="col-sm-4 pull-right" style="text-align:center")
 				div(class="title4") גודל התיק
@@ -113,8 +109,8 @@ block content
 									td()
 										div() #{lastQResultWords.number}  #{lastQResultWords.scale}
 									td()
-										div(style="background-color:blue;width:#{groupPercentage*(75/100)}%")
-											div() #{groupPercentage}% 
+										span() #{groupPercentage}% 
+										div(id="bar" style="width:#{groupPercentage*(75/100)}%")
 									
 										- var sparkline = [];
 										- for(var i = 0;i<4;i++){
