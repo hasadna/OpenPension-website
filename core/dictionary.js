@@ -21,6 +21,8 @@ dictionary['reference_index'] = 'מדד ייחוס';
 
 dictionary['harel'] = 'הראל';
 dictionary['migdal'] = 'מגדל';
+dictionary['menora'] = 'מנורה';
+dictionary['xnes'] = 'אקסלנס';
 
 dictionary['null'] = 'לא נמצא בקטגוריה';
 
