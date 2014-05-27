@@ -387,9 +387,63 @@ function groupByPortfolio(filter, callback){
 			}
 		}.bind(this, group));
 
-
 	}
 }
+
+
+/**
+ * Query DB, get info needed for investments view.
+ * @param filter : Filter object 
+ * @param callback : function to handle result rows
+ */
+function groupByInvestments(filter, callback){
+
+	var db = require('./db.js').open();
+
+
+	//remove group_by if present
+	var mFilter = filter.clone();
+
+	var report_year = mFilter.getConstraintData("report_year")[0];
+	var report_qurater = mFilter.getConstraintData("report_qurater")[0];
+	var groupBy = mFilter.getConstraintData("group_by")[0];
+
+
+	var select = squel.select().from(config.table);
+		
+	select.field("report_year");
+	select.field("report_qurater");
+	select.field(groupBy);
+	select.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
+
+
+	//dont need year and quarter in where's, add last 4 q's later
+	mFilter.removeField("report_year");
+	mFilter.removeField("report_qurater");
+	
+	//apply filter to joined WHERE clause
+	prepareWheres(select, mFilter);
+
+	//add last quarters to joined 
+	addLastQuartersToQuery(select,4);
+
+	select.group("report_year");
+	select.group("report_qurater");
+	select.group(groupBy);
+
+	select.order("report_year",false);
+	select.order("report_qurater",false);
+	select.order("group_sum",false);
+
+	select = select.toString();
+	console.log(select.toString());
+
+	db.querys(select,function(err, rows){
+		callback(rows,select);
+	});
+
+}
+
 
 
 /**
@@ -407,11 +461,13 @@ function getLastQuarters(year, quarter, numOfQuarters){
 	var q = quarter;
 	for (var i = 0; i < numOfQuarters; i++) {
 
-		res.push({
+		var obj = {
 					'quarter': ''+q,
-					'year': ''+year,
-					'string' : year + '_' + q
-				});
+					'year': ''+year
+				};
+
+		obj.toString = function (){return this['year'] + '_' + this['quarter']}
+		res.push(obj);
 
 		if (q == 1){
 			year--;
@@ -461,3 +517,4 @@ exports.groupByManagingBody=groupByManagingBody;
 exports.groupByPortfolio=groupByPortfolio;
 exports.getLastQuarters=getLastQuarters;
 exports.getFundsByManagingBody=getFundsByManagingBody;
+exports.groupByInvestments=groupByInvestments;

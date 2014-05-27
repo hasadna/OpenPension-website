@@ -1,0 +1,92 @@
+extends layout_v2
+
+
+
+block content
+
+	//- BODY
+	div(class="container")
+		
+		//- RIGHT COLUMN
+		div(id="right-column" class="col-sm-12 pull-right" style="padding-right: 0px;")
+	
+		
+			
+			- if (debug)
+				div(style="text-align:left;direction:ltr") #{query} 
+
+			div()
+				span(style="padding-top:15px;" class="title4") חלוקה לפי&nbsp #{translate(group_by)}
+			
+				table( class="table table-striped" style="text-align:right;width:100%")
+					colgroup()
+						col(class="col-sm-3")
+						col(class="col-sm-3")
+						col(class="col-sm-3")
+						col(class="col-sm-3")
+					thead()
+						tr() 
+							th(style="text-align: right") #{translate(group_by)}
+							th(style="text-align: right") היקף ההשקעה בשקלים
+							th(style="text-align: right") % מתיק ההשקעות
+							th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
+					tbody()
+						each group in groups
+							//- if (group[group_by] === 'NULL' ) continue;
+							- var lastQStr = lastQuarters[0].toString();
+							- if ( group[lastQStr] == undefined )
+								- if (debug)
+									div() חסר רבעון נוכחי 
+									div(style="text-align:left") #{JSON.stringify(group)}
+								- continue;
+							- var lastQResult = group[lastQStr][0];
+							- var lastQResultWords = convertNumberToWords(lastQResult['group_sum']);
+							- var groupPercentage = (lastQResult.group_sum / quartersSums[lastQStr] * 100 ).toFixed(2);
+							- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group_by]);
+							- var groupName = removeQoutes(translate(lastQResult[group_by]));
+
+								tr()
+									td()
+										div(class="table-link") #{ lastQResult[group_by] }
+									td()
+										div() #{lastQResultWords.number}  #{lastQResultWords.scale}
+									td()
+										span() #{groupPercentage}% 
+										div(id="bar" style="width:#{groupPercentage*(75/100)}%")
+								
+										- var sparkline = [];
+										- for(var i = 0;i<4;i++){
+											- var qStr = lastQuarters[i].toString();
+											- if (group[qStr] == undefined)
+												if (debug)
+													div() אין מידע עבור רבעון  #{qStr} 
+												- continue;
+											- if (quartersSums[qStr] == undefined) 
+												div() quartersSums[#{qStr}] is undefined
+												- continue;
+											- sparkline.push( (Number(group[qStr][0]['group_sum']) / Number(quartersSums[qStr]) * 100).toFixed(2) );
+										- }
+
+										td(data-sparkline="#{sparkline.reverse().join(', ')}")
+
+							//-each quarter in lastQuarters
+
+							
+
+
+
+
+	<!-- DEGBUGGING -->
+	script() var groups = !{JSON.stringify(groups)};
+	script() var quarters = !{JSON.stringify(quarters)};
+	script() var lastQuarters = !{JSON.stringify(lastQuarters)};
+	script() var totalPensionFundQuarters = !{JSON.stringify(totalPensionFundQuarters)};
+	script() var quartersQuery = !{JSON.stringify(quartersQuery)};
+	script() var totalPensionFundQuery = !{JSON.stringify(totalPensionFundQuery)};
+	script() var origGroups = !{JSON.stringify(origGroups)};
+		
+	script(type='text/javascript', src='/js/portfolio_clientside.js', myVar = 200 )
+	script(type='text/javascript', src='/js/underscore-min.js')
+	script(type='text/javascript', src='/js/highcharts.js')
+
+

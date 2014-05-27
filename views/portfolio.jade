@@ -85,23 +85,27 @@ block content
 								th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
 						tbody()
 							each result in group.result
-								- if (result[group.group_field] === 'NULL' ) continue;
 
-								- if ( result[lastQuarters[0]['string']] != undefined )
-									- var lastQResult = result[lastQuarters[0]['string']][0];
-								- else
-									div() UNDEFINED for #{group.group_field} #{removeQoutes(translate(lastQResult[group.group_field]))} #{lastQuarters[0]['string']}
-									
-									- result[lastQuarters[0]['string']] = [{'group_sum':'0'}];
-									- var lastQResult = result[lastQuarters[0]['string']][0];
-
-									- continue
-
+								- var lastQStr = lastQuarters[0].toString();
+								- var lastQResult = result[lastQStr][0];
 								- var lastQResultWords = convertNumberToWords(lastQResult.group_sum);
 								- var groupPercentage = (lastQResult.group_sum / quarters[0]['group_sum'] * 100 ).toFixed(2);
 								- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group.group_field]);
 								- var groupName = removeQoutes(translate(lastQResult[group.group_field]));
 								- visiblePercentage += Number(groupPercentage);
+
+								- if (result[group.group_field] === 'NULL' ) continue;
+
+								- if ( result[lastQStr] != undefined )
+									- var lastQResult = result[lastQStr][0];
+								- else
+									div() UNDEFINED for #{group.group_field} #{removeQoutes(translate(lastQResult[group.group_field]))} #{lastQStr}
+									
+									- result[lastQStr] = [{'group_sum':'0'}];
+									- var lastQResult = result[lastQStr][0];
+
+									- continue
+
 
 								tr()
 									td()
@@ -114,7 +118,7 @@ block content
 									
 										- var sparkline = [];
 										- for(var i = 0;i<4;i++){
-											- var qStr = lastQuarters[i]['string'];
+											- var qStr = lastQuarters[i].toString();
 											- if (result[qStr] == undefined) 
 												div() result[#{qStr}] is undefined
 												- continue;
@@ -131,7 +135,9 @@ block content
 							- if (visiblePercentage < 100){
 								tr()
 									td(class="listAll")
-										div() כל #{plurals[group.group_field]}...
+										div()
+											a(href="/investments#{filter.toQueryString()}&group_by=#{group.group_field}")
+												כל #{plurals[group.group_field]}...
 							- }
 							- if (visiblePercentage > 100){
 								tr()

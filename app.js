@@ -60,6 +60,8 @@ if ('development' == app.get('env')) {
 app.get('/', entry.show);
 
 app.get('/portfolio', portfolio.show);
+app.get('/investments', portfolio.investments);
+
 app.get('/entry', entry.show);
 
 app.get('/about', staticpages.about);

@@ -66,13 +66,96 @@ var plurals = {
   'asset_type' : 'סוגי הנכסים'
 }
 
+
+exports.investments = function(req, res){
+
+  
+  //create filter from request (search string)
+  var filter = Filter.fromGetRequest(req);
+  var group_by = filter.getConstraintData('group_by')[0];
+
+  if (group_by == undefined){
+    res.end("group_by is missing");
+  }
+
+  //check for debug flag  
+  var debug = filter.getConstraintData("debug")[0];
+  filter.removeField("debug");
+
+
+  var lastQuarters = DAL.getLastQuarters("2013","3",4);
+
+  //group filter by quarters
+  DAL.groupByInvestments(filter,
+      function(groups, select){
+
+        // DEBUG
+        // console.log("=====select==================");  
+        // console.log(JSON.stringify(select));  
+        // console.log("=====quarters==================");  
+        // console.log(JSON.stringify(quarters));  
+        // console.log("===============================");  
+
+
+
+          //sum groups to quarters
+          quartersSums = _.groupBy(groups,
+                function(v2,k2,l2){
+                  return v2['report_year']+"_"+v2['report_qurater'];
+                });
+
+          _.each(quartersSums,
+            function(v,k,l){
+                quartersSums[k] = _.reduce(quartersSums[k],function(memo, group){ return memo + Number(group['group_sum']); }, 0);
+          });
+
+
+
+          //group results by group_field (e.g. issuer)
+          groups = _.groupBy(groups, group_by);
+
+
+          // group result items by year and quarter
+          _.each(groups,
+            function(v,k,l){
+                groups[k] = _.groupBy(groups[k],
+                    function(v2,k2,l2){
+                      return v2['report_year']+"_"+v2['report_qurater'];
+                    }
+            );
+          });
+
+        // DEBUG
+        // res.json(quartersSums);
+
+        res.render('investments',{
+            filter: filter,
+            query:select,
+            translate: translate,
+            convertNumberToWords:DataNormalizer.convertNumberToWords,
+            escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
+            rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,  
+            removeQoutes: DataNormalizer.removeQoutes,
+            debug: debug == 'true',
+            req: req,
+            group_by: group_by,
+            plurals: plurals,
+            groups: groups,
+            lastQuarters: lastQuarters,
+            quartersSums: quartersSums
+          });
+
+      } 
+  );
+
+}
+
+
 exports.show = function(req, res){
 
   //create filter from request (search string)
   var filter = Filter.fromGetRequest(req);
   
-  var group_by = filter.getConstraintData("group_by")[0];
-
   //check for debug flag  
   var debug = filter.getConstraintData("debug")[0];
   filter.removeField("debug");
@@ -81,15 +164,6 @@ exports.show = function(req, res){
   var report_year = filter.getConstraintData("report_year")[0];
   var report_qurater = filter.getConstraintData("report_qurater")[0];
   
-
-
-  //get available categories, for selection menu
-  var availableCategories = Groups.getAvailableGroups(filter);
-  
-
-  for(i in availableCategories){
-    filter.addConstraint('group_by',availableCategories[i]);
-  }
 
 
   var lastQuarters = DAL.getLastQuarters("2013","3",4);
@@ -109,56 +183,64 @@ exports.show = function(req, res){
 //relative to total fund or current managing_body
 DAL.groupByManagingBody(totalPensionFundFilter,
   function(totalPensionFundQuarters, totalPensionFundQuery){
+  console.log("=====totalPensionFundQuarters==================");  
+  console.log(JSON.stringify(totalPensionFundQuarters));  
+  
+  console.log("=====totalPensionFundQuery==================");  
+  console.log(JSON.stringify(totalPensionFundQuery));  
+  console.log("===============================");  
 
 
-    console.log(JSON.stringify(totalPensionFundQuarters));  
-    console.log("===============================");  
-
-
-    //group filter by quarters
+  //group filter by quarters
   DAL.groupByQuarters(filter,
-      function(quarters){
+      function(quarters, quartersQuery){
+  console.log("=====QUARTERS==================");
+
+  console.log(JSON.stringify(quarters));  
+  console.log("=======quartersQuery=================");
+  console.log(JSON.stringify(quartersQuery));  
+  console.log("===============================");  
 
     DAL.groupByPortfolio(filter,
         function(groups){
 
-        console.log("managing_body="+filter.getConstraintData('managing_body'));
+      //console.log("managing_body="+filter.getConstraintData('managing_body'));
 
       DAL.getFundsByManagingBody(filter.getConstraintData('managing_body'),
         function(funds){
 
-        console.log(funds);
-        
+          //console.log(funds);
+          
 
-var origGroups = JSON.parse(JSON.stringify(groups));
+          var origGroups = JSON.parse(JSON.stringify(groups));
 
-//group results by group_field (e.g. issuer)
-_.each(groups, 
-    function(value,key,list){
-        value['result'] = 
-            _.groupBy(value['result'],value['group_field'])
-    }
-);
+          //group results by group_field (e.g. issuer)
+          _.each(groups, 
+              function(value,key,list){
+                  value['result'] = 
+                      _.groupBy(value['result'],value['group_field'])
+              }
+          );
 
 
-//group result items by year and quarter
-_.each(groups,
-  function(v,k,l){
-  _.each(v['result'],
-    function(v1,k1,l1){ 
-      l1[k1] = _.groupBy(l1[k1],
-          function(v2,k2,l2){
-            return v2['report_year']+"_"+v2['report_qurater'];
-          }
-      )
-    }
-  );
-});
+          //group result items by year and quarter
+          _.each(groups,
+            function(v,k,l){
+            _.each(v['result'],
+              function(v1,k1,l1){ 
+                l1[k1] = _.groupBy(l1[k1],
+                    function(v2,k2,l2){
+                      return v2['report_year']+"_"+v2['report_qurater'];
+                    }
+                )
+              }
+            );
+          });
 
 
 
         //console.log(JSON.stringify(groups));  
-        
+          
         var total = DataNormalizer.convertNumberToWords(groups['total_sum']);
         
 
@@ -167,8 +249,6 @@ _.each(groups,
             filter: filter,
             total_sum_words:DataNormalizer.convertNumberToWords(quarters[0]['group_sum']),      // total sum normalized (scaled)
             groups: groups,
-            group_by: group_by,
-            availableCategories: availableCategories, 
             convertNumberToWords:DataNormalizer.convertNumberToWords,
             translate: translate,
             escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
