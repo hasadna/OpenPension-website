@@ -1,16 +1,23 @@
 var pg = require('pg');
-var memjs = require('memjs')
-var mc = memjs.Client.create()
+var memjs = require('memjs') 
 var config = require('../config')
 var md5 = require('MD5');
 var db = {};
-
-
 
 db.pg = function() {
   this.client = new pg.Client(config.connection_string);
   this.client.connect();
 };
+
+
+if (config.use_memcache == false){
+  mc = require('./MemcacheDummy');
+}
+else{
+  mc = memjs.Client.create()
+}
+
+
 
 db.pg.prototype = {
   querys: function(sql,callback) {
@@ -21,7 +28,7 @@ db.pg.prototype = {
     
     mc.get(md5(sql), function(err,val) {
 
-        if (val == undefined || val.toString().indexOf("Error") == 0){ // value not found in cache
+        if (val == undefined){ // value not found in cache
           //console.error("miss");
           self.client.query(sql, function(err, result) {
             if(err) {
@@ -52,7 +59,7 @@ db.pg.prototype = {
     
     mc.get(md5(sql), function(err,val) {
       
-        if (val == undefined || val.toString().indexOf("Error") == 0){ // value not found in cache
+        if (val == undefined){ // value not found in cache
           //console.error("miss");
 
           self.client.query(sql, function(err, result) {
