@@ -66,6 +66,10 @@ block content
 					div(style="text-align:left;direction:ltr") #{group.query} 
 				- if (group.group_field == 'fund_name' )continue;
 
+				//- skip empty groups
+				- if (Object.keys(group.result).length == 0 ) continue;
+
+				//- count precent shown in table
 				- var visiblePercentage = 0;
 
 				div()
@@ -85,7 +89,6 @@ block content
 								th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
 						tbody()
 							each result in group.result
-
 								- var lastQStr = lastQuarters[0].toString();
 								- var lastQResult = result[lastQStr][0];
 								- var lastQResultWords = convertNumberToWords(lastQResult.group_sum);
@@ -119,11 +122,13 @@ block content
 										- var sparkline = [];
 										- for(var i = 0;i<4;i++){
 											- var qStr = lastQuarters[i].toString();
-											- if (result[qStr] == undefined) 
-												div() result[#{qStr}] is undefined
+											- if (result[qStr] == undefined)
+												if (debug) 
+													div() result[#{qStr}] is undefined
 												- continue;
 											- if (quarters[i] == undefined) 
-												div() quarters[i] is undefined
+												if (debug)  
+													div() quarters[i] is undefined
 												- continue;
 											- sparkline.push( (Number(result[qStr][0]['group_sum']) / Number(quarters[i]['group_sum']) * 100).toFixed(2) );
 										- }
@@ -132,14 +137,15 @@ block content
 
 
 		
-							- if (visiblePercentage < 100){
+							- if(visiblePercentage <= 99){
 								tr()
 									td(class="listAll")
 										div()
-											a(href="/investments#{filter.toQueryString()}&group_by=#{group.group_field}")
+											a(data-target="#myModal",data-toggle="modal",data-remote="/investments#{filter.toQueryString()}&group_by=#{group.group_field}")
 												כל #{plurals[group.group_field]}...
 							- }
-							- if (visiblePercentage > 100){
+							
+							- if (debug && visiblePercentage > 100){
 								tr()
 									td()
 										div() סהכ גדול מ100%!! #{visiblePercentage }
@@ -148,17 +154,19 @@ block content
 
 
 
-		div(class="row") 
-			div() עוד בפנסיה פתוחה
-				ul(id = "linksList") 
-					each fund in funds
-						- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
-							li()
-								a(class="table-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
-							br()
+			div(class="row") 
+				div() עוד בפנסיה פתוחה
+					ul(id = "linksList") 
+						each fund in funds
+							- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
+								li()
+									a(class="table-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
+								br()
 
-		div(class="row") 
-			div() עוד בפנסיה פתוחה
+
+		div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+			div(class="modal-dialog modal-sm",style="margin-right:3%")
+				div(class="modal-content")
 
 
 	<!-- DEGBUGGING -->
