@@ -14,6 +14,7 @@ block content
 			//- HEADER
 			div(id="header-bottom" style="padding-right: 0px;")
 				div(class="container" style="padding-right: 0px;")
+					div(id="report-type" class="title2") #{report_type}
 					div(id="breadcrumbs") 
 								each field in filter.getConstrainedFields()
 									- if (field == "group_by" || field == "report_year" || field == "report_qurater" ) continue;

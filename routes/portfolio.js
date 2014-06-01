@@ -52,6 +52,20 @@ function createTitle(filter){
   return title;  
 }
 
+function getReportType(filter){
+  if (filter.getDrillDownDepth() == 1){
+    if (filter.hasConstraint("managing_body") || 
+      filter.hasConstraint("fund_name")){
+      return "תיק השקעות";
+    }
+  }
+  else{
+    return "השקעה";
+  }
+
+}
+
+
 var plurals = {
   'managing_body': 'הגופים המוסדיים', 
   'currency' : 'סוגי המטבעות', 
@@ -264,7 +278,8 @@ DAL.groupByManagingBody(totalPensionFundFilter,
             totalPensionFundQuery:totalPensionFundQuery,
             quarters:quarters,
             funds:funds,
-            origGroups:origGroups
+            origGroups:origGroups,
+            report_type: getReportType(filter)
           });        
         });
       });
