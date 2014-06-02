@@ -165,7 +165,7 @@ exports.investments = function(req, res){
 }
 
 
-exports.show = function(req, res){
+exports.portfolio = function(req, res){
 
   //create filter from request (search string)
   var filter = Filter.fromGetRequest(req);

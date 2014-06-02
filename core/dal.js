@@ -374,7 +374,7 @@ function groupByPortfolio(filter, callback){
 		outerSelect.order("group_sum",false);
 
 
-		console.log(outerSelect.toString());
+		// console.log(outerSelect.toString());
 
 	 	group.query = outerSelect.toString();
 
@@ -436,7 +436,7 @@ function groupByInvestments(filter, callback){
 	select.order("group_sum",false);
 
 	select = select.toString();
-	console.log(select.toString());
+	// console.log(select.toString());
 
 	db.querys(select,function(err, rows){
 		callback(rows,select);

@@ -174,9 +174,6 @@ a:hover{
 	float: left;
 }
 
-.aggregate_datum{
-	margin: 1.5em 0;
-}
 
 
 /*RIGHT COLUMN*/
@@ -211,7 +208,7 @@ a:hover{
 }
 
 .table-title{
-	margin: 0.571428571428571em 0; /** 12px **/
+	margin: 0.571428571428571em 0 !important; /** 12px **/
 }
 
 /*LEFT COLUMN*/
@@ -520,6 +517,21 @@ h4 {
 	background-color: white !important;
 }
 
+.listAll a,
+.listAll a:hover{
+	text-decoration: none;
+	cursor: pointer;
+	text-decoration: none;
+	direction: ltr;
+	text-align: right;
+	color: #0855C7;
+	line-height: 2em;
+}
+
 li{
 	margin-bottom: 0.75em;
 } 
+
+#aggregate_data_panel{
+	margin-bottom: 1.5em;
+}

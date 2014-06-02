@@ -30,12 +30,14 @@ exports.download = function(req, res){
 			'Content-Disposition' : 'attachment; filename="pension.csv"'
 		});
 
+		//write columns header line
 		res.write(line);
 
+		//write each row
 		_.each(rows,function(v,k,l){res.write(_.values(v).join(",")+"\n")})
 
-		res.end();    
+		res.end();
 	}
 	
-  ); 
+  );
 };

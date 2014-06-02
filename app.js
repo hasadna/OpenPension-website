@@ -59,7 +59,7 @@ if ('development' == app.get('env')) {
 //app.get('/', index.show);
 app.get('/', entry.show);
 
-app.get('/portfolio', portfolio.show);
+app.get('/portfolio', portfolio.portfolio);
 app.get('/investments', portfolio.investments);
 
 app.get('/entry', entry.show);
