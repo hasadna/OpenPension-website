@@ -39,28 +39,31 @@ block content
 				a(id="download" href="/csv#{filter.toQueryString()}") 
 					button(class="btn btn-default") &#xf0f6 הורד נתונים גולמיים
 						
-			div(class="row",id="aggregate_data_panel")
-				div(class="aggregate_datum col-sm-4 pull-right" style="text-align:center")
-					h4() גודל התיק
-					h2() #{total_sum_words.number}  #{total_sum_words.scale} שקל
+			div(class="row")
+				table(id="aggregate_data_panel")
+					tbody()
+						tr()
+							td(class="aggregate_datum" style="text-align:center")
+								h4() גודל התיק
+								h2() #{total_sum_words.number}  #{total_sum_words.scale} שקל
 
-				div(class="aggregate_datum col-sm-4 pull-right" style="text-align:center")
-					h4() חלק משוק הפנסיה 
-					-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
-					h2(style="direction:ltr") #{percentageOfTotalFund} %
+							td(class="aggregate_datum" style="text-align:center")
+								h4() חלק משוק הפנסיה 
+								-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
+								h2(style="direction:ltr") #{percentageOfTotalFund} %
 
-				div(class="aggregate_datum col-sm-4 pull-right" style="text-align:center")
-					h4() שינוי ב-4 רבעונים אחרונים
-					-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
-					-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
-					-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
-					-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
+							td(class="aggregate_datum" style="text-align:center")
+								h4() שינוי ב-4 רבעונים אחרונים
+								-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
+								-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
+								-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
+								-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
 
-					- var diffQ0Q3 = (diffQ0 - diffQ3).toFixed(1);
-					- if (diffQ0Q3 > 0) diffQ0Q3 = "+" +diffQ0Q3
+								- var diffQ0Q3 = (diffQ0 - diffQ3).toFixed(1);
+								- if (diffQ0Q3 > 0) diffQ0Q3 = "+" +diffQ0Q3
 
-					h2(style="direction:ltr") #{diffQ0Q3} %
-	
+								h2(style="direction:ltr") #{diffQ0Q3} %
+
 		
 			each group in groups
 				- if (debug)
@@ -85,7 +88,8 @@ block content
 						thead()
 							tr() 
 								th(style="text-align: right") #{translate(group.group_field)}
-								th(style="text-align: right") היקף ההשקעה בשקלים
+								th(style="text-align: right") היקף ההשקעה 
+									span(class="unit") בשקלים
 								th(style="text-align: right") % מתיק ההשקעות
 								th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
 						tbody()

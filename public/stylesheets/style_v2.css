@@ -208,7 +208,7 @@ a:hover{
 }
 
 .table-title{
-	margin: 0.571428571428571em 0 !important; /** 12px **/
+	margin: 0 0 0.571428571428571em  0 !important; /** 12px **/
 }
 
 /*LEFT COLUMN*/
@@ -267,7 +267,6 @@ a:hover{
 	direction: ltr;
 	text-align: right;
 	color: #0855C7;
-	line-height: 2em;
 }
 
 .entry-box-title,
@@ -368,10 +367,10 @@ a:hover{
 }
 
 .icon-flipped {
-transform: scaleX(-1);
--moz-transform: scaleX(-1);
--webkit-transform: scaleX(-1);
--ms-transform: scaleX(-1);
+	transform: scaleX(-1);
+	-moz-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	-ms-transform: scaleX(-1);
 }
 
 #highcharts-0{
@@ -387,31 +386,36 @@ transform: scaleX(-1);
 }
 
 th, tr, td{
-	height: 3em;
+	line-height: 3em;
 }
 
 th, td{
-	padding: 0 10px !important;
+	padding: 0 0.625em !important; /** 10px **/
 	vertical-align: middle !important;
 }
 
 th{
 	font-weight: normal;
 	background-color: #F2F2F2;
-	border-color: #E4E4E4;
-	border-style: solid;
-	border-width: 1px;
+	border-collapse: collapse !important;
+	border: 1px solid #E4E4E4 !important;
+	vertical-align: baseline;
+}
+
+.unit{
+	color: #999999;
+	vertical-align: baseline;
 }
 
 td{
 	border-top: none !important;
 }
 
-th>div, td>div, td>span{
+th>div, td>div, th>span, td>span{
 	line-height: 3em;
 }
 
-td>span{
+th>span, td>span{
 	width: 25%;
 	display: inline-block;
 }
@@ -486,7 +490,6 @@ h4 {
 	-webkit-column-count: 3;
 	-moz-column-count: 3;
 	column-count: 3;
-	padding: 0;
 }
 
 #linksList li {
@@ -533,5 +536,14 @@ li{
 } 
 
 #aggregate_data_panel{
+	width: 100%;
 	margin-bottom: 1.5em;
+}
+
+#aggregate_data_panel td{
+	border-width: 0 1px;
+	border-color: #E4E4E4;
+	border-style: solid;
+	border-collapse: collapse !important;
+	width: 33%;
 }
