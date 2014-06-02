@@ -174,6 +174,10 @@ a:hover{
 	float: left;
 }
 
+.aggregate_datum{
+	margin: 1.5em 0;
+}
+
 
 /*RIGHT COLUMN*/
 
@@ -204,6 +208,10 @@ a:hover{
 	font-weight:bold;
 	color: #FFA202;
 	font-family:'almoni-tzar';
+}
+
+.table-title{
+	margin: 0.571428571428571em 0; /** 12px **/
 }
 
 /*LEFT COLUMN*/
@@ -411,6 +419,11 @@ td>span{
 	display: inline-block;
 }
 
+td>a{
+	color: #0855C7;
+	
+}
+
 #bar{
 	height: 1.5em;
 	background-color:#7FB2FF;
@@ -432,12 +445,45 @@ td>span{
 	border-color: #E4E4E4;
 }
 
-.title1 { font-size: 36px;line-height: 24px;font-family: "Alef Hebrew";font-weight: bold}
-.title2 { font-size: 24px;line-height: 24px;font-family: "Alef Hebrew";margin-bottom:}
-.title3 { font-size: 21px;line-height: 24px;font-family: "Alef Hebrew";color: #999999;}
-.title4 { font-size: 21px;line-height: 24px;font-family: "almoni-tzar";color: #999999;}
-.title5 { font-size: 16px;line-height: 24px;font-family: "Alef Hebrew";}
-.title6 { font-size: 14px;line-height: 24px;font-family: "Alef Hebrew";}
+.title1 { 
+	font-size: 36px;
+	line-height: 24px;
+	font-family: "Alef Hebrew";font-weight: bold;
+}
+
+h2 { 
+	font-size: 2.25em; /** 36px **/
+	line-height: 1.33333333333333em; /** 48px **/
+	font-family: "Alef Hebrew";
+	margin: 0 !important;
+}
+
+.title3 { 
+	font-size: 21px;
+	line-height: 24px;
+	font-family: "Alef Hebrew";
+	color: #999999;
+}
+
+h4 { 
+	font-size: 1.3125em; /** 21px **/
+	line-height: 1.14285714285714em; /** 24px **/
+	font-family: "almoni-tzar";
+	color: #999999; 
+	margin: 0 !important;
+}
+
+.title5 { 
+	font-size: 16px;
+	line-height: 24px;
+	font-family: "Alef Hebrew";
+}
+
+.title6 { 
+	font-size: 14px;
+	line-height: 24px;
+	font-family: "Alef Hebrew";
+}
 
 
 #linksList {

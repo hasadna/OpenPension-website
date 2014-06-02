@@ -14,7 +14,7 @@ block content
 			//- HEADER
 			div(id="header-bottom" style="padding-right: 0px;")
 				div(class="container" style="padding-right: 0px;")
-					div(id="report-type" class="title2") #{report_type}
+					h2(id="report-type") #{report_type}
 					div(id="breadcrumbs") 
 								each field in filter.getConstrainedFields()
 									- if (field == "group_by" || field == "report_year" || field == "report_qurater" ) continue;
@@ -25,7 +25,7 @@ block content
 									a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
 										span() #{removeQoutes(translate(value))} 
 					
-					div(id="question" class="title2")  תיק השקעות
+					h2(id="question")  תיק השקעות
 						
 
 			div(id="btn-bar" class="row btn-group" style="font-family:FontAwesome;")
@@ -40,17 +40,17 @@ block content
 					button(class="btn btn-default") &#xf0f6 הורד נתונים גולמיים
 						
 			div(class="row")
-			div(class="col-sm-4 pull-right" style="text-align:center")
-				div(class="title4") גודל התיק
-				div(class="title2") #{total_sum_words.number}  #{total_sum_words.scale} שקל
+			div(class="aggregate_datum col-sm-4 pull-right" style="text-align:center")
+				h4() גודל התיק
+				h2() #{total_sum_words.number}  #{total_sum_words.scale} שקל
 
-			div(class="col-sm-4 pull-right" style="text-align:center")
-				div(class="title4") חלק משוק הפנסיה 
+			div(class="aggregate_datum col-sm-4 pull-right" style="text-align:center")
+				h4() חלק משוק הפנסיה 
 				-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
-				div(style="direction:ltr" class="title2") #{percentageOfTotalFund} %
+				h2(style="direction:ltr") #{percentageOfTotalFund} %
 
-			div(class="col-sm-4 pull-right" style="text-align:center")
-				div(class="title4") שינוי ב-4 רבעונים אחרונים
+			div(class="aggregate_datum col-sm-4 pull-right" style="text-align:center")
+				h4() שינוי ב-4 רבעונים אחרונים
 				-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
 				-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
 				-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
@@ -59,7 +59,7 @@ block content
 				- var diffQ0Q3 = (diffQ0 - diffQ3).toFixed(1);
 				- if (diffQ0Q3 > 0) diffQ0Q3 = "+" +diffQ0Q3
 
-				div(style="direction:ltr" class="title2") #{diffQ0Q3} %
+				h2(style="direction:ltr") #{diffQ0Q3} %
 	
 		
 			each group in groups
@@ -74,7 +74,7 @@ block content
 				- var visiblePercentage = 0;
 
 				div()
-					span(style="padding-top:15px;" class="title4") חלוקה לפי&nbsp #{translate(group.group_field)}
+					h4(class="table-title") חלוקה לפי&nbsp #{translate(group.group_field)}
 				
 					table( class="table table-striped" style="text-align:right;width:100%")
 						colgroup()
