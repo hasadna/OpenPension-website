@@ -429,6 +429,7 @@ td>a{
 	height: 1.5em;
 	background-color:#7FB2FF;
 	display: inline-block;
+	min-width: 1px;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td, 
