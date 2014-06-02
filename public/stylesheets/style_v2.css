@@ -130,14 +130,15 @@ a:hover{
 
 #header-bottom{
 	background-color:#FFFFFF;
-	height:80px;
+	xheight:80px;
 	padding: 15px 20px 0 20px;
 }
 
 
 #breadcrumbs a{
-	text-decoration: underline;
-	cursor:pointer
+	text-decoration: none;
+	cursor:pointer;
+	color: #0855C7;
 }
 
 
@@ -546,4 +547,30 @@ li{
 	border-style: solid;
 	border-collapse: collapse !important;
 	width: 33%;
+}
+
+.modal-dialog{
+	margin-right:4%
+}
+
+#investments-header{
+	height: 3em;
+}
+
+#investments-header-title{
+	padding-top: 4px;
+	float: right;
+}
+
+#investments-header-button{
+	padding-top:26px;
+	font-family: FontAwesome;
+	float: left;
+    font-size: 1.5em;
+
+}
+
+
+#investments-header-button:hover{
+	cursor: pointer;
 }

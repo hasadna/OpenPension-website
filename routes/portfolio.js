@@ -13,6 +13,7 @@ function createTitle(filter){
                                                 
   var title = "";
   var onlyManagingBody = 0;
+  var onlyFundName = 0;
   var nothingIsChosen = 0;
   var addTheWordNechasim =0;
   
@@ -25,6 +26,7 @@ function createTitle(filter){
   var asset_type = filter.getConstraintData('asset_type');
   var instrument_id = filter.getConstraintData('instrument_id');
   var issuer = filter.getConstraintData('issuer');
+  var fund_name = filter.getConstraintData('fund_name');
         
         
   // nothing is chosen by the user
@@ -32,32 +34,45 @@ function createTitle(filter){
         nothingIsChosen = 1; 
   }  
   // only managing body is active 
-  if (managing_body!= "" && liquidity=="" && industry=="" && currency=="" && rating=="" && asset_type=="" && instrument_id==""  ) {
+  if (managing_body!= "" && filter.getDrillDownDepth() == 1 ) {
         onlyManagingBody = 1; 
   }
+
+  if (fund_name!= "" &&  filter.getDrillDownDepth() == 1 ||
+      fund_name!= "" && managing_body!= "" &&
+       filter.getDrillDownDepth() == 2 ) {
+        onlyFundName = 1; 
+  }
+
+
   // If managing body or instrument is not chosen add the word 'instruments' (nechasim) to have a NOSSE 
   //if (managing_body== "" && liquidity=="" ) {
   if (liquidity=="" && asset_type =="" && !onlyManagingBody) {
         addTheWordNechasim = 1;  
   }
-        
-  title +=  (managing_body != "")?onlyManagingBody?"תיק ההשקעות של " + managing_body : "כמה כסף משקיעה " + managing_body:"כמה כסף מושקע";
+  
+
+  title +=  (managing_body != "")?onlyManagingBody? managing_body : managing_body + " > " : "";
+  title +=  (fund_name != "")? onlyFundName ? fund_name : "כמה כסף משקיעה " + managing_body:"";
   title +=  (liquidity != "")?" ב" + removeQoutes(liquidity) :"";
   title +=  (asset_type != "")?(liquidity != "")?" ו" + removeQoutes(asset_type):" ב" + removeQoutes(asset_type) :"";  
-  title +=  (addTheWordNechasim)?" בנכסים" : "";  
-  title +=  (addTheWordNechasim && issuer != "" )?" של " + issuer :( (liquidity != "" || asset_type != "") && issuer != "" )?" של " + issuer :(issuer != "" )?" ב" + issuer:"";  
+  title +=  (issuer != "" )? issuer :( (liquidity != "" || asset_type != "") && issuer != "" )?" של " + issuer :(issuer != "" )?" ב" + issuer:"";  
   title +=  (industry != "")?" בענף ה" + industry :"";        
-  title +=  (currency != "")?" שנקנו ב" + currency :"";
+  title +=  (currency != "")?" ב" + currency :"";
   title +=  (rating != "")?" בדירוג " + rating :"";
   return title;  
 }
 
 function getReportType(filter){
-  if (filter.getDrillDownDepth() == 1){
-    if (filter.hasConstraint("managing_body") || 
-      filter.hasConstraint("fund_name")){
+  if ( (filter.getDrillDownDepth() == 1 && 
+        filter.hasConstraint("managing_body")) ||
+        (filter.getDrillDownDepth() == 1 && 
+        filter.hasConstraint("fund_name")) ||
+        (filter.getDrillDownDepth() == 2 && 
+        filter.hasConstraint("managing_body") && 
+        filter.hasConstraint("fund_name"))
+        ){
       return "תיק השקעות";
-    }
   }
   else{
     return "השקעה";
@@ -279,7 +294,9 @@ DAL.groupByManagingBody(totalPensionFundFilter,
             quarters:quarters,
             funds:funds,
             origGroups:origGroups,
-            report_type: getReportType(filter)
+            report_type: getReportType(filter),
+            report_title : createTitle(filter),
+            drillDown : filter.getDrillDown()
           });        
         });
       });

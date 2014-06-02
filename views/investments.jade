@@ -13,8 +13,9 @@ block content
 				div(style="text-align:left;direction:ltr") #{query} 
 
 			div()
-				span(style="padding-top:15px;" class="title4") חלוקה לפי&nbsp #{translate(group_by)}
-			
+				div(id="investments-header")
+					h3(id="investments-header-title") חלוקה לפי&nbsp #{translate(group_by)}
+					div(id="investments-header-button",onclick="$('.modal').modal('hide')" ) &#xf05c
 				table( class="table table-striped" style="text-align:right;width:100%")
 					colgroup()
 						col(class="col-sm-3")

@@ -14,18 +14,25 @@ block content
 			//- HEADER
 			div(id="header-bottom" style="padding-right: 0px;")
 				div(class="container" style="padding-right: 0px;")
+
 					div(id="breadcrumbs") 
-						each field in filter.getConstrainedFields()
-							- if (field == "group_by" || field == "report_year" || field == "report_qurater" ) continue;
+						each field, i in drillDown
 							- var value = filter.getConstraintData(field) ;
 							- var escapedValue = rfc3986EncodeURIComponent(value);
 							
-							span(id="breadcrumbs_seperator") >
-							a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
+							- if ( i !== 0){
+								span(id="breadcrumbs_seperator") /
+							- }
+
+							-if ( i < drillDown.length - 1 ){
+								a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
+									span() #{removeQoutes(translate(value))} 
+							-}else{
 								span() #{removeQoutes(translate(value))} 
+							-}
 
 					h2(id="report-type") #{report_type}
-					div(id="report-title") #{report_title} 
+						h1(id="report-title") #{report_title} 
 											
 
 			div(id="btn-bar" style="font-family:FontAwesome;")
@@ -170,7 +177,7 @@ block content
 
 
 		div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
-			div(class="modal-dialog modal-sm",style="margin-right:3%")
+			div(class="modal-dialog modal-sm")
 				div(class="modal-content")
 
 

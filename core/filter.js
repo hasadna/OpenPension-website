@@ -162,6 +162,19 @@ var Filter = function(){
 	}
 
 
+	this.getDrillDown = function(){
+
+		var constrainedFields = this.getConstrainedFields();
+		var drillDown = constrainedFields.filter(
+							function(val){
+									return (val !="group_by" &&
+										val !="report_year" &&
+										val !="report_qurater"
+								)
+							});
+
+		return drillDown;
+	}
 
 	this.getDrillDownDepth = function(){
 
