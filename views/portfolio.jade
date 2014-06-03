@@ -15,7 +15,7 @@ block content
 			div(id="header-bottom" style="padding-right: 0px;")
 				div(class="container" style="padding-right: 0px;")
 
-					div(id="breadcrumbs") 
+					div(id="breadcrumbs", class="row") 
 						each field, i in drillDown
 							- var value = filter.getConstraintData(field) ;
 							- var escapedValue = rfc3986EncodeURIComponent(value);
@@ -28,7 +28,7 @@ block content
 								a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
 									span() #{removeQoutes(translate(value))} 
 							-}else{
-								span() #{removeQoutes(translate(value))} 
+								span(title="#{translate(field)}") #{removeQoutes(translate(value))} 
 							-}
 
 					h2(id="report-type") #{report_type}
@@ -86,7 +86,7 @@ block content
 				div()
 					h4(class="table-title") חלוקה לפי&nbsp #{translate(group.group_field)}
 				
-					table( class="table table-striped" style="text-align:right;width:100%")
+					table( class="group-table table table-striped" style="text-align:right;width:100%")
 						colgroup()
 							col(class="col-sm-3")
 							col(class="col-sm-3")
@@ -150,13 +150,14 @@ block content
 
 		
 							- if(visiblePercentage <= 99){
-								tr()
-									td(class="listAll")
-										div()
-											a(data-target="#myModal",data-toggle="modal",data-remote="/investments#{filter.toQueryString()}&group_by=#{group.group_field}")
-												כל #{plurals[group.group_field]}...
+								tfoot()
+									tr()
+										td(class="listAll")
+											div()
+												a(data-target="#myModal",data-toggle="modal",data-remote="/investments#{filter.toQueryString()}&group_by=#{group.group_field}")
+													כל #{plurals[group.group_field]}...
 							- }
-							
+						
 							- if (debug && visiblePercentage > 100){
 								tr()
 									td()

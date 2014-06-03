@@ -85,10 +85,36 @@ function setConstraint(key, value) {
 
 }
 
-//////////////////// GRAPH
+
+/// Sort the tables
+
+function sortTable(table, col, reverse) {
+    var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+        tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+        i;
+    reverse = ((+reverse) || -1);
+
+    tr = tr.sort(function (a, b) { // sort rows
+        return reverse * (Number(a.cells[col].textContent.replace(/[^\d.-]/g, ''))
+                 - Number(b.cells[col].textContent.replace(/[^\d.-]/g, '')));
+
+    });
+    
+    for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+}
 
 
 $(function () {
+    
+     //sort the tables
+    $('.group-table').each(function(i,table){sortTable(table,2)})
+
+});
+//////////////////// GRAPH
+
+$(function () {
+
+   
     /**
      * Create a constructor for sparklines that takes some sensible defaults and merges in the individual 
      * chart options. This function is also available from the jQuery plugin as $(element).highcharts('SparkLine').

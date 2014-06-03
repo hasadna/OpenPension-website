@@ -135,15 +135,23 @@ a:hover{
 }
 
 
+#breadcrumbs{
+	direction: ltr;
+
+}
 #breadcrumbs a{
 	text-decoration: none;
 	cursor:pointer;
 	color: #0855C7;
 }
 
+#breadcrumbs span{
+	float: right;
+}
 
 #breadcrumbs_seperator{
 	padding: 0 5px 0 5px;
+	float: right;
 }
 
 #report-type{
