@@ -382,9 +382,16 @@ a:hover{
 	-ms-transform: scaleX(-1);
 }
 
+/* HIGHCHARTS GRAPH */
+
 #highcharts-0{
 	overflow: visible !important;
 }
+
+.highcharts-axis{
+	display: none !important;
+}
+
 
 .gray{
 	color: #999999;
@@ -583,3 +590,5 @@ li{
 #investments-header-button:hover{
 	cursor: pointer;
 }
+
+

@@ -180,11 +180,11 @@ $(function () {
                 plotOptions: {
                     series: {
                         animation: false,
-                        lineWidth: 1,
+                        lineWidth: 3, //width of graph
                         shadow: false,
                         states: {
                             hover: {
-                                lineWidth: 1
+                                lineWidth: 3 //width of graph line
                             }
                         },
                         marker: {
@@ -209,7 +209,7 @@ $(function () {
         };
 
     var start = +new Date(),
-        $tds = $("td[data-sparkline]"),
+        $tds = $("div[data-sparkline]"),
         fullLen = $tds.length,
         n = 0;
 
@@ -265,6 +265,7 @@ $(function () {
 
 $(function(){
 
+        ///// MODAL EVENTS
         $('body').on('hidden.bs.modal', '.modal', function () {
             $(this).removeData('bs.modal');
             // alert("hidden");
@@ -284,7 +285,7 @@ $(function(){
             // alert("loaded");
    
             var start = +new Date(),
-                $tds = $("td[data-sparkline]"),
+                $tds = $("div[data-sparkline]"),
                 fullLen = $tds.length,
                 n = 0;
 
