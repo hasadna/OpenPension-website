@@ -34,6 +34,11 @@
 	vertical-align: middle;
 }
 
+html {
+  margin: 0;
+}
+  
+
 body {
   font-family: "Alef Hebrew",
                “Helvetica Neue”,
@@ -43,6 +48,8 @@ body {
   direction: rtl;
 	font-size: 16px;
 	line-height: 1.5em;
+  margin: 0;
+  padding: 0;
 }
 
 a,
@@ -525,23 +532,43 @@ h4 {
 }
 
 
-#footer{
+footer{
 	font-size: 14px;
-	position: relative;
-	top:30px;
-	height: 45px;
-	background-color:#333333;
+	height: 48px;
+  line-height: 48px;
+	background-color: #333333;
 	color:white;
-
-}
-
-.footer-text{
-	position: relative;
-	top:15px;
 }
 
 #footer-feedback{
 	padding: 0px 10px 0px 10px;
+}
+
+footer .container{
+  height: 100%;
+  padding: 0;
+}
+
+#footer-text{
+  height: 100%;
+}
+
+#footer-links{
+  padding: 0;
+  height: 100%;
+  margin: 0;
+}
+
+footer li{
+  display: inline-block;
+  padding: 0 10px;
+  margin: 0;
+  height: 100%;
+}
+
+footer a {
+  vertical-align: baseline;
+  text-decoration: underline;
 }
 
 .listAll{
