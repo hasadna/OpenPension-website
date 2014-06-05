@@ -71,7 +71,7 @@ a:hover{
 	font-family: "Alef Hebrew";
 	margin: 0;
 	width: 100%;
-	height: 46px; /** could not convert into ems for some reason! Should be 2ems, equivalent of 48px including borders **/
+	height: 46px; /* could not convert into ems for some reason! Should be 2ems, equivalent of 48px including borders */
 	font-size: 1em;
 }
 
@@ -146,10 +146,10 @@ nav .container {
   padding: 0 10px !important;
 }
 
-#header-bottom{
+#portfolio-header{
 	background-color:#FFFFFF;
-	height:80px;
-	padding: 15px 20px 0 20px;
+  padding: 0;
+  margin-bottom: 1.5em;
 }
 
 
@@ -164,19 +164,10 @@ nav .container {
 }
 
 #breadcrumbs span{
-	float: right;
 }
 
 #breadcrumbs_seperator{
 	padding: 0 5px 0 5px;
-	float: right;
-}
-
-#report-type{
-	font-size: 24px;
-	line-height: 30px;
-	font-family:'almoni-tzar';
-	color: #999999;
 }
 
 #btn-bar{
@@ -184,7 +175,6 @@ nav .container {
 	border-top: 1px solid #EEE;
 	border-bottom: 1px solid #EEE;
 	width: 100%;
-	margin-bottom: 1.5em;
 }
 
 .btn-group{
@@ -194,7 +184,6 @@ nav .container {
 #quarterSelection{
 	font-size: 30px;
 	line-height: 45px;
-	float:left;
 }
 
 #download{
@@ -235,7 +224,7 @@ nav .container {
 }
 
 .table-title{
-	margin: 0 0 0.571428571428571em  0 !important; /** 12px **/
+	margin: 0.571428571428571em  0 !important; /* 12px */
 }
 
 /*LEFT COLUMN*/
@@ -415,8 +404,13 @@ nav .container {
 	color: #999999;
 }
 
+.segmentation{
+  	margin-bottom: 3em;
+}
+  
 .table{
-	margin-bottom: 1.5em;
+  border-collapse: collapse !important;
+	border: 1px solid #E4E4E4 !important;
 }
 
 th, tr, td{
@@ -424,7 +418,7 @@ th, tr, td{
 }
 
 th, td{
-	padding: 0 0.625em !important; /** 10px **/
+	padding: 0 0.625em !important; /* 10px */
 	vertical-align: middle !important;
 }
 
@@ -480,54 +474,55 @@ td>a{
 	border-color: #E4E4E4;
 }
 
-.title1 { 
-	font-size: 36px;
-	line-height: 24px;
+h1 { 
+	font-size: 2.25em; /* 36px */
+	line-height: 1.3333333333em; /* 48px */
 	font-family: "Alef Hebrew";font-weight: bold;
+  margin: 0 0 0.6666666667em 0 !important; /* 24px */
 }
 
 h2 { 
-	font-size: 2.25em; /** 36px **/
-	line-height: 1.33333333333333em; /** 48px **/
-	font-family: "Alef Hebrew";
-	margin: 0 !important;
-}
-
-.title3 { 
-	font-size: 21px;
-	line-height: 24px;
-	font-family: "Alef Hebrew";
-	color: #999999;
-}
-
-h4 { 
-	font-size: 1.3125em; /** 21px **/
-	line-height: 1.14285714285714em; /** 24px **/
+	font-size: 1.5em; /* 24px */
+	line-height: 1em; /* 24px */
 	font-family: "almoni-tzar";
 	color: #999999; 
 	margin: 0 !important;
 }
 
-.title5 { 
-	font-size: 16px;
-	line-height: 24px;
-	font-family: "Alef Hebrew";
+h3 { 
+	font-size: 1.3125em; /* 21px */
+	line-height: 1.14285714285714em; /* 24px */
+	font-family: "almoni-tzar";
+	color: #999999; 
+	margin: 0 !important;
 }
 
-.title6 { 
+h4 { 
+	font-size: 1em;
+	line-height: 1.5em;
+	font-family: "almoni-tzar";
+	color: #999999;
+}
+
+h5 { 
 	font-size: 14px;
 	line-height: 24px;
 	font-family: "Alef Hebrew";
 }
 
+#link-list-title {
+  margin: 1.14285714285714em 0 !important; /* 24px */
+}
+  
 
-#linksList {
+#link-list {
 	-webkit-column-count: 3;
 	-moz-column-count: 3;
 	column-count: 3;
+  padding: 0;
 }
 
-#linksList li {
+#link-list li {
 	display: inline-block;
 }
 
@@ -590,17 +585,27 @@ li{
 	margin-bottom: 0.75em;
 } 
 
-#aggregate_data_panel{
+#aggregate-data-panel{
 	width: 100%;
 	margin-bottom: 1.5em;
+  border: 1px solid #E4E4E4;
+	border-collapse: collapse !important;
 }
 
-#aggregate_data_panel td{
-	border-width: 0 1px;
-	border-color: #E4E4E4;
-	border-style: solid;
+#aggregate-data-panel td{
+	border: 1px solid #E4E4E4;
 	border-collapse: collapse !important;
 	width: 33%;
+  padding: 0.75em 0 !important;
+  text-align: center;
+}
+
+.datum { 
+	font-size: 2.25em; /* 36px */
+	line-height: 1.33333333333333em; /* 48px */
+	font-family: "Alef Hebrew";
+	margin: 0 !important;
+  width: auto !important;
 }
 
 .modal-dialog{

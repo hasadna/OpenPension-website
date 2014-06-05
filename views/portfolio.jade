@@ -9,67 +9,67 @@ block content
 	div(class="container")
 		
 		//- RIGHT COLUMN
-		div(id="right-column" class="col-sm-12 pull-right" style="padding-right: 0px;")
+		div(class="row")
 
 			//- HEADER
-			div(id="header-bottom" style="padding-right: 0px;")
-				div(class="container" style="padding-right: 0px;")
+			div(id="portfolio-header" class="col-sm-12")
+				
+				div(id="breadcrumbs") 
+					each field, i in drillDown
+						- var value = filter.getConstraintData(field) ;
+						- var escapedValue = rfc3986EncodeURIComponent(value);
 
-					div(id="breadcrumbs", class="row") 
-						each field, i in drillDown
-							- var value = filter.getConstraintData(field) ;
-							- var escapedValue = rfc3986EncodeURIComponent(value);
-							
-							- if ( i !== 0){
-								span(id="breadcrumbs_seperator") /
-							- }
+						- if ( i !== 0){
+							span(id="breadcrumbs_seperator") /
+						- }
 
-							-if ( i < drillDown.length - 1 ){
-								a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
-									span() #{removeQoutes(translate(value))} 
-							-}else{
-								span(title="#{translate(field)}") #{removeQoutes(translate(value))} 
-							-}
+						-if ( i < drillDown.length - 1 ){
+							a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
+								span() #{removeQoutes(translate(value))} 
+						-}else{
+							span(title="#{translate(field)}") #{removeQoutes(translate(value))} 
+						-}
 
-					h2(id="report-type") #{report_type}
-						h1(id="report-title") #{report_title} 
+				h2(id="report-type") #{report_type}
+				h1(id="report-title") #{report_title} 
 											
 
-			div(id="btn-bar" style="font-family:FontAwesome;")
-				select(id="select_quarter" style="float:right;"  data-width="160px" )
-					each quarter in lastQuarters
-						- var select=null;
-						- if (report_year == quarter.year && report_qurater == quarter.quarter)
-							- select='selected';
-						option(value="#{JSON.stringify(quarter)}",
-						selected=select) &#xf073 רבעון #{quarter.quarter}, #{quarter.year}
-				a(id="download" href="/csv#{filter.toQueryString()}") 
-					button(class="btn btn-default") &#xf0f6 הורד נתונים גולמיים
+				div(id="btn-bar" style="font-family:FontAwesome;")
+					select(id="select_quarter")
+						each quarter in lastQuarters
+							- var select=null;
+							- if (report_year == quarter.year && report_qurater == quarter.quarter)
+								- select='selected';
+							option(value="#{JSON.stringify(quarter)}",
+							selected=select) &#xf073 רבעון #{quarter.quarter}, #{quarter.year}
+					a(id="download" href="/csv#{filter.toQueryString()}") 
+						button(class="btn btn-default") &#xf0f6 הורד נתונים גולמיים
 						
 			div(class="row")
-				table(id="aggregate_data_panel")
-					tbody()
-						tr()
-							td(class="aggregate_datum" style="text-align:center")
-								h4() גודל התיק
-								h2() #{total_sum_words.number}  #{total_sum_words.scale} שקל
+				div(class="col-sm-12")
+					table(id="aggregate-data-panel")
+						tbody()
+							tr()
+								td()
+									h3() גודל התיק
+									span(class="datum") #{total_sum_words.number}  #{total_sum_words.scale} שקל
 
-							td(class="aggregate_datum" style="text-align:center")
-								h4() חלק משוק הפנסיה 
-								-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
-								h2(style="direction:ltr") #{percentageOfTotalFund} %
+								td()
+									h3() חלק משוק הפנסיה 
+									-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
+									span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
 
-							td(class="aggregate_datum" style="text-align:center")
-								h4() שינוי ב-4 רבעונים אחרונים
-								-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
-								-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
-								-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
-								-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
+								td()
+									h3() שינוי ב-4 רבעונים אחרונים
+									-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
+									-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
+									-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
+									-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
 
-								- var diffQ0Q3 = (diffQ0 - diffQ3).toFixed(1);
-								- if (diffQ0Q3 > 0) diffQ0Q3 = "+" +diffQ0Q3
+									- var diffQ0Q3 = (diffQ0 - diffQ3).toFixed(1);
+									- if (diffQ0Q3 > 0) diffQ0Q3 = "+" +diffQ0Q3
 
-								h2(style="direction:ltr") #{diffQ0Q3} %
+									span(class="datum" style="direction:ltr") #{diffQ0Q3} %
 
 		
 			each group in groups
@@ -83,10 +83,10 @@ block content
 				//- count precent shown in table
 				- var visiblePercentage = 0;
 
-				div()
-					h4(class="table-title") חלוקה לפי&nbsp #{translate(group.group_field)}
+				div(class="segmentation")
+					h3(class="table-title") חלוקה לפי&nbsp #{translate(group.group_field)}
 				
-					table( class="group-table table table-striped" style="text-align:right;width:100%")
+					table(class="group-table table table-striped" style="text-align:right;width:100%")
 						colgroup()
 							col(class="col-sm-3")
 							col(class="col-sm-3")
@@ -171,13 +171,15 @@ block content
 
 
 			div(class="row") 
-				h4() עוד בפנסיה פתוחה
-				ul(id = "linksList") 
-					each fund in funds
-						- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
-							li()
-								a(class="table-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
-							br()
+				div(id="further-reading" class="col-sm-12")
+					h3(id = "link-list-title") עוד בפנסיה פתוחה
+					h4() קופות של מגדל
+					ul(id = "link-list") 
+						each fund in funds
+							- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
+								li()
+									a(class="table-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
+								br()
 
 
 		div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
