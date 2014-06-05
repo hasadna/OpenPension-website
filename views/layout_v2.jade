@@ -1,49 +1,48 @@
 doctype html
 html
-  head
-    title= title
-    script(type='text/javascript', src='/js/jquery-1.11.0.min.js')
+	head
+		title= title
+		script(type='text/javascript', src='/js/jquery-1.11.0.min.js')
 
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')  
-    link(rel='stylesheet', href='/stylesheets/bootstrap-select.rtl.min.css')
-    link(rel='stylesheet', href='/stylesheets/style_v2.css')
-    link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')  
+		link(rel='stylesheet', href='/stylesheets/bootstrap-select.rtl.min.css')
+		link(rel='stylesheet', href='/stylesheets/style_v2.css')
+		link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
 
-    // Le HTML5 shim, for IE6-8 support of HTML5 elements 
-    //if lt IE 9
-    script(src='/js/html5.js')
-    script(src='/js/respond.min.js')
-    // Le fav and touch icons
-    script(type='text/javascript', src='/js/bootstrap.min.js')
-    script(type='text/javascript', src='/js/bootstrap-select.min.js')
-    script(type='text/javascript', src='/js/filter.js')
-    script(type='text/javascript', src='/js/categories.js')
-  body
-    header(id="header" class="row noselect")
-          div(id="header-top")
-            div(class="container")
-              div()
-                div(id="logo")
-                    img(id="header-logo" src="/img/pension-logo.png")
-                    div(id="header-title") 
-                        a( href="/" ) פנסיה פתוחה
-                div(id="header-feedback")
-                    a(href="mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה") שלחו לנו פידבק
-                div(id="header-about")
-                    a( href="/about")אודות
-        block headerbottom
+		// Le HTML5 shim, for IE6-8 support of HTML5 elements 
+		//if lt IE 9
+		script(src='/js/html5.js')
+		script(src='/js/respond.min.js')
+		// Le fav and touch icons
+		script(type='text/javascript', src='/js/bootstrap.min.js')
+		script(type='text/javascript', src='/js/bootstrap-select.min.js')
+		script(type='text/javascript', src='/js/filter.js')
+		script(type='text/javascript', src='/js/categories.js')
+	body    
+		nav(class="navbar navbar-default navbar-static-top" role="navigation")
+			div(class="container")
+				div(class="navbar-header navbar-right")
+					a(class="navbar-brand" href="/")
+						img(src="/img/pension-logo.png") 
+						span() פנסיה פתוחה
+				ul(class="nav navbar-nav navbar-left")
+					li()
+						a(id="about-link" href="/about") אודות
+					li()
+						button(id="feedback-button" onClick="location.href='mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה'" type="button" class="btn btn-default navbar-btn") שלח פידבק	
+			block headerbottom
 
-    block content
+		block content
 
-    footer(id="footer")
-        div(class="container")
-            div(class="footer-text pull-right") פנסיה פתוחה היא פרוייקט של 
-                a(href="http://www.hasadna.org.il/") הסדנא לידע ציבורי
-            div(class="footer-text pull-left")
-                div(class="pull-right") 
-                    a(href="/about") אודות
-                div(class="pull-right" id="footer-feedback") 
-                    a(href="mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה") שלחו פידבק
-                div(class="pull-right") מדיניות פרטיות
-                
+		footer(id="footer")
+				div(class="container")
+						div(class="footer-text pull-right") פנסיה פתוחה היא פרוייקט של 
+								a(href="http://www.hasadna.org.il/") הסדנא לידע ציבורי
+						div(class="footer-text pull-left")
+								div(class="pull-right") 
+										a(href="/about") אודות
+								div(class="pull-right" id="footer-feedback") 
+										a(href="mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה") שלחו פידבק
+								div(class="pull-right") מדיניות פרטיות
+								

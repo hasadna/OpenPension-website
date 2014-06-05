@@ -71,66 +71,77 @@ a:hover{
 
 
 /* HEADER */
-#header{
-	height:3em;
+
+
+.navbar{
+	color: #FFFFFF !important;
+  background-color: #0855C7;
+	height: 3em;
+  line-height: 3em;
+  direction: rtl !important;
+  border: none !important;
+  border-radius: 0;
 }
 
-#header-top{
-	background-color:#0855C7;
-	height:3em;
+nav .container {
+  height: 100%;
+  padding: 0;
 }
 
-#header-logo{
-	float:right;
-	height:28px;
-	width:auto;
-	margin: 10px 0 0 10px;
+.navbar .nav {
+    float: right;
 }
 
-#header-title{
-	float:right;
-	color:#FFFFFF;
-	font-size:1.5em;
+.navbar .nav li{
+  float: right;
+  padding: 0;
+  line-height: 3em;
+  height: 100%;
+}
+
+.navbar ul, .navbar-header, .navbar-brand {
+  padding: 0 !important;
+}
+
+.navbar ul {
+  height: 100%;
+}
+
+.navbar-brand{
+	float: right;
+  color: white !important;
+  font-size:1.5em;
 	font-weight:700;
 	font-family:"almoni-tzar";
-	line-height: 2em;
+  line-height: 2em;
 }
 
-#header-feedback{
-	height:30px;
-	float:left;
-	color:white;
-	font-size:18px;
+.navbar-brand img{
+  height: 28px;
+	width: auto;
+  margin-left: 0.375em;
+}
+
+#about-link {
+  color:#FFFFFF !important;
+	font-size:1.125em;
 	font-weight:600;
-	text-decoration:none;
-	line-height:25px;
-	position: relative;
-	top:10px;
-	border: 1px;
-	border-style: solid;
-	border-color: white;
-	margin: 0 20px 0 15px;
-	padding: 0 10px 0 10px;
+}
+
+#feedback-button {
+  height: 2em;
+	color: #FFFFFF !important;
+  font-size: 1.125em;
+	font-weight: 600;
+	border: 1px solid white;
 	border-radius: 5px;
-}
-
-#header-feedback a{
-	text-decoration: none;
-}
-
-#header-about{
-	float:left;
-	color:#FAF9F3;
-	font-size:18px;
-	font-weight:600;
-	text-decoration:none;
-	line-height:48px;
-	margin: 0 20px 0 20px;
+  background: none;
+  padding: 0 10px !important;
 }
 
 #header-bottom{
 	background-color:#FFFFFF;
-	xheight:80px;
+	height:80px;
 	padding: 15px 20px 0 20px;
 }
 
