@@ -153,21 +153,34 @@ nav .container {
 }
 
 
-#breadcrumbs{
+.breadcrumb{
 	direction: ltr;
-
+	text-align: right;
+	padding: 0px;
+	background-color: white;
+	margin: 0px;
 }
-#breadcrumbs a{
+
+.breadcrumb a{
 	text-decoration: none;
 	cursor:pointer;
 	color: #0855C7;
 }
 
-#breadcrumbs span{
+.breadcrumb>li{
+	float: right;
 }
 
-#breadcrumbs_seperator{
-	padding: 0 5px 0 5px;
+.breadcrumb>li+li:after {
+	content: "/\00a0";
+	padding: 0 5px;
+	color: #CCC;
+}
+
+
+.breadcrumb>li+li:before {
+	content: none !important;
+	padding: 0 !important;
 }
 
 #btn-bar{
@@ -399,6 +412,9 @@ nav .container {
 	display: none !important;
 }
 
+.highcharts-grid{
+	display: none !important;
+}
 
 .gray{
 	color: #999999;

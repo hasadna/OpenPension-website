@@ -14,20 +14,20 @@ block content
 			//- HEADER
 			div(id="portfolio-header" class="col-sm-12")
 				
-				div(id="breadcrumbs") 
+				div(class="breadcrumb col-sm-12") 
+					ol()
 					each field, i in drillDown
 						- var value = filter.getConstraintData(field) ;
+						
 						- var escapedValue = rfc3986EncodeURIComponent(value);
 
-						- if ( i !== 0){
-							span(id="breadcrumbs_seperator") /
-						- }
-
 						-if ( i < drillDown.length - 1 ){
-							a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
-								span() #{removeQoutes(translate(value))} 
+							li()
+								a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
+									span() #{removeQoutes(translate(value))} 
 						-}else{
-							span(title="#{translate(field)}") #{removeQoutes(translate(value))} 
+							li()
+								span(title="#{translate(field)}") #{removeQoutes(translate(value))} 
 						-}
 
 				h2(id="report-type") #{report_type}
