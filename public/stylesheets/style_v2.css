@@ -425,7 +425,10 @@ nav .container {
 }
   
 .table{
-  border-collapse: collapse !important;
+  	border-collapse: collapse !important;
+}
+
+.table tbody{
 	border: 1px solid #E4E4E4 !important;
 }
 
