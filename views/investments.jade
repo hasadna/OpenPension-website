@@ -16,7 +16,7 @@ block content
 				div(id="investments-header")
 					h3(id="investments-header-title") חלוקה לפי&nbsp #{translate(group_by)}
 					div(id="investments-header-button",onclick="$('.modal').modal('hide')" ) &#xf05c
-				table( class="table table-striped" style="text-align:right;width:100%")
+				table(id="investments-list" class="sortable table table-striped" style="text-align:right;width:100%")
 					colgroup()
 						col(class="col-sm-3")
 						col(class="col-sm-3")
@@ -82,22 +82,16 @@ block content
 										- if (diff > 0){
 											- diff = "+" + diff;
 											- caret = "fa-caret-up";
-											- color = "#7FB2FF";
+											- colorClass = "blue-text";
 										- }
 										- else{
 											- caret = "fa-caret-down";
-											- color = "#FFBB40";
+											- colorClass = "yellow-text";
 										- }
 
-										div(style="color:#{color}" class="quarter-diff" ) 
+										div(class="quarter-diff #{colorClass}" ) 
 											p(class="percentage") #{diff}%
 											i(class="fa #{caret}" style="position: relative;bottom: 15px")
 										div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
 
 		
-
-							
-
-
-
-

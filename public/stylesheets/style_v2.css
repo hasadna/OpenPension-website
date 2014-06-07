@@ -240,55 +240,6 @@ nav .container {
 	margin: 0.571428571428571em  0 !important; /* 12px */
 }
 
-/*LEFT COLUMN*/
-#left-column{
-	position: relative;
-	padding-right: 0px;
-}
-
-#group-by{
-	position: relative;
-	float:right;
-	font-size:19px;
-	top:3px;
-}
-
-
-
-
-/* ENTRY */
-
-.entry-box{
-	border-width:1px 1px 0 1px;
-	border-color:#EFEFEF;
-	border-style:solid;
-	height:48px;
-	padding-top:12px;
-	width:100%;
-}
-
-
-.entry-box:last-child{
-	border-width:1px 1px 1px 1px;
-	margin-bottom: 15px;
-}
-
-.entry-box .entry-bar {
-	display: block;
-	position: relative;
-	padding: 0;
-	margin: 0;
-	border: 0;
-	z-index: -1;
-	height: 15px;
-	background-color: #0855C7;
-	z-index: 1;
-}
-
-.entry-bar-empty{
-	background-color: #E6EEF9;
-	z-index: -1;
-}
 
 .table-link{
 	cursor:pointer;
@@ -298,27 +249,6 @@ nav .container {
 	color: #0855C7;
 }
 
-.entry-box-title,
-.entry-box-title:hover,
-.entry-box-title:active,
-.entry-box-title:link{
-	color:#686868;
-	font-size: 16px;
-	font-weight: normal;
-	padding-right: 12px;
-}
-
-.entry-box-value,
-.entry-box-value:hover,
-.entry-box-value:active,
-.entry-box-value:link{
-	text-decoration: none;
-	color:black;
-	font-size: 16px;
-	padding-right: 12px;
-	line-height: 10px;
-	margin-bottom: 15px;
-}
 
 /* ABOUT */
 #header-bottom-title{
@@ -337,70 +267,18 @@ nav .container {
 
 }
 
-/* QUERY BUILDER */
-#qb-container{
-	height:600px;
-	width: 600px;
-	background-color:grey;
-	float:right;
+/* BUTTON BAR */
+.dropdown-menu li span:before,
+.filter-option:before{
+	content: "\f073";
+	font-family: "FontAwesome";
+	padding-left: 3px;
 }
 
-.qb-category{
-	color: white;
-	border-width:1px;
-	border-style: solid;
-	border-color: black;
-	padding: 5px 10px 5px 10px;
-	width: 120px;
-	float: right;
-	text-align: center;
+#btn-bar .fa-file-text-o{
+	padding-left: 3px;	
 }
 
-#downloadDataButton {
-	text-decoration: none;e
-}
-
-#downloadDataButton{
-	border-bottom-width:1px;
-	border-bottom-style: solid;
-	border-bottom-color: #053B83;
-	background-color: #0855C7;
-	font-size: 25px;
-	font-weight: bold;
-	padding: 5px 10px 5px 10px;
-	border-radius: 5px;
-	color: #FFFFFF;
-}
-
-#csv-comment{
-	font-size: 16px;
-	font-weight: normal;
-}
-#csv-icon{
-	float: left;
-	padding-right: 40px;
-	padding-top: 10px;
-}
-
-
-#play-icon{
-	float: left;
-	font-size: 15px;
-	color: #C1BFBF;
-	padding-right: 20px;
-	padding-top: 15px;
-}
-
-.entry-box:hover #play-icon{
-	color: black;
-}
-
-.icon-flipped {
-	transform: scaleX(-1);
-	-moz-transform: scaleX(-1);
-	-webkit-transform: scaleX(-1);
-	-ms-transform: scaleX(-1);
-}
 
 /* HIGHCHARTS GRAPH */
 
@@ -439,6 +317,15 @@ nav .container {
 	position:relative;
 	bottom:25px;
 	direction: ltr;
+}
+
+
+.blue-text{
+	color:#7FB2FF;
+}
+
+.yellow-text{
+	color:#FFBE4C;
 }
 
 .gray{
