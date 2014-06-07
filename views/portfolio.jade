@@ -173,7 +173,7 @@ block content
 			div(class="row") 
 				div(id="further-reading" class="col-sm-12")
 					h3(id = "link-list-title") עוד בפנסיה פתוחה
-					h4() קופות של מגדל
+					h4() קופות של #{translate(filter.getConstraintData('managing_body'))}
 					ul(id = "link-list") 
 						each fund in funds
 							- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
