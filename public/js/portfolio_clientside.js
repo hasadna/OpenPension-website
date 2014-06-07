@@ -237,7 +237,8 @@ $(function () {
                     pointStart: 1
                 }],
                 tooltip: {
-                    headerFormat: '<span style="font-size: 10px">' + $td.parent().find('th').html() + ', Q{point.x}:</span><br/>',
+                    //headerFormat: '<span style="font-size: 10px">' + $td.parent().find('th').html() + ', Q{point.x}:</span><br/>',
+                    headerFormat :'',
                     pointFormat: '<b>% {point.y}</b>'
                 },
                 chart: chart
@@ -310,7 +311,8 @@ $(function(){
                             pointStart: 1
                         }],
                         tooltip: {
-                            headerFormat: '<span style="font-size: 10px">' + $td.parent().find('th').html() + ', Q{point.x}:</span><br/>',
+                            //headerFormat: '<span style="font-size: 10px">' + $td.parent().find('th').html() + ', Q{point.x}:</span><br/>',
+                            headerFormat :'',
                             pointFormat: '<b>% {point.y}</b>'
                         },
                         chart: chart

@@ -416,6 +416,31 @@ nav .container {
 	display: none !important;
 }
 
+.sparkline{
+	padding:10px !important;
+	float:right;
+}
+
+.quarter-diff .caret{
+	position: relative;
+	bottom: 15px;
+}
+
+.quarter-diff{
+	padding:10px !important;
+	float:right;
+	height:10px;
+	position:relative;
+}
+
+.quarter-diff .percentage{
+	padding:10px !important;
+	float:right;
+	position:relative;
+	bottom:25px;
+	direction: ltr;
+}
+
 .gray{
 	color: #999999;
 }
@@ -624,7 +649,7 @@ li{
 	line-height: 1.33333333333333em; /* 48px */
 	font-family: "Alef Hebrew";
 	margin: 0 !important;
-  width: auto !important;
+	width: auto !important;
 }
 
 .modal-dialog{
@@ -632,20 +657,19 @@ li{
 }
 
 #investments-header{
-	height: 3em;
+	margin-top: 1em;
+	height: 2em;
+	margin-bottom: 0.5em;
 }
 
 #investments-header-title{
-	padding-top: 4px;
 	float: right;
 }
 
 #investments-header-button{
-	padding-top:26px;
 	font-family: FontAwesome;
 	float: left;
     font-size: 1.5em;
-
 }
 
 

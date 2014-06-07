@@ -131,25 +131,44 @@ block content
 										span() #{groupPercentage}% 
 										div(id="bar" style="width:#{groupPercentage*(75/100)}%")
 									
+									td(style="padding:10px !important")
 										- var sparkline = [];
 										- for(var i = 0;i<4;i++){
 											- var qStr = lastQuarters[i].toString();
-											- if (result[qStr] == undefined)
-												if (debug) 
-													div() result[#{qStr}] is undefined
+											- if (result[qStr] == undefined){
+												- if (debug){
+													div() result[#{qStr}] is undefined	
+												- }
+												- sparkline.push( Number(0) );
 												- continue;
-											- if (quarters[i] == undefined) 
-												if (debug)  
+											- }
+											- if (quarters[i] == undefined){
+												- if (debug){
 													div() quarters[i] is undefined
+												- }
+												- sparkline.push( Number(0) );
 												- continue;
+											- }
 											- sparkline.push( (Number(result[qStr][0]['group_sum']) / Number(quarters[i]['group_sum']) * 100).toFixed(2) );
 										- }
 
-										td(style="padding:10px !important")
-											div(style="padding:10px !important;float:right;height:10px;position:relative;" ) 
-												p(style="padding:10px !important;float:right;position:relative;bottom:25px;direction: ltr;") +5.21%
-												i(class="fa fa-caret-up" style="position: relative;bottom: 15px")
-											div(style="padding:10px !important;float:right",data-sparkline="#{sparkline.reverse().join(', ')}")
+										- var diff, caret, color;
+
+										- diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
+										- if (diff > 0){
+											- diff = "+" + diff;
+											- caret = "fa-caret-up";
+											- color = "#7FB2FF";
+										- }
+										- else{
+											- caret = "fa-caret-down";
+											- color = "#FFBB40";
+										- }
+
+										div(style="color:#{color}" class="quarter-diff" ) 
+											p(class="percentage") #{diff}%
+											i(class="fa #{caret}" style="position: relative;bottom: 15px")
+										div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
 
 		
 							- if(visiblePercentage <= 99){
@@ -199,5 +218,3 @@ block content
 	script(type='text/javascript', src='/js/portfolio_clientside.js', myVar = 200 )
 	script(type='text/javascript', src='/js/underscore-min.js')
 	script(type='text/javascript', src='/js/highcharts.js')
-
-

@@ -25,7 +25,8 @@ block content
 					thead()
 						tr() 
 							th(style="text-align: right") #{translate(group_by)}
-							th(style="text-align: right") היקף ההשקעה בשקלים
+							th(style="text-align: right") היקף ההשקעה 
+								span(class="unit") בשקלים
 							th(style="text-align: right") % מתיק ההשקעות
 							th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
 					tbody()
@@ -51,27 +52,49 @@ block content
 									td()
 										span() #{groupPercentage}% 
 										div(id="bar" style="width:#{groupPercentage*(75/100)}%")
-								
+									
+									td(style="padding:10px !important")
 										- var sparkline = [];
 										- for(var i = 0;i<4;i++){
 											- var qStr = lastQuarters[i].toString();
-											- if (group[qStr] == undefined)
-												if (debug)
+											- if (group[qStr] == undefined){
+												- if (debug){
 													div() אין מידע עבור רבעון  #{qStr} 
+												- }
+												- sparkline.push( Number( 0 ) );
 												- continue;
-											- if (quartersSums[qStr] == undefined) 
-												div() quartersSums[#{qStr}] is undefined
+											- }
+											- if (quartersSums[qStr] == undefined){
+												- if (debug){
+													div() quartersSums[#{qStr}] is undefined
+												- }
+												- sparkline.push( Number( 0 ) );
 												- continue;
+											- }
 											- sparkline.push( (Number(group[qStr][0]['group_sum']) / Number(quartersSums[qStr]) * 100).toFixed(2) );
 										- }
 
-									td(style="padding:10px !important")
-															div(style="padding:10px !important;float:right;height:10px;position:relative;" ) 
-																p(style="padding:10px !important;float:right;position:relative;bottom:25px;direction: ltr;") +5.21%
-																i(class="fa fa-caret-up" style="position: relative;bottom: 15px")
-															div(style="padding:10px !important;float:right",data-sparkline="#{sparkline.reverse().join(', ')}")
 
-							//-each quarter in lastQuarters
+
+										- var diff, caret, color;
+
+										- diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
+										- if (diff > 0){
+											- diff = "+" + diff;
+											- caret = "fa-caret-up";
+											- color = "#7FB2FF";
+										- }
+										- else{
+											- caret = "fa-caret-down";
+											- color = "#FFBB40";
+										- }
+
+										div(style="color:#{color}" class="quarter-diff" ) 
+											p(class="percentage") #{diff}%
+											i(class="fa #{caret}" style="position: relative;bottom: 15px")
+										div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
+
+		
 
 							
 
