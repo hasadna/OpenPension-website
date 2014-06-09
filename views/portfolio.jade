@@ -47,7 +47,7 @@ block content
 						
 			div(class="row")
 				div(class="col-sm-12")
-					table(id="aggregate-data-panel")
+					table(id="aggregate-data-panel" class="table")
 						tbody()
 							tr()
 								td()
@@ -124,7 +124,7 @@ block content
 
 								tr()
 									td()
-										div(class="table-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')") #{ groupName}
+										a(class="table-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')") #{groupName}
 									td()
 										div() #{lastQResultWords.number}  #{lastQResultWords.scale}
 									td()
@@ -174,10 +174,13 @@ block content
 							- if(visiblePercentage <= 99){
 								tfoot()
 									tr()
-										td(class="listAll")
+										td(class="list-all")
 											div()
 												a(data-target="#myModal",data-toggle="modal",data-remote="/investments#{filter.toQueryString()}&group_by=#{group.group_field}")
 													כל #{plurals[group.group_field]}...
+										td()
+										td()
+										td()
 							- }
 						
 							- if (debug && visiblePercentage > 100){
@@ -185,8 +188,7 @@ block content
 									td()
 										div() סהכ גדול מ100%!! #{visiblePercentage }
 							- }
-							
-
+										
 
 
 			div(class="row") 

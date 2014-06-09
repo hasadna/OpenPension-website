@@ -29,7 +29,6 @@
 }
 
 
-
 *{
 	vertical-align: middle;
 }
@@ -50,6 +49,7 @@ body {
 	line-height: 1.5em;
   margin: 0;
   padding: 0;
+  background-color: #F9F9F9;
 }
 
 a,
@@ -65,7 +65,7 @@ a:hover{
 }
 
 .btn {
-	border: 1px solid #EEE;
+	border: 1px solid #DDD;
 	border-radius: 0;
 	padding: 10px;
 	font-family: "Alef Hebrew";
@@ -88,6 +88,7 @@ a:hover{
   direction: rtl !important;
   border: none !important;
   border-radius: 0;
+  margin-bottom: 0.75em;
 }
 
 nav .container {
@@ -147,7 +148,6 @@ nav .container {
 }
 
 #portfolio-header{
-	background-color:#FFFFFF;
   padding: 0;
   margin-bottom: 1.5em;
 }
@@ -156,10 +156,9 @@ nav .container {
 .breadcrumb{
 	direction: ltr;
 	text-align: right;
-	padding: 0px;
-	background-color: white;
-	margin: 0px;
-  
+	padding: 0;
+	margin: 0 0 0.75em 0;
+  background-color: inherit;
 }
 
 .breadcrumb a{
@@ -190,9 +189,9 @@ nav .container {
 
 #btn-bar{
 	line-height: 4.5em;
-	border-top: 1px solid #EEE;
-	border-bottom: 1px solid #EEE;
 	width: 100%;
+  border-top: 1px solid #E4E4E4;
+  border-bottom: 1px solid #E4E4E4;
 }
 
 .btn-group{
@@ -508,12 +507,16 @@ footer a {
   text-decoration: underline;
 }
 
-.listAll{
+.list-all{
 	background-color: white !important;
 }
 
-.listAll a,
-.listAll a:hover{
+tfoot {
+  border: 1px solid #E4E4E4;
+}
+
+.list-all a,
+.list-all a:hover{
 	text-decoration: none;
 	cursor: pointer;
 	text-decoration: none;
@@ -530,8 +533,9 @@ li{
 #aggregate-data-panel{
 	width: 100%;
 	margin-bottom: 1.5em;
-  border: 1px solid #E4E4E4;
+
 	border-collapse: collapse !important;
+  background-color: white;
 }
 
 #aggregate-data-panel td{
