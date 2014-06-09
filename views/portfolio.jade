@@ -51,11 +51,23 @@ block content
 						tbody()
 							tr()
 								td()
-									h3() גודל התיק
+									- if (report_type == "תיק השקעות"){
+										h3() גודל התיק
+									- }
+									- else if(report_type == "השקעה") {
+										h3() גודל ההשקעה
+									- }
 									span(class="datum") #{total_sum_words.number}  #{total_sum_words.scale} שקל
 
 								td()
-									h3() חלק משוק הפנסיה 
+
+									- if (report_type == "תיק השקעות"){
+										h3() חלק משוק הפנסיה
+									- }
+									- else if(report_type == "השקעה") {
+										h3() חלק מתיק השקעות
+									- }
+
 									-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
 									span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
 
@@ -66,11 +78,23 @@ block content
 									-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
 									-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
 
-									- var diffQ0Q3 = (diffQ0 - diffQ3).toFixed(1);
-									- if (diffQ0Q3 > 0) diffQ0Q3 = "+" +diffQ0Q3
+									- var diff = (diffQ0 - diffQ3).toFixed(1);
+									- var caret, colorClass;
 
-									span(class="datum" style="direction:ltr") #{diffQ0Q3} %
+									- if (diff > 0){
+										- diff = "+" + diff;
+										- caret = "fa-caret-up";
+										- colorClass = "blue-text";
+									- }
+									- else{
+										- caret = "fa-caret-down";
+										- colorClass = "yellow-text";
+									- }
 
+									div(class="quarter-diff #{colorClass}" ) 
+										p(class="datum percentage"  style="direction:ltr") #{diff}%
+										i(class="fa #{caret}" style="position: relative;bottom: 15px")
+									div(class="sparkline",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")
 		
 			each group in groups
 				- if (debug)
@@ -97,7 +121,14 @@ block content
 								th(style="text-align: right") #{translate(group.group_field)}
 								th(style="text-align: right") היקף ההשקעה 
 									span(class="unit") בשקלים
-								th(style="text-align: right") % מתיק ההשקעות
+
+								- if (report_type == "תיק השקעות"){
+									th(style="text-align: right") % מתיק ההשקעות
+								- }
+								- else if(report_type == "השקעה") {
+									th(style="text-align: right") % מההשקעה
+								- }
+
 								th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
 						tbody()
 							each result in group.result

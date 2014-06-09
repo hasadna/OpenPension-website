@@ -321,6 +321,7 @@ nav .container {
 	position:relative;
 	bottom:25px;
 	direction: ltr;
+	width: 80px;
 }
 
 
@@ -533,17 +534,16 @@ li{
 #aggregate-data-panel{
 	width: 100%;
 	margin-bottom: 1.5em;
-
 	border-collapse: collapse !important;
-  background-color: white;
+	background-color: white;
 }
 
 #aggregate-data-panel td{
 	border: 1px solid #E4E4E4;
 	border-collapse: collapse !important;
 	width: 33%;
-  padding: 0.75em 0 !important;
-  text-align: center;
+	padding: 0.75em 0 !important;
+	text-align: center;
 }
 
 .datum { 
@@ -554,8 +554,14 @@ li{
 	width: auto !important;
 }
 
+
+.modal-sm{
+	width: inherit;
+}
+
 .modal-dialog{
-	margin-right:4%
+	margin-right:4%;
+	margin-left:4%;
 }
 
 #investments-header{
