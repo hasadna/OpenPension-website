@@ -159,12 +159,15 @@ nav .container {
 	padding: 0px;
 	background-color: white;
 	margin: 0px;
+  
 }
 
 .breadcrumb a{
 	text-decoration: none;
 	cursor:pointer;
 	color: #0855C7;
+  vertical-align: baseline;
+  text-decoration: underline;
 }
 
 .breadcrumb>li{
@@ -172,9 +175,11 @@ nav .container {
 }
 
 .breadcrumb>li+li:after {
-	content: "/\00a0";
+	font-family: "Alef Hebrew";
+  content: "/\00a0";
 	padding: 0 5px;
 	color: #CCC;
+  vertical-align: baseline;
 }
 
 
@@ -390,10 +395,16 @@ td>a{
 	min-width: 1px;
 }
 
-.table-striped>tbody>tr:nth-child(odd)>td, 
-.table-striped>tbody>tr:nth-child(odd)>th{
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th{
 	background-color: #F8F8F8;
 }
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th{
+	background-color: white;
+}
+
 
 .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td{
 	background-color: white;

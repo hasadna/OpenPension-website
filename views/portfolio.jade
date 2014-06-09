@@ -23,11 +23,9 @@ block content
 
 						-if ( i < drillDown.length - 1 ){
 							li()
-								a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}")
-									span() #{removeQoutes(translate(value))} 
+								a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}") #{removeQoutes(translate(value))} 
 						-}else{
-							li()
-								span(title="#{translate(field)}") #{removeQoutes(translate(value))} 
+							li(title="#{translate(field)}") #{removeQoutes(translate(value))} 
 						-}
 
 				h2(id="report-type") #{report_type}
