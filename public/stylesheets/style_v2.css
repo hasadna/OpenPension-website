@@ -207,7 +207,9 @@ nav .container {
 	float: left;
 }
 
-
+#headerDiff{
+	display: inline-block;
+}
 
 /*RIGHT COLUMN*/
 

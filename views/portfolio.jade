@@ -90,11 +90,11 @@ block content
 										- caret = "fa-caret-down";
 										- colorClass = "yellow-text";
 									- }
-
-									div(class="quarter-diff #{colorClass}" ) 
-										p(class="datum percentage"  style="direction:ltr") #{diff}%
-										i(class="fa #{caret}" style="position: relative;bottom: 15px")
-									div(class="sparkline",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")
+									div(id="headerDiff")
+										div(class="quarter-diff #{colorClass}" ) 
+											p(class="datum percentage"  style="direction:ltr") #{diff}%
+											i(class="fa #{caret}" style="position: relative;bottom: 15px")
+										div(class="sparkline",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")
 		
 			each group in groups
 				- if (debug)
@@ -251,3 +251,4 @@ block content
 	script(type='text/javascript', src='/js/portfolio_clientside.js', myVar = 200 )
 	script(type='text/javascript', src='/js/underscore-min.js')
 	script(type='text/javascript', src='/js/highcharts.js')
+	script(type='text/javascript', src='/js/sorttable.js')
