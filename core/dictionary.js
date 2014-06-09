@@ -23,6 +23,12 @@ dictionary['harel'] = 'הראל';
 dictionary['migdal'] = 'מגדל';
 dictionary['menora'] = 'מנורה';
 dictionary['xnes'] = 'אקסלנס';
+dictionary['amitim'] = 'עמיתים';
+dictionary['clal'] = 'כלל';
+dictionary['fenix'] = 'פניקס';
+dictionary['psagot'] = 'פסגות';
+dictionary['ayalon'] = 'איילון';
+
 
 dictionary['null'] = 'לא נמצא בקטגוריה';
 
