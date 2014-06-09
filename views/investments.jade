@@ -26,7 +26,7 @@ block content
 						th(style="text-align: right") #{translate(group_by)}
 						th(style="text-align: right") היקף ההשקעה 
 							span(class="unit") בשקלים
-						th(style="text-align: right") % מתיק ההשקעות
+						th(style="text-align: right") % מההשקעה
 						th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
 				tbody()
 					each group in groups
@@ -92,5 +92,3 @@ block content
 										p(class="percentage") #{diff}%
 										i(class="fa #{caret}" style="position: relative;bottom: 15px")
 									div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
-
-	

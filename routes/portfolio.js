@@ -72,10 +72,10 @@ function getReportType(filter){
         filter.hasConstraint("managing_body") && 
         filter.hasConstraint("fund_name"))
         ){
-      return "תיק השקעות";
+      return "managing_body";
   }
   else{
-    return "השקעה";
+    return "investment";
   }
 
 }
