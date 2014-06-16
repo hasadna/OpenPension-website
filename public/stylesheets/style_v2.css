@@ -587,4 +587,20 @@ li{
 	cursor: pointer;
 }
 
+.jumbotron {
+  background-color: inherit;
+  text-align: center;
+}
+
+.jumbotron p {
+  font-size: 2.25em; /** 36px **/
+  line-height: 1.3333333333em; /** 48px **/
+}
+
+#market-size {
+  vertical-align: baseline;
+  font-weight: bold;
+}
+
+
 
