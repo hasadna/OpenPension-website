@@ -48,7 +48,13 @@ exports.normalizeData = function(groups){
 
 exports.convertNumberToWords = function(numberToConvert){
 	var number = Number(numberToConvert);
-	if (Math.abs(number) > 1000000000){
+	if (Math.abs(number) > 1000000000000){
+		return {
+			number: (number / 1000000000000).toFixed(1),
+			scale: "טריליון"
+		}
+	}
+	else if (Math.abs(number) > 1000000000){
 		return {
 			number: (number / 1000000000).toFixed(1),
 			scale: "מיליארד"

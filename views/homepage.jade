@@ -1,0 +1,38 @@
+extends layout_v2
+
+block headerbottom
+
+
+block content
+
+
+    div(id="homepage-header" class="container-fluid")
+      div(class="row")
+        div(class="col-xs-12")
+          div(class="jumbotron")
+            p()
+              span(id="market-size") #{market_size.number} #{market_size.scale} שקל
+              |  מנוהלים בקרנות הפנסיה ובקופות הגמל.
+              br()
+              | איך ואיפה מנוהל הכסף שלנו?
+          div(id="content-types")
+            ul(class="nav nav-tabs")
+              li(class="active")
+                a(href="#home" data-toggle="tab") גופים מוסדיים
+              li
+                a(href="#profile" data-toggle="tab")מנפיקים 
+                  span(class="soon") בקרוב
+
+    div(id="homepage-content" class="container")
+      div(class="row")
+        div(class="col-xs-12")
+          form()
+            label()
+              input(type="radio" name="mode" value="size" checked)
+              |  Size
+            label()
+              input(type="radio" name="mode" value="count")
+              |  Count
+          
+          script(src="treemap/d3.js")
+          script(src="js/homepage_clientside.js")

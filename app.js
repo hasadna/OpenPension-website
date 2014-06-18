@@ -10,6 +10,7 @@ var express = require('express')
   , portfolio = require('./routes/portfolio')
   , staticpages = require('./routes/staticpages')
   , entry = require('./routes/entry')
+  , homepage = require('./routes/homepage')
   , http = require('http')
   , path = require('path')
   , FSUtil = require('./util/FSUtil')
@@ -56,8 +57,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//app.get('/', index.show);
-app.get('/', entry.show);
+app.get('/', homepage.show);
+app.get('/ver1', entry.show);
 
 app.get('/portfolio', portfolio.portfolio);
 app.get('/investments', portfolio.investments);
