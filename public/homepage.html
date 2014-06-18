@@ -8,8 +8,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" href="stylesheets/bootstrap-select.rtl.min.css">
-		<link rel="stylesheet" href="stylesheets/style_v2.css">
+    <link rel="stylesheet" href="stylesheets/bootstrap-rtl.css">
+    <link type="text/css" rel="stylesheet" href="treemap/treemap.css">
 		<link rel="stylesheet" href="stylesheets/font-awesome.min.css">
+    <link rel="stylesheet" href="stylesheets/style_v2.css">
+    
 		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--if lt IE 9-->
 		<script src="/js/html5.js"></script>
@@ -39,31 +42,84 @@
         </ul>
       </div>
 		</nav>
-    <div class="container">
+    <div id="homepage-header" class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
           <div class="jumbotron">
             <p><span id="market-size">1.2 טריליון שקל</span> מנוהלים בקרנות הפנסיה ובקופות הגמל.
               <br>
               איך ואיפה מנוהל הכסף שלנו?
-            <p>
-          </div>
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#home" data-toggle="tab">גופים מוסדיים</a></li>
-            <li><a href="#profile" data-toggle="tab">מנפיקים <span class="soon">בקרוב</span></a></li>
-          </ul>
-          
-          
-          
-          <div class="tab-content">
-            <div class="tab-pane active" id="institutions">
-            
-            
-            </div>
-            <div class="tab-pane" id="issuers"></div>
-          </div>
-        </div>
-      </div>
-    </div> 
+            </p>
+          </div> <!-- jumbotron -->
+          <div id="content-types">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#home" data-toggle="tab">גופים מוסדיים</a></li>
+              <li><a href="#profile" data-toggle="tab">מנפיקים <span class="soon">בקרוב</span></a></li>
+            </ul>
+          </div> <!-- content-types -->
+        </div> <!-- col-xs-12 -->
+      </div> <!-- row -->
+    </div> <!-- homepage-header -->           
+    <div id="homepage-content" class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <form>
+            <label><input type="radio" name="mode" value="size" checked> Size</label>
+            <label><input type="radio" name="mode" value="count"> Count</label>
+          </form>
+          <script src="treemap/d3.js"></script>
+          <script>
+
+          var margin = {top: 40, right: 10, bottom: 10, left: 10},
+              width = 960 - margin.left - margin.right,
+              height = 530 - margin.top - margin.bottom;
+
+          var color = d3.scale.category20c();
+
+          var treemap = d3.layout.treemap()
+              .size([width, height])
+              .sticky(true)
+              .value(function(d) { return d.size; });
+
+          var div = d3.select("body").append("div")
+              .style("position", "relative")
+              .style("width", (width + margin.left + margin.right) + "px")
+              .style("height", (height + margin.top + margin.bottom) + "px")
+              .style("left", margin.left + "px")
+              .style("top", margin.top + "px");
+
+          d3.json("treemap/flare.json", function(error, root) {
+            var node = div.datum(root).selectAll(".node")
+                .data(treemap.nodes)
+              .enter().append("div")
+                .attr("class", "node")
+                .call(position)
+                .style("background", function(d) { return d.children ? color(d.name) : null; })
+                .text(function(d) { return d.children ? null : d.name; });
+
+            d3.selectAll("input").on("change", function change() {
+              var value = this.value === "count"
+                  ? function() { return 1; }
+                  : function(d) { return d.size; };
+
+              node
+                  .data(treemap.value(value).nodes)
+                .transition()
+                  .duration(1500)
+                  .call(position);
+            });
+          });
+
+          function position() {
+            this.style("left", function(d) { return d.x + "px"; })
+                .style("top", function(d) { return d.y + "px"; })
+                .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
+                .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
+          }
+
+          </script>
+        </div> <!-- col-xs-12 -->
+      </div> <!-- row -->
+    </div> <!-- homepage-content --> 
   </body>
 </html>
