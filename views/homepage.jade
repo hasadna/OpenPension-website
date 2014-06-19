@@ -36,3 +36,27 @@ block content
           
           script(src="treemap/d3.js")
           script(src="js/homepage_clientside.js")
+          script.
+            var root = !{JSON.stringify(treemapData)};
+            var node = div.datum(root).selectAll(".node")
+                .data(treemap.nodes)
+                .enter().append("div")
+                .attr("class", "node")
+                .attr("onclick",function(d){return "window.location = '/portfolio?managing_body="+d.name+"&report_year=#{report_year}&report_qurater=#{report_qurater}'"})
+                .call(position)
+                .style("background", function(d) { return d.children ? color(d.name) : null; })
+                .style("cursor", "pointer")                
+                .text(function(d) { return d.children ? null : d.translatedName; });
+
+            d3.selectAll("input").on("change", function change() {
+              var value = this.value === "count"
+                  ? function() { return 1; }
+                  : function(d) { return d.size; };
+
+              node
+                .data(treemap.value(value).nodes)
+                .transition()
+                .duration(1500)
+                .call(position);
+            });
+            

@@ -16,27 +16,7 @@
       .style("left", margin.left + "px")
       .style("top", margin.top + "px");
 
-  d3.json("treemap/flare.json", function(error, root) {
-    var node = div.datum(root).selectAll(".node")
-        .data(treemap.nodes)
-      .enter().append("div")
-        .attr("class", "node")
-        .call(position)
-        .style("background", function(d) { return d.children ? color(d.name) : null; })
-        .text(function(d) { return d.children ? null : d.name; });
 
-    d3.selectAll("input").on("change", function change() {
-      var value = this.value === "count"
-          ? function() { return 1; }
-          : function(d) { return d.size; };
-
-      node
-          .data(treemap.value(value).nodes)
-        .transition()
-          .duration(1500)
-          .call(position);
-    });
-  });
 
   function position() {
     this.style("left", function(d) { return d.x + "px"; })

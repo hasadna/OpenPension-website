@@ -189,6 +189,16 @@ exports.portfolio = function(req, res){
   var debug = filter.getConstraintData("debug")[0];
   filter.removeField("debug");
 
+  //TODO: get current year and quarter from DB
+  if (!filter.hasConstraint("report_year")){
+      filter.addConstraint("report_year","2013");
+  }
+
+  if (!filter.hasConstraint("report_qurater")){
+      filter.addConstraint("report_qurater","3");
+  }
+
+
   var asset_type = filter.getConstraintData("asset_type")[0];
   var report_year = filter.getConstraintData("report_year")[0];
   var report_qurater = filter.getConstraintData("report_qurater")[0];
