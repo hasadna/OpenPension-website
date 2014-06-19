@@ -161,8 +161,6 @@ function singleQuery(filter, callback)
 }
 
 /**
- * Group by managing body, if managing body is in the filter
- * and by last four quarters
  * @param filter : Filter object
  * @param callback : function to handle result rows
  */
@@ -198,7 +196,7 @@ function groupBySummaries(filter, callback)
 			if(--wait<=0)
 			{
 				db.end();
-				callback(groups);
+				callback(groups,group.query);
 			}
 		}.bind(this, group));
 	}
@@ -393,6 +391,15 @@ function groupByPortfolio(filter, callback){
 
 /**
  * Query DB, get info needed for investments view.
+ * Creates an SQL query of the following template: 
+ *
+ *   SELECT report_year, report_qurater, %GROUP_BY_FIELD%, 
+ *   sum(market_cap+fair_value) AS "group_sum" 
+ *   FROM pension_data_all WHERE %FILTER_CONSTRAINTS%
+ *   AND %LAST_4_QUARTERS%
+ *   GROUP BY report_year, report_qurater, %GROUP_BY_FIELD% 
+ *   ORDER BY report_year DESC, report_qurater DESC, group_sum DESC
+ *
  * @param filter : Filter object 
  * @param callback : function to handle result rows
  */
@@ -421,10 +428,10 @@ function groupByInvestments(filter, callback){
 	mFilter.removeField("report_year");
 	mFilter.removeField("report_qurater");
 	
-	//apply filter to joined WHERE clause
+	//apply filter constraints to WHERE clause
 	prepareWheres(select, mFilter);
 
-	//add last quarters to joined 
+	//add last quarters to constraints 
 	addLastQuartersToQuery(select,4);
 
 	select.group("report_year");
