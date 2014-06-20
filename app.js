@@ -57,6 +57,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+app.get('/managing_bodies_treemap.json', homepage.managing_body_treemap);
+app.get('/issuers_treemap.json', homepage.issuers_treemap);
 app.get('/', homepage.show);
 app.get('/ver1', entry.show);
 

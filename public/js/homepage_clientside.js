@@ -2,20 +2,55 @@
       width = 960 - margin.left - margin.right,
       height = 530 - margin.top - margin.bottom;
 
-  var color = d3.scale.category20c();
 
-  var treemap = d3.layout.treemap()
-      .size([width, height])
-      .sticky(true)
-      .value(function(d) { return d.size; });
 
-  var div = d3.select("body").append("div")
-      .style("position", "relative")
-      .style("width", (width + margin.left + margin.right) + "px")
-      .style("height", (height + margin.top + margin.bottom) + "px")
-      .style("left", margin.left + "px")
-      .style("top", margin.top + "px");
+  	$(function(){
+		drawGraph("managing_bodies","/managing_bodies_treemap.json");
+		drawGraph("issuers","/issuers_treemap.json");
+  	});
 
+  function drawGraph(elementId, jsonURL){
+
+	  var color = d3.scale.category20c();
+
+	  var treemap = d3.layout.treemap()
+	      .size([width, height])
+	      .sticky(true)
+	      .value(function(d) { return d.size; });
+
+
+	  var div = d3.select("#"+elementId).append("div")
+	      .style("position", "relative")
+	      .style("width", (width + margin.left + margin.right) + "px")
+	      .style("height", (height + margin.top + margin.bottom) + "px")
+	      .style("left", margin.left + "px")
+	      .style("top", margin.top + "px");
+
+	  d3.json(jsonURL, function(error, root) {
+      	
+      	var node = div.datum(root).selectAll(".node")
+          .data(treemap.nodes)
+          .enter().append("div")
+          .attr("class", "node")
+          .attr("onclick",function(d){return "window.location = '"+d.link+"'"})
+          .call(position)
+          .style("background", function(d) { return d.children ? color(d.name) : null; })
+          .style("cursor", "pointer")                
+          .text(function(d) { return d.children ? null : d.translatedName; });
+
+		d3.selectAll("input").on("change", function change() {
+			var value = this.value === "count"
+				? function() { return 1; }
+				: function(d) { return d.size; };
+
+        node
+          .data(treemap.value(value).nodes)
+          .transition()
+          .duration(1500)
+          .call(position);
+        });
+	  });
+   }
 
 
   function position() {

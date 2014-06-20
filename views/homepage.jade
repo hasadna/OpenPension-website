@@ -18,45 +18,18 @@ block content
           div(id="content-types")
             ul(class="nav nav-tabs")
               li(class="active")
-                a(href="#home" data-toggle="tab") גופים מוסדיים
+                a(href="#managing_bodies" data-toggle="tab") גופים מוסדיים
               li
-                a(href="#profile" data-toggle="tab")מנפיקים 
+                a(href="#issuers" data-toggle="tab")מנפיקים 
                   span(class="soon") בקרוב
 
     div(id="homepage-content" class="container")
+      script(src="treemap/d3.js")
+      script(src="js/homepage_clientside.js")
       div(class="row")
         div(class="col-xs-12")
-          form()
-            label()
-              input(type="radio" name="mode" value="size" checked)
-              |  Size
-            label()
-              input(type="radio" name="mode" value="count")
-              |  Count
-          
-          script(src="treemap/d3.js")
-          script(src="js/homepage_clientside.js")
-          script.
-            var root = !{JSON.stringify(treemapData)};
-            var node = div.datum(root).selectAll(".node")
-                .data(treemap.nodes)
-                .enter().append("div")
-                .attr("class", "node")
-                .attr("onclick",function(d){return "window.location = '/portfolio?managing_body="+d.name+"&report_year=#{report_year}&report_qurater=#{report_qurater}'"})
-                .call(position)
-                .style("background", function(d) { return d.children ? color(d.name) : null; })
-                .style("cursor", "pointer")                
-                .text(function(d) { return d.children ? null : d.translatedName; });
 
-            d3.selectAll("input").on("change", function change() {
-              var value = this.value === "count"
-                  ? function() { return 1; }
-                  : function(d) { return d.size; };
-
-              node
-                .data(treemap.value(value).nodes)
-                .transition()
-                .duration(1500)
-                .call(position);
-            });
-            
+          div(id="homepage-content" class="tab-content")
+              div(class="row tab-pane active" id="managing_bodies")
+              div(class="row tab-pane" id="issuers")
+  
