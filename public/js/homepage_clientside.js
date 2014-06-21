@@ -1,5 +1,5 @@
-  var margin = {top: 40, right: 10, bottom: 10, left: 10},
-      width = 960 - margin.left - margin.right,
+  var margin = {top: 0, right: 10, bottom: 10, left: 34},
+      width = 1204 - margin.left - margin.right,
       height = 530 - margin.top - margin.bottom;
 
 
@@ -35,7 +35,7 @@
           .attr("onclick",function(d){return "window.location = '"+d.link+"'"})
           .call(position)
           .style("background", function(d) { return d.children ? color(d.name) : null; })
-          .style("cursor", "pointer")                
+          .style("cursor", "pointer")
           .text(function(d) { return d.children ? null : d.translatedName; });
 
 		d3.selectAll("input").on("change", function change() {
