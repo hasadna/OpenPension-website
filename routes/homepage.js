@@ -35,7 +35,7 @@ exports.managing_body_treemap = function(req,res){
 								"name":managing_bodies[i]['managing_body'], 
 								"size":managing_bodies[i]['group_sum'],
 								"translatedName":translate(managing_bodies[i]['managing_body']),
-								"link": "/portfolio?managing_body="+managing_bodies[i]['managing_body']+"&report_year="+current_year+"report_qurater="+current_quarter
+								"link": "/portfolio?managing_body="+managing_bodies[i]['managing_body']+"&report_year="+current_year+"&report_qurater="+current_quarter
 							}
 						);
 		}
@@ -79,7 +79,7 @@ exports.issuers_treemap = function(req,res){
 								"name":issuers[i]['issuer'], 
 								"size":issuers[i]['group_sum'],
 								"translatedName":translate(issuers[i]['issuer']),
-								//"link": "/portfolio?issuer="+issuers[i]['issuer']+"&report_year="+current_year+"report_qurater="+current_quarter
+								//"link": "/portfolio?issuer="+issuers[i]['issuer']+"&report_year="+current_year+"&report_qurater="+current_quarter
 								"link": "#"
 							}
 						);
