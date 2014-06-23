@@ -29,12 +29,15 @@ exports.managing_body_treemap = function(req,res){
 		var totalSum = 0;
 
 		for (i in managing_bodies){
+			var sizeDesc = DataNormalizer.convertNumberToWords(managing_bodies[i]['group_sum']);
+
 			totalSum += Number(managing_bodies[i]['group_sum']);			
 			treemapChildren.push(
 							{
 								"name":managing_bodies[i]['managing_body'], 
 								"size":managing_bodies[i]['group_sum'],
 								"translatedName":translate(managing_bodies[i]['managing_body']),
+								"sizeDescription" : sizeDesc.number + " " + sizeDesc.scale + " שקל",
 								"link": "/portfolio?managing_body="+managing_bodies[i]['managing_body']+"&report_year="+current_year+"&report_qurater="+current_quarter
 							}
 						);
@@ -73,12 +76,15 @@ exports.issuers_treemap = function(req,res){
 		var totalSum = 0;
 		
 		for (i in issuers){
+			var sizeDesc = DataNormalizer.convertNumberToWords(issuers[i]['group_sum']);
+
 			totalSum += Number(issuers[i]['group_sum']);			
 			treemapChildren.push(
 							{
 								"name":issuers[i]['issuer'], 
 								"size":issuers[i]['group_sum'],
 								"translatedName":translate(issuers[i]['issuer']),
+								"sizeDescription" : sizeDesc.number + " " + sizeDesc.scale + " שקל",
 								//"link": "/portfolio?issuer="+issuers[i]['issuer']+"&report_year="+current_year+"&report_qurater="+current_quarter
 								"link": "#"
 							}

@@ -36,7 +36,7 @@
           .call(position)
           .style("background", "#0855C7" )
           .style("cursor", "pointer")
-          .text(function(d) { return d.children ? null : d.translatedName; });
+          .html(function(d) { return d.translatedName+"<br/>"+d.sizeDescription; });
 
 		d3.selectAll("input").on("change", function change() {
 			var value = this.value === "count"
