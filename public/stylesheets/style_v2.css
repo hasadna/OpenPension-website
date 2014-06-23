@@ -710,3 +710,8 @@ li{
 .node .title {
   font-size: 1.3125em; <!-- 21px -->
 }
+
+#privacy-body p b,
+#privacy-body p a{
+	vertical-align: baseline;
+}
