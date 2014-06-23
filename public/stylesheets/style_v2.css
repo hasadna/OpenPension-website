@@ -706,3 +706,8 @@ li{
   position: absolute;
   text-indent: 2px;
 }
+
+#privacy-body p b,
+#privacy-body p a{
+	vertical-align: baseline;
+}
