@@ -52,6 +52,10 @@ body {
   background-color: white;
 }
 
+.container {
+  width: 970px !important;
+}
+
 a,
 a:hover,
 a:active,
@@ -128,6 +132,11 @@ nav .container {
   height: 28px;
 	width: auto;
   margin-left: 0.375em;
+}
+
+#about-link, #feedback-button {
+  font-weight: 100;
+  color: red !important;
 }
 
 #about-link {
@@ -476,6 +485,7 @@ footer{
   line-height: 48px;
 	background-color: #333333;
 	color:white;
+  bottom: 0;
 }
 
 #footer-feedback{
@@ -605,6 +615,7 @@ li{
 .jumbotron {
   background-color: inherit;
   text-align: center;
+  margin-bottom: 0;
 }
 
 .jumbotron p {

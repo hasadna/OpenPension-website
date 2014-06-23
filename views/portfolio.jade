@@ -12,9 +12,9 @@ block content
 		div(class="row")
 
 			//- HEADER
-			div(id="portfolio-header" class="col-sm-12")
+			div(id="portfolio-header" class="col-xs-12")
 				
-				div(class="breadcrumb col-sm-12") 
+				div(class="breadcrumb col-xs-12") 
 					ol()
 					each field, i in drillDown
 						- var value = filter.getConstraintData(field) ;
@@ -53,7 +53,7 @@ block content
 							הורד נתונים גולמיים
 						
 			div(class="row")
-				div(class="col-sm-12")
+				div(class="col-xs-12")
 					table(id="aggregate-data-panel" class="table")
 						tbody()
 							tr()
@@ -119,10 +119,10 @@ block content
 				
 					table(class="group-table table table-striped" style="text-align:right;width:100%")
 						colgroup()
-							col(class="col-sm-3")
-							col(class="col-sm-3")
-							col(class="col-sm-3")
-							col(class="col-sm-3")
+							col(class="col-xs-3")
+							col(class="col-xs-3")
+							col(class="col-xs-3")
+							col(class="col-xs-3")
 						thead()
 							tr() 
 								th(style="text-align: right") #{translate(group.group_field)}
@@ -230,7 +230,7 @@ block content
 
 
 			div(class="row") 
-				div(id="further-reading" class="col-sm-12")
+				div(id="further-reading" class="col-xs-12")
 					h3(id = "link-list-title") עוד בפנסיה פתוחה
 					h4() קופות של #{translate(filter.getConstraintData('managing_body'))}
 					ul(id = "link-list") 
