@@ -706,3 +706,7 @@ li{
   position: absolute;
   text-indent: 2px;
 }
+
+.node .title {
+  font-size: 1.3125em; <!-- 21px -->
+}
