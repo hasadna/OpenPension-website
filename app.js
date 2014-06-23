@@ -10,6 +10,7 @@ var express = require('express')
   , portfolio = require('./routes/portfolio')
   , staticpages = require('./routes/staticpages')
   , entry = require('./routes/entry')
+  , homepage = require('./routes/homepage')
   , http = require('http')
   , path = require('path')
   , FSUtil = require('./util/FSUtil')
@@ -56,8 +57,10 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//app.get('/', index.show);
-app.get('/', entry.show);
+app.get('/managing_bodies_treemap.json', homepage.managing_body_treemap);
+app.get('/issuers_treemap.json', homepage.issuers_treemap);
+app.get('/', homepage.show);
+app.get('/ver1', entry.show);
 
 app.get('/portfolio', portfolio.portfolio);
 app.get('/investments', portfolio.investments);
@@ -65,6 +68,7 @@ app.get('/investments', portfolio.investments);
 app.get('/entry', entry.show);
 
 app.get('/about', staticpages.about);
+app.get('/privacy', staticpages.privacy);
 
 app.post('/list', test.list);
 app.get('/list', test.list);

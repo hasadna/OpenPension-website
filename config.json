@@ -2,6 +2,6 @@
     "db_mode": "pg",
     "connection_string": "tcp://op:birraolklassedstarkol@37.139.2.224:5432/op", 
     "table": "pension_data_all",
-    "use_memcache" : false,
+    "use_memcache" : true,
     "data_version" : "0.1"
 }
