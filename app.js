@@ -68,6 +68,7 @@ app.get('/investments', portfolio.investments);
 app.get('/entry', entry.show);
 
 app.get('/about', staticpages.about);
+app.get('/privacy', staticpages.privacy);
 
 app.post('/list', test.list);
 app.get('/list', test.list);
