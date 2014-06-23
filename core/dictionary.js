@@ -30,6 +30,16 @@ dictionary['psagot'] = 'פסגות';
 dictionary['ayalon'] = 'איילון';
 
 
+dictionary['nis'] = 'שקל ישראלי';
+dictionary['usd'] = 'דולר ארה"ב';
+dictionary['eur'] = 'אירו';
+dictionary['jpy'] = 'ין יפני';
+dictionary['gbp'] = 'ליש"ט';
+dictionary['aud'] = 'דולר אוסטרלי';
+dictionary['chf'] = 'פרנק שוויצרי';
+dictionary['nzd'] = 'דולר ניו-זילנד';
+dictionary['cny'] = 'יואן סיני';
+
 dictionary['null'] = 'לא נמצא בקטגוריה';
 
 //dictionary holds lower case keys
