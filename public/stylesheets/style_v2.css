@@ -690,3 +690,19 @@ li{
 #homepage-content td:nth-child(even) {
   text-align: left;
 }
+
+.node:first-child {
+  background: none !important;
+}
+
+.node {
+  font-size: 1em;
+  color: white;
+  padding: 10px;
+  text-align: right;
+  line-height: 1.5em;
+  border: 3px solid  white;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px;
+}
