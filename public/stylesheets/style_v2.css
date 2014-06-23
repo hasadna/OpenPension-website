@@ -177,20 +177,24 @@ nav .container {
   text-decoration: underline;
 }
 
-.breadcrumb>li{
+.breadcrumb li{
 	float: right;
 }
 
-.breadcrumb>li+li:after {
+.breadcrumb ol{
+	list-style-type: none;
+}
+
+.breadcrumb li+li:after {
 	font-family: "Alef Hebrew";
-  content: "/\00a0";
+    content: "/\00a0";
 	padding: 0 5px;
 	color: #CCC;
   vertical-align: baseline;
 }
 
 
-.breadcrumb>li+li:before {
+.breadcrumb li+li:before {
 	content: none !important;
 	padding: 0 !important;
 }
