@@ -34,7 +34,7 @@
           .attr("class", "node")
           .attr("onclick",function(d){return "window.location = '"+d.link+"'"})
           .call(position)
-          .style("background", function(d) { return d.children ? color(d.name) : null; })
+          .style("background", "#0855C7" )
           .style("cursor", "pointer")
           .text(function(d) { return d.children ? null : d.translatedName; });
 
