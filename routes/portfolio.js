@@ -49,7 +49,7 @@ function createTitle(filter){
   if (currency!="") {numberOfChosenFilters=numberOfChosenFilters+1; if (firstInTitle=="") {firstInTitle="currency";};};
   
   // nothing is chosen by the user
-  if (managing_body== "" && liquidity=="" && industry=="" && currency=="" && rating=="" && instrument_sub_type=="" && instrument_id==""  ) {
+  if (managing_body== "" && liquidity=="" && industry=="" && currency=="" && rating=="" && instrument_id==""  ) {
         nothingIsChosen = 1; 
   }  
   // only managing body is active 
@@ -57,7 +57,7 @@ function createTitle(filter){
         onlyManagingBody = 1; 
   }
   // only issuer is active 
-  if (issuer!="" && liquidity=="" && industry=="" && activity_industry=="" && currency=="" && rating=="" && asset_type=="" && instrument_sub_type=="" && instrument_id=="" && fund_name=="" && instrument_name=="") {
+  if (issuer!="" && liquidity=="" && industry=="" && activity_industry=="" && currency=="" && rating=="" && asset_type=="" && instrument_id=="" && fund_name=="" && instrument_name=="") {
         onlyIssuer = 1; 
   }  
   

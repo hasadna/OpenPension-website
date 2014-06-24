@@ -16,7 +16,7 @@ Groups.common_groups = [
 /* Get Groups by filter */
 Groups.getGroups = function(filter){
 
-  //clone all_categories
+  //clone common_groups
   var resArray = Groups.common_groups.slice(0); 
   
   var liquidity = filter.getConstraintData('liquidity')[0];
@@ -84,32 +84,32 @@ Groups.getGroups = function(filter){
  */
 Groups.getAvailableGroups = function(filter){
 
-  var categoriesBySubType = this.getGroups(filter);
-  var availableCategories = [];
+  var groupsByFilter = this.getGroups(filter);
+  var availableGroups = [];
 
-  //iterate over categories by filter
-  for(categoryIndex in categoriesBySubType ){
-    var category = categoriesBySubType[categoryIndex];
-    //category is already in filter constraints, continue   
-    if(filter.hasConstraint(category)){ 
+  //iterate over groups by filter
+  for(index in groupsByFilter ){
+    var group = groupsByFilter[index];
+    //group is already in filter constraints, continue   
+    if(filter.hasConstraint(group)){ 
       continue;
     }
     else{
-      availableCategories.push(category);
+      availableGroups.push(group);
     }
   }
-  return availableCategories;
+  return availableGroups;
 }
 
 /*
- * Look for category which is not in filter constraints
- * (first available category)
+ * Look for group which is not in filter constraints
+ * (first available group)
  */ 
-Groups.getNextGroupingCategory = function(filter){
+Groups.getNextGroup = function(filter){
 
     //TODO: check validity
-    var availableCategories = this.getAvailableCategories(filter);
-    return availableCategories.shift();
+    var availableGroups = this.getAvailableGroups(filter);
+    return availableGroups.shift();
 }
 
 if(typeof module != 'undefined')
