@@ -250,24 +250,33 @@ exports.portfolio = function(req, res){
 //relative to total fund or current managing_body
 DAL.groupByManagingBody(totalPensionFundFilter,
   function(totalPensionFundQuarters, totalPensionFundQuery){
-  console.log("=====totalPensionFundQuarters==================");  
-  console.log(JSON.stringify(totalPensionFundQuarters));  
   
-  console.log("=====totalPensionFundQuery==================");  
-  console.log(JSON.stringify(totalPensionFundQuery));  
-  console.log("===============================");  
+  //console.log("=====totalPensionFundQuarters==================");  
+  //console.log(JSON.stringify(totalPensionFundQuarters));  
+  
+  //console.log("=====totalPensionFundQuery==================");  
+  //console.log(JSON.stringify(totalPensionFundQuery));  
+  //console.log("===============================");  
 
 
   //group filter by quarters
   DAL.groupByQuarters(filter,
       function(quarters, quartersQuery){
-  console.log("=====QUARTERS==================");
+ 
+  //console.log("=====QUARTERS==================");
+  //console.log(JSON.stringify(quarters));  
+  //console.log("=======quartersQuery=================");
+  //console.log(JSON.stringify(quartersQuery));  
+  //console.log("===============================");  
 
-  console.log(JSON.stringify(quarters));  
-  console.log("=======quartersQuery=================");
-  console.log(JSON.stringify(quartersQuery));  
-  console.log("===============================");  
 
+    //add group by fields for display
+    var group_by_fields = Groups.getGroups(filter);
+
+    for( i in group_by_fields){
+      filter.addConstraint("group_by",group_by_fields[i]);
+    }
+    
     DAL.groupByPortfolio(filter,
         function(groups){
 
