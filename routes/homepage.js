@@ -130,7 +130,8 @@ exports.show = function(req, res){
 		//console.log(treemapData);
 		
 	    res.render('homepage',{
-	    	market_size: DataNormalizer.convertNumberToWords(totalSum)
+	    	market_size: DataNormalizer.convertNumberToWords(totalSum),
+	    	title: "פנסיה פתוחה"
 		
 	    });
 		
