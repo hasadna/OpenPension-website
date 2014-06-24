@@ -270,12 +270,6 @@ DAL.groupByManagingBody(totalPensionFundFilter,
   //console.log("===============================");  
 
 
-    //add group by fields for display
-    var group_by_fields = Groups.getGroups(filter);
-
-    for( i in group_by_fields){
-      filter.addConstraint("group_by",group_by_fields[i]);
-    }
     
     DAL.groupByPortfolio(filter,
         function(groups){

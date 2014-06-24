@@ -1,3 +1,4 @@
+var Groups = require('../core/groups.js');
 var Filter = require('./filter.js');
 var squel = require('squel');
 var config = require('../config')
@@ -324,8 +325,15 @@ function groupByPortfolio(filter, callback){
 	//add row_number to inner select, for getting top 5 
 	innerSelect.field("ROW_NUMBER() OVER (ORDER BY sum(market_cap+fair_value) DESC) AS rownumber");
 	
+    //add group by fields for display
+    var group_by_fields = Groups.getGroups(mFilter);
+
+    for( i in group_by_fields){
+      mFilter.addConstraint("group_by",group_by_fields[i]);
+    }
+
 	//create multiple queries, one for each group
-	var groups=prepareGroupBy(innerSelect, filter);
+	var groups=prepareGroupBy(innerSelect, mFilter);
 
 	var wait=groups.length;
 	if (wait == 0)
