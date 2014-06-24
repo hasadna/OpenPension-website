@@ -45,7 +45,8 @@ block content
 
 							tr()
 								td()
-									div(data-sort="#{ lastQResult[group_by]}" class="table-link") #{ lastQResult[group_by] }
+									div(data-sort="#{ lastQResult[group_by]}" class="table-link") 
+										a(class="table-link", onclick="addConstraint('#{group_by}','#{escapedVal}')") #{groupName}
 								td()
 									div(data-sort="#{ lastQResult['group_sum']}") #{lastQResultWords.number}  #{lastQResultWords.scale}
 								td()
