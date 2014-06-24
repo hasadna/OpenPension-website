@@ -254,16 +254,17 @@ block content
 				div(class="modal-content")
 
 
-	<!-- DEGBUGGING -->
-	script() var groups = !{JSON.stringify(groups)};
-	script() var quarters = !{JSON.stringify(quarters)};
-	script() var lastQuarters = !{JSON.stringify(lastQuarters)};
-	script() var totalPensionFundQuarters = !{JSON.stringify(totalPensionFundQuarters)};
-	script() var quartersQuery = !{JSON.stringify(quartersQuery)};
-	script() var totalPensionFundQuery = !{JSON.stringify(totalPensionFundQuery)};
-	script() var origGroups = !{JSON.stringify(origGroups)};
+	-if (debug)
+		<!-- DEGBUGGING -->
+		script() var groups = !{JSON.stringify(groups)};
+		script() var quarters = !{JSON.stringify(quarters)};
+		script() var lastQuarters = !{JSON.stringify(lastQuarters)};
+		script() var totalPensionFundQuarters = !{JSON.stringify(totalPensionFundQuarters)};
+		script() var quartersQuery = !{JSON.stringify(quartersQuery)};
+		script() var totalPensionFundQuery = !{JSON.stringify(totalPensionFundQuery)};
+		script() var origGroups = !{JSON.stringify(origGroups)};
+		script(type='text/javascript', src='/js/underscore-min.js')
 		
 	script(type='text/javascript', src='/js/portfolio_clientside.js', myVar = 200 )
-	script(type='text/javascript', src='/js/underscore-min.js')
 	script(type='text/javascript', src='/js/highcharts.js')
-	script(type='text/javascript', src='/js/sorttable.js')
+	

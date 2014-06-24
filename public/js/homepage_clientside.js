@@ -5,8 +5,8 @@
 
 
   	$(function(){
-		drawGraph("managing_bodies","/managing_bodies_treemap.json");
-		drawGraph("issuers","/issuers_treemap.json");
+		  drawGraph("managing_bodies","/managing_bodies_treemap.json");
+		  drawGraph("issuers","/issuers_treemap.json");
   	});
 
   function drawGraph(elementId, jsonURL){
