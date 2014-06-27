@@ -231,8 +231,23 @@ $(function () {
             if (arr[1]) {
                 chart.type = arr[1];
             }
+
+            var color;
+            var dataDif = data[3] - data[0];
+            
+            if (dataDif < 0){
+                color = '#FFBE4C';
+            }
+            else if(dataDif == 0){
+                color = 'grey';
+            }
+            else{
+                color = '#7FB2FF';
+            }
+
             $td.highcharts('SparkLine', {
                 series: [{
+                    color: color,
                     data: data,
                     pointStart: 1
                 }],
