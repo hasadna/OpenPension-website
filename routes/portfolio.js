@@ -307,6 +307,18 @@ DAL.groupByManagingBody(totalPensionFundFilter,
             );
           });
 
+        if (quarters.length < 4 || totalPensionFundQuarters.length < 4){
+          for(var q = 0; q < 4; q++){
+            if (quarters[q] == undefined){
+              quarters[q] = {"group_sum":"0"};
+            }
+            if (totalPensionFundQuarters[q] == undefined){
+              totalPensionFundQuarters[q] = {"group_sum":"0"};
+            }
+          }
+
+
+        }
 
 
         //console.log(JSON.stringify(groups));  

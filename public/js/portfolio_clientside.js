@@ -234,15 +234,15 @@ $(function () {
 
             var color;
             var dataDif = data[3] - data[0];
-            
+  
             if (dataDif < 0){
-                color = '#FFBE4C';
+                color = '#FFBE4C'; //yellow
             }
             else if(dataDif == 0){
-                color = '#999999';
+                color = '#999999'; //gray
             }
             else{
-                color = '#7FB2FF';
+                color = '#7FB2FF'; //blue
             }
 
             $td.highcharts('SparkLine', {
@@ -328,13 +328,13 @@ $(function(){
                     var dataDif = data[3] - data[0];
                     
                     if (dataDif < 0){
-                        color = '#FFBE4C';
+                        color = '#FFBE4C'; //yellow
                     }
                     else if(dataDif == 0){
-                        color = '#999999';
+                        color = '#999999'; //gray
                     }
                     else{
-                        color = '#7FB2FF';
+                        color = '#7FB2FF'; //blue
                     }
 
                     $td.highcharts('SparkLine', {
