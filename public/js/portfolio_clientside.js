@@ -284,11 +284,13 @@ $(function(){
         ///// MODAL EVENTS
         $('body').on('hidden.bs.modal', '.modal', function () {
             $(this).removeData('bs.modal');
-            // alert("hidden");
+            $(".modal-content").empty();
+             //alert("hidden");
         });
 
         $(".modal").on("show.bs.modal",function()
         {
+            $(".modal-content").html("טוען נתונים...")
            // alert("show");  
         });
         
