@@ -125,13 +125,16 @@ nav .container {
   font-size:1.5em;
 	font-weight:700;
 	font-family:"almoni-tzar";
-  line-height: 2em;
+  line-height: 50px;
+  margin-right: 0 !important;
 }
 
 .navbar-brand img{
   height: 28px;
 	width: auto;
   margin-left: 0.375em;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 #about-link {
@@ -281,7 +284,7 @@ nav .container {
 /* BUTTON BAR */
 .dropdown-menu li span:before,
 .filter-option:before{
-	content: "\f073";
+	content: "\f073\0020";
 	font-family: "FontAwesome";
 	padding-left: 3px;
 }
@@ -307,7 +310,8 @@ nav .container {
 
 .sparkline{
 	padding:10px !important;
-	float:right;
+	float:left;
+  display: inline-block;
 }
 
 .quarter-diff .caret{
@@ -399,6 +403,10 @@ td>a{
 	color: #3B70BF;
 }
 
+.unit {
+  width: auto;
+}
+
 #bar{
 	height: 1.5em;
 	background-color:#7FB2FF;
@@ -486,7 +494,6 @@ footer{
   line-height: 48px;
 	background-color: #333333;
 	color:white;
-  bottom: 0;
 }
 
 #footer-feedback{
@@ -506,6 +513,10 @@ footer .container{
   padding: 0;
   height: 100%;
   margin: 0;
+}
+
+footer li:last-child {
+  padding-left: 0;
 }
 
 footer li{
@@ -563,7 +574,7 @@ li{
 }
 
 .datum { 
-	font-size: 2.25em; /* 36px */
+	font-size: 2em; /* 32px */
 	line-height: 1.33333333333333em; /* 48px */
 	font-family: "Alef Hebrew";
 	margin: 0 !important;
@@ -709,6 +720,8 @@ li{
 
 .node:first-child {
   background: none !important;
+  border: 0;
+  padding 
 }
 
 .node {

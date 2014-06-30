@@ -127,7 +127,7 @@ $(function () {
                     borderWidth: 0,
                     type: 'line',
                     margin: [2, 0, 2, 0],
-                    width: 120,
+                    width: 80,
                     height: 20,
                     style: {
                         overflow: 'visible'

@@ -53,7 +53,7 @@ block content
 					a(id="download" href="/csv#{filter.toQueryString()}") 
 						button(class="btn btn-default") 
 							i(class="fa fa-file-text-o")
-							הורד נתונים גולמיים
+							&nbspהורד נתונים גולמיים
 						
 			div(class="row")
 				div(class="col-xs-12")
@@ -75,14 +75,14 @@ block content
 										h3() חלק משוק הפנסיה
 									- }
 									- else if(report_type == "investment") {
-										h3() חלק מתיק השקעות
+										h3() חשיפה
 									- }
 
 									-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
 									span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
 
 								td()
-									h3() שינוי ב-4 רבעונים אחרונים
+									h3() שינוי חשיפה ב-4 רבעונים
 									-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
 									-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
 									-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
@@ -137,13 +137,16 @@ block content
 									span(class="unit") בשקלים
 
 								- if (report_type == "managing_body"){
-									th(style="text-align: right") % מתיק ההשקעות
+									th(style="text-align: right") חשיפה 
+										span(class="unit") באחוזים
 								- }
 								- else if(report_type == "investment") {
-									th(style="text-align: right") % מההשקעה
+									th(style="text-align: right") אחוז מההשקעה
 								- }
 
-								th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
+								th(style="text-align: right") שינוי חשיפה 
+									span(class="unit") ב-4 רבעונים
+									
 						tbody()
 							each result in group.result
 								- var lastQStr = lastQuarters[0].toString();
