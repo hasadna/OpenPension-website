@@ -34,7 +34,7 @@
           .attr("class", "node")
           .attr("onclick",function(d){return "window.location = '"+d.link+"'"})
           .call(position)
-          .style("background", "#0855C7" )
+          .style("background", "#3B70BF" )
           .style("cursor", "pointer")
           .html(function(d) { return "<span class='title'>"+d.translatedName+"</span><br/>"+d.sizeDescription; });
 

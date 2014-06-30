@@ -60,7 +60,7 @@ a,
 a:hover,
 a:active,
 a:visited {
-  color:inherit;
+  color: #3B70BF;
   text-decoration: none;
 }
 
@@ -86,7 +86,7 @@ a:hover{
 
 .navbar{
 	color: #FFFFFF !important;
-  background-color: #0855C7;
+  background-color: #3B70BF;
 	height: 3em;
   line-height: 3em;
   direction: rtl !important;
@@ -134,22 +134,15 @@ nav .container {
   margin-left: 0.375em;
 }
 
-#about-link, #feedback-button {
-  font-weight: 100;
-  color: red !important;
-}
-
 #about-link {
   color:#FFFFFF !important;
 	font-size:1.125em;
-	font-weight:600;
 }
 
 #feedback-button {
   height: 2em;
 	color: #FFFFFF !important;
   font-size: 1.125em;
-	font-weight: 600;
 	border: 1px solid white;
   background: none;
   padding: 0 10px !important;
@@ -172,7 +165,7 @@ nav .container {
 .breadcrumb a{
 	text-decoration: none;
 	cursor:pointer;
-	color: #0855C7;
+	color: #3B70BF;
   vertical-align: baseline;
   text-decoration: underline;
 }
@@ -245,7 +238,7 @@ nav .container {
 	top: 0px;
 	right: 0px;
 	height: 250px;
-	background-color: #0855C7;
+	background-color: #3B70BF;
 }
 
 #info #total{
@@ -264,7 +257,7 @@ nav .container {
 	text-decoration: none;
 	direction: ltr;
 	text-align: right;
-	color: #0855C7;
+	color: #3B70BF;
 }
 
 
@@ -403,7 +396,7 @@ th>span, td>span{
 }
 
 td>a{
-	color: #0855C7;
+	color: #3B70BF;
 }
 
 #bar{
@@ -527,6 +520,10 @@ footer a {
   text-decoration: underline;
 }
 
+footer a {
+  color: white !important;
+}
+
 .list-all{
 	background-color: white !important;
 }
@@ -542,7 +539,7 @@ tfoot {
 	text-decoration: none;
 	direction: ltr;
 	text-align: right;
-	color: #0855C7;
+	color: #3B70BF;
 	line-height: 2em;
 }
 
@@ -605,7 +602,7 @@ li{
 }
 
 #homepage-header {
-  background-color: #F9F9F9;
+  background-color: #EDECEC;
   padding: 0;
   margin: -20px 0 0 0;
 }
@@ -638,7 +635,7 @@ li{
 
 #content-types {
   text-align: center;
-  border-bottom: 5px solid #0855C7;
+  border-bottom: 5px solid #3B70BF;
 }
 
 #content-types ul {
@@ -668,7 +665,7 @@ li{
 }
 
 #content-types .active a {
-  background-color: #0855C7;
+  background-color: #3B70BF;
   color: white;
 }
 
