@@ -1,5 +1,5 @@
-  var margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 970, 
+  var margin = {top: 0, right: -18, bottom: 0, left: 0},
+      width = 976, 
       height = 480;
 
 

@@ -5,255 +5,256 @@ block headerbottom
 
 block content
 
-	//- BODY
-	div(class="container")
-		
-		//- RIGHT COLUMN
-		div(class="row")
+	div(id="portfolio-header" class="container-fluid")
 
-			//- HEADER
-			div(id="portfolio-header" class="col-xs-12")
-				
-				div(class="breadcrumb col-xs-12") 
-					ol()
-						li()
-							a(onclick="window.location='/'" title="דף הבית") דף הבית 
-							
-						each field, i in drillDown
-							- var value = filter.getConstraintData(field) ;
-							
-							- var escapedValue = rfc3986EncodeURIComponent(value);
+		div(class="container")
 
-							-if ( i < drillDown.length - 1 ){
-								li()
-									a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}") #{removeQoutes(translate(value))} 
-							-}else{
-								li(title="#{translate(field)}") #{removeQoutes(translate(value))} 
-							-}
-
-
-				- if (report_type == "managing_body"){
-					h2(id="report-type") תיק השקעות
-				- }
-				- else if(report_type == "investment") {
-					h2(id="report-type") השקעה
-				- }
-
-				h1(id="report-title") #{report_title} 
-											
-
-				div(id="btn-bar")
-					select(id="select_quarter")
-						each quarter in lastQuarters
-							- var select=null;
-							- if (report_year == quarter.year && report_qurater == quarter.quarter)
-								- select='selected';
-							option(value="#{JSON.stringify(quarter)}",
-							selected=select) רבעון #{quarter.quarter}, #{quarter.year}
-					a(id="download" href="/csv#{filter.toQueryString()}") 
-						button(class="btn btn-default") 
-							i(class="fa fa-file-text-o")
-							&nbspהורד נתונים גולמיים
-						
 			div(class="row")
-				div(class="col-xs-12")
-					table(id="aggregate-data-panel" class="table")
-						tbody()
+
+				//- HEADER
+				div( class="col-xs-12")
+
+					div(class="breadcrumb col-xs-12") 
+						ol()
+							li()
+								a(onclick="window.location='/'" title="דף הבית") דף הבית 
+
+							each field, i in drillDown
+								- var value = filter.getConstraintData(field) ;
+
+								- var escapedValue = rfc3986EncodeURIComponent(value);
+
+								-if ( i < drillDown.length - 1 ){
+									li()
+										a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}") #{removeQoutes(translate(value))} 
+								-}else{
+									li(title="#{translate(field)}") #{removeQoutes(translate(value))} 
+								-}
+
+
+					- if (report_type == "managing_body"){
+						h2(id="report-type") תיק השקעות
+					- }
+					- else if(report_type == "investment") {
+						h2(id="report-type") השקעה
+					- }
+
+					h1(id="report-title") !{report_title} 
+
+
+			
+	div(class="container")
+		div(class="row")
+			div(class="col-xs-12")
+				div(id="btn-bar")
+						select(id="select_quarter")
+							each quarter in lastQuarters
+								- var select=null;
+								- if (report_year == quarter.year && report_qurater == quarter.quarter)
+									- select='selected';
+								option(value="#{JSON.stringify(quarter)}",
+								selected=select) רבעון #{quarter.quarter}, #{quarter.year}
+						a(id="download" href="/csv#{filter.toQueryString()}") 
+							button(class="btn btn-default") 
+								i(class="fa fa-file-text-o")
+								&nbspהורד נתונים גולמיים
+				table(id="aggregate-data-panel" class="table")
+					tbody()
+						tr()
+							td()
+								- if (report_type == "managing_body"){
+									h3() גודל התיק
+								- }
+								- else if(report_type == "investment") {
+									h3() גודל ההשקעה
+								- }
+								span(class="datum") #{total_sum_words.number}  #{total_sum_words.scale} שקל
+
+							td()
+
+								- if (report_type == "managing_body"){
+									h3() חלק משוק הפנסיה
+								- }
+								- else if(report_type == "investment") {
+									h3() חשיפה
+								- }
+
+								-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
+								span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
+
+							td()
+								h3() שינוי ב-4 רבעונים
+								-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
+								-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
+								-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
+								-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
+
+								- var diff = (diffQ0 - diffQ3).toFixed(1);
+								- var caret, colorClass;
+
+								- if (diff > 0){
+									- diff = "+" + diff;
+									- caret = "fa-caret-up";
+									- colorClass = "blue-text";
+								- }
+								- else if (diff == 0){
+									- caret = "";
+									- colorClass = "gray-text";
+								- }
+								- else{
+									- caret = "fa-caret-down";
+									- colorClass = "yellow-text";
+								- }
+								div(id="headerDiff")
+									div(class="quarter-diff #{colorClass}" ) 
+										p(class="datum percentage"  style="direction:ltr") #{diff}%
+										i(class="fa #{caret}" style="position: relative;bottom: 15px")
+									div(class="sparkline",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")
+
+		each group in groups
+			- if (debug)
+				div(style="text-align:left;direction:ltr") #{group.query} 
+			- if (group.group_field == 'fund_name' )continue;
+
+			//- skip empty groups
+			- if (Object.keys(group.result).length == 0 ) continue;
+
+			//- count precent shown in table
+			- var visiblePercentage = 0;
+
+			div(class="segmentation")
+				h3(class="table-title") חלוקה לפי&nbsp #{translate(group.group_field)}
+
+				table(class="group-table table table-striped" style="text-align:right;width:100%")
+					colgroup()
+						col(class="col-xs-3")
+						col(class="col-xs-3")
+						col(class="col-xs-3")
+						col(class="col-xs-3")
+					thead()
+						tr() 
+							th(style="text-align: right") #{translate(group.group_field)}
+							th(style="text-align: right") היקף ההשקעה 
+								span(class="unit") בשקלים
+
+							- if (report_type == "managing_body"){
+								th(style="text-align: right") חשיפה 
+									span(class="unit") באחוזים
+							- }
+							- else if(report_type == "investment") {
+								th(style="text-align: right") אחוז מההשקעה
+							- }
+
+							th(style="text-align: right") שינוי חשיפה 
+								span(class="unit") ב-4 רבעונים
+
+					tbody()
+						each result in group.result
+							- var lastQStr = lastQuarters[0].toString();
+							- var lastQResult = result[lastQStr][0];
+							- var lastQResultWords = convertNumberToWords(lastQResult.group_sum);
+							- var groupPercentage = (lastQResult.group_sum / quarters[0]['group_sum'] * 100 ).toFixed(2);
+							- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group.group_field]);
+							- var groupName = removeQoutes(translate(lastQResult[group.group_field]));
+							- visiblePercentage += Number(groupPercentage);
+
+							- if (result[group.group_field] === 'NULL' ) continue;
+
+							- if ( result[lastQStr] != undefined )
+								- var lastQResult = result[lastQStr][0];
+							- else
+								div() UNDEFINED for #{group.group_field} #{removeQoutes(translate(lastQResult[group.group_field]))} #{lastQStr}
+
+								- result[lastQStr] = [{'group_sum':'0'}];
+								- var lastQResult = result[lastQStr][0];
+
+								- continue
+
+
 							tr()
 								td()
-									- if (report_type == "managing_body"){
-										h3() גודל התיק
-									- }
-									- else if(report_type == "investment") {
-										h3() גודל ההשקעה
-									- }
-									span(class="datum") #{total_sum_words.number}  #{total_sum_words.scale} שקל
-
+									a(class="table-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')") #{groupName}
 								td()
-
-									- if (report_type == "managing_body"){
-										h3() חלק משוק הפנסיה
-									- }
-									- else if(report_type == "investment") {
-										h3() חשיפה
-									- }
-
-									-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
-									span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
-
+									div() #{lastQResultWords.number}  #{lastQResultWords.scale}
 								td()
-									h3() שינוי חשיפה ב-4 רבעונים
-									-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
-									-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
-									-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
-									-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
+									span() #{groupPercentage}% 
+									div(id="bar" style="width:#{groupPercentage*(75/100)}%")
 
-									- var diff = (diffQ0 - diffQ3).toFixed(1);
-									- var caret, colorClass;
+								td(style="padding:10px !important")
+									- var sparkline = [];
+									- for(var i = 0;i<4;i++){
+										- var qStr = lastQuarters[i].toString();
+										- if (result[qStr] == undefined){
+											- if (debug){
+												div() result[#{qStr}] is undefined	
+											- }
+											- sparkline.push( Number(0) );
+											- continue;
+										- }
+										- if (quarters[i] == undefined){
+											- if (debug){
+												div() quarters[i] is undefined
+											- }
+											- sparkline.push( Number(0) );
+											- continue;
+										- }
+										- sparkline.push( (Number(result[qStr][0]['group_sum']) / Number(quarters[i]['group_sum']) * 100).toFixed(2) );
+									- }
 
+									- var diff, caret, colorClass;
+
+									- diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
 									- if (diff > 0){
 										- diff = "+" + diff;
 										- caret = "fa-caret-up";
 										- colorClass = "blue-text";
 									- }
-									- else if (diff == 0){
+									- else if(diff==0) {
 										- caret = "";
-										- colorClass = "gray-text";
+										- colorClass = "gray-text-text";
 									- }
+
 									- else{
 										- caret = "fa-caret-down";
 										- colorClass = "yellow-text";
 									- }
-									div(id="headerDiff")
-										div(class="quarter-diff #{colorClass}" ) 
-											p(class="datum percentage"  style="direction:ltr") #{diff}%
-											i(class="fa #{caret}" style="position: relative;bottom: 15px")
-										div(class="sparkline",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")
-		
-			each group in groups
-				- if (debug)
-					div(style="text-align:left;direction:ltr") #{group.query} 
-				- if (group.group_field == 'fund_name' )continue;
 
-				//- skip empty groups
-				- if (Object.keys(group.result).length == 0 ) continue;
-
-				//- count precent shown in table
-				- var visiblePercentage = 0;
-
-				div(class="segmentation")
-					h3(class="table-title") חלוקה לפי&nbsp #{translate(group.group_field)}
-				
-					table(class="group-table table table-striped" style="text-align:right;width:100%")
-						colgroup()
-							col(class="col-xs-3")
-							col(class="col-xs-3")
-							col(class="col-xs-3")
-							col(class="col-xs-3")
-						thead()
-							tr() 
-								th(style="text-align: right") #{translate(group.group_field)}
-								th(style="text-align: right") היקף ההשקעה 
-									span(class="unit") בשקלים
-
-								- if (report_type == "managing_body"){
-									th(style="text-align: right") חשיפה 
-										span(class="unit") באחוזים
-								- }
-								- else if(report_type == "investment") {
-									th(style="text-align: right") אחוז מההשקעה
-								- }
-
-								th(style="text-align: right") שינוי חשיפה 
-									span(class="unit") ב-4 רבעונים
-									
-						tbody()
-							each result in group.result
-								- var lastQStr = lastQuarters[0].toString();
-								- var lastQResult = result[lastQStr][0];
-								- var lastQResultWords = convertNumberToWords(lastQResult.group_sum);
-								- var groupPercentage = (lastQResult.group_sum / quarters[0]['group_sum'] * 100 ).toFixed(2);
-								- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group.group_field]);
-								- var groupName = removeQoutes(translate(lastQResult[group.group_field]));
-								- visiblePercentage += Number(groupPercentage);
-
-								- if (result[group.group_field] === 'NULL' ) continue;
-
-								- if ( result[lastQStr] != undefined )
-									- var lastQResult = result[lastQStr][0];
-								- else
-									div() UNDEFINED for #{group.group_field} #{removeQoutes(translate(lastQResult[group.group_field]))} #{lastQStr}
-									
-									- result[lastQStr] = [{'group_sum':'0'}];
-									- var lastQResult = result[lastQStr][0];
-
-									- continue
+									div(class="quarter-diff #{colorClass}" ) 
+										p(class="percentage") #{diff}%
+										i(class="fa #{caret}" style="position: relative;bottom: 15px")
+									div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
 
 
+						- if(visiblePercentage <= 99){
+							tfoot()
 								tr()
+									td(class="list-all")
+										div()
+											a(data-target="#myModal",data-toggle="modal",data-remote="/investments#{filter.toQueryString()}&group_by=#{group.group_field}")
+												כל #{plurals[group.group_field]}...
 									td()
-										a(class="table-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')") #{groupName}
 									td()
-										div() #{lastQResultWords.number}  #{lastQResultWords.scale}
 									td()
-										span() #{groupPercentage}% 
-										div(id="bar" style="width:#{groupPercentage*(75/100)}%")
-									
-									td(style="padding:10px !important")
-										- var sparkline = [];
-										- for(var i = 0;i<4;i++){
-											- var qStr = lastQuarters[i].toString();
-											- if (result[qStr] == undefined){
-												- if (debug){
-													div() result[#{qStr}] is undefined	
-												- }
-												- sparkline.push( Number(0) );
-												- continue;
-											- }
-											- if (quarters[i] == undefined){
-												- if (debug){
-													div() quarters[i] is undefined
-												- }
-												- sparkline.push( Number(0) );
-												- continue;
-											- }
-											- sparkline.push( (Number(result[qStr][0]['group_sum']) / Number(quarters[i]['group_sum']) * 100).toFixed(2) );
-										- }
+						- }
 
-										- var diff, caret, colorClass;
-
-										- diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
-										- if (diff > 0){
-											- diff = "+" + diff;
-											- caret = "fa-caret-up";
-											- colorClass = "blue-text";
-										- }
-										- else if(diff==0) {
-											- caret = "";
-											- colorClass = "gray-text-text";
-										- }
-										
-										- else{
-											- caret = "fa-caret-down";
-											- colorClass = "yellow-text";
-										- }
-
-										div(class="quarter-diff #{colorClass}" ) 
-											p(class="percentage") #{diff}%
-											i(class="fa #{caret}" style="position: relative;bottom: 15px")
-										div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
-
-		
-							- if(visiblePercentage <= 99){
-								tfoot()
-									tr()
-										td(class="list-all")
-											div()
-												a(data-target="#myModal",data-toggle="modal",data-remote="/investments#{filter.toQueryString()}&group_by=#{group.group_field}")
-													כל #{plurals[group.group_field]}...
-										td()
-										td()
-										td()
-							- }
-						
-							- if (debug && visiblePercentage > 100){
-								tr()
-									td()
-										div() סהכ גדול מ100%!! #{visiblePercentage }
-							- }
-										
+						- if (debug && visiblePercentage > 100){
+							tr()
+								td()
+									div() סהכ גדול מ100%!! #{visiblePercentage }
+						- }
 
 
-			div(class="row") 
-				div(id="further-reading" class="col-xs-12")
-					h3(id = "link-list-title") עוד בפנסיה פתוחה
-					h4() קופות של #{translate(filter.getConstraintData('managing_body'))}
-					ul(id = "link-list") 
-						each fund in funds
-							- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
-								li()
-									a(class="table-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
-								br()
+
+		div(class="row") 
+			div(id="further-reading" class="col-xs-12")
+				h3(id = "link-list-title") עוד בפנסיה פתוחה
+				h4() קופות של #{translate(filter.getConstraintData('managing_body'))}
+				ul(id = "link-list") 
+					each fund in funds
+						- var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);
+							li()
+								a(class="table-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
+							br()
 
 
 		div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")

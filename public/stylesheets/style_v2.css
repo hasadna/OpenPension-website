@@ -92,7 +92,7 @@ a:hover{
   direction: rtl !important;
   border: none !important;
   border-radius: 0;
-  margin-bottom: 0.75em;
+  margin-bottom: 0;
 }
 
 nav .container {
@@ -152,8 +152,10 @@ nav .container {
 }
 
 #portfolio-header{
-  padding: 0;
-  margin-bottom: 1.5em;
+  padding: 0.75em 0 0 0;
+  margin-bottom: 0.75em;
+  border-bottom: 5px solid #333;
+  background-color: #EDECEC;
 }
 
 
@@ -198,8 +200,7 @@ nav .container {
 #btn-bar{
 	line-height: 4.5em;
 	width: 100%;
-  border-top: 1px solid #E4E4E4;
-  border-bottom: 1px solid #E4E4E4;
+  margin-bottom: 1.5em;
 }
 
 .btn-group{
@@ -439,7 +440,7 @@ h1 {
 	font-size: 2.25em; /* 36px */
 	line-height: 1.3333333333em; /* 48px */
 	font-family: "Alef Hebrew";font-weight: bold;
-  margin: 0 0 0.6666666667em 0 !important; /* 24px */
+  margin: 0 0 0.3333333333em 0 !important; /* 12px */
 }
 
 h2 { 
@@ -489,11 +490,15 @@ h5 {
 
 
 footer{
+  position: relative;
+  margin-top: -48px; /* negative value of footer height */
+  clear:both;
+  height: 48px;
+  width: 100%;
 	font-size: 14px;
-	height: 48px;
   line-height: 48px;
 	background-color: #333333;
-	color:white;
+	color: white;
 }
 
 #footer-feedback{
@@ -737,7 +742,7 @@ li{
 }
 
 .node .title {
-  font-size: 1.3125em; <!-- 21px -->
+  font-size: 1.3125em; /** 21px **/
 }
 
 #privacy-body p b,
@@ -745,8 +750,17 @@ li{
 	vertical-align: baseline;
 }
 
-#managing_bodies {
+#managing-bodies {
   margin-bottom: 1.5em;
 }
 
-.homepage-link
+#homepage-links {
+  font-size: 1.3125em; /** 21px **/
+  line-height: 1.14285714285714em; /** 24px **/
+  margin-bottom: 2.28571428571429em; /** 48px **/ 
+}
+
+#homepage-links .seperator {
+  color: #999999;
+  padding: 0 5px;
+}
