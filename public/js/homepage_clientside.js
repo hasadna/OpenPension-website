@@ -1,11 +1,11 @@
-  var margin = {top: 0, right: 0, bottom: 72, left: 0},
+  var margin = {top: 0, right: 0, bottom: 0, left: 0},
       width = 970, 
       height = 480;
 
 
 
   	$(function(){
-		  drawGraph("managing_bodies","/managing_bodies_treemap.json");
+		  drawGraph("managing-bodies","/managing_bodies_treemap.json");
 		  drawGraph("issuers","/issuers_treemap.json");
   	});
 

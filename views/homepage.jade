@@ -6,31 +6,36 @@ block headerbottom
 block content
 
 
-    div(id="homepage-header" class="container-fluid")
-      div(class="row")
-        div(class="col-xs-12")
-          div(class="jumbotron")
-            p()
-              span(id="market-size") #{market_size.number} #{market_size.scale} שקל
-              |  מנוהלים בקרנות הפנסיה ובקופות הגמל.
-              br()
-              | איך ואיפה מנוהל הכסף שלנו?
-          div(id="content-types")
-            ul(class="nav nav-tabs")
-              li(class="active")
-                a(href="#managing_bodies" data-toggle="tab") גופים מוסדיים
-              li(class="disabled")
-                //- a(href="#issuers" data-toggle="tab")מנפיקים 
-                a() מנפיקים 
-                  span(class="soon") בקרוב
+		div(id="homepage-header" class="container-fluid")
+			div(class="row")
+				div(class="col-xs-12")
+					div(class="jumbotron")
+						p()
+							span(id="market-size") #{market_size.number} #{market_size.scale} שקל
+							|  מנוהלים בקרנות הפנסיה ובקופות הגמל.
+							br()
+							| איך ואיפה מנוהל הכסף שלנו?
+					div(id="content-types")
+						ul(class="nav nav-tabs")
+							li(class="active")
+								a(href="#managing-bodies" data-toggle="tab") גופים מוסדיים
+							li(class="disabled")
+								//- a(href="#issuers" data-toggle="tab")מנפיקים 
+								a() מנפיקים 
+									span(class="soon") בקרוב
 
-    div(id="homepage-content" class="container")
-      script(src="treemap/d3.js")
-      script(src="js/homepage_clientside.js")
-      div(class="row")
-        div(class="col-xs-12")
+		div(id="homepage-content" class="container")
+			script(src="treemap/d3.js")
+			script(src="js/homepage_clientside.js")
+			div(class="row")
+				div(class="col-xs-12")
+					div(id="homepage-content" class="tab-content")
+							div(class="tab-pane active" id="managing-bodies")
+							div(class="tab-pane" id="issuers")
+							div(id="homepage-links")
+								a(class="homepage-link") תיק ההשקעות של כל שוק הפנסיה
+								span(class="seperator") |
+								a(class="homepage-link") כל הגופים המוסדיים
 
-          div(id="homepage-content" class="tab-content")
-              div(class="row tab-pane active" id="managing_bodies")
-              div(class="row tab-pane" id="issuers")
-  
+							
+	
