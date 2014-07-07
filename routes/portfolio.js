@@ -48,6 +48,8 @@ function createTitle(filter){
   if (activity_industry!="") {numberOfChosenFilters=numberOfChosenFilters+1; if (firstInTitle=="") {firstInTitle="activity_industry";};};
   if (currency!="") {numberOfChosenFilters=numberOfChosenFilters+1; if (firstInTitle=="") {firstInTitle="currency";};};
   
+  
+  
   // nothing is chosen by the user
   if (managing_body== "" && liquidity=="" && industry=="" && currency=="" && rating=="" && instrument_id==""  ) {
         nothingIsChosen = 1; 
@@ -75,11 +77,11 @@ function createTitle(filter){
   }
   
 
-  title +=  (managing_body != "")?onlyManagingBody? managing_body : managing_body + " > " : "";
+  title +=  (managing_body != "")?onlyManagingBody? managing_body : managing_body + " > " : "שוק הפנסיה > ";
   title +=  (instrument_name != "")? " " + instrument_name:"";
 
   if (instrument_name=="") {
-	  title+= (asset_type != "")?((firstInTitle=="asset_type")?((numberOfChosenFilters==1)? " ב" : "") : ((numberOfChosenFilters==1)? "" : " ב")) + asset_type + " " + numberOfChosenFilters: "" ;
+	  title+= (asset_type != "")?((firstInTitle=="asset_type")?((numberOfChosenFilters==1)? " ב" : "") : ((numberOfChosenFilters==1)? "" : " ב")) + asset_type + " " : "" ;
 	  title+= (reference_index != "")?((firstInTitle=="reference_index")?((numberOfChosenFilters==1)? " ב" : "") : ((numberOfChosenFilters==1)? "" : " ב")) + "תעודות סל על מדד " + reference_index + " " : "" ;
 	  title+= (liquidity != "")?((firstInTitle=="liquidity")?((numberOfChosenFilters==1)? " ב" : "") : ((numberOfChosenFilters==1)? "" : " ב")) + "רמת נזילות " + liquidity + " " : "" ;
 	  title+= (issuer != "")?((firstInTitle=="issuer")?((numberOfChosenFilters==1)? "" : "") : ((numberOfChosenFilters==1)? "" : " של ")) + issuer + " " : "" ;
