@@ -94,10 +94,9 @@ function createTitle(filter){
 }
 
 function getReportType(filter){
-  if ( (filter.getDrillDownDepth() == 1 && 
-        filter.hasConstraint("managing_body")) ||
-        (filter.getDrillDownDepth() == 1 && 
-        filter.hasConstraint("fund_name")) ||
+  if (  (filter.getDrillDownDepth() == 0 ) || 
+        (filter.getDrillDownDepth() == 1 && filter.hasConstraint("managing_body")) ||
+        (filter.getDrillDownDepth() == 1 && filter.hasConstraint("fund_name")) ||
         (filter.getDrillDownDepth() == 2 && 
         filter.hasConstraint("managing_body") && 
         filter.hasConstraint("fund_name"))
@@ -309,17 +308,19 @@ DAL.groupByManagingBody(totalPensionFundFilter,
             );
           });
 
+
+        //fill up missing quarters with sum 0
         if (quarters.length < 4 || totalPensionFundQuarters.length < 4){
           for(var q = 0; q < 4; q++){
+          
             if (quarters[q] == undefined){
               quarters[q] = {"group_sum":"0"};
             }
             if (totalPensionFundQuarters[q] == undefined){
               totalPensionFundQuarters[q] = {"group_sum":"0"};
             }
+          
           }
-
-
         }
 
 
@@ -329,7 +330,6 @@ DAL.groupByManagingBody(totalPensionFundFilter,
         
 
         res.render('portfolio',{
-            title : createTitle(filter),
             filter: filter,
             total_sum_words:DataNormalizer.convertNumberToWords(quarters[0]['group_sum']),      // total sum normalized (scaled)
             groups: groups,
