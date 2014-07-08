@@ -314,27 +314,15 @@ nav .container {
   display: inline-block;
 }
 
-.quarter-diff .caret{
-	position: relative;
-	bottom: 15px;
-}
-
-.quarter-diff{
-	padding:10px !important;
-	float:right;
-	height:10px;
-	position:relative;
-}
-
-.quarter-diff .percentage{
-	padding:10px !important;
-	float:right;
-	position:relative;
-	bottom:25px;
+.quarter-diff, .percentage{
+  float: right;
 	direction: ltr;
-	width: 80px;
 }
 
+.relative-size, .percentage {
+  width: 60px;
+  margin-left: 3px;
+}
 
 .blue-text{
 	color:#7FB2FF;
@@ -364,10 +352,6 @@ nav .container {
 	border: 1px solid #E4E4E4 !important;
 }
 
-th, tr, td{
-	line-height: 3em;
-}
-
 th, td{
 	padding: 0 0.625em !important; /* 10px */
 	vertical-align: middle !important;
@@ -386,21 +370,26 @@ th{
 	vertical-align: baseline;
 }
 
-td{
-	border-top: none !important;
-}
-
-th>div, td>div, th>span, td>span{
-	line-height: 3em;
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+	border-top: none;
+  line-height: 3em;
 }
 
 th>span, td>span{
-	width: 25%;
 	display: inline-block;
 }
 
 td>a{
 	color: #3B70BF;
+}
+
+span.relative-size., span.change {
+  width: 25%;
 }
 
 .unit {
@@ -481,6 +470,7 @@ h5 {
 	-moz-column-count: 3;
 	column-count: 3;
   padding: 0;
+  margin-bottom: 4.5em; /* 72px */
 }
 
 #link-list li {

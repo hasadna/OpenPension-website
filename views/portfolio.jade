@@ -106,9 +106,9 @@ block content
 									- colorClass = "yellow-text";
 								- }
 								div(id="headerDiff")
-									div(class="quarter-diff #{colorClass}" ) 
+									span(class="quarter-diff #{colorClass}" ) 
 										p(class="datum percentage"  style="direction:ltr") #{diff}%
-										i(class="fa #{caret}" style="position: relative;bottom: 15px")
+										i(class="fa #{caret}")
 									div(class="sparkline",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")
 
 		each group in groups
@@ -175,12 +175,12 @@ block content
 								td()
 									a(class="table-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')") #{groupName}
 								td()
-									div() #{lastQResultWords.number}  #{lastQResultWords.scale}
+									span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
 								td()
-									span() #{groupPercentage}% 
-									div(id="bar" style="width:#{groupPercentage*(75/100)}%")
+									span(class="relative-size") #{groupPercentage}% 
+									div(id="bar" style="width:#{groupPercentage*(70/100)}%")
 
-								td(style="padding:10px !important")
+								td(class="change")
 									- var sparkline = [];
 									- for(var i = 0;i<4;i++){
 										- var qStr = lastQuarters[i].toString();
@@ -219,9 +219,9 @@ block content
 										- colorClass = "yellow-text";
 									- }
 
-									div(class="quarter-diff #{colorClass}" ) 
-										p(class="percentage") #{diff}%
-										i(class="fa #{caret}" style="position: relative;bottom: 15px")
+									span(class="quarter-diff #{colorClass}" ) 
+										span(class="percentage") #{diff}% 
+										i(class="fa #{caret}")
 									div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
 
 
