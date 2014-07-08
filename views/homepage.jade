@@ -33,9 +33,13 @@ block content
 							div(class="tab-pane active" id="managing-bodies")
 							div(class="tab-pane" id="issuers")
 							div(id="homepage-links")
-								a(class="homepage-link") תיק ההשקעות של כל שוק הפנסיה
+								a(class="homepage-link" href="/portfolio#{filterWithoutGroup.toQueryString()}" ) תיק ההשקעות של כל שוק הפנסיה
 								span(class="seperator") |
-								a(class="homepage-link") כל הגופים המוסדיים
+								a(class="homepage-link" data-target="#myModal",data-toggle="modal",data-remote="/investments#{filterWithoutGroup.toQueryString()}&group_by=managing_body") כל הגופים המוסדיים
+									
 
+		div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
+			div(class="modal-dialog modal-sm")
+				div(class="modal-content")
 							
 	

@@ -106,14 +106,14 @@ exports.issuers_treemap = function(req,res){
 
 exports.show = function(req, res){
 
-	  
+	
+	//create query by managing bodies
     var filter = new Filter();
     filter.addConstraint("group_by","managing_body");
-
 	filter.addConstraint("report_year",current_year);
 	filter.addConstraint("report_qurater",current_quarter);
 
-
+	//perform query
 	DAL.groupBySummaries(filter,function(groups, select){
 	
 		var managing_bodies = groups[0].result;
@@ -123,6 +123,10 @@ exports.show = function(req, res){
 			totalSum += Number(managing_bodies[i]['group_sum']);			
 		}
 
+		var filterWithoutGroup = filter.clone();
+		filterWithoutGroup.removeField("group_by");
+
+
 		totalSum = totalSum.toFixed(2);
 		
 
@@ -131,8 +135,8 @@ exports.show = function(req, res){
 		
 	    res.render('homepage',{
 	    	market_size: DataNormalizer.convertNumberToWords(totalSum),
-	    	title: "פנסיה פתוחה"
-		
+	    	title: "פנסיה פתוחה",
+			filterWithoutGroup: filterWithoutGroup
 	    });
 		
 	});
