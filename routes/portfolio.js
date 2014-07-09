@@ -77,7 +77,7 @@ function createTitle(filter){
   }
   
 
-  title +=  (managing_body != "")?onlyManagingBody? managing_body : managing_body + " <i class=\"fa fa-angle-left\"></i>  " : "שוק הפנסיה <i class=\"fa fa-angle-left\"></i>  ";
+  title +=  (managing_body != "")?onlyManagingBody? managing_body : managing_body + " <i class=\"fa fa-angle-left\"></i>  " : "שוק הפנסיה";
   title +=  (instrument_name != "")? " " + instrument_name:"";
 
   if (instrument_name=="") {
