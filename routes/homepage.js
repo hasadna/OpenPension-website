@@ -9,50 +9,57 @@ var translate = require('../core/dictionary.js').translate;
 var current_year = "2013";
 var current_quarter = "3";
 
-var managingBodiesTreemapData = new Object();
+var formatSizeDesc = function(sizeDesc) {
+    return sizeDesc.number + " " + sizeDesc.scale + " שקל"
+}
+
+var asTreemapData = function(name, children) {
+    return {
+        'name' : name,
+        'children' : children
+    };
+}
+
+var sum = function(entities, property, decimals) {
+    decimals = typeof decimals !== 'undefined' ? decimals : 2;
+    property = typeof property !== 'undefined' ? property : 'group_sum';
+    var total = _.reduce(entities, function(entity, total) { return total + Number(entity[property]); }, 0);
+    return total.toFixed(decimals);
+}
+
 
 exports.managing_body_treemap = function(req,res){
 
     var filter = new Filter();
     filter.addConstraint("group_by","managing_body");
 
-	filter.addConstraint("report_year", current_year);
-	filter.addConstraint("report_qurater", current_quarter);
+    filter.addConstraint("report_year", current_year);
+    filter.addConstraint("report_qurater", current_quarter);
 
 
-	DAL.groupBySummaries(filter,function(groups, select){
-	
-		var managing_bodies = groups[0].result;
+    DAL.groupBySummaries(filter,function(groups, select){
 
-		var treemapData = new Object();
-		var treemapChildren = new Array();
-		var totalSum = 0;
+        var managing_bodies = groups[0].result;
 
-		for (i in managing_bodies){
-			var sizeDesc = DataNormalizer.convertNumberToWords(managing_bodies[i]['group_sum']);
+        var children = _.map(managing_bodies, function(entity) {
 
-			totalSum += Number(managing_bodies[i]['group_sum']);			
-			treemapChildren.push(
-							{
-								"name":managing_bodies[i]['managing_body'], 
-								"size":managing_bodies[i]['group_sum'],
-								"translatedName":translate(managing_bodies[i]['managing_body']),
-								"sizeDescription" : sizeDesc.number + " " + sizeDesc.scale + " שקל",
-								"link": "/portfolio?managing_body="+managing_bodies[i]['managing_body']+"&report_year="+current_year+"&report_qurater="+current_quarter
-							}
-						);
-		}
+            var group_sum = entity['group_sum'];
+            var managing_body = entity['managing_body'];
+            var sizeDesc = DataNormalizer.convertNumberToWords(group_sum);
 
-		totalSum = totalSum.toFixed(2);
-		
-		treemapData['name'] = "managing_bodies"
-		treemapData['children'] = treemapChildren;
+            return {
+               "name":managing_body,
+               "size":group_sum,
+               "translatedName":translate(managing_body),
+               "sizeDescription" : formatSizeDesc(sizeDesc),
+               "link": "/portfolio?managing_body=" + managing_body + "&report_year=" + current_year + "&report_qurater=" + current_quarter
+            };
+        }
 
-		//console.log(select);
-		//console.log(treemapData);
-		
-		res.end(JSON.stringify(treemapData));		
-	});
+        var totalSum = sum(managing_bodies);
+
+        res.end(JSON.stringify(asTreemapData('managing_bodies', children);
+    });
 
 
 }
@@ -63,82 +70,61 @@ exports.issuers_treemap = function(req,res){
     var filter = new Filter();
     filter.addConstraint("group_by","issuer");
 
-	filter.addConstraint("report_year", current_year);
-	filter.addConstraint("report_qurater", current_quarter);
+    filter.addConstraint("report_year", current_year);
+    filter.addConstraint("report_qurater", current_quarter);
 
 
-	DAL.groupBySummaries(filter,function(groups, select){
-	
-		var issuers = groups[0].result;
+    DAL.groupBySummaries(filter,function(groups, select){
 
-		var treemapData = new Object();
-		var treemapChildren = new Array();
-		var totalSum = 0;
-		
-		for (i in issuers){
-			var sizeDesc = DataNormalizer.convertNumberToWords(issuers[i]['group_sum']);
+        var issuers = groups[0].result;
 
-			totalSum += Number(issuers[i]['group_sum']);			
-			treemapChildren.push(
-							{
-								"name":issuers[i]['issuer'], 
-								"size":issuers[i]['group_sum'],
-								"translatedName":translate(issuers[i]['issuer']),
-								"sizeDescription" : sizeDesc.number + " " + sizeDesc.scale + " שקל",
-								//"link": "/portfolio?issuer="+issuers[i]['issuer']+"&report_year="+current_year+"&report_qurater="+current_quarter
-								"link": "#"
-							}
-						);
-		}
+        var children = _.map(issuers, new function(entity) {
 
-		totalSum = totalSum.toFixed(2);
-		
-		treemapData['name'] = "issuers"
-		treemapData['children'] = treemapChildren;
+            var group_sum = entity['group_sum'];
+            var issuer = entity['issuer'];
+            var sizeDesc = DataNormalizer.convertNumberToWords(group_sum);
 
-		//console.log(select);
-		//console.log(treemapData);
-		
-		res.end(JSON.stringify(treemapData));		
-	});
+            return {
+                "name":issuer,
+                "size":group_sum,
+                "translatedName":translate(issuer),
+                "sizeDescription" : formatSizeDesc(sizeDesc),
+                //"link": "/portfolio?issuer=" + issuer + "&report_year=" + current_year + "&report_qurater=" + current_quarter
+                "link": "#"
+            };
+        }
+
+        var totalSum = sum(issuers);
+
+        res.end(JSON.stringify(asTreemapData('issuers', children));
+    });
 
 }
 
 exports.show = function(req, res){
 
-	
-	//create query by managing bodies
+    //create query by managing bodies
     var filter = new Filter();
     filter.addConstraint("group_by","managing_body");
-	filter.addConstraint("report_year",current_year);
-	filter.addConstraint("report_qurater",current_quarter);
+    filter.addConstraint("report_year",current_year);
+    filter.addConstraint("report_qurater",current_quarter);
 
-	//perform query
-	DAL.groupBySummaries(filter,function(groups, select){
-	
-		var managing_bodies = groups[0].result;
-		var totalSum = 0;
+    //perform query
+    DAL.groupBySummaries(filter,function(groups, select){
 
-		for (i in managing_bodies){
-			totalSum += Number(managing_bodies[i]['group_sum']);			
-		}
+        var managing_bodies = groups[0].result;
 
-		var filterWithoutGroup = filter.clone();
-		filterWithoutGroup.removeField("group_by");
+        var filterWithoutGroup = filter.clone();
+        filterWithoutGroup.removeField("group_by");
 
+        var totalSum = sum(managing_bodies);
 
-		totalSum = totalSum.toFixed(2);
-		
+        res.render('homepage',{
+            market_size: DataNormalizer.convertNumberToWords(totalSum),
+            title: "פנסיה פתוחה",
+            filterWithoutGroup: filterWithoutGroup
+        });
 
-		//console.log(select);
-		//console.log(treemapData);
-		
-	    res.render('homepage',{
-	    	market_size: DataNormalizer.convertNumberToWords(totalSum),
-	    	title: "פנסיה פתוחה",
-			filterWithoutGroup: filterWithoutGroup
-	    });
-		
-	});
+    });
 
 };
