@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
@@ -23,7 +24,7 @@ var asTreemapData = function(name, children) {
 var sum = function(entities, property, decimals) {
     decimals = typeof decimals !== 'undefined' ? decimals : 2;
     property = typeof property !== 'undefined' ? property : 'group_sum';
-    var total = _.reduce(entities, function(entity, total) { return total + Number(entity[property]); }, 0);
+    var total = _.reduce(entities, function(total, entity) { return total + Number(entity[property]); }, 0);
     return total.toFixed(decimals);
 }
 
@@ -54,11 +55,11 @@ exports.managing_body_treemap = function(req,res){
                "sizeDescription" : formatSizeDesc(sizeDesc),
                "link": "/portfolio?managing_body=" + managing_body + "&report_year=" + current_year + "&report_qurater=" + current_quarter
             };
-        }
+        });
 
         var totalSum = sum(managing_bodies);
 
-        res.end(JSON.stringify(asTreemapData('managing_bodies', children);
+        res.json(asTreemapData('managing_bodies', children));
     });
 
 
@@ -78,7 +79,7 @@ exports.issuers_treemap = function(req,res){
 
         var issuers = groups[0].result;
 
-        var children = _.map(issuers, new function(entity) {
+        var children = _.map(issuers, function(entity) {
 
             var group_sum = entity['group_sum'];
             var issuer = entity['issuer'];
@@ -92,11 +93,11 @@ exports.issuers_treemap = function(req,res){
                 //"link": "/portfolio?issuer=" + issuer + "&report_year=" + current_year + "&report_qurater=" + current_quarter
                 "link": "#"
             };
-        }
+        });
 
         var totalSum = sum(issuers);
 
-        res.end(JSON.stringify(asTreemapData('issuers', children));
+        res.json(asTreemapData('issuers', children));
     });
 
 }
