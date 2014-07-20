@@ -503,7 +503,8 @@ function getLastQuarters(year, quarter, numOfQuarters){
  */
 function getFundsByManagingBody(managing_body,callback){
 	if (managing_body == undefined || managing_body == ""){
-			callback([]);		
+			callback([]);
+			return;
 	}
 
 	var db = require('./db.js').open();

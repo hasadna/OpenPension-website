@@ -231,7 +231,7 @@ exports.portfolio = function(req, res){
   var asset_type = filter.getConstraintData("asset_type")[0];
   var report_year = filter.getConstraintData("report_year")[0];
   var report_qurater = filter.getConstraintData("report_qurater")[0];
-  
+  var managing_body = filter.getConstraintData('managing_body')[0];  
 
 
   var lastQuarters = DAL.getLastQuarters("2013","3",4);
@@ -277,7 +277,7 @@ DAL.groupByManagingBody(totalPensionFundFilter,
 
       //console.log("managing_body="+filter.getConstraintData('managing_body'));
 
-      DAL.getFundsByManagingBody(filter.getConstraintData('managing_body'),
+      DAL.getFundsByManagingBody(managing_body,
         function(funds){
 
           //console.log(funds);
