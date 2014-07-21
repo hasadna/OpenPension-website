@@ -313,7 +313,8 @@ exports.portfolio = function(req, res){
             origGroups:origGroups,
             report_type: getReportType(filter),
             report_title : createTitle(filter),
-            drillDown : filter.getDrillDown()
+            drillDown : filter.getDrillDown(),
+            title: createTitle(filter)
           });        
         });
       });
