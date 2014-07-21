@@ -15,18 +15,18 @@ exports.normalizeData = function(groups){
 			var group_field = groups[i]['group_field'];
 			if (groups[i]['result'][j][group_field] == null ||
 				groups[i]['result'][j][group_field] == ''){
-				sum_null +=  Number(groups[i]['result'][j]['group_sum']) ;
+				sum_null +=  Number(groups[i]['result'][j]['fair_value']) ;
 				groups[i]['result'].splice(j,1);
 			}
 
 		}
 
 		//sort by group sum in descending order
-		groups[i]['result'].sort(function(a,b) { return parseFloat(b['group_sum']) - parseFloat(a['group_sum']) } );
+		groups[i]['result'].sort(function(a,b) { return parseFloat(b['fair_value']) - parseFloat(a['fair_value']) } );
 
 		var nullGroup = {};
 		nullGroup[group_field] = "NULL";		
-		nullGroup['group_sum'] = sum_null;
+		nullGroup['fair_value'] = sum_null;
 
 		groups[i]['result'].push(nullGroup);
 	}
@@ -39,7 +39,7 @@ exports.normalizeData = function(groups){
 	groups['total_sum'] = 0; //init 
 	for (var j in groups[0]['result']){ //for j index of result
 			//summarize 
-			groups['total_sum'] += Number(groups[0]['result'][j]['group_sum']);
+			groups['total_sum'] += Number(groups[0]['result'][j]['fair_value']);
 	}
 
 	return groups;

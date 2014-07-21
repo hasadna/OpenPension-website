@@ -101,13 +101,13 @@ exports.show = function(req, res){
       DAL.groupByManagingBody(gfilter,
         function(groupByManagingBody){
 
-        var sumByManagingBody = groupByManagingBody[0]['group_sum'];
+        var sumByManagingBody = groupByManagingBody[0]['fair_value'];
         groups = DataNormalizer.normalizeData(groups);
 
  //       console.log(groups);  
 
         var total = DataNormalizer.convertNumberToWords(groups['total_sum']);
-        var totalByManagingBody = DataNormalizer.convertNumberToWords(groupByManagingBody['0']['group_sum']);
+        var totalByManagingBody = DataNormalizer.convertNumberToWords(groupByManagingBody['0']['fair_value']);
 
         var qPercentage = [];
         
@@ -115,8 +115,8 @@ exports.show = function(req, res){
         //and put dummy data in missing quarters
         for (var i = 0; i < 4 ; i++){
             if (quarters[i] != undefined){
-              qPercentage[i] = Number(quarters[i]['group_sum'])/
-                Number(groupByManagingBody[i]['group_sum']) * 100;
+              qPercentage[i] = Number(quarters[i]['fair_value'])/
+                Number(groupByManagingBody[i]['fair_value']) * 100;
             }
             else{
               quarters[i] = {};

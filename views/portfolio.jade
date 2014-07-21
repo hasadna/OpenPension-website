@@ -79,15 +79,15 @@ block content
 									h3() חשיפה
 								- }
 
-								-var percentageOfTotalFund = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1)
+								-var percentageOfTotalFund = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1)
 								span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
 
 							td()
 								h3() שינוי ב-4 רבעונים
-								-var diffQ0 = (quarters[0]['group_sum'] / totalPensionFundQuarters[0]['group_sum'] * 100).toFixed(1);
-								-var diffQ1 = (quarters[1]['group_sum'] / totalPensionFundQuarters[1]['group_sum'] * 100).toFixed(1);
-								-var diffQ2 = (quarters[2]['group_sum'] / totalPensionFundQuarters[2]['group_sum'] * 100).toFixed(1);
-								-var diffQ3 = (quarters[3]['group_sum'] / totalPensionFundQuarters[3]['group_sum'] * 100).toFixed(1);
+								-var diffQ0 = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1);
+								-var diffQ1 = (quarters[1]['fair_value'] / totalPensionFundQuarters[1]['fair_value'] * 100).toFixed(1);
+								-var diffQ2 = (quarters[2]['fair_value'] / totalPensionFundQuarters[2]['fair_value'] * 100).toFixed(1);
+								-var diffQ3 = (quarters[3]['fair_value'] / totalPensionFundQuarters[3]['fair_value'] * 100).toFixed(1);
 
 								- var diff = (diffQ0 - diffQ3).toFixed(1);
 								- var caret, colorClass;
@@ -152,8 +152,9 @@ block content
 						each result in group.result
 							- var lastQStr = lastQuarters[0].toString();
 							- var lastQResult = result[lastQStr][0];
-							- var lastQResultWords = convertNumberToWords(lastQResult.group_sum);
-							- var groupPercentage = (lastQResult.group_sum / quarters[0]['group_sum'] * 100 ).toFixed(2);
+							- console.log(lastQResult);
+							- var lastQResultWords = convertNumberToWords(lastQResult.fair_value);
+							- var groupPercentage = (lastQResult.fair_value / quarters[0]['fair_value'] * 100 ).toFixed(2);
 							- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group.group_field]);
 							- var groupName = removeQoutes(translate(lastQResult[group.group_field]));
 							- visiblePercentage += Number(groupPercentage);
@@ -165,7 +166,7 @@ block content
 							- else
 								div() UNDEFINED for #{group.group_field} #{removeQoutes(translate(lastQResult[group.group_field]))} #{lastQStr}
 
-								- result[lastQStr] = [{'group_sum':'0'}];
+								- result[lastQStr] = [{'fair_value':'0'}];
 								- var lastQResult = result[lastQStr][0];
 
 								- continue
@@ -198,7 +199,7 @@ block content
 											- sparkline.push( Number(0) );
 											- continue;
 										- }
-										- sparkline.push( (Number(result[qStr][0]['group_sum']) / Number(quarters[i]['group_sum']) * 100).toFixed(2) );
+										- sparkline.push( (Number(result[qStr][0]['fair_value']) / Number(quarters[i]['fair_value']) * 100).toFixed(2) );
 									- }
 
 									- var diff, caret, colorClass;

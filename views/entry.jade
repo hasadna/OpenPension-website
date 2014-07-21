@@ -39,7 +39,7 @@ block content
 					div( id="graphdata#{i}-report_year", style="display:none"   ) #{quarters[i]['report_year'] } 
 					div( id="graphdata#{i}-report_qurater", style="display:none") #{quarters[i]['report_qurater']}
 					-if( drillDownDepth == 0)
-						div( id="graphdata#{i}-sum_market_cap", style="display:none") #{convertNumberToWords(quarters[i]['group_sum']).number}
+						div( id="graphdata#{i}-sum_market_cap", style="display:none") #{convertNumberToWords(quarters[i]['fair_value']).number}
 					-else
 						div( id="graphdata#{i}-sum_market_cap", style="display:none") #{qPercentage[i]} 			
 
@@ -79,18 +79,18 @@ block content
 				-if (debug)
 					div(style="text-align:left;") #{group.query} 
 				div(class="")
-					-if(group.result.length > 0)  var firstBar = group.result[0].group_sum;
+					-if(group.result.length > 0)  var firstBar = group.result[0].fair_value;
 
 					each result in group.result					
 						//- skip groups with empty name (shouldnt happen)
 						- if (result[group.group_field] == null || result[group.group_field] == '') continue
 						//- skip NULL box if sum is 0
-						- if (result[group.group_field] == 'NULL' && result.group_sum == 0) continue
+						- if (result[group.group_field] == 'NULL' && result.fair_value == 0) continue
 						
-						- var sum = convertNumberToWords(result.group_sum);
+						- var sum = convertNumberToWords(result.fair_value);
 						div(class="pull-right entry-box")
 						
-							- var groupPercentage = (result.group_sum / total_sum * 100 ).toFixed(2);
+							- var groupPercentage = (result.fair_value / total_sum * 100 ).toFixed(2);
 							- var escapedVal = rfc3986EncodeURIComponent(result[group.group_field]);
 							a(class="entry-box-link", onclick="addConstraint('#{group.group_field}','#{escapedVal}')")
 								- var groupName = removeQoutes(translate(result[group.group_field]));
@@ -105,7 +105,7 @@ block content
 								
 								- if (result[group.group_field] != 'NULL')
 									div(class="entry-bar-empty",style="width: 100%;")
-										div(class="entry-bar",style="width: #{Math.max(result.group_sum / firstBar,0.001) * 100}%;")
+										div(class="entry-bar",style="width: #{Math.max(result.fair_value / firstBar,0.001) * 100}%;")
 								
 								br
 

@@ -19,8 +19,6 @@ var allowed_filters={
 	'asset_type' : simple_filter
 };
 
-var summary_columns=["market_cap","fair_value"];
-
 /**
  * Escape single qoutes ' => ''
  * for SQL query
@@ -90,7 +88,7 @@ function prepareWheres(select, filter)
  * if filter contains "group_by" field, then group by groups in filter.
  * else group by every field which is in allowed_filters and not in filter.
  *
- * adds sum queries by summary_columns
+ * adds sum fair_value
  * @param select: Squel select, is duplicated for each select group
  * @param filter: Filter object with constraints
  * @returns [Squel]: array of Squel select objects 
@@ -121,11 +119,6 @@ function prepareGroupBy(select, filter)
 		new_select.group(all_groups[group_index]);
 		new_select.field(all_groups[group_index]);
 
-
-		for (var idx in summary_columns)
-		{
-			col=summary_columns[idx];
-		}
 
 		return_data.push({"group_field":all_groups[group_index],"query":new_select})
 	}
@@ -183,11 +176,11 @@ function groupBySummaries(filter, callback)
 	{
 		var group=groups[index];
 		
-		//add sum(market_cap+fair_value) AS group_sum
-		group.query.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
+		//add sum(fair_value) AS fair_value
+		group.query.field('sum(fair_value)', 'fair_value' );
 
-		//ORDER BY group_sum DESC
-		group.query.order('sum('+(summary_columns.join('+')+')'),false);
+		//ORDER BY fair_value DESC
+		group.query.order('sum(fair_value)',false);
 
 		group.query=group.query.toString();
 
@@ -256,16 +249,9 @@ function groupByQuarters(filter, callback){
 	addLastQuartersToQuery(select,4);
 
 
-	//sum by summary columns
-	for (var idx in summary_columns)
-	{
-		col=summary_columns[idx];
-		select.field('sum('+col+')','sum_'+col);
-	}
-
-	//sum by group_sum
-	select.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
-	select.order('sum('+(summary_columns.join('+')+')'),false);
+	//sum by fair_value
+	select.field('sum(fair_value)', 'fair_value' );
+	select.order('sum(fair_value)',false);
 
 	select=select.toString();
 
@@ -303,7 +289,7 @@ function addLastQuartersToQuery(query, numOfQuarters){
 /**
  * Query DB, get info needed for portfolio view.
  * For each group in allowed_filters which is not in filter constraints,
- * get 5 top most rows, ordered by group_sum (=market_cap+fair_value) 
+ * get 5 top most rows, ordered by fair_value 
  * joined with last four quarters.
  * Query structure generated is : outerSelect FROM ( innerSelect JOIN joined)
  * @param filter : Filter object 
@@ -352,7 +338,7 @@ function groupByPortfolio(filter, callback){
 		joined.field("report_year");
 		joined.field("report_qurater");
 		joined.field(groupField);
-		joined.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
+		joined.field('sum(fair_value)', 'fair_value' );
 
 		mFilter.removeField("report_year");
 		mFilter.removeField("report_qurater");
@@ -377,7 +363,7 @@ function groupByPortfolio(filter, callback){
 
 		outerSelect.order("report_year",false);
 		outerSelect.order("report_qurater",false);
-		outerSelect.order("group_sum",false);
+		outerSelect.order("fair_value",false);
 
 
 		// console.log(outerSelect.toString());
@@ -402,11 +388,11 @@ function groupByPortfolio(filter, callback){
  * Creates an SQL query of the following template: 
  *
  *   SELECT report_year, report_qurater, %GROUP_BY_FIELD%, 
- *   sum(market_cap+fair_value) AS "group_sum" 
+ *   sum(fair_value) AS fair_value 
  *   FROM pension_data_all WHERE %FILTER_CONSTRAINTS%
  *   AND %LAST_4_QUARTERS%
  *   GROUP BY report_year, report_qurater, %GROUP_BY_FIELD% 
- *   ORDER BY report_year DESC, report_qurater DESC, group_sum DESC
+ *   ORDER BY report_year DESC, report_qurater DESC, fair_value DESC
  *
  * @param filter : Filter object 
  * @param callback : function to handle result rows
@@ -429,7 +415,7 @@ function groupByInvestments(filter, callback){
 	select.field("report_year");
 	select.field("report_qurater");
 	select.field(groupBy);
-	select.field('sum('+(summary_columns.join('+')+')'), 'group_sum' );
+	select.field('sum(fair_value)');
 
 
 	//dont need year and quarter in where's, add last 4 q's later
@@ -448,7 +434,7 @@ function groupByInvestments(filter, callback){
 
 	select.order("report_year",false);
 	select.order("report_qurater",false);
-	select.order("group_sum",false);
+	select.order("fair_value",false);
 
 	select = select.toString();
 	// console.log(select.toString());
