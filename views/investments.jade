@@ -38,8 +38,8 @@ block content
 								div(style="text-align:left") #{JSON.stringify(group)}
 							- continue;
 						- var lastQResult = group[lastQStr][0];
-						- var lastQResultWords = convertNumberToWords(lastQResult['group_sum']);
-						- var groupPercentage = (lastQResult.group_sum / quartersSums[lastQStr] * 100 ).toFixed(2);
+						- var lastQResultWords = convertNumberToWords(lastQResult['fair_value']);
+						- var groupPercentage = (lastQResult.fair_value / quartersSums[lastQStr] * 100 ).toFixed(2);
 						- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group_by]);
 						- var groupName = removeQoutes(translate(lastQResult[group_by]));
 
@@ -48,7 +48,7 @@ block content
 									div(data-sort="#{ lastQResult[group_by]}" class="table-link") 
 										a(class="table-link", onclick="addConstraint('#{group_by}','#{escapedVal}')") #{groupName}
 								td()
-									div(data-sort="#{ lastQResult['group_sum']}") #{lastQResultWords.number}  #{lastQResultWords.scale}
+									div(data-sort="#{ lastQResult['fair_value']}") #{lastQResultWords.number}  #{lastQResultWords.scale}
 								td()
 									span() #{groupPercentage}% 
 									div(data-sort="#{groupPercentage}", id="bar" style="width:#{groupPercentage*(75/100)}%")
@@ -71,7 +71,7 @@ block content
 											- sparkline.push( Number( 0 ) );
 											- continue;
 										- }
-										- sparkline.push( (Number(group[qStr][0]['group_sum']) / Number(quartersSums[qStr]) * 100).toFixed(2) );
+										- sparkline.push( (Number(group[qStr][0]['fair_value']) / Number(quartersSums[qStr]) * 100).toFixed(2) );
 									- }
 
 

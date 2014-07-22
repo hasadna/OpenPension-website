@@ -309,7 +309,7 @@ function groupByPortfolio(filter, callback){
 	prepareWheres(innerSelect, mFilter);
 
 	//add row_number to inner select, for getting top 5 
-	innerSelect.field("ROW_NUMBER() OVER (ORDER BY sum(market_cap+fair_value) DESC) AS rownumber");
+	innerSelect.field("ROW_NUMBER() OVER (ORDER BY sum(fair_value) DESC) AS rownumber");
 	
     //add group by fields for display
     var group_by_fields = Groups.getGroups(mFilter);
@@ -415,7 +415,7 @@ function groupByInvestments(filter, callback){
 	select.field("report_year");
 	select.field("report_qurater");
 	select.field(groupBy);
-	select.field('sum(fair_value)');
+	select.field('sum(fair_value)', 'fair_value');
 
 
 	//dont need year and quarter in where's, add last 4 q's later
