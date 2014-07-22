@@ -291,6 +291,8 @@ exports.portfolio = function(req, res){
           }
         }
 
+        var title = createTitle(filter);
+
         res.render('portfolio',{
             filter: filter,
             total_sum_words:DataNormalizer.convertNumberToWords(quarters[0]['fair_value']),      // total sum normalized (scaled)
