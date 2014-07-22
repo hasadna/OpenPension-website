@@ -312,9 +312,9 @@ exports.portfolio = function(req, res){
             funds:funds,
             origGroups:origGroups,
             report_type: getReportType(filter),
-            report_title : createTitle(filter),
+            report_title : title,
             drillDown : filter.getDrillDown(),
-            title: createTitle(filter)
+            title: title.replace("<i class=\"fa fa-angle-left\"></i>",">")
           });        
         });
       });
