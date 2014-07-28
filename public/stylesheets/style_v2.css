@@ -743,6 +743,10 @@ li{
   margin-bottom: 1.5em;
 }
 
+.homepage-link:hover{
+  cursor: pointer;
+}
+
 #homepage-links {
   font-size: 1.3125em; /** 21px **/
   line-height: 1.14285714285714em; /** 24px **/
