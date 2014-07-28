@@ -48,8 +48,9 @@ body {
 	font-size: 16px;
 	line-height: 1.5em;
   margin: 0;
-  padding: 0;
+  padding: 0 0 48px 0;
   background-color: white;
+  position: relative;
 }
 
 .container {
@@ -150,9 +151,9 @@ nav .container {
   padding: 0 10px !important;
 }
 
-#portfolio-header{
-  padding: 0.75em 0 0 0;
-  margin-bottom: 0.75em;
+#page-header{
+  padding: 0.75em 0 0 0; /* 12px */
+  margin-bottom: 1.5em; /* 24px */
   border-bottom: 5px solid #333;
   background-color: #EDECEC;
 }
@@ -197,9 +198,12 @@ nav .container {
 }
 
 #btn-bar{
-	line-height: 4.5em;
 	width: 100%;
   margin-bottom: 1.5em;
+}
+
+#btn-bar button {
+  height: 3em;
 }
 
 .btn-group{
@@ -248,10 +252,6 @@ nav .container {
 	font-weight:bold;
 	color: #FFA202;
 	font-family:'almoni-tzar';
-}
-
-.table-title{
-	margin: 0.571428571428571em  0 !important; /* 12px */
 }
 
 
@@ -343,21 +343,40 @@ nav .container {
 .segmentation{
   	margin-bottom: 3em;
 }
+
+.help-spot {
+  margin-right: 5px;
+  color: #F0F0F0;
+  font-size: 16px;
+}
+
+.help-spot:hover {
+  color: #999;
+}
+
   
 .table{
   	border-collapse: collapse !important;
+    margin-bottom: 48px;
 }
 
 .table tbody{
 	border: 1px solid #E4E4E4 !important;
 }
 
-th, td{
+th, td {
 	padding: 0 0.625em !important; /* 10px */
 	vertical-align: middle !important;
 }
 
-th{
+td {
+  max-width: 235px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+th {
 	font-weight: normal;
 	background-color: #F2F2F2;
 	border-collapse: collapse !important;
@@ -384,7 +403,7 @@ th>span, td>span{
 	display: inline-block;
 }
 
-td>a{
+td > a{
 	color: #3B70BF;
 }
 
@@ -444,7 +463,7 @@ h3 {
 	line-height: 1.14285714285714em; /* 24px */
 	font-family: "almoni-tzar";
 	color: #999999; 
-	margin: 0 !important;
+  margin: 0 0 0.571428571428571em  0 !important; /* 12px */
 }
 
 h4 { 
@@ -479,10 +498,9 @@ h5 {
 
 
 footer{
-  position: relative;
-  margin-top: -48px; /* negative value of footer height */
+  position: absolute;
+  bottom: 0;
   clear:both;
-  height: 48px;
   width: 100%;
 	font-size: 14px;
   line-height: 48px;
@@ -552,19 +570,22 @@ li{
 	margin-bottom: 0.75em;
 } 
 
-#aggregate-data-panel{
+#aggregate-data-panel {
 	width: 100%;
-	margin-bottom: 1.5em;
 	border-collapse: collapse !important;
 	background-color: white;
 }
 
-#aggregate-data-panel td{
+#aggregate-data-panel td {
 	border: 1px solid #E4E4E4;
 	border-collapse: collapse !important;
 	width: 33%;
 	padding: 0.75em 0 !important;
 	text-align: center;
+}
+
+#aggregate-data-panel h3 {
+	margin: 0 !important;
 }
 
 .datum { 
@@ -750,10 +771,63 @@ li{
 #homepage-links {
   font-size: 1.3125em; /** 21px **/
   line-height: 1.14285714285714em; /** 24px **/
-  margin-bottom: 2.28571428571429em; /** 48px **/ 
+  margin-bottom: 2.28571428571429em; /** 48px **/
 }
 
 #homepage-links .seperator {
   color: #999999;
   padding: 0 5px;
+}
+
+.affix,
+.affix-top,
+.affix-bottom {
+  width: auto;
+}
+
+.affix {
+  top: 12px;
+}
+
+.affix-top {
+  
+}
+
+.affix-bottom {
+}
+
+#nav.affix {
+  width: 100%;
+}
+
+.nav > li > a {
+  line-height: 2em;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 20px;
+}
+
+.nav > li.active > a,
+.nav > li > a:hover,
+.nav > li > a:focus{
+  background-color: inherit;
+  border-right: 5px solid #3B70BF;
+  padding-right: 15px;
+}
+
+.nav > li.active > a {
+  font-weight: bold;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus{
+  text-decoration: underline;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.section:last-child {
+  margin-bottom: 72px;
 }
