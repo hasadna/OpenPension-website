@@ -7,3 +7,8 @@ exports.privacy = function(req, res)
 {
 	res.render('privacy',{});
 }
+
+exports.help = function(req, res)
+{
+	res.render('help',{});
+}
