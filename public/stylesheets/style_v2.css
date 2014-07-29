@@ -88,7 +88,8 @@ a:hover{
 .navbar{
 	color: #FFFFFF !important;
   background-color: #3B70BF;
-	height: 3em;
+	height: 48px !important;
+  min-height: 48px !important;
   line-height: 3em;
   direction: rtl !important;
   border: none !important;
@@ -107,7 +108,7 @@ nav .container {
 .navbar .nav li{
   float: right;
   padding: 0;
-  line-height: 3em;
+  line-height: 48px;
   height: 100%;
 }
 
@@ -125,7 +126,8 @@ nav .container {
   font-size:1.5em;
 	font-weight:700;
 	font-family:"almoni-tzar";
-  line-height: 50px;
+  height: 48px;
+  line-height: 48px;
   margin-right: 0 !important;
 }
 
@@ -140,10 +142,11 @@ nav .container {
 #about-link {
   color:#FFFFFF !important;
 	font-size:1.125em;
+  line-height: 2.6666666667em;
 }
 
 #feedback-button {
-  height: 2em;
+  height: 32px;
 	color: #FFFFFF !important;
   font-size: 1.125em;
 	border: 1px solid white;
