@@ -803,29 +803,37 @@ li{
   width: 100%;
 }
 
-.nav > li > a {
+.affix > .nav > li > a,
+.affix-top > .nav > li > a {
   line-height: 2em;
   padding-top: 0;
   padding-bottom: 0;
   padding-right: 20px;
 }
 
-.nav > li.active > a,
-.nav > li > a:hover,
-.nav > li > a:focus{
+.affix > .nav > li.active > a,
+.affix > .nav > li > a:hover,
+.affix > .nav > li > a:focus,
+.affix-top > .nav > li.active > a,
+.affix-top > .nav > li > a:hover,
+.affix-top > .nav > li > a:focus {
   background-color: inherit;
   border-right: 5px solid #3B70BF;
   padding-right: 15px;
 }
 
-.nav > li.active > a {
+.affix > .nav > li.active > a,
+.affix-top > .nav > li.active > a {
   font-weight: bold;
 }
 
-.nav > li > a:hover,
-.nav > li > a:focus{
+.affix > .nav > li > a:hover,
+.affix > .nav > li > a:focus,
+.affix-top > .nav > li > a:hover,
+.affix-top > .nav > li > a:focus {
   text-decoration: underline;
 }
+
 
 .section {
   margin-bottom: 48px;
