@@ -7,14 +7,18 @@ block content
 
 
 		div(id="homepage-header" class="container-fluid")
+			div(class="container")
+				div(class="row")
+					div(class="col-xs-12")
+						div(class="jumbotron")
+							p()
+								מעל 
+								span(id="market-size") 1,000,000,000,000 (טריליון) שקל 
+								מנוהלים בקרנות הפנסיה, ביטוחי המנהלים וקופות הגמל.
+								br()
+								איך ואיפה מנוהל הכסף שלנו?
 			div(class="row")
-				div(class="col-xs-12")
-					div(class="jumbotron")
-						p()
-							span(id="market-size") #{market_size.number} #{market_size.scale} שקל
-							|  מנוהלים בקרנות הפנסיה ובקופות הגמל.
-							br()
-							| איך ואיפה מנוהל הכסף שלנו?
+				div(class="col-xs-12")      
 					div(id="content-types")
 						ul(class="nav nav-tabs")
 							li(class="active")
@@ -36,7 +40,7 @@ block content
 							div(id="homepage-links")
 								a(class="homepage-link" href="/portfolio#{filterWithoutGroup.toQueryString()}" ) תיק ההשקעות של כל שוק הפנסיה
 								span(class="seperator") |
-								a(class="homepage-link" data-target="#myModal",data-toggle="modal",data-remote="/investments#{filterWithoutGroup.toQueryString()}&group_by=managing_body") כל הגופים המוסדיים
+								a(class="homepage-link" data-target="#myModal",data-toggle="modal",data-remote="/investments#{filterWithoutGroup.toQueryString()}&group_by=managing_body") רשימת הגופים המוסדיים
 									
 
 		div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
