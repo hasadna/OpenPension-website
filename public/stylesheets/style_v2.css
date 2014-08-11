@@ -212,6 +212,10 @@ nav .container {
 	margin: 0 !important;
 }
 
+#select-quarter + div {
+  width: 180px;
+}
+
 #quarterSelection{
 	font-size: 30px;
 	line-height: 45px;

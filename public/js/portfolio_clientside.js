@@ -1,8 +1,8 @@
 $(function () {
 
-    $('#select_quarter').selectpicker();
+    $('#select-quarter').selectpicker();
 
-    $('#select_quarter').on('change', function () {
+    $('#select-quarter').on('change', function () {
         //generate filter from query string
 
         var filter = Filter.fromQueryString(window.location.search);
