@@ -272,7 +272,7 @@ function groupByQuarters(filter, callback){
 function addLastQuartersToQuery(query, numOfQuarters){
 
 	var expr=squel.expr();
-	var quarters = 	getLastQuarters("2013","3", numOfQuarters);
+	var quarters = 	getLastQuarters(config.current_year, config.current_quarter, numOfQuarters);
 	for (var i = 0; i < quarters.length; i++){
 		expr.or_begin()
 	 		.and("report_year = "+ quarters[i]['year'])

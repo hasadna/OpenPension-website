@@ -5,6 +5,7 @@ var metaTable = require('../common/MetaTable').getMetaTable();
 var Categories = require('../core/categories.js');
 var translate = require('../core/dictionary.js').translate;
 var removeQoutes = DataNormalizer.removeQoutes;
+var config = require('../config')
 
 
 function createTitle(filter){
@@ -79,8 +80,8 @@ exports.show = function(req, res){
 
   //show data only for last quarter
   //TODO: get last quarter from DB
-  filter.addConstraint("report_year","2013");
-  filter.addConstraint("report_qurater","3");
+  filter.addConstraint("report_year", config.current_year);
+  filter.addConstraint("report_qurater", config.current_quarter);
 
 
   //special case for managing body page

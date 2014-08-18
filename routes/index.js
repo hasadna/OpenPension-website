@@ -3,6 +3,7 @@ var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
 var Categories = require('../core/categories.js');
+var config = require('../config')
 
 
 
@@ -19,8 +20,8 @@ exports.show = function(req, res){
 
   //show data only for last quarter
   //TODO: get last quarter from DB
-  filter.addConstraint("report_year","2013");
-  filter.addConstraint("report_qurater","3");
+  filter.addConstraint("report_year", config.current_year);
+  filter.addConstraint("report_qurater", config.current_quarter);
 
 
   DAL.groupBySummaries(filter,

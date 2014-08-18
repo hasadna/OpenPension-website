@@ -5,10 +5,9 @@ var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
 var Categories = require('../core/categories.js');
 var translate = require('../core/dictionary.js').translate;
+var config = require('../config')
 
 
-var current_year = "2013";
-var current_quarter = "3";
 
 var formatSizeDesc = function(sizeDesc) {
     return sizeDesc.number + " " + sizeDesc.scale + " שקל"
@@ -34,8 +33,8 @@ exports.managing_body_treemap = function(req,res){
     var filter = new Filter();
     filter.addConstraint("group_by","managing_body");
 
-    filter.addConstraint("report_year", current_year);
-    filter.addConstraint("report_qurater", current_quarter);
+    filter.addConstraint("report_year", config.current_year);
+    filter.addConstraint("report_qurater", config.current_quarter);
 
 
     DAL.groupBySummaries(filter,function(groups, select){
@@ -53,7 +52,7 @@ exports.managing_body_treemap = function(req,res){
                "size":fair_value,
                "translatedName":translate(managing_body),
                "sizeDescription" : formatSizeDesc(sizeDesc),
-               "link": "/portfolio?managing_body=" + managing_body + "&report_year=" + current_year + "&report_qurater=" + current_quarter
+               "link": "/portfolio?managing_body=" + managing_body + "&report_year=" + config.current_year + "&report_qurater=" + config.current_quarter
             };
         });
 
@@ -71,8 +70,8 @@ exports.issuers_treemap = function(req,res){
     var filter = new Filter();
     filter.addConstraint("group_by","issuer");
 
-    filter.addConstraint("report_year", current_year);
-    filter.addConstraint("report_qurater", current_quarter);
+    filter.addConstraint("report_year", config.current_year);
+    filter.addConstraint("report_qurater", config.current_quarter);
 
 
     DAL.groupBySummaries(filter,function(groups, select){
@@ -107,8 +106,8 @@ exports.show = function(req, res){
     //create query by managing bodies
     var filter = new Filter();
     filter.addConstraint("group_by","managing_body");
-    filter.addConstraint("report_year",current_year);
-    filter.addConstraint("report_qurater",current_quarter);
+    filter.addConstraint("report_year", config.current_year);
+    filter.addConstraint("report_qurater", config.current_quarter);
 
     //perform query
     DAL.groupBySummaries(filter,function(groups, select){

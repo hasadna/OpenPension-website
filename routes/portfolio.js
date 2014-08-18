@@ -6,6 +6,7 @@ var metaTable = require('../common/MetaTable').getMetaTable();
 var Groups = require('../core/groups.js');
 var translate = require('../core/dictionary.js').translate;
 var removeQoutes = DataNormalizer.removeQoutes;
+var config = require('../config')
 
 
 function createTitle(filter){
@@ -141,7 +142,7 @@ exports.investments = function(req, res){
   filter.removeField("debug");
 
 
-  var lastQuarters = DAL.getLastQuarters("2013","3",4);
+  var lastQuarters = DAL.getLastQuarters(config.current_year, config.current_quarter,4);
 
   //group filter by quarters
   DAL.groupByInvestments(filter,
@@ -210,11 +211,11 @@ exports.portfolio = function(req, res){
 
   //TODO: get current year and quarter from DB
   if (!filter.hasConstraint("report_year")){
-      filter.addConstraint("report_year","2013");
+      filter.addConstraint("report_year",config.current_year);
   }
 
   if (!filter.hasConstraint("report_qurater")){
-      filter.addConstraint("report_qurater","3");
+      filter.addConstraint("report_qurater", config.current_quarter);
   }
 
 
@@ -224,7 +225,7 @@ exports.portfolio = function(req, res){
   var managing_body = filter.getConstraintData('managing_body')[0];  
 
 
-  var lastQuarters = DAL.getLastQuarters("2013","3",4);
+  var lastQuarters = DAL.getLastQuarters(config.current_year, config.current_quarter, 4);
   
   //special case for managing body page
   //where we want to show precentage of total market sum
