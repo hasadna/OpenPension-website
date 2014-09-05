@@ -50,6 +50,7 @@
           .call(position);
         });
 
+      //remove text content of small graph blocks where text cannot fit
       $("#"+ elementId +" div").each(function(i,e){ if($(e).width() < 150 ) $(e).html("") })
 
 	  });
@@ -64,30 +65,3 @@
         .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
         .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
   }
-
-
-$(function(){
-
-        ///// MODAL EVENTS
-        $('body').on('hidden.bs.modal', '.modal', function () {
-            $(this).removeData('bs.modal');
-            $(".modal-content").empty();
-             //alert("hidden");
-        });
-
-        $(".modal").on("show.bs.modal",function()
-        {
-            $(".modal-content").html("טוען נתונים...")
-           // alert("show");  
-        });
-        
-        $(".modal").on("shown.bs.modal",function()
-        {
-            // alert("shown");
-        });
-
-        $('body').on('loaded.bs.modal', '.modal', function () {
-            // alert("loaded");
-        });
-
-});
