@@ -121,7 +121,7 @@ var Filter = function(){
 
 				str +=  constraint ;
 				str += "=";
-				str += this.constraints[constraint][data_index]['data'];
+				str += encodeURIComponent(this.constraints[constraint][data_index]['data']);
 
 				constraint_index++;
 			}
@@ -213,7 +213,7 @@ var parseQueryString = function(url){
         if ( result[sParameterName[0]] == undefined){
         	result[sParameterName[0]] = [];
         }      
-        result[sParameterName[0]].push( sParameterName[1] );
+        result[sParameterName[0]].push(  sParameterName[1]  );
     }
     return result;
 }
@@ -244,7 +244,7 @@ Filter.fromParsedQueryString = function(query){
 	for( var field in query){
 		query[field] = [].concat( query[field] );
 		for (var index in query[field]){
-			filter.addConstraint(field, query[field][index]);
+			filter.addConstraint(field, decodeURIComponent( query[field][index]) );
 		}
 	}
 
