@@ -368,7 +368,7 @@ nav .container {
 }
 
 .table tbody{
-    border: 1px solid #E4E4E4 !important;
+    border: 1px solid #DDD !important;
 }
 
 th, td {
@@ -387,7 +387,7 @@ th {
     font-weight: normal;
     background-color: #F2F2F2;
     border-collapse: collapse !important;
-    border: 1px solid #E4E4E4 !important;
+    border: 1px solid #DDD !important;
     vertical-align: baseline;
 }
 
@@ -447,7 +447,7 @@ span.relative-size., span.change {
 .table thead>tr>th{
     border: 1px;
     border-style: solid;
-    border-color: #E4E4E4;
+    border-color: #DDD;
 }
 
 h1 {
@@ -559,7 +559,7 @@ footer a {
 }
 
 tfoot {
-    border: 1px solid #E4E4E4;
+    border: 1px solid #DDD;
 }
 
 .list-all a,
@@ -602,7 +602,7 @@ li{
 }
 
 #aggregate-data-panel td {
-    border: 1px solid #E4E4E4;
+    border: 1px solid #DDD;
     border-collapse: collapse !important;
     width: 33%;
     padding: 0.75em 0 !important;
