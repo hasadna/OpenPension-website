@@ -17,10 +17,10 @@ block content
 				div(id="investments-header-button",onclick="$('.modal').modal('hide')" ) &#xf05c
 			table(id="investments-list" class="sortable table table-striped" style="text-align:right;width:100%")
 				colgroup()
-					col(class="col-sm-3")
-					col(class="col-sm-3")
-					col(class="col-sm-3")
-					col(class="col-sm-3")
+					col(class="col-xs-3")
+					col(class="col-xs-3")
+					col(class="col-xs-3")
+					col(class="col-xs-3")
 				thead()
 					tr() 
 						th(style="text-align: right") #{translate(group_by)}
@@ -45,15 +45,16 @@ block content
 
 							tr()
 								td()
-									div(data-sort="#{ lastQResult[group_by]}" class="table-link") 
-										a(class="table-link", onclick="addConstraint('#{group_by}','#{escapedVal}')") #{groupName}
+									a(class="table-link" onclick="addConstraint('#{group_by}','#{escapedVal}')" title='#{groupName}') #{groupName}
+					
 								td()
-									div(data-sort="#{ lastQResult['fair_value']}") #{lastQResultWords.number}  #{lastQResultWords.scale}
+									span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
+					
 								td()
-									span() #{groupPercentage}% 
-									div(data-sort="#{groupPercentage}", id="bar" style="width:#{groupPercentage*(75/100)}%")
+									span(class="relative-size") #{groupPercentage}% 
+									div(id="bar" style="width:#{groupPercentage*(70/100)}%")
 								
-								td(style="padding:10px !important")
+								td(class="change")
 									- var sparkline = [];
 									- for(var i = 0;i<4;i++){
 										- var qStr = lastQuarters[i].toString();
@@ -93,7 +94,7 @@ block content
 										- colorClass = "yellow-text";
 									- }
 
-									div(data-sort="#{diff}",class="quarter-diff #{colorClass}" ) 
-										p(class="percentage") #{diff}%
-										i(class="fa #{caret}" style="position: relative;bottom: 15px")
+									span(class="quarter-diff #{colorClass}" ) 
+										span(class="percentage") #{diff}% 
+										i(class="fa #{caret}")
 									div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
