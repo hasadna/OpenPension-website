@@ -157,7 +157,6 @@ block content
                         each result in group.result
                             - var lastQStr = lastQuarters[0].toString();
                             - var lastQResult = result[lastQStr][0];
-                            - console.log(lastQResult);
                             - var lastQResultWords = convertNumberToWords(lastQResult.fair_value);
                             - var groupPercentage = (lastQResult.fair_value / quarters[0]['fair_value'] * 100 ).toFixed(2);
                             - var escapedVal = rfc3986EncodeURIComponent(lastQResult[group.group_field]);

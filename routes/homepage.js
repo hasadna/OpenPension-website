@@ -59,6 +59,10 @@ exports.managing_body_treemap = function(req,res){
         var totalSum = sum(managing_bodies);
 
         res.setHeader('Vary', 'Accept-Encoding');
+
+        var oneWeek = 604800000;
+        res.setHeader('Cache-Control', 'public, max-age='+oneWeek);        
+        
         res.json(asTreemapData('managing_bodies', children));
     });
 
@@ -98,6 +102,10 @@ exports.issuers_treemap = function(req,res){
         var totalSum = sum(issuers);
 
         res.setHeader('Vary', 'Accept-Encoding');
+
+        var oneWeek = 604800000;
+        res.setHeader('Cache-Control', 'public, max-age='+oneWeek);        
+
         res.json(asTreemapData('issuers', children));
     });
 
