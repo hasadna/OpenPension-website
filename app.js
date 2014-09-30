@@ -45,8 +45,10 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
+//browser caching, sets Cache-Control HTTP header
+var oneWeek = 604800000;
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: oneWeek }));
 
 // development only
 if ('development' == app.get('env')) {
