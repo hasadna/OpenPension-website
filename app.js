@@ -66,6 +66,8 @@ app.get('/entry', entry.show);
 app.get('/about', staticpages.about);
 app.get('/privacy', staticpages.privacy);
 app.get('/help', staticpages.help);
+app.get('/refresh', staticpages.refresh);
+
 
 app.post('/list', test.list);
 app.get('/list', test.list);
