@@ -13,14 +13,11 @@ html
 		link(rel='stylesheet', href='/stylesheets/style_v2.css')
 		
 		// Le HTML5 shim, for IE6-8 support of HTML5 elements 
-		//if lt IE 9
-		script(src='/js/html5.js')
-		script(src='/js/respond.min.js')
-		// Le fav and touch icons
-		script(type='text/javascript', src='/js/bootstrap.min.js')
-		script(type='text/javascript', src='/js/bootstrap-select.min.js')
-		script(type='text/javascript', src='/js/filter.js')
-		script(type='text/javascript', src='/js/categories.js')
+		!= "<!--[if lt IE 9]>"
+			script(src='/js/html5.js')
+			script(src='/js/respond.min.js')
+		!= "<![endif]-->"
+		
 	body(data-spy="scroll")    
 		nav(class="navbar navbar-default navbar-static-top" role="navigation")
 			div(class="container")
@@ -38,6 +35,11 @@ html
 		block content
 
 		footer()
+			// Le fav and touch icons
+			script(type='text/javascript', src='/js/bootstrap.min.js')
+			script(type='text/javascript', src='/js/bootstrap-select.min.js')
+			script(type='text/javascript', src='/js/filter.js')
+			script(type='text/javascript', src='/js/categories.js')
 			div(class="container")
 				div(id="footer-text" class="pull-right") פנסיה פתוחה היא פרוייקט של 
 					a(href="http://www.hasadna.org.il/") הסדנא לידע ציבורי
