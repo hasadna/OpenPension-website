@@ -28,6 +28,7 @@ dictionary['clal'] = 'כלל';
 dictionary['fenix'] = 'פניקס';
 dictionary['psagot'] = 'פסגות';
 dictionary['ayalon'] = 'איילון';
+dictionary['ds'] = 'דש';
 
 
 dictionary['nis'] = 'שקל ישראלי';

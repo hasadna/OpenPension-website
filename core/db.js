@@ -5,7 +5,7 @@ var md5 = require('MD5');
 
 
 
-if (config.use_memcache == false){
+if (config.use_memcache === false){
   mc = require('./MemcacheDummy');
 }
 else{
@@ -14,12 +14,12 @@ else{
 
 
 
-exports.query =  function(sql, callback){
+exports.query =  function(sql, callback, bypassMemcache){
 
       //look for query result in cache
       mc.get(md5(sql), function(err,val) {
 
-          if (val == undefined){ // query not found in cache
+          if (val == undefined || bypassMemcache === true ){ // query not found in cache
 
               pg.connect(config.connection_string,        
                   function(err, client, done){
@@ -29,19 +29,29 @@ exports.query =  function(sql, callback){
                         done();
 
                         if(err) {
-                            callback(err);
+                            if (callback != undefined){
+                              callback(err);
+                            }
                             return;
                         }
 
-                         mc.set(md5(sql),JSON.stringify(result.rows));
+                        if (bypassMemcache !== true){
+                          mc.set(md5(sql),JSON.stringify(result.rows));
+                        }
 
-                         callback(null, result.rows);
+                        if (callback != undefined){
+                          callback(null, result.rows);
+                        }
                    });
               });
           }
           else {//query found in cache
               val = JSON.parse(val.toString());
-                  callback(null, val);
+              if (callback != undefined){
+                callback(null, val);
+              }
           }
       });
   };
+
+exports.memcache = mc;

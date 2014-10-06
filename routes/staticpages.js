@@ -1,5 +1,5 @@
 var Tabletop = require("tabletop");
-
+var db = require('../core/db.js');
 
 var sheetURL = 'https://docs.google.com/spreadsheets/d/1tm2xjPUYUFPk3BeHSLXec3sSckGMlFROcoH2zZYQC20/pubhtml?hl=en_US&hl=en_US';
 
@@ -43,6 +43,16 @@ exports.help = function(req, res)
 }
 
 exports.refresh = function(req,res){
+	
+	//reload Google Doc
 	initTableTop();
-	res.end("Finished refreshing");
+
+	//flush memcache
+	db.memcache.flush();
+
+	//refresh materialized view
+	db.query("REFRESH MATERIALIZED VIEW pension_data_all", function(){
+		res.end("Finished refreshing");
+	}, false);
+
 }
