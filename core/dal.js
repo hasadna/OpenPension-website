@@ -205,9 +205,13 @@ function groupByManagingBody(filter, callback){
 	
   var mFilter = new Filter();
 
-  if (filter.getConstraintData("managing_body") != "") {
+  if (filter.hasConstraint("managing_body")) {
 	mFilter.addConstraint("managing_body", filter.getConstraintData("managing_body"));
   } 
+
+  //add year and quarter to new fiter
+  mFilter.addConstraint("report_year", filter.getConstraintData("report_year"));
+  mFilter.addConstraint("report_qurater", filter.getConstraintData("report_qurater"));
 
   groupByQuarters(mFilter, callback);
 
@@ -223,7 +227,11 @@ function groupByManagingBody(filter, callback){
 function groupByQuarters(filter, callback){
 
 	var mFilter = filter.clone();
-	
+
+	//report year and quarter
+	var report_year = mFilter.getConstraintData("report_year")[0];
+	var report_quarter = mFilter.getConstraintData("report_qurater")[0];
+
 	mFilter.removeField("group_by");
 	mFilter.removeField("report_year");
 	mFilter.removeField("report_qurater");
@@ -244,7 +252,7 @@ function groupByQuarters(filter, callback){
 	select.order("report_qurater",false);
 
 	//get last 4 quarters
-	addLastQuartersToQuery(select,4);
+	addLastQuartersToQuery(select, report_year, report_quarter, 4);
 
 
 	//sum by fair_value
@@ -262,14 +270,16 @@ function groupByQuarters(filter, callback){
 
 /**
  * Add previous quarters to Squel query
- * @param query : Squel select 
+ * @param query    : Squel select 
+ * @param year     : starting year 
+ * @param quarter  : starting quarter
  * @param numOfQuarters : number of previous quarters to add to query 
  * @param callback : function to handle result rows
  */
-function addLastQuartersToQuery(query, numOfQuarters){
+function addLastQuartersToQuery(query, year, quarter, numOfQuarters){
 
 	var expr=squel.expr();
-	var quarters = 	getLastQuarters(config.current_year, config.current_quarter, numOfQuarters);
+	var quarters = 	getLastQuarters(year, quarter, numOfQuarters);
 	for (var i = 0; i < quarters.length; i++){
 		expr.or_begin()
 	 		.and("report_year = "+ quarters[i]['year'])
@@ -295,6 +305,10 @@ function addLastQuartersToQuery(query, numOfQuarters){
 function groupByPortfolio(filter, callback){
 
 	var mFilter = filter.clone();
+
+	//report year and quarter
+	var report_year = mFilter.getConstraintData("report_year")[0];
+	var report_quarter = mFilter.getConstraintData("report_qurater")[0];
 
 	//remove group_by if present
 	mFilter.removeField("group_by");
@@ -343,7 +357,7 @@ function groupByPortfolio(filter, callback){
 		prepareWheres(joined, mFilter);
 
 		//add last quarters to joined 
-		addLastQuartersToQuery(joined,4);
+		addLastQuartersToQuery(joined, report_year, report_quarter, 4);
 
 		joined.group("report_year");
 		joined.group("report_qurater");
@@ -366,8 +380,9 @@ function groupByPortfolio(filter, callback){
 
 	 	group.query = outerSelect.toString();
 
+	 	//run query for group in groups
 		db.query(group.query, function(group, err,rows){
-			group.result=rows;
+			group.result=rows; //put result in group (groups[index])
 			if(--wait<=0)
 			{
 				callback(groups);
@@ -398,7 +413,7 @@ function groupByInvestments(filter, callback){
 	var mFilter = filter.clone();
 
 	var report_year = mFilter.getConstraintData("report_year")[0];
-	var report_qurater = mFilter.getConstraintData("report_qurater")[0];
+	var report_quarter = mFilter.getConstraintData("report_qurater")[0];
 	var groupBy = mFilter.getConstraintData("group_by")[0];
 
 
@@ -418,7 +433,7 @@ function groupByInvestments(filter, callback){
 	prepareWheres(select, mFilter);
 
 	//add last quarters to constraints 
-	addLastQuartersToQuery(select,4);
+	addLastQuartersToQuery(select, report_year, report_quarter, 4);
 
 	select.group("report_year");
 	select.group("report_qurater");
