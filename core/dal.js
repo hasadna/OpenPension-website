@@ -2,6 +2,7 @@ var Groups = require('../core/groups.js');
 var Filter = require('./filter.js');
 var squel = require('squel');
 var config = require('../config')
+var db = require('./db.js');
 
 var allowed_filters={ 
 	'managing_body':simple_filter, 
@@ -146,10 +147,9 @@ function parseFilter(filter)
  */
 function singleQuery(filter, callback)
 {
-	var db = require('./db.js').open();
 	var sqlQuery = parseFilter(filter);
 	
-	db.querys(sqlQuery,function(err, rows){
+	db.query(sqlQuery, function(err, rows){
 			callback(rows);
 	});
 }
@@ -171,7 +171,6 @@ function groupBySummaries(filter, callback)
 	if (wait == 0)
 		return;
 
-	var db = require('./db.js').open();
 	for (var index in groups)
 	{
 		var group=groups[index];
@@ -185,11 +184,10 @@ function groupBySummaries(filter, callback)
 		group.query=group.query.toString();
 
 		//perform multiple queries
-		db.multiple_queries(group.query, function(group, err,rows){
+		db.query(group.query, function(group, err,rows){
 			group.result=rows;
 			if(--wait<=0)
 			{
-				db.end();
 				callback(groups,group.query);
 			}
 		}.bind(this, group));
@@ -256,8 +254,7 @@ function groupByQuarters(filter, callback){
 	select=select.toString();
 
 	//console.log(select);
-	var db = require('./db.js').open();
-	db.querys(select,function(err, rows){
+	db.query(select, function(err, rows){
 			callback(rows,select);
 	});
 
@@ -325,7 +322,6 @@ function groupByPortfolio(filter, callback){
 	if (wait == 0)
 		return;
 
-	var db = require('./db.js').open();
 	for (var index in groups)
 	{
 		var group=groups[index];
@@ -370,11 +366,10 @@ function groupByPortfolio(filter, callback){
 
 	 	group.query = outerSelect.toString();
 
-		db.multiple_queries(group.query, function(group, err,rows){
+		db.query(group.query, function(group, err,rows){
 			group.result=rows;
 			if(--wait<=0)
 			{
-				db.end();
 				callback(groups);
 			}
 		}.bind(this, group));
@@ -398,9 +393,6 @@ function groupByPortfolio(filter, callback){
  * @param callback : function to handle result rows
  */
 function groupByInvestments(filter, callback){
-
-	var db = require('./db.js').open();
-
 
 	//remove group_by if present
 	var mFilter = filter.clone();
@@ -437,9 +429,8 @@ function groupByInvestments(filter, callback){
 	select.order("fair_value",false);
 
 	select = select.toString();
-	// console.log(select.toString());
 
-	db.querys(select,function(err, rows){
+	db.query(select, function(err, rows){
 		callback(rows,select);
 	});
 
@@ -493,8 +484,6 @@ function getFundsByManagingBody(managing_body,callback){
 			return;
 	}
 
-	var db = require('./db.js').open();
-
 	var select = squel.select().from(config.table);
 	select.field("fund_name");
 	select.where("managing_body = '"+escape(managing_body) +"'")
@@ -503,8 +492,8 @@ function getFundsByManagingBody(managing_body,callback){
 
 	var sqlQuery = select.toString();
 
-	db.querys(sqlQuery,function(err, rows){
-			callback(rows);
+	db.query(sqlQuery, function(err, rows){
+			callback(rows, sqlQuery);
 	});
 
 }
