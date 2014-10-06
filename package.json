@@ -7,7 +7,7 @@
   "dependencies": {
     "express": "3.3.3",
     "jade": "1.1.5",
-    "pg": "latest",
+    "pg": "3.4.5",
     "squel": "1.1.3",
     "memjs" : "0.8.4",
     "underscore" : "1.6",
