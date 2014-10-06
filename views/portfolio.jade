@@ -62,6 +62,11 @@ block content
                     strong() שימו לב!
                     נתונים חלקיים
                     a(href="#") קרא עוד
+
+                - if (debug)
+                    div(style="text-align:left;direction:ltr") #{totalPensionFundQuery}
+                    div(style="text-align:left;direction:ltr") #{quartersQuery}
+
                 table(id="aggregate-data-panel" class="table")
                     tbody()
                         tr()
@@ -255,6 +260,8 @@ block content
             div(id="further-reading" class="col-xs-12")
                 h3(id = "link-list-title") עוד בפנסיה פתוחה
                 h4() קופות של #{translate(filter.getConstraintData('managing_body'))}
+                - if (debug)
+                    div(style="text-align:left;direction:ltr") #{fundsQuery}
                 ul(id = "link-list")
                     each fund in funds
                         - var escapedVal = rfc3986EncodeURIComponent(fund['fund_name']);

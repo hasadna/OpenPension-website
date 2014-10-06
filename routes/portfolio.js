@@ -250,7 +250,7 @@ exports.portfolio = function(req, res){
           function(groups){
 
         DAL.getFundsByManagingBody(managing_body,
-          function(funds){
+          function(funds, fundsQuery){
           
           var origGroups = JSON.parse(JSON.stringify(groups));
 
@@ -309,10 +309,13 @@ exports.portfolio = function(req, res){
             report_qurater: report_qurater,
             report_year: report_year,
             totalPensionFundQuarters: totalPensionFundQuarters,
+            totalPensionFundQuery: totalPensionFundQuery,
             plurals: plurals,
             totalPensionFundQuery:totalPensionFundQuery,
             quarters:quarters,
+            quartersQuery: quartersQuery,
             funds:funds,
+            fundsQuery: fundsQuery,
             origGroups:origGroups,
             report_type: getReportType(filter),
             report_title : title,
