@@ -53,6 +53,6 @@ exports.refresh = function(req,res){
 	//refresh materialized view
 	db.query("REFRESH MATERIALIZED VIEW pension_data_all", function(){
 		res.end("Finished refreshing");
-	}, false);
+	}, true);
 
 }
