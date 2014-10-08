@@ -20,31 +20,39 @@ $(function () {
 
 });
 
-
+/**
+ * Remove query parameters from end of 
+ * query string till selected parameter key
+ * 
+ * @param key : selected parameter
+ *
+ */
 
 function breadCrumbs(key) {
 
     //generate filter from query string
     var filter = Filter.fromQueryString(window.location.search);
+    
+    var constraintFields = filter.getConstrainedFields();
 
-    // remove group by field 
-    filter.removeField("group_by");
+    for ( var index = constraintFields.length - 1; index >= 0; index-- ) {
 
-    // remove from stop=1 fields from array 
-    var stop = 0;
-
-    for (var index in filter.getConstrainedFields()) {
-
-        // from here remove all fields from the filter. (always remove the last element from array in each iteration) 
-        if (stop == 1) {
-            var lastField = filter.getConstrainedFields().pop();
-            filter.removeField(lastField);
-        }
-        // if bread crumb is equal to field data remove all fields from here and on. 
         var field = filter.getConstrainedFields()[index];
+
+        // if bread crumb is equal to field, stop removing
         if (key == filter.getConstraintData(field)) {
-            stop = 1;
+            break;
         }
+        
+        //remove all fields other than quarter, year and group_by
+        if (field == 'report_qurater' || 
+            field == 'report_year' || 
+            field == 'group_by'){
+            continue;
+        }
+
+        filter.removeField(field);
+
     }
 
     // browse to new filter
