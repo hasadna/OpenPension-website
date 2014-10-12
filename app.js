@@ -15,6 +15,7 @@ var express = require('express')
   , path = require('path')
   , FSUtil = require('./util/FSUtil')
   , csv = require('./routes/csv')
+  , api = require('./routes/api')
   , test = require('./routes/test');
  
 
@@ -77,6 +78,12 @@ app.get('/list', test.list);
 app.post('/group',test.post);
 app.get('/group',test.get);
   
+app.get('/api/portfolio',api.portfolio);
+app.get('/api/funds',api.funds);
+app.get('/api/quarters',api.quarters);
+
+
+
 app.get('/csv',csv.download);
 
 

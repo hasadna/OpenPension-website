@@ -2,9 +2,10 @@ $(function () {
 
     $('#select-quarter').selectpicker();
 
+    //handle quarter change
     $('#select-quarter').on('change', function () {
+        
         //generate filter from query string
-
         var filter = Filter.fromQueryString(window.location.search);
 
         var quarterData = JSON.parse(this.value);
@@ -13,10 +14,22 @@ $(function () {
         filter.setConstraint("report_year", quarterData.year);
         filter.setConstraint("report_qurater", quarterData.quarter);
 
+
+        history.pushState("object or string", "Title", filter.toQueryString());
+    
+
         //convert filter back to query string, and apply location
-        window.location.href = filter.toQueryString();
+        loadTemplates(filter);
 
     });
+
+
+    //handle back events
+    window.onpopstate = function (event) {
+        var filter = Filter.fromQueryString();
+        loadTemplates(filter);
+    };
+
 
 });
 
@@ -55,8 +68,91 @@ function breadCrumbs(key) {
 
     }
 
+    history.pushState("object or string", "Title", filter.toQueryString());
+    
     // browse to new filter
-    window.location.href = filter.toQueryString();
+    loadTemplates(filter);
+
+}
+
+
+
+
+
+/**
+ * Group by managing body, if managing body is in the filter
+ * and by last four quarters
+ * @param filter : Filter object 
+ * @param callback : function to handle result rows
+ */
+
+function groupByManagingBody(filter){
+    
+  var mFilter = new Filter();
+
+  if (filter.hasConstraint("managing_body") 
+            &&  filter.getDrillDownDepth() > 1){
+        mFilter.addConstraint("managing_body", filter.getConstraintData("managing_body"));
+  }
+
+  //add year and quarter to new fiter
+  mFilter.addConstraint("report_year", filter.getConstraintData("report_year"));
+  mFilter.addConstraint("report_qurater", filter.getConstraintData("report_qurater"));
+
+  return mFilter; 
+}
+
+function loadTemplates(filter){
+
+    var filter = Filter.fromQueryString();
+
+
+    $("#breadcrumbs").html(breadcrumbsTemplate({drillDown: filter.getDrillDown(), filter: filter}))
+
+    $("#reportTitle").html( reportTitleTemplate( { report_type: getReportType(filter), report_title : createTitle(filter) } ) );
+ 
+   var mFilter = groupByManagingBody(filter);
+
+    $.getJSON( "/api/quarters" + filter.toQueryString(), function( quarters ) {
+        $.getJSON( "/api/quarters" + mFilter.toQueryString(), function( totalPensionFundQuarters ) {
+            $("#header").html( headerTemplate( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value'])} ) );
+        });
+    
+        $.getJSON( "/api/portfolio" + filter.toQueryString(), function( data ) {
+            $("#groups").html(groupsTemplate({ debug: debug, fundsQuery: fundsQuery, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter} ))
+        });
+
+
+    });
+
+    
+    $.getJSON( "/api/funds" + filter.toQueryString(), function( data ) {
+        $("#funds").html(fundsTemplate({ debug: debug, fundsQuery: fundsQuery, funds:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent} ))
+    });
+
+ 
+
+    setTimeout(
+        function(){
+            drawSparklines();
+        }, 
+        800)
+
+}
+
+//add new constraint to filter and reload page
+function addConstraint(key, value) {
+
+    //generate filter from query string
+    var filter = Filter.fromQueryString(window.location.search);
+
+    //add constraint from user
+    filter.setConstraint(key, value);
+
+    history.pushState("object or string", "Title", filter.toQueryString() );
+
+    //convert filter back to query string, and apply location
+    loadTemplates(filter);
 
 }
 
@@ -103,7 +199,11 @@ $(function () {
 
 $(function () {
 
-   
+    drawSparklines();
+
+});
+
+function drawSparklines(){
     /**
      * Create a constructor for sparklines that takes some sensible defaults and merges in the individual 
      * chart options. This function is also available from the jQuery plugin as $(element).highcharts('SparkLine').
@@ -265,7 +365,7 @@ $(function () {
     }
     doChunk();
     
-});
+};
 
 
 $(function(){

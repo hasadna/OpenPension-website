@@ -232,6 +232,11 @@ Filter.fromJSON = function(json){
 
 Filter.fromQueryString = function(query){	
 	var filter = new Filter();
+
+	if ( query == undefined ){
+		query = window.location.search;
+	}
+
 	var parsed = parseQueryString(query);
 	return Filter.fromParsedQueryString(parsed);
 

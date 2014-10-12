@@ -40,12 +40,12 @@ block content
 						- var lastQResult = group[lastQStr][0];
 						- var lastQResultWords = convertNumberToWords(lastQResult['fair_value']);
 						- var groupPercentage = (lastQResult.fair_value / quartersSums[lastQStr] * 100 ).toFixed(2);
-						- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group_by]);
+						//- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group_by]);
 						- var groupName = removeQoutes(translate(lastQResult[group_by]));
 
 							tr()
 								td()
-									a(class="table-link" onclick="addConstraint('#{group_by}','#{escapedVal}')" title='#{groupName}') #{groupName}
+									a(class="table-link" onclick="addConstraint('#{group_by}','#{lastQResult[group_by]}'); $('.modal').modal('hide');" title='#{groupName}') #{groupName}
 					
 								td()
 									span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}

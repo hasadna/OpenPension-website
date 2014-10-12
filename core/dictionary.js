@@ -55,3 +55,4 @@ var translate = function(word){
 }
 
 exports.translate = translate;
+exports.dictionary = dictionary;
