@@ -107,19 +107,19 @@ function loadTemplates(filter){
     var filter = Filter.fromQueryString();
 
 
-    $("#breadcrumbs").html(breadcrumbsTemplate({drillDown: filter.getDrillDown(), filter: filter}))
+    $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
 
-    $("#reportTitle").html( reportTitleTemplate( { report_type: getReportType(filter), report_title : createTitle(filter) } ) );
+    $("#reportTitle").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter) } ) );
  
    var mFilter = groupByManagingBody(filter);
 
     $.getJSON( "/api/quarters" + filter.toQueryString(), function( quarters ) {
         $.getJSON( "/api/quarters" + mFilter.toQueryString(), function( totalPensionFundQuarters ) {
-            $("#header").html( headerTemplate( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value'])} ) );
+            $("#header").html( templatizer.header( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value'])} ) );
         });
     
         $.getJSON( "/api/portfolio" + filter.toQueryString(), function( data ) {
-            $("#groups").html(groupsTemplate({ debug: debug, fundsQuery: fundsQuery, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter} ))
+            $("#groups").html(templatizer.groups({ debug: debug, fundsQuery: fundsQuery, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter} ))
         });
 
 
@@ -127,7 +127,7 @@ function loadTemplates(filter){
 
     
     $.getJSON( "/api/funds" + filter.toQueryString(), function( data ) {
-        $("#funds").html(fundsTemplate({ debug: debug, fundsQuery: fundsQuery, funds:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent} ))
+        $("#funds").html(templatizer.funds({ debug: debug, fundsQuery: fundsQuery, funds:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent} ))
     });
 
  

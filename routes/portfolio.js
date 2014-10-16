@@ -286,21 +286,6 @@ exports.portfolio = function(req, res){
 
         var title = createTitle(filter);
         
-        var fundsCode = fs.readFileSync("views/partials/funds.jade","utf-8").toString();
-        var fundsTemplate = jade.compileClient(fundsCode, {pretty: true, debug: true });
-
-        var groupsCode = fs.readFileSync("views/partials/groups.jade","utf-8").toString();
-        var groupsTemplate = jade.compileClient(groupsCode, {pretty: true, debug: true });
-
-        var breadcrumbsCode = fs.readFileSync("views/partials/breadcrumbs.jade","utf-8").toString();
-        var breadcrumbsTemplate = jade.compileClient(breadcrumbsCode, {pretty: true, debug: true });
-
-        var reportTitleCode = fs.readFileSync("views/partials/report_title.jade","utf-8").toString();
-        var reportTitleTemplate = jade.compileClient(reportTitleCode, {pretty: true, debug: true });
-
-        var headerCode = fs.readFileSync("views/partials/header.jade","utf-8").toString();
-        var headerTemplate = jade.compileClient(headerCode, {});
-
 
         res.render('portfolio',{
             filter: filter,
@@ -331,14 +316,9 @@ exports.portfolio = function(req, res){
             title: title.replace("<i class=\"fa fa-angle-left\"></i>",">"),
             Filter: Filter,
             dictionary : dictionary,
-            fundsTemplate: fundsTemplate,
-            groupsTemplate: groupsTemplate,
-            breadcrumbsTemplate: breadcrumbsTemplate,
-            reportTitleTemplate: reportTitleTemplate,
             getReportType: getReportType,
-            createTitle: createTitle,
-            headerTemplate: headerTemplate
-
+            createTitle: createTitle
+        
           });        
         });
       });

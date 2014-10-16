@@ -16,8 +16,11 @@ var express = require('express')
   , FSUtil = require('./util/FSUtil')
   , csv = require('./routes/csv')
   , api = require('./routes/api')
+  , templates = require('./routes/templates')
   , test = require('./routes/test');
  
+var templatizer = require('templatizer');
+templatizer(__dirname + '/views/partials', __dirname + '/public/js/portfolio_templates.js');
 
 //enable use of data_normalizer in client
 FSUtil.copyFile('./core/data_normalizer.js', './public/js/data_normalizer.js',
