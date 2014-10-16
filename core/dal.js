@@ -1,4 +1,5 @@
 var Groups = require('../core/groups.js');
+var getLastQuarters = require('../core/data_normalizer.js').getLastQuarters;
 var Filter = require('./filter.js');
 var squel = require('squel');
 var config = require('../config')
@@ -449,43 +450,6 @@ function groupByInvestments(filter, callback){
 		callback(rows,select);
 	});
 
-}
-
-
-
-/**
- * Get previous quarters, including current, one based.
- * @param year : year to start counting back from 
- * @param quarter : quarter to start counting back from
- * @return Array : [{'quarter':'1','year:'2012'}, ...]
- */
-function getLastQuarters(year, quarter, numOfQuarters){
-	if (quarter > 4){
-		throw "illegal quarter";
-	}
-
-	var res = [];
-	var q = quarter;
-	for (var i = 0; i < numOfQuarters; i++) {
-
-		var obj = {
-					'quarter': ''+q,
-					'year': ''+year
-				};
-
-		obj.toString = function (){return this['year'] + '_' + this['quarter']}
-		res.push(obj);
-
-		if (q == 1){
-			year--;
-			q = 4;
-		}
-		else{
-			q--;
-		}
-
-	};
-	return res;
 }
 
 /**

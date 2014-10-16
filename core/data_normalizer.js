@@ -3,7 +3,7 @@ function numberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-exports.normalizeData = function(groups){
+function normalizeData(groups){
 
 	//set nulls to zeros and sort 
 	for(var i in groups){ //go over index of groups
@@ -46,7 +46,7 @@ exports.normalizeData = function(groups){
 }
 
 
-exports.convertNumberToWords = function(numberToConvert){
+function convertNumberToWords(numberToConvert){
 	var number = Number(numberToConvert);
 	if (Math.abs(number) > 1000000000000){
 		return {
@@ -84,17 +84,68 @@ exports.convertNumberToWords = function(numberToConvert){
 
 //escape special chars
 //duplicate single qoutes ' => ''
- exports.escapeSpecialChars = function(s) {  
+ function escapeSpecialChars(s) {  
     return String(s).replace(/'/g, '\'\'');  
  }
 
 //encodes string, including special chars !'()*
- exports.rfc3986EncodeURIComponent = function(s) {  
+ function rfc3986EncodeURIComponent(s) {  
     return encodeURIComponent(s).replace(/[!'()*]/g, escape);  
  }
 
 //remove duplicate double qoutes 
 //and enclosing (start - end) double qoutes 
- exports.removeQoutes = function(s){ 
+function removeQoutes(s){ 
  	return String(s).replace(/""/g, '"').replace(/^\"/, "").replace(/"$/, "");
  }
+
+
+
+
+
+/**
+ * Get previous quarters, including current, one based.
+ * @param year : year to start counting back from 
+ * @param quarter : quarter to start counting back from
+ * @return Array : [{'quarter':'1','year:'2012'}, ...]
+ */
+function getLastQuarters (year, quarter, numOfQuarters){
+	if (quarter > 4){
+		throw "illegal quarter";
+	}
+
+	var res = [];
+	var q = quarter;
+	for (var i = 0; i < numOfQuarters; i++) {
+
+		var obj = {
+					'quarter': ''+q,
+					'year': ''+year
+				};
+
+		obj.toString = function (){return this['year'] + '_' + this['quarter']}
+		res.push(obj);
+
+		if (q == 1){
+			year--;
+			q = 4;
+		}
+		else{
+			q--;
+		}
+
+	};
+	return res;
+}
+
+
+
+if(typeof module != 'undefined'){
+	module.exports.numberWithCommas = numberWithCommas;
+	module.exports.normalizeData = normalizeData;
+	module.exports.convertNumberToWords = convertNumberToWords;
+	module.exports.escapeSpecialChars = escapeSpecialChars;
+	module.exports.rfc3986EncodeURIComponent = rfc3986EncodeURIComponent;
+	module.exports.removeQoutes = removeQoutes;
+	module.exports.getLastQuarters = getLastQuarters;
+}

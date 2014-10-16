@@ -73,20 +73,19 @@ block content
         script() var totalPensionFundQuery = !{JSON.stringify(totalPensionFundQuery)};
         script() var origGroups = !{JSON.stringify(origGroups)};
         script(type='text/javascript', src='/js/underscore-min.js')
+    
 
+
+    script() var filter = Filter.fromQueryString("!{filter.toQueryString()}");
+    
     script() var translate = !{translate};
     script() var funds = !{JSON.stringify(funds)};    
     script() var fundsQuery = !{JSON.stringify(fundsQuery)};
-    script() var rfc3986EncodeURIComponent = !{rfc3986EncodeURIComponent};
-    script() var fundsQuery = !{JSON.stringify(fundsQuery)};
-    script() var filter = Filter.fromQueryString("!{filter.toQueryString()}");
     script() var debug = !{debug};
     script() var dictionary = !{JSON.stringify(dictionary)};
     script() var report_type = !{JSON.stringify(report_type)};
     script() var lastQuarters = !{JSON.stringify(lastQuarters)};
-    script() var convertNumberToWords = !{convertNumberToWords};
     script() var quarters = !{JSON.stringify(quarters)};
-    script() var removeQoutes = !{removeQoutes};
     script() var plurals = !{JSON.stringify(plurals)};
     script() var groups = !{JSON.stringify(groups)};
 

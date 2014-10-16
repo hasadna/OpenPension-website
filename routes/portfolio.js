@@ -2,14 +2,18 @@ var _ = require('underscore');
 var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
-var metaTable = require('../common/MetaTable').getMetaTable();
 var Groups = require('../core/groups.js');
-var translate = require('../core/dictionary.js').translate;
 var removeQoutes = DataNormalizer.removeQoutes;
 var config = require('../config')
 var jade = require('jade');
 var fs = require('fs');
-var dictionary = require('../core/dictionary.js').dictionary;
+
+var Dictionary =  require('../core/dictionary.js')
+var dictionary = Dictionary.dictionary;
+var translate = Dictionary.translate;
+var plurals = Dictionary.plurals;
+
+
 
 function createTitle(filter){
 
@@ -112,20 +116,6 @@ function getReportType(filter){
 
 }
 
-
-var plurals = {
-  'managing_body': 'הגופים המוסדיים', 
-  'currency' : 'סוגי המטבעות', 
-  'rating':'הדירוגים', 
-  'instrument_id':'מספרי הנכסים',
-  'issuer':'המנפיקים',
-  'instrument_name':'שמות הנכסים',
-  'activity_industry':'ענפי הפעילות',
-  'reference_index':'המדדים',
-  'fund_name' : 'הקופות',
-  'liquidity' : 'רמות הנזילות',
-  'asset_type' : 'סוגי הנכסים'
-}
 
 
 exports.investments = function(req, res){

@@ -54,5 +54,25 @@ var translate = function(word){
 	}
 }
 
-exports.translate = translate;
-exports.dictionary = dictionary;
+
+var plurals = {
+  'managing_body': 'הגופים המוסדיים', 
+  'currency' : 'סוגי המטבעות', 
+  'rating':'הדירוגים', 
+  'instrument_id':'מספרי הנכסים',
+  'issuer':'המנפיקים',
+  'instrument_name':'שמות הנכסים',
+  'activity_industry':'ענפי הפעילות',
+  'reference_index':'המדדים',
+  'fund_name' : 'הקופות',
+  'liquidity' : 'רמות הנזילות',
+  'asset_type' : 'סוגי הנכסים'
+}
+
+
+if(typeof module != 'undefined'){
+	module.exports.plurals = plurals;
+	module.exports.translate = translate;
+	module.exports.dictionary = dictionary;	
+}
+

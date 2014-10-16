@@ -19,6 +19,13 @@ var express = require('express')
   , test = require('./routes/test');
  
 
+//enable use of data_normalizer in client
+FSUtil.copyFile('./core/data_normalizer.js', './public/js/data_normalizer.js',
+      function(err){ 
+        console.log(err);
+        process.exit(1);
+      }
+    );
 //enable use of Filter in client
 FSUtil.copyFile('./core/filter.js', './public/js/filter.js',
 			function(err){ 
