@@ -16,7 +16,6 @@ var express = require('express')
   , FSUtil = require('./util/FSUtil')
   , csv = require('./routes/csv')
   , api = require('./routes/api')
-  , templates = require('./routes/templates')
   , test = require('./routes/test');
  
 var templatizer = require('templatizer');
@@ -91,7 +90,6 @@ app.get('/group',test.get);
 app.get('/api/portfolio',api.portfolio);
 app.get('/api/funds',api.funds);
 app.get('/api/quarters',api.quarters);
-
 
 
 app.get('/csv',csv.download);

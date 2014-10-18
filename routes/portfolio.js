@@ -32,9 +32,7 @@ function createTitle(filter){
   
   var managing_body = translate(filter.getConstraintData('managing_body'));
   var fund_name = filter.getConstraintData('fund_name');
-  //
   var instrument_name = filter.getConstraintData('instrument_name');
-  //
   var asset_type = filter.getConstraintData('asset_type');
   var liquidity = filter.getConstraintData('liquidity');
   var reference_index = filter.getConstraintData('reference_index');
@@ -42,7 +40,6 @@ function createTitle(filter){
   var rating = filter.getConstraintData('rating');
   var activity_industry = filter.getConstraintData('activity_industry');
   var currency = filter.getConstraintData('currency');
-  // unused 
   var instrument_id = filter.getConstraintData('instrument_id');
   var industry = filter.getConstraintData('industry');
 
