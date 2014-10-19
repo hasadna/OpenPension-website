@@ -16,7 +16,7 @@ $(function () {
         filter.setConstraint("report_qurater", quarterData.quarter);
 
 
-        history.pushState("", "", filter.toQueryString());
+        navigate(filter.toQueryString());
     
 
         //convert filter back to query string, and apply location
@@ -33,6 +33,17 @@ $(function () {
 
 
 });
+
+function navigate(url){
+
+    if (history.pushState != null){
+        history.pushState("", "", url);
+    }
+    else{
+        window.location = url;
+    }
+
+}
 
 /**
  * Remove query parameters from end of 
@@ -69,8 +80,8 @@ function breadCrumbs(key) {
 
     }
 
-    history.pushState("", "", filter.toQueryString());
-    
+    navigate(filter.toQueryString());
+
     // browse to new filter
     loadTemplates(filter);
 
@@ -146,7 +157,7 @@ function addConstraint(key, value) {
     //add constraint from user
     filter.setConstraint(key, value);
 
-    history.pushState("", "", filter.toQueryString() );
+    navigate(filter.toQueryString());
 
     //convert filter back to query string, and apply location
     loadTemplates(filter);
