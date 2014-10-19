@@ -88,6 +88,12 @@ function convertNumberToWords(numberToConvert){
     return String(s).replace(/'/g, '\'\'');  
  }
 
+//escape JS function attribute 
+//escape single qoutes ' => \'
+ function escapeJSLink(s) {  
+    return String(s).replace(/'/g, '\\\'')  
+ }
+
 //encodes string, including special chars !'()*
  function rfc3986EncodeURIComponent(s) {  
     return encodeURIComponent(s).replace(/[!'()*]/g, escape);  
@@ -148,4 +154,5 @@ if(typeof module != 'undefined'){
 	module.exports.rfc3986EncodeURIComponent = rfc3986EncodeURIComponent;
 	module.exports.removeQoutes = removeQoutes;
 	module.exports.getLastQuarters = getLastQuarters;
+	module.exports.escapeJSLink = escapeJSLink;
 }

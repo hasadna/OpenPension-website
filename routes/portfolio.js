@@ -172,6 +172,7 @@ exports.investments = function(req, res){
             translate: translate,
             convertNumberToWords:DataNormalizer.convertNumberToWords,
             escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
+            escapeJSLink: DataNormalizer.escapeJSLink,
             rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,  
             removeQoutes: DataNormalizer.removeQoutes,
             debug: debug == 'true',
@@ -314,7 +315,8 @@ exports.portfolio = function(req, res){
             Filter: Filter,
             dictionary : dictionary,
             getReportType: getReportType,
-            createTitle: createTitle
+            createTitle: createTitle,
+            escapeJSLink: DataNormalizer.escapeJSLink,
         
           });        
         });

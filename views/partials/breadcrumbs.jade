@@ -5,11 +5,11 @@ ol()
     each field, i in drillDown
         - var value = filter.getConstraintData(field) ;
 
-        - var escapedValue = value;//rfc3986EncodeURIComponent(value);
+        - var escapedValue = escapeJSLink(value);
 
         -if ( i < drillDown.length - 1 ){
             li()
                 a(onclick="breadCrumbs('#{escapedValue}')" title="#{translate(field)}") #{removeQoutes(translate(value))}
         -}else{
-            li(title="#{translate(field)}") #{removeQoutes(translate(value))}
+            li(title="#{translate(field)}") #{removeQoutes(translate(value))} 
         -}

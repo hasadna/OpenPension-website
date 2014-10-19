@@ -60,6 +60,7 @@ exports.managing_body_treemap = function(req,res){
 
         res.setHeader('Vary', 'Accept-Encoding');
 
+        //let browser cache content for 1 week
         var oneWeek = 604800000;
         res.setHeader('Cache-Control', 'public, max-age='+oneWeek);        
         
@@ -103,6 +104,7 @@ exports.issuers_treemap = function(req,res){
 
         res.setHeader('Vary', 'Accept-Encoding');
 
+        //let browser cache content for 1 week
         var oneWeek = 604800000;
         res.setHeader('Cache-Control', 'public, max-age='+oneWeek);        
 

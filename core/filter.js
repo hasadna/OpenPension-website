@@ -249,7 +249,15 @@ Filter.fromParsedQueryString = function(query){
 	for( var field in query){
 		query[field] = [].concat( query[field] );
 		for (var index in query[field]){
-			filter.addConstraint(field, decodeURIComponent( query[field][index]) );
+			
+			var decoded;
+			try{
+				decoded = decodeURIComponent( query[field][index]);
+			}
+			catch(e){
+				decoded = query[field][index];
+			}
+			filter.addConstraint(field, decoded );
 		}
 	}
 

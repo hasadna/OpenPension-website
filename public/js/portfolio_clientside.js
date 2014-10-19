@@ -1,5 +1,6 @@
 $(function () {
 
+    //initialize quarter select element
     $('#select-quarter').selectpicker();
 
     //handle quarter change
@@ -15,7 +16,7 @@ $(function () {
         filter.setConstraint("report_qurater", quarterData.quarter);
 
 
-        history.pushState("object or string", "Title", filter.toQueryString());
+        history.pushState("", "", filter.toQueryString());
     
 
         //convert filter back to query string, and apply location
@@ -68,7 +69,7 @@ function breadCrumbs(key) {
 
     }
 
-    history.pushState("object or string", "Title", filter.toQueryString());
+    history.pushState("", "", filter.toQueryString());
     
     // browse to new filter
     loadTemplates(filter);
@@ -120,6 +121,7 @@ function loadTemplates(filter){
     
         $.getJSON( "/api/portfolio" + filter.toQueryString(), function( data ) {
             $("#groups").html(templatizer.groups({ debug: debug, fundsQuery: fundsQuery, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter} ))
+            drawSparklines();
         });
 
 
@@ -132,11 +134,6 @@ function loadTemplates(filter){
 
  
 
-    setTimeout(
-        function(){
-            drawSparklines();
-        }, 
-        800)
 
 }
 
@@ -149,7 +146,7 @@ function addConstraint(key, value) {
     //add constraint from user
     filter.setConstraint(key, value);
 
-    history.pushState("object or string", "Title", filter.toQueryString() );
+    history.pushState("", "", filter.toQueryString() );
 
     //convert filter back to query string, and apply location
     loadTemplates(filter);
@@ -199,11 +196,6 @@ $(function () {
 
 $(function () {
 
-    drawSparklines();
-
-});
-
-function drawSparklines(){
     /**
      * Create a constructor for sparklines that takes some sensible defaults and merges in the individual 
      * chart options. This function is also available from the jQuery plugin as $(element).highcharts('SparkLine').
@@ -297,12 +289,19 @@ function drawSparklines(){
             return new Highcharts.Chart(options, callback);
         };
 
+
+    drawSparklines();
+
+});
+
+function drawSparklines(){
+
     var start = +new Date(),
         $tds = $("div[data-sparkline]"),
         fullLen = $tds.length,
         n = 0;
 
-    // Creating 153 sparkline charts is quite fast in modern browsers, but IE8 and mobile
+    // Creating sparkline charts is quite fast in modern browsers, but IE8 and mobile
     // can take some seconds, so we split the input into chunks and apply them in timeouts
     // in order avoid locking up the browser process and allow interaction.
     function doChunk(){
@@ -357,10 +356,6 @@ function drawSparklines(){
                 break;
             }
 
-            // Print a feedback on the performance
-            if (n === fullLen) {
-                $('#result').html('Generated ' + fullLen + ' sparklines in ' + (new Date() - start) + ' ms');
-            }
         }
     }
     doChunk();
@@ -390,71 +385,6 @@ $(function(){
 
         $('body').on('loaded.bs.modal', '.modal', function () {
             // alert("loaded");
-   
-            var start = +new Date(),
-                $tds = $("div[data-sparkline]"),
-                fullLen = $tds.length,
-                n = 0;
-
-             function doChunk(){
-                var time = +new Date(),
-                    i,
-                    len = $tds.length;
-
-                for (i = 0; i < len; i++) {
-                    var $td = $($tds[i]),
-                        stringdata = $td.data('sparkline'),
-                        arr = stringdata.split('; '),
-                        data = $.map(arr[0].split(', '), parseFloat),
-                        chart = {};
-
-                    if (arr[1]) {
-                        chart.type = arr[1];
-                    }
-                    
-
-                    var color;
-                    var dataDif = data[3] - data[0];
-                    
-                    if (dataDif < 0){
-                        color = '#FFBE4C'; //yellow
-                    }
-                    else if(dataDif == 0){
-                        color = '#999999'; //gray
-                    }
-                    else{
-                        color = '#7FB2FF'; //blue
-                    }
-
-                    $td.highcharts('SparkLine', {
-                        series: [{
-                            color: color,
-                            data: data,
-                            pointStart: 1
-                        }],
-                        tooltip: {
-                            //headerFormat: '<span style="font-size: 10px">' + $td.parent().find('th').html() + ', Q{point.x}:</span><br/>',
-                            headerFormat :'',
-                            pointFormat: '<b>% {point.y}</b>'
-                        },
-                        chart: chart
-                    });
-
-                    n++;
-                    
-                    // If the process takes too much time, run a timeout to allow interaction with the browser
-                    if (new Date() - time > 1500) {
-                        $tds.splice(0, i + 1);
-                        setTimeout(doChunk, 0);
-                        break;
-                    }
-
-                    // Print a feedback on the performance
-                    if (n === fullLen) {
-                        $('#result').html('Generated ' + fullLen + ' sparklines in ' + (new Date() - start) + ' ms');
-                    }
-                }
-            }
-            doChunk();            
+            drawSparklines();
         });
 });
