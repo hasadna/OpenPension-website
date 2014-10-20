@@ -1,100 +1,200 @@
 
 block content
 
-	//- BODY
-	div(class="container")
-		
-		//- RIGHT COLUMN
-		div(class="col-sm-12" style="padding-right: 0px;")
-	
-		
-			
-			- if (debug)
-				div(style="text-align:left;direction:ltr") #{query} 
+  //- BODY
+  div(class="container")
 
-			div(id="investments-header")
-				h3(id="investments-header-title") חלוקה לפי&nbsp #{translate(group_by)}
-				div(id="investments-header-button",onclick="$('.modal').modal('hide')" ) &#xf05c
-			table(id="investments-list" class="sortable table table-striped" style="text-align:right;width:100%")
-				colgroup()
-					col(class="col-xs-3")
-					col(class="col-xs-3")
-					col(class="col-xs-3")
-					col(class="col-xs-3")
-				thead()
-					tr() 
-						th(style="text-align: right") #{translate(group_by)}
-						th(style="text-align: right") היקף ההשקעה 
-							span(class="unit") בשקלים
-						th(style="text-align: right") % מההשקעה
-						th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
-				tbody()
-					each group in groups
-						//- if (group[group_by] === 'NULL' ) continue;
-						- var lastQStr = lastQuarters[0].toString();
-						- if ( group[lastQStr] == undefined )
-							- if (debug)
-								div() חסר רבעון נוכחי 
-								div(style="text-align:left") #{JSON.stringify(group)}
-							- continue;
-						- var lastQResult = group[lastQStr][0];
-						- var lastQResultWords = convertNumberToWords(lastQResult['fair_value']);
-						- var groupPercentage = (lastQResult.fair_value / quartersSums[lastQStr] * 100 ).toFixed(2);
-						- var escapedVal = escapeJSLink(lastQResult[group_by]);
-						- var groupName = removeQoutes(translate(lastQResult[group_by]));
+    div(class="row")
 
-							tr()
-								td()
-									a(class="table-link" onclick="addConstraint('#{group_by}','#{escapedVal}'); $('.modal').modal('hide');" title='#{groupName}') #{groupName}
-					
-								td()
-									span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
-					
-								td()
-									span(class="relative-size") #{groupPercentage}% 
-									div(id="bar" style="width:#{groupPercentage*(70/100)}%")
-								
-								td(class="change")
-									- var sparkline = [];
-									- for(var i = 0;i<4;i++){
-										- var qStr = lastQuarters[i].toString();
-										- if (group[qStr] == undefined){
-											- if (debug){
-												div() אין מידע עבור רבעון  #{qStr} 
-											- }
-											- sparkline.push( Number( 0 ) );
-											- continue;
-										- }
-										- if (quartersSums[qStr] == undefined){
-											- if (debug){
-												div() quartersSums[#{qStr}] is undefined
-											- }
-											- sparkline.push( Number( 0 ) );
-											- continue;
-										- }
-										- sparkline.push( (Number(group[qStr][0]['fair_value']) / Number(quartersSums[qStr]) * 100).toFixed(2) );
-									- }
+      //- RIGHT COLUMN
+      div(class="col-sm-12")
 
 
 
-									- var diff, caret, colorClass;
+        - if (debug)
+          div(style="text-align:left;direction:ltr") #{query}
 
-									- diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
-									- if (diff > 0){
-										- diff = "+" + diff;
-										- caret = "fa-caret-up";
-										- colorClass = "blue-text";
-									- }
-									- else if (diff == 0){
-										- caret = "";
-										- colorClass = "gray-text";
-									- }
-									- else{
-										- caret = "fa-caret-down";
-										- colorClass = "yellow-text";
-									- }
+        div(id="investments-header")
+          h3(id="investments-header-title") חלוקה לפי&nbsp #{translate(group_by)}
+          div(id="investments-header-button",onclick="$('.modal').modal('hide')" ) &#xf05c
+        table(id="investments-list" class="sortable table table-striped" style="text-align:right;width:100%")
+          colgroup()
+            col(class="col-xs-3")
+            col(class="col-xs-3")
+            col(class="col-xs-3")
+            col(class="col-xs-3")
+          thead()
+            tr()
+              th(style="text-align: right") #{translate(group_by)}
+              th(style="text-align: right") היקף ההשקעה
+                span(class="unit") בשקלים
+              th(style="text-align: right") % מההשקעה
+              th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
+          tbody()
+            each group in groups
+              //- if (group[group_by] === 'NULL' ) continue;
+              - var lastQStr = lastQuarters[0].toString();
+              - if ( group[lastQStr] == undefined )
+                - if (debug)
+                  div() חסר רבעון נוכחי
+                  div(style="text-align:left") #{JSON.stringify(group)}
+                - continue;
+              - var lastQResult = group[lastQStr][0];
+              - var lastQResultWords = convertNumberToWords(lastQResult['fair_value']);
+              - var groupPercentage = (lastQResult.fair_value / quartersSums[lastQStr] * 100 ).toFixed(2);
+              //- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group_by]);
+              - var groupName = removeQoutes(translate(lastQResult[group_by]));
 
-									span(class="quarter-diff #{colorClass}" ) 
-										span(class="percentage") #{diff}% 
-										i(class="fa #{caret}")
-									div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
+                tr()
+                  td()
+                    a(class="table-link" onclick="addConstraint('#{group_by}','#{lastQResult[group_by]}'); $('.modal').modal('hide');" title='#{groupName}') #{groupName}
+
+                  td()
+                    span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
+
+                  td()
+                    span(class="relative-size") #{groupPercentage}%
+                    div(id="bar" style="width:#{groupPercentage*(70/100)}%")
+
+                  td(class="change")
+                    - var sparkline = [];
+                    - for(var i = 0;i<4;i++){
+                      - var qStr = lastQuarters[i].toString();
+                      - if (group[qStr] == undefined){
+                        - if (debug){
+                          div() אין מידע עבור רבעון  #{qStr}
+                        - }
+                        - sparkline.push( Number( 0 ) );
+                        - continue;
+                      - }
+                      - if (quartersSums[qStr] == undefined){
+                        - if (debug){
+                          div() quartersSums[#{qStr}] is undefined
+                        - }
+                        - sparkline.push( Number( 0 ) );
+                        - continue;
+                      - }
+                      - sparkline.push( (Number(group[qStr][0]['fair_value']) / Number(quartersSums[qStr]) * 100).toFixed(2) );
+                    - }
+
+
+
+                    - var diff, caret, colorClass;
+
+                    - diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
+                    - if (diff > 0){
+                      - diff = "+" + diff;
+                      - caret = "fa-caret-up";
+                      - colorClass = "blue-text";
+                    - }
+                    - else if (diff == 0){
+                      - caret = "";
+                      - colorClass = "gray-text";
+                    - }
+                    - else{
+                      - caret = "fa-caret-down";
+                      - colorClass = "yellow-text";
+                    - }
+
+                    span(class="quarter-diff #{colorClass}" )
+                      span(class="percentage") #{diff}%
+                      i(class="fa #{caret}")
+                    div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
+=======
+  //- BODY
+  div(class="container")
+
+    //- RIGHT COLUMN
+    div(class="col-sm-12" style="padding-right: 0px;")
+
+
+
+      - if (debug)
+        div(style="text-align:left;direction:ltr") #{query}
+
+      div(id="investments-header")
+        h3(id="investments-header-title") חלוקה לפי&nbsp #{translate(group_by)}
+        div(id="investments-header-button",onclick="$('.modal').modal('hide')" ) &#xf05c
+      table(id="investments-list" class="sortable table table-striped" style="text-align:right;width:100%")
+        colgroup()
+          col(class="col-xs-3")
+          col(class="col-xs-3")
+          col(class="col-xs-3")
+          col(class="col-xs-3")
+        thead()
+          tr()
+            th(style="text-align: right") #{translate(group_by)}
+            th(style="text-align: right") היקף ההשקעה
+              span(class="unit") בשקלים
+            th(style="text-align: right") % מההשקעה
+            th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
+        tbody()
+          each group in groups
+            //- if (group[group_by] === 'NULL' ) continue;
+            - var lastQStr = lastQuarters[0].toString();
+            - if ( group[lastQStr] == undefined )
+              - if (debug)
+                div() חסר רבעון נוכחי
+                div(style="text-align:left") #{JSON.stringify(group)}
+              - continue;
+            - var lastQResult = group[lastQStr][0];
+            - var lastQResultWords = convertNumberToWords(lastQResult['fair_value']);
+            - var groupPercentage = (lastQResult.fair_value / quartersSums[lastQStr] * 100 ).toFixed(2);
+            - var escapedVal = escapeJSLink(lastQResult[group_by]);
+            - var groupName = removeQoutes(translate(lastQResult[group_by]));
+
+              tr()
+                td()
+                  a(class="table-link" onclick="addConstraint('#{group_by}','#{escapedVal}'); $('.modal').modal('hide');" title='#{groupName}') #{groupName}
+
+                td()
+                  span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
+
+                td()
+                  span(class="relative-size") #{groupPercentage}%
+                  div(id="bar" style="width:#{groupPercentage*(70/100)}%")
+
+                td(class="change")
+                  - var sparkline = [];
+                  - for(var i = 0;i<4;i++){
+                    - var qStr = lastQuarters[i].toString();
+                    - if (group[qStr] == undefined){
+                      - if (debug){
+                        div() אין מידע עבור רבעון  #{qStr}
+                      - }
+                      - sparkline.push( Number( 0 ) );
+                      - continue;
+                    - }
+                    - if (quartersSums[qStr] == undefined){
+                      - if (debug){
+                        div() quartersSums[#{qStr}] is undefined
+                      - }
+                      - sparkline.push( Number( 0 ) );
+                      - continue;
+                    - }
+                    - sparkline.push( (Number(group[qStr][0]['fair_value']) / Number(quartersSums[qStr]) * 100).toFixed(2) );
+                  - }
+
+
+
+                  - var diff, caret, colorClass;
+
+                  - diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
+                  - if (diff > 0){
+                    - diff = "+" + diff;
+                    - caret = "fa-caret-up";
+                    - colorClass = "blue-text";
+                  - }
+                  - else if (diff == 0){
+                    - caret = "";
+                    - colorClass = "gray-text";
+                  - }
+                  - else{
+                    - caret = "fa-caret-down";
+                    - colorClass = "yellow-text";
+                  - }
+
+                  span(class="quarter-diff #{colorClass}" )
+                    span(class="percentage") #{diff}%
+                    i(class="fa #{caret}")
+                  div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
