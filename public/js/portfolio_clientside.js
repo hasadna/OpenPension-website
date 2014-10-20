@@ -148,7 +148,7 @@ function loadTemplates(filter){
             $.ajax( "/api/quarters" + mFilter.toQueryString()),
             $.ajax( "/api/portfolio" + filter.toQueryString()),
             $.ajax( "/api/funds" + filter.toQueryString() ))
-        .done( success);
+        .then( success , failed);
 
 
 }

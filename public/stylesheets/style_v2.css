@@ -267,6 +267,7 @@ nav .container {
     direction: ltr;
     text-align: right;
     color: #3B70BF;
+    float: right;
 }
 
 
