@@ -116,14 +116,18 @@ function groupByManagingBody(filter){
 
 function loadTemplates(filter){
 
+    //show message on data table
+    $('#aggregate-data-panel').block({ 
+        message: '<h1>טוען נתונים...</h1>', 
+        css: { border: '2px solid #3B70BF' } 
+    }); 
+
+    //scroll window to top position
+    window.scrollTo(0,0);
+
     var filter = Filter.fromQueryString();
-
-
-    $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
-
-    $("#reportTitle").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter) } ) );
  
-    var mFilter = groupByManagingBody(filter);
+    var managingBodyFilter = groupByManagingBody(filter);
 
     function success(a1, a2, a3, a4){
 
@@ -135,17 +139,23 @@ function loadTemplates(filter){
         $("#header").html( templatizer.header( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value'])} ) );
         $("#groups").html(templatizer.groups({ debug: debug, fundsQuery: fundsQuery, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter} ))
         $("#funds").html(templatizer.funds({ debug: debug, fundsQuery: fundsQuery, funds:funds, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent} ))
+        $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
+        $("#reportTitle").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter) } ) );
         drawSparklines();
+
+
+        $('#aggregate-data-panel').unblock(); 
 
     }
 
     function failed(f){
+        $('#aggregate-data-panel').unblock(); 
         console.error(f);
     }
 
 
     $.when( $.ajax( "/api/quarters" + filter.toQueryString()), 
-            $.ajax( "/api/quarters" + mFilter.toQueryString()),
+            $.ajax( "/api/quarters" + managingBodyFilter.toQueryString()),
             $.ajax( "/api/portfolio" + filter.toQueryString()),
             $.ajax( "/api/funds" + filter.toQueryString() ))
         .then( success , failed);
