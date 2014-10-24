@@ -135,9 +135,12 @@ function loadTemplates(filter){
         var totalPensionFundQuarters = a2[0];
         var data = a3[0];
         var funds = a4[0];
+        var report_year = filter.getConstraintData("report_year")[0];
+        var report_qurater = filter.getConstraintData("report_qurater")[0];
+        var lastQuarters = getLastQuarters(report_year, report_qurater, 4);
 
         $("#header").html( templatizer.header( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value'])} ) );
-        $("#groups").html(templatizer.groups({ debug: debug, fundsQuery: fundsQuery, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter} ))
+        $("#groups").html(templatizer.groups({ debug: debug, fundsQuery: fundsQuery, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter, lastQuarters: lastQuarters} ))
         $("#funds").html(templatizer.funds({ debug: debug, fundsQuery: fundsQuery, funds:funds, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent} ))
         $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
         $("#reportTitle").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter) } ) );
