@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/earlyaccess/alefhebrew.css);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:700);
 
 @font-face {
     font-family: 'Glyphicons Halflings';
@@ -6,16 +7,6 @@
     src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 
-}
-@font-face{
-    font-family:'almoni-tzar';
-    font-weight:400; /*(regular)*/
-    font-style: normal;
-    src: url('../fonts/almoni-tzar-aaa-400.eot?');
-    src: url('../fonts/almoni-tzar-aaa-400.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/almoni-tzar-aaa-400.woff?') format('woff'),
-        url('../fonts/almoni-tzar-aaa-400.ttf?') format('truetype');
-}
 
 @font-face{
             font-family:'almoni-tzar';
@@ -27,7 +18,6 @@
                 url('../fonts/almoni-tzar-aaa-700.woff') format('woff'),
                 url('../fonts/almoni-tzar-aaa-700.svg#almoni-tzar-bold') format('svg');
 }
-
 
 *{
     vertical-align: middle;
@@ -125,7 +115,7 @@ nav .container {
     color: white !important;
     font-size:1.5em;
     font-weight:700;
-    font-family:"almoni-tzar";
+    font-family: "almoni-tzar", "Roboto Condensed";
     height: 48px;
     line-height: 48px;
     margin-right: 0 !important;
@@ -257,12 +247,12 @@ nav .container {
 #info #total{
     font-weight:bold;
     color: #FFA202;
-    font-family:'almoni-tzar';
+    font-family: "almoni-tzar", "Roboto Condensed";
 }
 
 
 .table-link{
-    cursor:pointer;
+    cursor: pointer;
     text-decoration: none;
     direction: ltr;
     text-align: right;
@@ -454,14 +444,14 @@ span.relative-size., span.change {
 h1 {
     font-size: 2.25em; /* 36px */
     line-height: 1.3333333333em; /* 48px */
-    font-family: "Alef Hebrew";font-weight: bold;
+    font-weight: bold;
     margin: 0 0 0.3333333333em 0 !important; /* 12px */
 }
 
 h2 {
     font-size: 1.5em; /* 24px */
     line-height: 1em; /* 24px */
-    font-family: "almoni-tzar";
+    font-family: "almoni-tzar", "Roboto Condensed";
     color: #999999;
     margin: 0 !important;
 }
@@ -469,7 +459,7 @@ h2 {
 h3 {
     font-size: 1.3125em; /* 21px */
     line-height: 1.14285714285714em; /* 24px */
-    font-family: "almoni-tzar";
+    font-family: "almoni-tzar", "Roboto Condensed";
     color: #999999;
     margin: 0 0 0.571428571428571em  0 !important; /* 12px */
 }
@@ -477,14 +467,13 @@ h3 {
 h4 {
     font-size: 1em;
     line-height: 1.5em;
-    font-family: "almoni-tzar";
+    font-family: "almoni-tzar", "Roboto Condensed";
     color: #999999;
 }
 
 h5 {
     font-size: 14px;
     line-height: 24px;
-    font-family: "Alef Hebrew";
 }
 
 #link-list-title {
