@@ -26,6 +26,15 @@ exports.quarters = function(req,res){
 
 };
 
+
+exports.managing_bodies = function(req,res){
+    DAL.getManagingBodies(function(bodies, bodiesQuery){
+     
+          res.json(bodies);
+
+    });
+}
+
 exports.funds = function(req,res){
 
 		//create filter from request (search string)

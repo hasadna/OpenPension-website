@@ -90,7 +90,7 @@ app.get('/group',test.get);
 app.get('/api/portfolio',api.portfolio);
 app.get('/api/funds',api.funds);
 app.get('/api/quarters',api.quarters);
-
+app.get('/api/managingBodies',api.managing_bodies);
 
 app.get('/csv',csv.download);
 

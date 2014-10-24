@@ -131,7 +131,7 @@ exports.investments = function(req, res){
   filter.removeField("debug");
 
 
-  var lastQuarters = DAL.getLastQuarters(config.current_year, config.current_quarter,4);
+  var lastQuarters = DataNormalizer.getLastQuarters(config.current_year, config.current_quarter,4);
 
   //group filter by quarters
   DAL.groupByInvestments(filter,
@@ -215,7 +215,7 @@ exports.portfolio = function(req, res){
   var managing_body = filter.getConstraintData('managing_body')[0];  
 
 
-  var lastQuarters = DAL.getLastQuarters(report_year, report_qurater, 4);
+  var lastQuarters = DataNormalizer.getLastQuarters(report_year, report_qurater, 4);
   
   //special case for managing body page
   //where we want to show precentage of total market sum

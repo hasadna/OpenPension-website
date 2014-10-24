@@ -453,6 +453,24 @@ function groupByInvestments(filter, callback){
 }
 
 /**
+ * Query the DB, get list of managing bodies
+ */
+function getManagingBodies(callback){
+
+	var select = squel.select().from(config.table);
+	
+	select.field("managing_body").distinct();
+
+	var sqlQuery = select.toString();
+
+	db.query(sqlQuery, function(err, rows){
+			callback(rows, sqlQuery);
+	});
+
+}
+
+
+/**
  * Query the DB, get funds by managing_body
  * @param managing_body : string, name of managing body
  * @param callback : function to handle result rows.
@@ -485,6 +503,6 @@ exports.singleQuery=singleQuery;
 exports.groupByQuarters=groupByQuarters;
 exports.groupByManagingBody=groupByManagingBody;
 exports.groupByPortfolio=groupByPortfolio;
-exports.getLastQuarters=getLastQuarters;
 exports.getFundsByManagingBody=getFundsByManagingBody;
 exports.groupByInvestments=groupByInvestments;
+exports.getManagingBodies=getManagingBodies;
