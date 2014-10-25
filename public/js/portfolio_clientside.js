@@ -18,10 +18,6 @@ $(function () {
 
         navigate(filter.toQueryString());
     
-
-        //convert filter back to query string, and apply location
-        loadTemplates(filter);
-
     });
 
 
@@ -34,10 +30,16 @@ $(function () {
 
 });
 
+
+//change url either by history & ajax or by setting new location 
 function navigate(url){
 
     if (history.pushState != null){
         history.pushState("", "", url);
+
+        //convert filter back to query string, and apply location
+        loadTemplates(filter);
+
     }
     else{
         window.location = url;
@@ -82,8 +84,6 @@ function breadCrumbs(key) {
 
     navigate(filter.toQueryString());
 
-    // browse to new filter
-    loadTemplates(filter);
 
 }
 
@@ -114,6 +114,7 @@ function groupByManagingBody(filter){
   return mFilter; 
 }
 
+//load templates by filter
 function loadTemplates(filter){
 
     //show message on data table
@@ -177,24 +178,29 @@ function addConstraint(key, value) {
 
     navigate(filter.toQueryString());
 
-    //convert filter back to query string, and apply location
-    loadTemplates(filter);
-
 }
 
-
-function setConstraint(key, value) {
+//reset filter to year quarter and managing body
+function gotoPage(key, value){
 
     //generate filter from query string
     var filter = Filter.fromQueryString(window.location.search);
 
-    //add constraint from user
-    filter.setConstraint(key, value);
+    //create new filter for fund page
+    var mFilter = new Filter();
+    var report_year = filter.getConstraintData("report_year")[0];
+    var report_qurater = filter.getConstraintData("report_qurater")[0];
+    var managing_body = filter.getConstraintData("managing_body")[0];
 
-    //convert filter back to query string, and apply location
-    window.location.href = filter.toQueryString();
+    mFilter.setConstraint("report_year",report_year);
+    mFilter.setConstraint("report_qurater",report_qurater);
+    mFilter.setConstraint("managing_body",managing_body);
+    mFilter.setConstraint(key, value);
+
+    navigate(mFilter.toQueryString());
 
 }
+
 
 
 /// Sort the tables
