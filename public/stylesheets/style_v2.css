@@ -215,7 +215,7 @@ nav .container {
     float: left;
 }
 
-#headerDiff{
+#header-diff{
     display: inline-block;
 }
 
@@ -305,10 +305,14 @@ nav .container {
     display: none !important;
 }
 
-.sparkline{
+.sparkline {
     padding:10px !important;
     float:left;
     display: inline-block;
+}
+
+#header-diff .sparkline {
+  margin-right: 15px;
 }
 
 .quarter-diff, .percentage{

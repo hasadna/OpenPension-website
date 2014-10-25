@@ -46,8 +46,8 @@ table(id="aggregate-data-panel" class="table")
                     - caret = "fa-caret-down";
                     - colorClass = "yellow-text";
                 - }
-                div(id="headerDiff")
-                    span(class="quarter-diff #{colorClass}" )
-                        p(class="datum percentage"  style="direction:ltr") #{diff}%
+                div(id="header-diff")
+                    div(class="quarter-diff #{colorClass}" )
+                        span(class="datum percentage"  style="direction:ltr") #{diff}%
                         i(class="fa #{caret}")
                     div(class="sparkline",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")
