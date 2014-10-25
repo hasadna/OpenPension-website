@@ -61,7 +61,11 @@ each group in groups
 
                     tr()
                         td()
-                            a(class="table-link" onclick="addConstraint('#{group.group_field}','#{lastQResult[group.group_field]}')" title='#{groupName}') #{groupName}
+                            - if (groupPercentage == 100){
+                                div() #{groupName}
+                            - }else{
+                                a(class="table-link" onclick="addConstraint('#{group.group_field}','#{lastQResult[group.group_field]}')" title='#{groupName}') #{groupName}
+                            -}
                         td()
                             span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
                         td()
