@@ -10,18 +10,19 @@ table(id="aggregate-data-panel" class="table")
                 - }
                 span(class="datum") #{total_sum_words.number}  #{total_sum_words.scale} שקל
 
-            td()
+            
+            -if (filter.hasConstraint("managing_body") || filter.getDrillDownDepth() > 0){
+                td()
+                    - if (report_type == "managing_body"){
+                        h3() חלק משוק הפנסיה
+                    - }
+                    - else if(report_type == "investment") {
+                        h3() חשיפה
+                    - }
 
-                - if (report_type == "managing_body"){
-                    h3() חלק משוק הפנסיה
-                - }
-                - else if(report_type == "investment") {
-                    h3() חשיפה
-                - }
-
-                -var percentageOfTotalFund = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1)
-                span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
-
+                    -var percentageOfTotalFund = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1)
+                    span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
+            -}
             td()
                 h3() שינוי ב-4 רבעונים
                 -var diffQ0 = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1);
