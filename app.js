@@ -67,6 +67,7 @@ if ('development' == app.get('env')) {
 
 app.get('/managing_bodies_treemap.json', homepage.managing_body_treemap);
 app.get('/issuers_treemap.json', homepage.issuers_treemap);
+app.get('/highcharts_managing_body', homepage.highcharts_managing_body);
 app.get('/', homepage.show);
 app.get('/ver1', entry.show);
 
@@ -90,7 +91,10 @@ app.get('/group',test.get);
 app.get('/api/portfolio',api.portfolio);
 app.get('/api/funds',api.funds);
 app.get('/api/quarters',api.quarters);
-app.get('/api/managingBodies',api.managing_bodies);
+app.get('/api/managing_bodies',api.managing_bodies);
+app.get('/api/query',api.query);
+app.get('/api/fair_values',api.fair_values);
+
 
 app.get('/csv',csv.download);
 

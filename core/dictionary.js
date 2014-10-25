@@ -42,6 +42,7 @@ dictionary['nzd'] = 'דולר ניו-זילנד';
 dictionary['cny'] = 'יואן סיני';
 
 dictionary['null'] = 'לא נמצא בקטגוריה';
+dictionary['others'] = 'אחרים';
 
 //dictionary holds lower case keys
 var translate = function(word){

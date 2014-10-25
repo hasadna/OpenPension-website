@@ -57,36 +57,66 @@ exports.portfolio = function(req, res){
 		  //create filter from request (search string)
 		  var filter = Filter.fromGetRequest(req);
 
-	      DAL.groupByPortfolio(filter,
-	                function(groups){
+      DAL.groupByPortfolio(filter,
+                function(groups){
 
-          //group results by group_field (e.g. issuer)
-          _.each(groups, 
-              function(value,key,list){
-                  value['result'] = 
-                      _.groupBy(value['result'],value['group_field']);
-                  delete value['query'];
-              }
+        //group results by group_field (e.g. issuer)
+        _.each(groups, 
+            function(value,key,list){
+                value['result'] = 
+                    _.groupBy(value['result'],value['group_field']);
+                delete value['query'];
+            }
+        );
+
+
+        //group result items by year and quarter
+        _.each(groups,
+          function(v,k,l){
+          _.each(v['result'],
+            function(v1,k1,l1){ 
+              l1[k1] = _.groupBy(l1[k1],
+                  function(v2,k2,l2){
+                    return v2['report_year']+"_"+v2['report_qurater'];
+                  }
+              );
+            }
           );
-
-
-          //group result items by year and quarter
-          _.each(groups,
-            function(v,k,l){
-            _.each(v['result'],
-              function(v1,k1,l1){ 
-                l1[k1] = _.groupBy(l1[k1],
-                    function(v2,k2,l2){
-                      return v2['report_year']+"_"+v2['report_qurater'];
-                    }
-                );
-              }
-            );
-          });
-
-
-	          res.json(groups);
-
         });
 
+
+        res.json(groups);
+
+      });
+
 };
+
+exports.query = function(req,res){
+
+    //create filter from request (search string)
+    var filter = Filter.fromGetRequest(req);
+
+    if ( filter.getConstrainedFields().length == 0 ){
+      res.json({'error':'Query is empty','return_code':'-7'})
+    }
+
+    DAL.singleQuery(filter, function(result){
+      res.json(result);
+    });
+
+};
+
+exports.fair_values = function(req,res){
+
+    //create filter from request (search string)
+    var filter = Filter.fromGetRequest(req);
+
+    if ( filter.getConstrainedFields().length == 0 ){
+      res.json({'error':'Query is empty','return_code':'-7'})
+    }
+
+    DAL.groupBySummaries(filter, function(result, query){
+      res.json(result);
+    });
+
+}

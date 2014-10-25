@@ -29,24 +29,24 @@ block content
                                     span(class="soon") בקרוב
 
         div(id="homepage-content" class="container")
-            script(src="treemap/d3.js")
             script(src="js/common_clientside.js")
             script(src="js/homepage_clientside.js")
             script(type='text/javascript', src='js/highcharts.js')
+            script(src="http://code.highcharts.com/modules/exporting.js")
+
+
 
             div(class="row")
                 div(class="col-xs-12")
                     div(id="homepage-content" class="tab-content")
-                            div(class="tab-pane active" id="managing-bodies")
+                            div(class="tab-pane active" id="container" style="direction:ltr; text-align:left; float:left; width:100%;height:40em")
                             div(class="tab-pane" id="issuers")
                             div(id="homepage-links")
                                 a(class="homepage-link" href="/portfolio#{filterWithoutGroup.toQueryString()}" ) תיק ההשקעות של כל שוק הפנסיה
                                 span(class="seperator") |
-                                a(class="homepage-link" data-target="#myModal",data-toggle="modal",data-remote="/investments#{filterWithoutGroup.toQueryString()}&group_by=managing_body") רשימת הגופים המוסדיים
-
+                                a(id="modal-anchor" class="homepage-link" data-target="#myModal",data-toggle="modal",data-remote="/investments#{filterWithoutGroup.toQueryString()}&group_by=managing_body") רשימת הגופים המוסדיים
+ 
 
         div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
             div(class="modal-dialog modal-lg")
                 div(class="modal-content")
-
-

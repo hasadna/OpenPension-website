@@ -1,67 +1,102 @@
-  var margin = {top: 0, right: -3, bottom: 0, left: 0},
-      width = 946, 
-      height = 470;
+$(function () {
+
+
+    $.ajax({
+        url: '/highcharts_managing_body',
+        datatype: "json",
+        success: function(data) 
+        {
+            drawGraph(data);
+        },
+    });
+    
+});
+
+//add new constraint to filter and reload page
+function addConstraint(key, value) {
+
+    //generate filter from query string
+    var filter = Filter.fromQueryString(window.location.search);
+
+    //add constraint from user
+    filter.setConstraint(key, value);
+
+    //convert filter back to query string, and apply location
+    window.location.href = '/portfolio' + filter.toQueryString();
+}
 
 
 
-  	$(function(){
-		  drawGraph("managing-bodies","/managing_bodies_treemap.json");
-		  drawGraph("issuers","/issuers_treemap.json");
-  	});
+function drawGraph(data){
+    $('#container').highcharts({
+        chart: {
+            margin: 0,
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        plotOptions: {
+            pie: {
+                slicedOffset: 0,
+                dataLabels: {
+                    enabled: true,
+                    distance: -50,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
+                    }
+                },
+                size:'100%',
+                startAngle: -90,
+                endAngle: 90,
+                center: ['50%', '75%'],
+                colors: ["#3B70BF"],
+                point: {
+                    events: {
+                        click: function () {
+                            if (this.link == "others"){
+                                $('#myModal').modal('show');
+                                $.ajax($("#modal-anchor").data("remote"))
+                                    .success(function(res){
+                                        $(".modal-content").html(res);
+                                    });
+                            }
+                            else{
+                                location.href = this.link;
+                            }
+                        }
+                    }
+                }
 
-  function drawGraph(elementId, jsonURL){
-
-	  var color = d3.scale.category20c();
-
-	  var treemap = d3.layout.treemap()
-	      .size([width, height])
-	      .sticky(true)
-	      .value(function(d) { return d.size; });
-
-
-	  var div = d3.select("#"+elementId).append("div")
-	      .style("position", "relative")
-	      .style("width", (width + margin.left + margin.right) + "px")
-	      .style("height", (height + margin.top + margin.bottom) + "px")
-	      .style("left", margin.left + "px")
-	      .style("top", margin.top + "px");
-
-	  d3.json(jsonURL, function(error, root) {
-      	
-      	var node = div.datum(root).selectAll(".node")
-          .data(treemap.nodes)
-          .enter().append("div")
-          .attr("class", "node")
-          .attr("onclick",function(d){return "window.location = '"+d.link+"'"})
-          .call(position)
-          .style("background", "#3B70BF" )
-          .style("cursor", "pointer")
-          .html(function(d) { return "<span class='title'>"+d.translatedName+"</span><br/>"+d.sizeDescription; });
-
-		d3.selectAll("input").on("change", function change() {
-			var value = this.value === "count"
-				? function() { return 1; }
-				: function(d) { return d.size; };
-
-        node
-          .data(treemap.value(value).nodes)
-          .transition()
-          .duration(1500)
-          .call(position);
-        });
-
-      //remove text content of small graph blocks where text cannot fit
-      $("#"+ elementId +" div").each(function(i,e){ if($(e).width() < 150 ) $(e).html("") })
-
-	  });
-
-  
-   }
-
-
-  function position() {
-    this.style("left", function(d) { return d.x + "px"; })
-        .style("top", function(d) { return d.y + "px"; })
-        .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
-        .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
-  }
+            }
+        },
+        title: {
+            text: 'שוק הפנסיה',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 60
+        },
+        exporting: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        tooltip: {
+            useHTML: true,
+            formatter: function()
+            {
+                var color = "";
+                return '<div style="direction:rtl;text-align:right">' + 
+                    '<p><b>'+this.point.name+'</b></p><p>חלק מהשוק:' + Number(this.y * 100).toFixed(1) + '% </p></div>';
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'חלק יחסי',
+            innerSize: '50%',
+            data: data
+        }]
+    });
+}
