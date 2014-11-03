@@ -89,7 +89,10 @@ function drawGraph(data){
             {
                 var color = "";
                 return '<div style="direction:rtl;text-align:right">' + 
-                    '<p><b>'+this.point.name+'</b></p><p>חלק מהשוק:' + Number(this.y * 100).toFixed(1) + '% </p></div>';
+                    '<p><b>'+this.point.name+'</b></p>' +
+                    '<p>חלק מהשוק:' + Number(this.y * 100).toFixed(1) + '% </p>'+
+                    '<p>'+ this.point.sizeDescription  +'</p>'+
+                    '</div>';
             }
         },
         series: [{

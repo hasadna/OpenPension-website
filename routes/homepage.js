@@ -171,6 +171,8 @@ exports.highcharts_managing_body = function(req,res){
             });
 
 
+        others.sizeDescription = formatSizeDesc(DataNormalizer.convertNumberToWords(others.size));
+
         largeEnough.push(others);
 
         var totalSum = sum(managing_bodies);
