@@ -13,22 +13,36 @@ CREATE OR REPLACE VIEW pension_data_all AS
     end					as instrument_name,
     
 --    (production.instrument_id || ' - '::character varying(128) || (COALESCE(ext.instrument_name,production.instrument_symbol)))::character varying(128) as instrument_name,
-    ext.issuer, 
+-- -----------------------------------------------------------------------
+-- issuer - in case of תעודות התחייבות ממשלתיות the ussuer is ממשלת ישראל
+-- -----------------------------------------------------------------------
+    case        when production.instrument_sub_type like '%ממשלתיות%' and production.currency = 'NIS'		then 'ממשלת ישראל'::character varying(128)
+		else ext.issuer 
+    end 				as issuer, 
+-- -----------------------------------------------------------------------
+-- activity_industry (ענף פעילות) - null -> in case of מזומן,פקדונות,ממשלתיות, תעודות סל, חוזים עתידיים, מוצרים מובנים, הלוואות וזכויות מקרקעין     
+-- -----------------------------------------------------------------------
     case 	when production.instrument_sub_type like '%מניות%' 		then COALESCE(ext.activity_industry,production.industry,'אחר'::character varying(128))
 		when production.instrument_sub_type like '%קונצרני%' 		then COALESCE(ext.activity_industry,production.industry,'אחר'::character varying(128))
+		when production.instrument_sub_type like '%תעודות חוב%' 	then COALESCE(ext.activity_industry,production.industry,'אחר'::character varying(128))
+		when production.instrument_sub_type like '%תעודות התחייבות מסחריות%' 	then COALESCE(ext.activity_industry,production.industry,'אחר'::character varying(128))
 		when production.instrument_sub_type like '%כתבי אופציה%' 	then COALESCE(ext.activity_industry,production.industry,'אחר'::character varying(128))
-		when production.instrument_sub_type like '%תעודות סל%' 	then COALESCE(ext.activity_industry,production.industry,'ללא סיווג'::character varying(128))
+		when production.instrument_sub_type like '%תעודות סל%' 		then COALESCE(ext.activity_industry,production.industry,NULL::character varying(128))
 		when production.instrument_sub_type like '%קרנות%' 		then 'אחר'::character varying(128)
-		when production.instrument_type     like '%הלוואות%' 		then 'אחר'::character varying(128)
-		when production.instrument_sub_type like '%ממשלתיות%'		then 'ללא סיווג'::character varying(128)
-		when production.instrument_sub_type in ('חוזים עתידיים', 'מוצרים מובנים', 'אופציות')	then 'ללא סיווג'::character varying(128)
-		when production.instrument_type in ('מזומנים','פקדונות')	then 'ללא סיווג'::character varying(128)
-		else 							     'ללא סיווג'::character varying(128)
+		when production.instrument_type     like '%הלוואות%' 		then NULL::character varying(128)
+		when production.instrument_type     like '%זכויות מקרקעין%' 	then NULL::character varying(128)
+		when production.instrument_sub_type like '%ממשלתיות%'		then NULL::character varying(128)
+		when production.instrument_sub_type in ('חוזים עתידיים', 'מוצרים מובנים', 'אופציות')	then NULL::character varying(128)
+		when production.instrument_type in ('מזומנים','פקדונות')	then NULL::character varying(128)
+		else 							     'לא מסווג'::character varying(128)
     end					as activity_industry,
 --    production.currency,     
+-- -----------------------------------------------------------------------
+-- currency (מטבע) - can not be null    
+-- -----------------------------------------------------------------------
     COALESCE(production.currency,'NIS'::character varying(128)) 	as currency,     
-    (COALESCE(production.fair_value,0))*1000 	as fair_value, 
-    (COALESCE(production.market_cap,0))*1000 	as market_cap, 
+    (COALESCE(production.fair_value,0))*1000+(COALESCE(production.market_cap,0))*1000 	as fair_value, 
+    0::numeric 	as market_cap, 
     production.rate_of_fund, 
     production.rating_agency, 
     ext.reference_index, 
@@ -36,6 +50,18 @@ CREATE OR REPLACE VIEW pension_data_all AS
     production.date_of_purchase, 
     production.average_of_duration, 
     production.date_of_revaluation, 
+-- -----------------------------------------------------------------------
+-- rate (דירוג) - not null - ממשלתיות, אגח קונצרני, תעודות חוב מסחריות, קרנות נאמנות, מוצרים מובנים, תעודות התחייבות מסחריות, הלוואות
+-- -----------------------------------------------------------------------
+--    case 	when production.instrument_sub_type like '%ממשלתיות%'		then production.rate::character varying(128)
+--		when production.instrument_sub_type like '%קונצרני%' 		then production.rate::character varying(128)
+--		when production.instrument_sub_type like '%תעודות חוב%' 	then production.rate::character varying(128)
+--		when production.instrument_sub_type like '%קרנות%' 		then production.rate::character varying(128)
+--		when production.instrument_sub_type like '%תעודות התחייבות מסחריות%' 	then production.rate::character varying(128)
+--		when production.instrument_type     like '%הלוואות%' 		then production.rate::character varying(128)
+--		when production.instrument_sub_type in ( 'מוצרים מובנים')	then production.rate::character varying(128)
+--		else 							     	NULL::character varying(128)
+--    end					as rate,
     production.rate,
     production.yield, 
     case	when production.rating_agency = 'פנימי' 		then 'פנימי'::character varying(128)
@@ -67,8 +93,13 @@ CREATE OR REPLACE VIEW pension_data_all AS
     production.tmp_name, 
     production.underlying_asset, 
     production.type_of_asset, 
-    production.rate_of_ipo, 
-    liquidity.liquidity,
+    production.rate_of_ipo,
+-- -----------------------------------------------------------------------
+-- liquidity - null -> in case of קרנות השקעה     
+-- -----------------------------------------------------------------------
+    case        when production.instrument_sub_type like '%קרנות%' 		then NULL::character varying(128)
+		else liquidity.liquidity
+    end 				as liquidity,
     liquidity.asset_type 
    FROM production
    LEFT JOIN ext ON (production.instrument_id::text = ext.instrument_id::text)
