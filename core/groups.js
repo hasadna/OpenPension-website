@@ -4,6 +4,7 @@ var Groups = function(){
 }
 
 Groups.common_groups = [
+                              'managing_body',
                               'issuer',
                               'activity_industry', 
                               'currency', 
@@ -30,7 +31,10 @@ Groups.getGroups = function(filter){
 
   //if managing body is not in constraints remove fund_name
   if (!filter.hasConstraint("managing_body")){
-    delete resArray[resArray.indexOf("fund_name")];
+	delete resArray[resArray.indexOf("fund_name")];
+  }
+  else{ //managing body is in constraint, remove from groups 
+	delete resArray[resArray.indexOf("managing_body")];
   }
 
   //filter contains reference index
