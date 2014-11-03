@@ -94,6 +94,7 @@ app.get('/api/quarters',api.quarters);
 app.get('/api/managing_bodies',api.managing_bodies);
 app.get('/api/query',api.query);
 app.get('/api/fair_values',api.fair_values);
+app.get('/api/search',api.search);
 
 
 app.get('/csv',csv.download);

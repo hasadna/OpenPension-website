@@ -120,3 +120,18 @@ exports.fair_values = function(req,res){
     });
 
 }
+
+
+exports.search = function(req,res){
+
+    var searchTerm = req.query['term'];
+
+    if ( searchTerm == undefined ){
+      res.json({'error':'Query is empty','return_code':'-7'})
+    }
+
+    DAL.search(searchTerm, function(result, query){
+      res.json(result);
+    });
+
+}

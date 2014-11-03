@@ -495,6 +495,32 @@ function getFundsByManagingBody(managing_body,callback){
 
 }
 
+
+/**
+ * Query the DB, find lines containing term in 
+ * instrument_id or instrument_name 
+ * @param term : string, name/id to look for
+ * @param callback : function to handle result rows.
+ */
+function search(term,callback){
+	
+	var select = squel.select().from(config.table);
+	select.distinct();
+	select.field("instrument_name");
+	select.field("instrument_id");
+	select.where("instrument_name like '%"+escape(term) +"%'" +
+		" OR instrument_id like '%"+escape(term) +"%'");
+	
+	var sqlQuery = select.toString();
+
+	console.log(sqlQuery);
+
+	db.query(sqlQuery, function(err, rows){
+			callback(rows, sqlQuery);
+	});
+
+}
+
 //exports
 exports.groupBySummaries=groupBySummaries;
 exports.parseFilter=parseFilter;
@@ -506,3 +532,4 @@ exports.groupByPortfolio=groupByPortfolio;
 exports.getFundsByManagingBody=getFundsByManagingBody;
 exports.groupByInvestments=groupByInvestments;
 exports.getManagingBodies=getManagingBodies;
+exports.search=search;
