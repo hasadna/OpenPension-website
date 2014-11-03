@@ -42,22 +42,55 @@ exports.managing_body_treemap = function(req,res){
 
         var managing_bodies = groups[0].result;
 
+        var totalSum = sum(managing_bodies);
         var children = _.map(managing_bodies, function(entity) {
 
             var fair_value = entity['fair_value'];
             var managing_body = entity['managing_body'];
             var sizeDesc = DataNormalizer.convertNumberToWords(fair_value);
+            var relativePart = Number(fair_value / totalSum );
 
             return {
                "name":managing_body,
                "size":fair_value,
                "translatedName":translate(managing_body),
                "sizeDescription" : formatSizeDesc(sizeDesc),
-               "link": "/portfolio?managing_body=" + managing_body + "&report_year=" + config.current_year + "&report_qurater=" + config.current_quarter
+               "link": "/portfolio?managing_body=" + managing_body + "&report_year=" + config.current_year + "&report_qurater=" + config.current_quarter,
+               "relativePart" : relativePart
             };
         });
 
-        var totalSum = sum(managing_bodies);
+
+
+        var tooSmall = children.filter(function(element){
+                return element.relativePart <= 0.07;
+            });
+
+        var largeEnough = children.filter(function(element){
+                return element.relativePart > 0.07;
+            });
+
+        var others = tooSmall.reduce(
+            function(previousValue, currentValue, index, array) { 
+                return {
+	                "translatedName":translate("others"),
+                    "size":Number(currentValue.size) + Number(previousValue.size),
+                    "name":translate("others"),
+                    "relativePart":Number(currentValue.relativePart) + Number(previousValue.relativePart),
+                    "link": "others"
+                }
+            }
+            , {
+               "size":0,
+               "relativePart":0
+            });
+
+
+        others.sizeDescription = formatSizeDesc(DataNormalizer.convertNumberToWords(others.size));
+
+        largeEnough.push(others);
+
+
 
         res.setHeader('Vary', 'Accept-Encoding');
 
@@ -65,7 +98,7 @@ exports.managing_body_treemap = function(req,res){
         var oneWeek = 604800000;
         res.setHeader('Cache-Control', 'public, max-age='+oneWeek);        
         
-        res.json(asTreemapData('managing_bodies', children));
+        res.json(asTreemapData('managing_bodies', largeEnough));
     });
 
 
