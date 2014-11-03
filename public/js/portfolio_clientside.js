@@ -140,29 +140,31 @@ function loadTemplates(filter){
         var report_qurater = filter.getConstraintData("report_qurater")[0];
         var lastQuarters = getLastQuarters(report_year, report_qurater, 4);
 
-        $("#header").html( templatizer.header( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value'])} ) );
-        $("#groups").html(templatizer.groups({ debug: debug, fundsQuery: fundsQuery, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter, lastQuarters: lastQuarters} ))
-        $("#funds").html(templatizer.funds({ debug: debug, fundsQuery: fundsQuery, funds:funds, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent} ))
+        $("#header").html( templatizer.header( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value']), filter : filter} ) );
+        $("#groups").html(templatizer.groups({ debug: debug, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter, lastQuarters: lastQuarters} ))
+        $("#funds").html(templatizer.funds({ debug: debug, funds:funds, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent} ))
         $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
-        $("#reportTitle").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter) } ) );
+        $("#reportTitle").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter), filter : filter } ) );
         drawSparklines();
 
 
+        //remove loading message
         $('#aggregate-data-panel').unblock(); 
 
     }
 
-    function failed(f){
+    function failed(msg){
         $('#aggregate-data-panel').unblock(); 
-        console.error(f);
+        console.error(msg);
     }
 
-
-    $.when( $.ajax( "/api/quarters" + filter.toQueryString()), 
+    
+    var deferred = [ $.ajax( "/api/quarters" + filter.toQueryString()), 
             $.ajax( "/api/quarters" + managingBodyFilter.toQueryString()),
             $.ajax( "/api/portfolio" + filter.toQueryString()),
-            $.ajax( "/api/funds" + filter.toQueryString() ))
-        .then( success , failed);
+            $.ajax( "/api/funds" + filter.toQueryString()) ];
+
+    $.when.apply($, deferred).then( success , failed);
 
 
 }

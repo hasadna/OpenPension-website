@@ -199,7 +199,6 @@ exports.portfolio = function(req, res){
   var debug = filter.getConstraintData("debug")[0];
   filter.removeField("debug");
 
-  //TODO: get current year and quarter from DB
   if (!filter.hasConstraint("report_year")){
       filter.addConstraint("report_year",config.current_year);
   }
@@ -316,8 +315,8 @@ exports.portfolio = function(req, res){
             dictionary : dictionary,
             getReportType: getReportType,
             createTitle: createTitle,
-            escapeJSLink: DataNormalizer.escapeJSLink,
-        
+            escapeJSLink: DataNormalizer.escapeJSLink
+
           });        
         });
       });

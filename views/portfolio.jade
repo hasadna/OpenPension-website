@@ -55,32 +55,27 @@ block content
         div(class="row")
             div(id="further-reading" class="col-xs-12")
                 h3(id = "link-list-title") עוד בפנסיה פתוחה
-                div(id="funds")
-                    include partials/funds.jade
+                div(id="more")
+                    - if (filter.hasConstraint("managing_body"))
+                        include partials/funds.jade
 
         div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
             div(class="modal-dialog modal-lg")
                 div(class="modal-content")
 
 
-    -if (debug)
-        <!-- DEGBUGGING -->
-        script() var groups = !{JSON.stringify(groups)};
-        script() var quarters = !{JSON.stringify(quarters)};
-        script() var lastQuarters = !{JSON.stringify(lastQuarters)};
-        script() var totalPensionFundQuarters = !{JSON.stringify(totalPensionFundQuarters)};
-        script() var quartersQuery = !{JSON.stringify(quartersQuery)};
-        script() var totalPensionFundQuery = !{JSON.stringify(totalPensionFundQuery)};
-        script() var origGroups = !{JSON.stringify(origGroups)};
-        script(type='text/javascript', src='/js/underscore-min.js')
-    
-
 
     script() var filter = Filter.fromQueryString("!{filter.toQueryString()}");
     
     script() var translate = !{translate};
-    script() var funds = !{JSON.stringify(funds)};    
-    script() var fundsQuery = !{JSON.stringify(fundsQuery)};
+    
+    - if (funds != undefined)
+        script() var funds = !{JSON.stringify(funds)};    
+    
+    - if (fundsQuery != undefined)
+        script() var fundsQuery = !{JSON.stringify(fundsQuery)};
+    
+
     script() var debug = !{debug};
     script() var dictionary = !{JSON.stringify(dictionary)};
     script() var report_type = !{JSON.stringify(report_type)};
