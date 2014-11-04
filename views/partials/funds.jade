@@ -1,9 +1,0 @@
-h4() קופות של #{translate(filter.getConstraintData('managing_body'))}
-- if (debug)
-    div(style="text-align:left;direction:ltr") #{fundsQuery}
-ul(id = "link-list")
-    each fund in funds
-        - var escapedVal = escapeJSLink(fund['fund_name']); 
-            li()
-                a(class="table-link", onclick="addConstraint('fund_name','#{escapedVal}')") #{fund['fund_name']}
-            br()

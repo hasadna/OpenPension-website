@@ -54,10 +54,8 @@ block content
 
         div(class="row")
             div(id="further-reading" class="col-xs-12")
-                h3(id = "link-list-title") עוד בפנסיה פתוחה
                 div(id="more")
-                    - if (filter.hasConstraint("managing_body"))
-                        include partials/funds.jade
+                    include partials/more.jade
 
         div(class="modal fade", id="myModal",tabindex="-1", role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
             div(class="modal-dialog modal-lg")

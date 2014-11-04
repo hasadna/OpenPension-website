@@ -140,13 +140,15 @@ function loadTemplates(filter){
         var report_qurater = filter.getConstraintData("report_qurater")[0];
         var lastQuarters = getLastQuarters(report_year, report_qurater, 4);
 
-        $("#header").html( templatizer.header( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value']), filter : filter} ) );
-        $("#groups").html(templatizer.groups({ debug: debug, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter, lastQuarters: lastQuarters} ))
-        $("#funds").html(templatizer.funds({ debug: debug, funds:funds, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent} ))
+        //render templates and inject output to view 
         $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
         $("#reportTitle").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter), filter : filter } ) );
-        drawSparklines();
+        $("#header").html( templatizer.header( { report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[0]['fair_value']), filter : filter} ) );
+        $("#groups").html(templatizer.groups({ debug: debug, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter, lastQuarters: lastQuarters} ))
+        $("#more").html(templatizer.more({ debug: debug, funds:funds, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, filter : filter} ))
 
+        //draw sparklines over quarter data
+        drawSparklines();
 
         //remove loading message
         $('#aggregate-data-panel').unblock(); 
@@ -188,7 +190,7 @@ function gotoPage(key, value){
     //generate filter from query string
     var filter = Filter.fromQueryString(window.location.search);
 
-    //create new filter for fund page
+    //create new filter with key & value
     var mFilter = new Filter();
     var report_year = filter.getConstraintData("report_year")[0];
     var report_qurater = filter.getConstraintData("report_qurater")[0];
