@@ -413,6 +413,9 @@ span.relative-size., span.change {
     width: 25%;
 }
 
+.change{
+    overflow: visible !important;
+}
 .unit {
     width: auto;
 }
