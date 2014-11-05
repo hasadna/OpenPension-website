@@ -5,11 +5,8 @@
 
 
 var express = require('express')
-  , routes = require('./routes')
-  , index = require('./routes/index')
   , portfolio = require('./routes/portfolio')
   , staticpages = require('./routes/staticpages')
-  , entry = require('./routes/entry')
   , homepage = require('./routes/homepage')
   , http = require('http')
   , path = require('path')
@@ -35,13 +32,6 @@ FSUtil.copyFile('./core/filter.js', './public/js/filter.js',
 				process.exit(1);
 			}
 		);
-//enable use of Categories in client
-FSUtil.copyFile('./core/categories.js', './public/js/categories.js',
-      function(err){ 
-        console.log(err);
-        process.exit(1);
-      }
-    );
 
 var app = express();
 
@@ -69,12 +59,10 @@ app.get('/managing_bodies_treemap.json', homepage.managing_body_treemap);
 app.get('/issuers_treemap.json', homepage.issuers_treemap);
 app.get('/highcharts_managing_body', homepage.highcharts_managing_body);
 app.get('/', homepage.show);
-app.get('/ver1', entry.show);
 
 app.get('/portfolio', portfolio.portfolio);
 app.get('/investments', portfolio.investments);
 
-app.get('/entry', entry.show);
 
 app.get('/about', staticpages.about);
 app.get('/privacy', staticpages.privacy);

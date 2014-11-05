@@ -4,7 +4,6 @@ var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
-var Categories = require('../core/categories.js');
 var translate = require('../core/dictionary.js').translate;
 var config = require('../config')
 
