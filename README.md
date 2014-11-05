@@ -13,6 +13,10 @@ Our stack
 [Squel] [4]  
 [PostgreSQL] [5]  
 
+Also used
+===============
+[Templatizer] [6]  
+[Tabletop] [7]  
 
 Getting Started
 ===============
@@ -37,20 +41,22 @@ Getting Started
   [3]: http://jade-lang.com/    "Jade"
   [4]: http://hiddentao.github.io/squel/ "Squel"
   [5]: http://www.postgresql.org/download/ "PostgreSQL"
+  [6]: https://github.com/HenrikJoreteg/templatizer "Templatizer"
+  [7]: https://github.com/jsoma/tabletop "Tabletop"
 
 Additional Requirements
 ===========
 
 For compiling the packages on windows  
 you might need to install Microsoft Visual Studio  
-You can get the Express version which is free to download [here] [6]
+You can get the Express version which is free to download [here] [8]
 
 
-  [6]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "Squel"
+  [8]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "Squel"
 
 
-Continuous Deployment Server
+Online version
 ===========
-Heroku: [http://open-pension.herokuapp.com] [7]
+Visit: [http://www.openpension.org.il] [9]
 
-  [7]: http://open-pension.herokuapp.com
+  [9]: http://www.openpension.org.il
