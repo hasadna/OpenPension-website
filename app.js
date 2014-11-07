@@ -8,6 +8,7 @@ var express = require('express')
   , portfolio = require('./routes/portfolio')
   , staticpages = require('./routes/staticpages')
   , homepage = require('./routes/homepage')
+  , search = require('./routes/search')
   , http = require('http')
   , path = require('path')
   , FSUtil = require('./util/FSUtil')
@@ -62,7 +63,7 @@ app.get('/', homepage.show);
 
 app.get('/portfolio', portfolio.portfolio);
 app.get('/investments', portfolio.investments);
-
+app.get('/search', search.show)
 
 app.get('/about', staticpages.about);
 app.get('/privacy', staticpages.privacy);

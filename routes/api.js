@@ -124,13 +124,14 @@ exports.fair_values = function(req,res){
 
 exports.search = function(req,res){
 
-    var searchTerm = req.query['term'];
+    var searchTerm = req.query['q'];
+    var page = req.query['p'];
 
     if ( searchTerm == undefined ){
       res.json({'error':'Query is empty','return_code':'-7'})
     }
 
-    DAL.search(searchTerm, function(result, query){
+    DAL.search(searchTerm, page, function(result, query){
       res.json(result);
     });
 

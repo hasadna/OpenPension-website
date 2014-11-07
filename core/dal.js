@@ -483,7 +483,7 @@ function getFundsByManagingBody(managing_body,callback){
 
 	var select = squel.select().from(config.table);
 	select.field("fund_name");
-	select.where("managing_body = '"+escape(managing_body) +"'")
+	select.where("managing_body = '"+escapeChars(managing_body) +"'")
 	select.group("fund_name");
 	select.order("fund_name",true);
 
@@ -500,23 +500,46 @@ function getFundsByManagingBody(managing_body,callback){
  * Query the DB, find lines containing term in 
  * instrument_id or instrument_name 
  * @param term : string, name/id to look for
- * @param callback : function to handle result rows.
+ * @param callback(obj) : function to handle result rows.
+ * obj = {rows:[...], total_row_count:int, page: int, 
+ * 			results_per_page: int, total_pages: int}	
  */
-function search(term,callback){
-	
+function search(term, pageNum, callback){
+	var RESULTS_PER_PAGE = 50;
+
+	if (pageNum == undefined)
+		pageNum = 1;
+
+	if (term == undefined || term == "" ) {
+		var res = {"rows":[], "total_row_count" : 0, "page":0, "results_per_page" : RESULTS_PER_PAGE, "total_pages": 0};
+		callback(res)
+		return
+	}
+
+	//query limited & offset
 	var select = squel.select().from(config.table);
 	select.distinct();
 	select.field("instrument_name");
 	select.field("instrument_id");
-	select.where("instrument_name like '%"+escape(term) +"%'" +
-		" OR instrument_id like '%"+escape(term) +"%'");
+	select.where("LOWER(instrument_name) like LOWER('%"+escapeChars(term) +"%')" +
+		" OR LOWER(instrument_id) like LOWER('%"+escapeChars(term) +"%')");
+	select.limit(RESULTS_PER_PAGE);
+	select.offset( RESULTS_PER_PAGE * (pageNum - 1));
+
+
+	var countSelect = 
+		"select count(count_a) from (" 
+			+"SELECT count(*) as count_a,instrument_name, instrument_id FROM pension_data_all WHERE (LOWER(instrument_name) like LOWER('%"+escapeChars(term)+"%') OR LOWER(instrument_id) like LOWER('%"+escapeChars(term)+"%')) group by instrument_name, instrument_id"
+		+")  as c";
+
 	
-	var sqlQuery = select.toString();
+	//console.log(select.toString())
 
-	console.log(sqlQuery);
-
-	db.query(sqlQuery, function(err, rows){
-			callback(rows, sqlQuery);
+	db.query(select.toString(), function(err, rows){
+		db.query(countSelect, function(err, count){
+				var res = {"rows":rows, "total_row_count" : count[0].count, "page":pageNum, "results_per_page" : RESULTS_PER_PAGE, "total_pages": Math.ceil(count[0].count/RESULTS_PER_PAGE)};
+				callback(res, select.toString());
+		});
 	});
 
 }
