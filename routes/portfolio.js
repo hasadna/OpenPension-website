@@ -7,6 +7,7 @@ var removeQoutes = DataNormalizer.removeQoutes;
 var config = require('../config')
 var jade = require('jade');
 var fs = require('fs');
+var async = require('async');
 
 var Dictionary =  require('../core/dictionary.js')
 var dictionary = Dictionary.dictionary;
@@ -135,7 +136,7 @@ exports.investments = function(req, res){
 
   //group filter by quarters
   DAL.groupByInvestments(filter,
-      function(groups, select){
+      function(err, groups, select){
 
 
         //sum groups to quarters
@@ -227,99 +228,114 @@ exports.portfolio = function(req, res){
       totalPensionFundFilter.removeField("managing_body");
   }
 
-  //relative to total fund or current managing_body
-  DAL.groupByManagingBody(totalPensionFundFilter,
-    function(totalPensionFundQuarters, totalPensionFundQuery){
-
-    //group filter by quarters
-    DAL.groupByQuarters(filter,
-        function(quarters, quartersQuery){
-      
-      DAL.groupByPortfolio(filter,
-          function(groups){
-
-        DAL.getFundsByManagingBody(managing_body,
-          function(funds, fundsQuery){
-          
-          var origGroups = JSON.parse(JSON.stringify(groups));
 
 
-          //group results by group_field (e.g. issuer)
-          _.each(groups, 
-              function(value,key,list){
-                  value['result'] = 
-                      _.groupBy(value['result'],value['group_field'])
-              }
-          );
 
+  async.parallel([
+      function(callback){ 
+          //relative to total fund or current managing_body
+          DAL.groupByManagingBody(totalPensionFundFilter,callback);
+      },
+      function(callback){ 
+          //group filter by quarters
+          DAL.groupByQuarters(filter, callback);
+      },
+      function(callback){ 
+          //get portfolio data
+          DAL.groupByPortfolio(filter, callback);
+      },
+      function(callback){ 
+          DAL.getFundsByManagingBody(managing_body, callback);
+      }
+    ], 
+    function(err,results){
 
-          //group result items by year and quarter
-          _.each(groups,
-            function(v,k,l){
-            _.each(v['result'],
-              function(v1,k1,l1){ 
-                l1[k1] = _.groupBy(l1[k1],
-                    function(v2,k2,l2){
-                      return v2['report_year']+"_"+v2['report_qurater'];
-                    }
-                )
-              }
-            );
-          });
+      var totalPensionFundQuarters = results[0][0];
+      var totalPensionFundQuery = results[0][1];
 
-        //fill up missing quarters with sum 0
-        if (quarters.length < 4 || totalPensionFundQuarters.length < 4){
-          for(var q = 0; q < 4; q++){
-          
-            if (quarters[q] == undefined){
-              quarters[q] = {"fair_value":"0"};
-            }
-            if (totalPensionFundQuarters[q] == undefined){
-              totalPensionFundQuarters[q] = {"fair_value":"0"};
-            }
-          
+      var quarters = results[1][0];
+      var quartersQuery = results[1][1];
+
+      var groups = results[2];
+
+      var funds = results[3][0];
+      var fundsQuery = results[3][1];
+
+      //group results by group_field (e.g. issuer)
+      _.each(groups, 
+          function(value,key,list){
+              value['result'] = 
+                  _.groupBy(value['result'],value['group_field'])
           }
-        }
+      );
 
-        var title = createTitle(filter);
-        
 
-        res.render('portfolio',{
-            filter: filter,
-            total_sum_words:DataNormalizer.convertNumberToWords(quarters[0]['fair_value']),      // total sum normalized (scaled)
-            groups: groups,
-            convertNumberToWords:DataNormalizer.convertNumberToWords,
-            translate: translate,
-            escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
-            rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,  
-            removeQoutes: DataNormalizer.removeQoutes,
-            debug: debug == 'true',
-            req: req,
-            lastQuarters: lastQuarters,
-            report_qurater: report_qurater,
-            report_year: report_year,
-            totalPensionFundQuarters: totalPensionFundQuarters,
-            totalPensionFundQuery: totalPensionFundQuery,
-            plurals: plurals,
-            totalPensionFundQuery:totalPensionFundQuery,
-            quarters:quarters,
-            quartersQuery: quartersQuery,
-            funds:funds,
-            fundsQuery: fundsQuery,
-            origGroups:origGroups,
-            report_type: getReportType(filter),
-            report_title : title,
-            drillDown : filter.getDrillDown(),
-            title: title.replace("<i class=\"fa fa-angle-left\"></i>",">"),
-            Filter: Filter,
-            dictionary : dictionary,
-            getReportType: getReportType,
-            createTitle: createTitle,
-            escapeJSLink: DataNormalizer.escapeJSLink
-
-          });        
-        });
+      //group result items by year and quarter
+      _.each(groups,
+        function(v,k,l){
+        _.each(v['result'],
+          function(v1,k1,l1){ 
+            l1[k1] = _.groupBy(l1[k1],
+                function(v2,k2,l2){
+                  return v2['report_year']+"_"+v2['report_qurater'];
+                }
+            )
+          }
+        );
       });
-    });
-  });
-};
+
+    //fill up missing quarters with sum 0
+    if (quarters.length < 4 || totalPensionFundQuarters.length < 4){
+      for(var q = 0; q < 4; q++){
+      
+        if (quarters[q] == undefined){
+          quarters[q] = {"fair_value":"0"};
+        }
+        if (totalPensionFundQuarters[q] == undefined){
+          totalPensionFundQuarters[q] = {"fair_value":"0"};
+        }
+      
+      }
+    }
+
+    var title = createTitle(filter);
+    
+
+    res.render('portfolio',{
+        filter: filter,
+        total_sum_words:DataNormalizer.convertNumberToWords(quarters[0]['fair_value']),      // total sum normalized (scaled)
+        groups: groups,
+        convertNumberToWords:DataNormalizer.convertNumberToWords,
+        translate: translate,
+        escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
+        rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,  
+        removeQoutes: DataNormalizer.removeQoutes,
+        debug: debug == 'true',
+        req: req,
+        lastQuarters: lastQuarters,
+        report_qurater: report_qurater,
+        report_year: report_year,
+        totalPensionFundQuarters: totalPensionFundQuarters,
+        totalPensionFundQuery: totalPensionFundQuery,
+        plurals: plurals,
+        totalPensionFundQuery:totalPensionFundQuery,
+        quarters:quarters,
+        quartersQuery: quartersQuery,
+        funds:funds,
+        fundsQuery: fundsQuery,
+        report_type: getReportType(filter),
+        report_title : title,
+        drillDown : filter.getDrillDown(),
+        title: title.replace("<i class=\"fa fa-angle-left\"></i>",">"),
+        Filter: Filter,
+        dictionary : dictionary,
+        getReportType: getReportType,
+        createTitle: createTitle,
+        escapeJSLink: DataNormalizer.escapeJSLink
+
+      });
+
+});
+
+
+}

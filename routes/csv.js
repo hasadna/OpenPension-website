@@ -15,7 +15,7 @@ exports.download = function(req, res){
   filter.removeField("report_year");
 
   DAL.singleQuery(filter,
-    function(rows){
+    function(err, rows){
 		
     	if (!_.isObject(rows)){
 			res.end(); 

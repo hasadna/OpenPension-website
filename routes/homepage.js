@@ -37,7 +37,7 @@ exports.managing_body_treemap = function(req,res){
     filter.addConstraint("report_qurater", config.current_quarter);
 
 
-    DAL.groupBySummaries(filter,function(groups, select){
+    DAL.groupBySummaries(filter,function(err, groups, select){
 
         var managing_bodies = groups[0].result;
 
@@ -113,7 +113,7 @@ exports.issuers_treemap = function(req,res){
     filter.addConstraint("report_qurater", config.current_quarter);
 
 
-    DAL.groupBySummaries(filter,function(groups, select){
+    DAL.groupBySummaries(filter,function(err, groups, select){
 
         var issuers = groups[0].result;
 
@@ -155,7 +155,7 @@ exports.highcharts_managing_body = function(req,res){
     filter.addConstraint("report_qurater", config.current_quarter);
 
 
-    DAL.groupBySummaries(filter,function(groups, select){
+    DAL.groupBySummaries(filter,function(err, groups, select){
 
         var managing_bodies = groups[0].result;
         var totalSum = sum(managing_bodies);
@@ -229,7 +229,7 @@ exports.show = function(req, res){
     filter.addConstraint("report_qurater", config.current_quarter);
 
     //perform query
-    DAL.groupBySummaries(filter,function(groups, select){
+    DAL.groupBySummaries(filter,function(err, groups, select){
 
         var managing_bodies = groups[0].result;
 

@@ -15,7 +15,7 @@ exports.show = function(req, res){
         searchTerm = "";
     }
     
-    DAL.search(searchTerm, page, function(result, query){
+    DAL.search(searchTerm, page, function(err, result, query){
 
         res.render('search',{
             rows: result.rows,

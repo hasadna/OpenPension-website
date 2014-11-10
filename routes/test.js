@@ -16,7 +16,7 @@ exports.post = function(req, res)
 
 	var start1 = new Date();
 	DAL.groupBySummaries(filter,
-							function(groups){ 
+							function(err, groups){ 
 								var groupBySummariesTime = new Date() - start1;
 								groups = DataNormalizer.normalizeData(groups);
 								var dataNormalizerTime = new Date() - start1 - groupBySummariesTime;
@@ -33,26 +33,20 @@ exports.get = function(req, res){
 	var filter = Filter.fromGetRequest(req);
 
 	
-  	//show data only for last quarter
-  	//TODO: get last quarter from DB
-  	filter.addConstraint("report_year","2013");
-  	filter.addConstraint("report_qurater","3");
-
-
 	var start1 = new Date();
 	res.contentType('json');
 	DAL.groupBySummaries(filter,
-							function(groups){ 
+							function(err, groups){ 
 								var response = {};
 								response['timing'] = {};
 
 								var groupBySummariesTime = new Date() - start1;
-								groups = DataNormalizer.normalizeData(groups);
+								//groups = DataNormalizer.normalizeData(groups);
 								var dataNormalizerTime = new Date() - start1 - groupBySummariesTime;
 								response['timing']['groupBySummariesTime'] = groupBySummariesTime;
 								response['timing']['dataNormalizerTime'] = dataNormalizerTime;
 								response['groups'] = groups;
-								res.end(JSON.stringify(response));
+								res.json(response);
 							});
 
 }

@@ -8,7 +8,7 @@ exports.quarters = function(req,res){
     var filter = Filter.fromGetRequest(req);
 
     DAL.groupByQuarters(filter,
-      function(resultQuarters, resultQuery){
+      function(err, resultQuarters, resultQuery){
 
         //fill up missing quarters with sum 0
         for(var q = 0; q < 4; q++){
@@ -28,7 +28,7 @@ exports.quarters = function(req,res){
 
 
 exports.managing_bodies = function(req,res){
-    DAL.getManagingBodies(function(bodies, bodiesQuery){
+    DAL.getManagingBodies(function(err, bodies, bodiesQuery){
      
           res.json(bodies);
 
@@ -43,7 +43,7 @@ exports.funds = function(req,res){
 		var managing_body = filter.getConstraintData('managing_body')[0];  
 
     DAL.getFundsByManagingBody(managing_body,
-      function(funds, fundsQuery){
+      function(err, funds, fundsQuery){
    
   			res.json(funds);
 
@@ -58,7 +58,7 @@ exports.portfolio = function(req, res){
 		  var filter = Filter.fromGetRequest(req);
 
       DAL.groupByPortfolio(filter,
-                function(groups){
+                function(err, groups){
 
         //group results by group_field (e.g. issuer)
         _.each(groups, 
@@ -100,7 +100,7 @@ exports.query = function(req,res){
       res.json({'error':'Query is empty','return_code':'-7'})
     }
 
-    DAL.singleQuery(filter, function(result){
+    DAL.singleQuery(filter, function(err, result){
       res.json(result);
     });
 
@@ -115,7 +115,7 @@ exports.fair_values = function(req,res){
       res.json({'error':'Query is empty','return_code':'-7'})
     }
 
-    DAL.groupBySummaries(filter, function(result, query){
+    DAL.groupBySummaries(filter, function(err, result, query){
       res.json(result);
     });
 
@@ -131,7 +131,7 @@ exports.search = function(req,res){
       res.json({'error':'Query is empty','return_code':'-7'})
     }
 
-    DAL.search(searchTerm, page, function(result, query){
+    DAL.search(searchTerm, page, function(err, result, query){
       res.json(result);
     });
 

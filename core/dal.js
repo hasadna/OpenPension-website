@@ -148,10 +148,12 @@ function parseFilter(filter)
  */
 function singleQuery(filter, callback)
 {
+	//add wheres to query
 	var sqlQuery = parseFilter(filter);
 	
+	//perform query
 	db.query(sqlQuery, function(err, rows){
-			callback(rows);
+			callback(err, rows);
 	});
 }
 
@@ -189,7 +191,7 @@ function groupBySummaries(filter, callback)
 			group.result=rows;
 			if(--wait<=0)
 			{
-				callback(groups,group.query);
+				callback(err, groups,group.query);
 			}
 		}.bind(this, group));
 	}
@@ -262,9 +264,8 @@ function groupByQuarters(filter, callback){
 
 	select=select.toString();
 
-	//console.log(select);
 	db.query(select, function(err, rows){
-			callback(rows,select);
+			callback(err, rows,select);
 	});
 
 }
@@ -377,8 +378,6 @@ function groupByPortfolio(filter, callback){
 		outerSelect.order("fair_value",false);
 
 
-		// console.log(outerSelect.toString());
-
 	 	group.query = outerSelect.toString();
 
 	 	//run query for group in groups
@@ -386,7 +385,7 @@ function groupByPortfolio(filter, callback){
 			group.result=rows; //put result in group (groups[index])
 			if(--wait<=0)
 			{
-				callback(groups);
+				callback(err, groups);
 			}
 		}.bind(this, group));
 
@@ -447,7 +446,7 @@ function groupByInvestments(filter, callback){
 	select = select.toString();
 
 	db.query(select, function(err, rows){
-		callback(rows,select);
+		callback(err, rows, select);
 	});
 
 }
@@ -464,7 +463,7 @@ function getManagingBodies(callback){
 	var sqlQuery = select.toString();
 
 	db.query(sqlQuery, function(err, rows){
-			callback(rows, sqlQuery);
+			callback(err, rows, sqlQuery);
 	});
 
 }
@@ -490,7 +489,7 @@ function getFundsByManagingBody(managing_body,callback){
 	var sqlQuery = select.toString();
 
 	db.query(sqlQuery, function(err, rows){
-			callback(rows, sqlQuery);
+			callback(err, rows, sqlQuery);
 	});
 
 }
@@ -512,7 +511,7 @@ function search(term, pageNum, callback){
 
 	if (term == undefined || term == "" ) {
 		var res = {"rows":[], "total_row_count" : 0, "page":0, "results_per_page" : RESULTS_PER_PAGE, "total_pages": 0};
-		callback(res)
+		callback("term is empty", res)
 		return
 	}
 
@@ -538,7 +537,7 @@ function search(term, pageNum, callback){
 	db.query(select.toString(), function(err, rows){
 		db.query(countSelect, function(err, count){
 				var res = {"rows":rows, "total_row_count" : count[0].count, "page":pageNum, "results_per_page" : RESULTS_PER_PAGE, "total_pages": Math.ceil(count[0].count/RESULTS_PER_PAGE)};
-				callback(res, select.toString());
+				callback(err, res, select.toString());
 		});
 	});
 
