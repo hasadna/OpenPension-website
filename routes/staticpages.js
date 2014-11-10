@@ -1,5 +1,10 @@
 var Tabletop = require("tabletop");
 var db = require('../core/db.js');
+var async = require('async');
+var cloudflare = require('cloudflare').createClient({
+    email: 'openpension.org.il@gmail.com',
+    token: '93f093df1049fd91772193aff9faf618e69c3'
+});
 
 var sheetURL = 'https://docs.google.com/spreadsheets/d/1tm2xjPUYUFPk3BeHSLXec3sSckGMlFROcoH2zZYQC20/pubhtml?hl=en_US&hl=en_US';
 
@@ -19,8 +24,20 @@ function onLoad(data, tabletop) {
 };
 
 //load google spreadsheet using tabletop
-function initTableTop(){
-	Tabletop.init(tableTopOptions);
+function initTableTop(callback){
+	//override callback
+	if (callback != undefined){
+		Tabletop.init(
+			{
+				key: tableTopOptions.key, 
+				simpleSheet: tableTopOptions.simpleSheet,
+				callback: callback
+			}
+		);
+	}
+	else{
+		Tabletop.init(tableTopOptions);
+	}
 }
 
 initTableTop();
@@ -44,15 +61,34 @@ exports.help = function(req, res)
 
 exports.refresh = function(req,res){
 	
-	//reload Google Doc
-	initTableTop();
+	async.parallel([
+		function(callback){
+			//reload Google Doc
+			initTableTop();
+			callback();
+		},
+		function(callback){
+			//flush memcache
+			db.memcache.flush(callback);
+		},
+		function(callback){
+			//refresh materialized view
+			db.query("REFRESH MATERIALIZED VIEW pension_data_all", callback, true);
+		},
+		function(callback){
+			cloudflare.clearCache ("openpension.org.il", callback);
+		}
+	],
+	function(err,results){
+		if (err){
+			res.end("Error: " + JSON.stringify(err));
+		}
 
-	//flush memcache
-	db.memcache.flush();
-
-	//refresh materialized view
-	db.query("REFRESH MATERIALIZED VIEW pension_data_all", function(){
 		res.end("Finished refreshing");
-	}, true);
+	});
 
 }
+
+
+
+
