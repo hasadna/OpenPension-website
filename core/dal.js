@@ -476,7 +476,7 @@ function getManagingBodies(callback){
  */
 function getFundsByManagingBody(managing_body,callback){
 	if (managing_body == undefined || managing_body == ""){
-			callback([]);
+			callback(null,[]);
 			return;
 	}
 

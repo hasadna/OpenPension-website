@@ -250,6 +250,12 @@ exports.portfolio = function(req, res){
     ], 
     function(err,results){
 
+      if (err){
+        console.log(err);
+        res.end("Err: "+err);
+        return;
+      }
+
       var totalPensionFundQuarters = results[0][0];
       var totalPensionFundQuery = results[0][1];
 
