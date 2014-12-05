@@ -8,7 +8,7 @@
 }
 
 
-@font-face{
+@font-face {
             font-family:'almoni-tzar';
             font-weight:700; /*(bold)*/
             font-style: normal;
@@ -19,7 +19,7 @@
                 url('../fonts/almoni-tzar-aaa-700.svg#almoni-tzar-bold') format('svg');
 }
 
-*{
+* {
     vertical-align: middle;
 }
 
@@ -55,7 +55,8 @@ a:visited {
     text-decoration: none;
 }
 
-a:hover{
+a:hover {
+    cursor: pointer;
     text-decoration: underline;
 }
 
@@ -75,7 +76,7 @@ a:hover{
 /* HEADER */
 
 
-.navbar{
+.navbar {
     color: #FFFFFF !important;
     background-color: #3B70BF;
     height: 48px !important;
@@ -92,10 +93,10 @@ nav .container {
 }
 
 .navbar .nav {
-        float: right;
+    float: right;
 }
 
-.navbar .nav li{
+.navbar .nav li {
     float: right;
     padding: 0;
     line-height: 48px;
@@ -110,7 +111,7 @@ nav .container {
     height: 100%;
 }
 
-.navbar-brand{
+.navbar-brand {
     float: right;
     color: white !important;
     font-size:1.5em;
@@ -121,7 +122,7 @@ nav .container {
     margin-right: 0 !important;
 }
 
-.navbar-brand img{
+.navbar-brand img {
     height: 28px;
     width: auto;
     margin-left: 0.375em;
@@ -143,7 +144,7 @@ nav .container {
     padding: 0 10px !important;
 }
 
-#page-header{
+#page-header {
     padding: 0.75em 0 0 0; /* 12px */
     margin-bottom: 1.5em; /* 24px */
     border-bottom: 6px solid #333;
@@ -151,7 +152,7 @@ nav .container {
 }
 
 
-.breadcrumb{
+.breadcrumb {
     direction: ltr;
     text-align: right;
     padding: 0;
@@ -159,19 +160,17 @@ nav .container {
     background-color: inherit;
 }
 
-.breadcrumb a{
+.breadcrumb a {
     text-decoration: none;
-    cursor:pointer;
     color: #3B70BF;
     vertical-align: baseline;
-    text-decoration: underline;
 }
 
-.breadcrumb li{
+.breadcrumb li {
     float: right;
 }
 
-.breadcrumb ol{
+.breadcrumb ol {
     list-style-type: none;
 }
 
@@ -189,7 +188,7 @@ nav .container {
     padding: 0 !important;
 }
 
-#btn-bar{
+#btn-bar {
     width: 100%;
     margin-bottom: 1.5em;
 }
@@ -206,28 +205,28 @@ nav .container {
   width: 180px;
 }
 
-#quarterSelection{
+#quarterSelection {
     font-size: 30px;
     line-height: 45px;
 }
 
-#download{
+#download {
     float: left;
 }
 
-#header-diff{
+#portfolio-overview-diff {
     display: inline-block;
 }
 
 /*RIGHT COLUMN*/
 
-#right-column{
+#right-column {
     position: relative;
     background-color: white;
     padding-right: 0px;
 }
 
-#right-column #info{
+#right-column #info {
     font-size: 50px;
 }
 
@@ -244,31 +243,28 @@ nav .container {
     background-color: #3B70BF;
 }
 
-#info #total{
+#info #total {
     font-weight:bold;
     color: #FFA202;
     font-family: "almoni-tzar", "Roboto Condensed";
 }
 
 
-.table-link{
-    cursor: pointer;
+.table-link {
     text-decoration: none;
-    direction: ltr;
-    text-align: right;
     color: #3B70BF;
     float: right;
 }
 
 
 /* ABOUT */
-#header-bottom-title{
+#header-bottom-title {
     margin-top: 8px;
     font-size: 30px;
 }
 
 /* GENERAL */
-.noselect{
+.noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -280,28 +276,28 @@ nav .container {
 
 /* BUTTON BAR */
 .dropdown-menu li span:before,
-.filter-option:before{
+.filter-option:before {
     content: "\f073\0020";
     font-family: "FontAwesome";
     padding-left: 3px;
 }
 
-#btn-bar .fa-file-text-o{
+#btn-bar .fa-file-text-o {
     padding-left: 3px;
 }
 
 
 /* HIGHCHARTS GRAPH */
 
-#highcharts-0{
+#highcharts-0 {
     overflow: visible !important;
 }
 
-.highcharts-axis{
+.highcharts-axis {
     display: none !important;
 }
 
-.highcharts-grid{
+.highcharts-grid {
     display: none !important;
 }
 
@@ -311,11 +307,11 @@ nav .container {
     display: inline-block;
 }
 
-#header-diff .sparkline {
+#portfolio-overview-diff .sparkline {
   margin-right: 15px;
 }
 
-.quarter-diff, .percentage{
+.quarter-diff, .percentage {
     float: right;
     direction: ltr;
 }
@@ -325,23 +321,23 @@ nav .container {
     margin-left: 3px;
 }
 
-.blue-text{
+.blue-text {
     color:#7FB2FF;
 }
 
-.yellow-text{
+.yellow-text {
     color:#FFBE4C;
 }
 
-.gray-text{
+.gray-text {
     color:#999999;
 }
 
-.gray{
+.gray {
     color: #999999;
 }
 
-.segmentation{
+.segmentation {
         margin-bottom: 3em;
 }
 
@@ -357,12 +353,12 @@ nav .container {
 }
 
 
-.table{
+.table {
         border-collapse: collapse !important;
         margin-bottom: 48px;
 }
 
-.table tbody{
+.table tbody {
     border: 1px solid #DDD !important;
 }
 
@@ -373,6 +369,10 @@ th, td {
 
 td {
     max-width: 235px;
+}
+
+td a {
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -386,7 +386,7 @@ th {
     vertical-align: baseline;
 }
 
-.unit{
+.unit {
     color: #999999;
     vertical-align: baseline;
 }
@@ -401,26 +401,28 @@ th {
     line-height: 3em;
 }
 
-th>span, td>span{
+th>span,
+td>span {
     display: inline-block;
 }
 
-td > a{
+td > a {
     color: #3B70BF;
 }
 
-span.relative-size., span.change {
+span.relative-size.,
+span.change {
     width: 25%;
 }
 
-.change{
+.change {
     overflow: visible !important;
 }
 .unit {
     width: auto;
 }
 
-#bar{
+#bar {
     height: 1.5em;
     background-color:#7FB2FF;
     display: inline-block;
@@ -428,21 +430,21 @@ span.relative-size., span.change {
 }
 
 .table-striped>tbody>tr:nth-child(even)>td,
-.table-striped>tbody>tr:nth-child(even)>th{
+.table-striped>tbody>tr:nth-child(even)>th {
     background-color: #F8F8F8;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>td,
-.table-striped>tbody>tr:nth-child(odd)>th{
+.table-striped>tbody>tr:nth-child(odd)>th {
     background-color: white;
 }
 
 
-.table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td{
+.table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td {
     background-color: white;
 }
 
-.table thead>tr>th{
+.table thead>tr>th {
     border: 1px;
     border-style: solid;
     border-color: #DDD;
@@ -501,7 +503,7 @@ h5 {
 }
 
 
-footer{
+footer {
     position: absolute;
     bottom: 0;
     clear:both;
@@ -512,20 +514,20 @@ footer{
     color: white;
 }
 
-#footer-feedback{
+#footer-feedback {
     padding: 0px 10px 0px 10px;
 }
 
-footer .container{
+footer .container {
     height: 100%;
     padding: 0;
 }
 
-#footer-text{
+#footer-text {
     height: 100%;
 }
 
-#footer-links{
+#footer-links {
     padding: 0;
     height: 100%;
     margin: 0;
@@ -535,7 +537,7 @@ footer li:last-child {
     padding-left: 0;
 }
 
-footer li{
+footer li {
     display: inline-block;
     padding: 0 10px;
     margin: 0;
@@ -551,7 +553,7 @@ footer a {
     color: white !important;
 }
 
-.list-all{
+.list-all {
     background-color: white !important;
 }
 
@@ -560,17 +562,12 @@ tfoot {
 }
 
 .list-all a,
-.list-all a:hover{
-    text-decoration: none;
-    cursor: pointer;
-    text-decoration: none;
-    direction: ltr;
-    text-align: right;
+.list-all a:hover {
     color: #3B70BF;
     line-height: 2em;
 }
 
-li{
+li {
     margin-bottom: 0.75em;
 }
 
@@ -592,13 +589,13 @@ li{
     color: #8A6D3B;
 }
 
-#aggregate-data-panel {
+#portfolio-overview {
     width: 100%;
     border-collapse: collapse !important;
     background-color: white;
 }
 
-#aggregate-data-panel td {
+#portfolio-overview td {
     border: 1px solid #DDD;
     border-collapse: collapse !important;
     width: 33%;
@@ -606,7 +603,7 @@ li{
     text-align: center;
 }
 
-#aggregate-data-panel h3 {
+#portfolio-overview h3 {
     margin: 0 !important;
 }
 
@@ -619,29 +616,24 @@ li{
 }
 
 
-.modal-lg{
+.modal-lg {
     width: 970px;
 }
 
-#investments-header{
+#investments-header {
     margin-top: 1em;
     height: 2em;
     margin-bottom: 0.5em;
 }
 
-#investments-header-title{
+#investments-header-title {
     float: right;
 }
 
-#investments-header-button{
+#investments-header-button {
     font-family: FontAwesome;
     float: left;
         font-size: 1.5em;
-}
-
-
-#investments-header-button:hover{
-    cursor: pointer;
 }
 
 #homepage-header {
@@ -775,16 +767,12 @@ li{
 }
 
 #privacy-body p b,
-#privacy-body p a{
+#privacy-body p a {
     vertical-align: baseline;
 }
 
 #managing-bodies {
     margin-bottom: 1.5em;
-}
-
-.homepage-link:hover{
-    cursor: pointer;
 }
 
 #homepage-links {

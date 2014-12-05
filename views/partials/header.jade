@@ -1,4 +1,4 @@
-table(id="aggregate-data-panel" class="table")
+table(id="portfolio-overview" class="table")
     tbody()
         tr()
             td()
@@ -10,7 +10,7 @@ table(id="aggregate-data-panel" class="table")
                 - }
                 span(class="datum") #{total_sum_words.number}  #{total_sum_words.scale} שקל
 
-            
+
             -if (filter.hasConstraint("managing_body") || filter.getDrillDownDepth() > 0){
                 td()
                     - if (report_type == "managing_body"){
@@ -46,7 +46,7 @@ table(id="aggregate-data-panel" class="table")
                     - caret = "fa-caret-down";
                     - colorClass = "yellow-text";
                 - }
-                div(id="header-diff")
+                div(id="portfolio-overview-diff")
                     div(class="quarter-diff #{colorClass}" )
                         span(class="datum percentage"  style="direction:ltr") #{diff}%
                         i(class="fa #{caret}")

@@ -118,7 +118,7 @@ function groupByManagingBody(filter){
 function loadTemplates(filter){
 
     //show message on data table
-    $('#aggregate-data-panel').block({ 
+    $('#portfolio-overview').block({ 
         message: '<h1>טוען נתונים...</h1>', 
         css: { border: '2px solid #3B70BF' } 
     }); 
@@ -151,12 +151,12 @@ function loadTemplates(filter){
         drawSparklines();
 
         //remove loading message
-        $('#aggregate-data-panel').unblock(); 
+        $('#portfolio-overview').unblock(); 
 
     }
 
     function failed(msg){
-        $('#aggregate-data-panel').unblock(); 
+        $('#portfolio-overview').unblock(); 
         console.error(msg);
     }
 
