@@ -14,29 +14,43 @@ exports.download = function(req, res){
   filter.removeField("report_qurater");
   filter.removeField("report_year");
 
-  DAL.singleQuery(filter,
-    function(err, rows){
+  DAL.streamQuery(filter,
+    function(err, stream){
 		
-    	if (!_.isObject(rows)){
+    	if (err != undefined || !_.isObject(stream)){
 			res.end(); 
     	}
 
-		//write column headers csv
-		var cols = Object.keys(rows[0]); 
-		var line = cols.join(",") + "\n";
 
 		res.writeHead(200, {
 			'Content-Type': 'text/csv; charset=utf8',
 			'Content-Disposition' : 'attachment; filename="pension.csv"'
 		});
 
-		//write columns header line
-		res.write(line);
 
-		//write each row
-		_.each(rows,function(v,k,l){res.write(_.values(v).join(",")+"\n")})
+		var isFirstLine = true; 
+		stream.on('data',function(data){
 
-		res.end();
+			if (isFirstLine){
+				isFirstLine = false;
+
+				//write column headers csv
+				var cols = Object.keys(data); 
+				var line = cols.join(",") + "\n";
+				res.write(line);
+			}
+
+			//write columns header line
+			res.write(_.values(data).join(",")+"\n")
+			// console.log(_.values(data).join(",")+"\n")
+		});
+
+		stream.on('end',function(){
+
+			res.end();
+		});
+
+	
 	}
 	
   );

@@ -2,6 +2,8 @@ var pg = require('pg');
 var memjs = require('memjs') 
 var config = require('../config')
 var md5 = require('MD5');
+var QueryStream = require('pg-query-stream')
+var JSONStream = require('JSONStream')
 
 
 
@@ -12,7 +14,13 @@ else{
   mc = memjs.Client.create()
 }
 
-
+/**
+ * Query DB, or get from memcache if already present  
+ *
+ * @param sql - SQL query 
+ * @param callback - callback function that with params (err, rows)
+ * @param bypassMemcache - boolean, if true, ignore memcache 
+ */
 
 exports.query =  function(sql, callback, bypassMemcache){
 
@@ -53,5 +61,29 @@ exports.query =  function(sql, callback, bypassMemcache){
           }
       });
   };
+
+/**
+ * Query DB, return results on stream
+ *
+ * @param sql - SQL query 
+ * @param callback - callback function that with params (err, stream)
+ */
+exports.streamQuery = function(sql, callback){
+
+    pg.connect(config.connection_string,
+      function(err, client, done) {
+  
+        if(err) throw err;
+    
+        var query = new QueryStream(sql)
+        var stream = client.query(query)
+        
+        //release the client when the stream is finished
+        stream.on('end', done)
+        callback(err, stream);
+   
+    })
+}
+
 
 exports.memcache = mc;

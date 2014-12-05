@@ -150,9 +150,28 @@ function singleQuery(filter, callback)
 {
 	//add wheres to query
 	var sqlQuery = parseFilter(filter);
-	
+
 	//perform query
 	db.query(sqlQuery, function(err, rows){
+			callback(err, rows);
+	});
+}
+
+
+
+/**
+ * Perform stream query and pass stream
+ * to callback function
+ * @param filter: Filter object with constraints
+ * @param callback : function to handle stream
+ */
+function streamQuery(filter, callback)
+{
+	//add wheres to query
+	var sqlQuery = parseFilter(filter);
+
+	//perform query
+	db.streamQuery(sqlQuery, function(err, rows){
 			callback(err, rows);
 	});
 }
@@ -555,3 +574,4 @@ exports.getFundsByManagingBody=getFundsByManagingBody;
 exports.groupByInvestments=groupByInvestments;
 exports.getManagingBodies=getManagingBodies;
 exports.search=search;
+exports.streamQuery=streamQuery;
