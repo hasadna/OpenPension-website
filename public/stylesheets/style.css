@@ -562,8 +562,6 @@ tfoot {
 
 .list-all a,
 .list-all a:hover {
-    direction: ltr;
-    text-align: right;
     color: #3B70BF;
     line-height: 2em;
 }
