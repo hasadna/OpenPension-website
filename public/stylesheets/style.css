@@ -56,6 +56,7 @@ a:visited {
 }
 
 a:hover {
+    cursor: pointer;
     text-decoration: underline;
 }
 
@@ -92,7 +93,7 @@ nav .container {
 }
 
 .navbar .nav {
-        float: right;
+    float: right;
 }
 
 .navbar .nav li {
@@ -161,10 +162,8 @@ nav .container {
 
 .breadcrumb a {
     text-decoration: none;
-    cursor:pointer;
     color: #3B70BF;
     vertical-align: baseline;
-    text-decoration: underline;
 }
 
 .breadcrumb li {
@@ -252,10 +251,7 @@ nav .container {
 
 
 .table-link {
-    cursor: pointer;
     text-decoration: none;
-    direction: ltr;
-    text-align: right;
     color: #3B70BF;
     float: right;
 }
@@ -373,6 +369,9 @@ th, td {
 
 td {
     max-width: 235px;
+}
+
+td a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -563,9 +562,6 @@ tfoot {
 
 .list-all a,
 .list-all a:hover {
-    text-decoration: none;
-    cursor: pointer;
-    text-decoration: none;
     direction: ltr;
     text-align: right;
     color: #3B70BF;
@@ -639,11 +635,6 @@ li {
     font-family: FontAwesome;
     float: left;
         font-size: 1.5em;
-}
-
-
-#investments-header-button:hover {
-    cursor: pointer;
 }
 
 #homepage-header {
@@ -783,10 +774,6 @@ li {
 
 #managing-bodies {
     margin-bottom: 1.5em;
-}
-
-.homepage-link:hover {
-    cursor: pointer;
 }
 
 #homepage-links {
