@@ -30,7 +30,7 @@ each group in groups
                             span(class="unit") באחוזים
                     - }
                     - else if(report_type == "investment") {
-                        th(style="text-align: right") אחוז מההשקעה 
+                        th(style="text-align: right") אחוז מההשקעה
                     - }
 
                     th(style="text-align: right") שינוי חשיפה 
@@ -121,13 +121,9 @@ each group in groups
                     tfoot()
                         tr()
                             td(class="list-all")
-                                div()
-                                    - var linkUrl = "/investments" + filter.toQueryString() + "&group_by=" + group.group_field;
-                                    a(data-target="#myModal",data-toggle="modal",data-remote="#{linkUrl}")
-                                        כל #{plurals[group.group_field]}...
-                            td()
-                            td()
-                            td()
+                                - var linkUrl = "/investments" + filter.toQueryString() + "&group_by=" + group.group_field;
+                                a(data-target="#myModal",data-toggle="modal",data-remote="#{linkUrl}")
+                                    כל #{plurals[group.group_field]}...
                 - }
 
                 - if (debug && visiblePercentage > 100){
