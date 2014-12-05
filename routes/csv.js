@@ -22,33 +22,32 @@ exports.download = function(req, res){
     	}
 
 
-		res.writeHead(200, {
-			'Content-Type': 'text/csv; charset=utf8',
-			'Content-Disposition' : 'attachment; filename="pension.csv"'
-		});
+	res.writeHead(200, {
+		'Content-Type': 'text/csv; charset=utf8',
+		'Content-Disposition' : 'attachment; filename="pension.csv"'
+	});
 
 
-		var isFirstLine = true; 
-		stream.on('data',function(data){
+	var isFirstLine = true; 
+	stream.on('data',function(data){
 
-			if (isFirstLine){
-				isFirstLine = false;
+		if (isFirstLine){
+			isFirstLine = false;
 
-				//write column headers csv
-				var cols = Object.keys(data); 
-				var line = cols.join(",") + "\n";
-				res.write(line);
-			}
+			//write column headers csv
+			var cols = Object.keys(data); 
+			var line = cols.join(",") + "\n";
+			res.write(line);
+		}
 
-			//write columns header line
-			res.write(_.values(data).join(",")+"\n")
-			// console.log(_.values(data).join(",")+"\n")
-		});
+		//write data as csv line
+		res.write(_.values(data).join(",")+"\n")
+	});
 
-		stream.on('end',function(){
-
-			res.end();
-		});
+	stream.on('end',function(){
+		//close response
+		res.end();
+	});
 
 	
 	}
