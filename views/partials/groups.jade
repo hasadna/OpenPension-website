@@ -117,7 +117,7 @@ each group in groups
                             div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
 
 
-                - if(visiblePercentage <= 99){
+                - if(visiblePercentage < 100){
                     tfoot()
                         tr()
                             td(class="list-all" colspan="4")
