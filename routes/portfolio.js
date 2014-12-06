@@ -135,7 +135,20 @@ exports.investments = function(req, res){
   filter.removeField("debug");
 
 
-  var lastQuarters = DataNormalizer.getLastQuarters(config.current_year, config.current_quarter,4);
+
+  if (!filter.hasConstraint("report_year")){
+      filter.addConstraint("report_year",config.current_year);
+  }
+
+  if (!filter.hasConstraint("report_qurater")){
+      filter.addConstraint("report_qurater", config.current_quarter);
+  }
+
+
+  var report_year = filter.getConstraintData("report_year")[0];
+  var report_qurater = filter.getConstraintData("report_qurater")[0];
+
+  var lastQuarters = DataNormalizer.getLastQuarters(report_year, report_qurater,4);
 
   //group filter by quarters
   DAL.groupByInvestments(filter,
