@@ -50,7 +50,13 @@ function simple_filter(select, constraintField, constraintDataArr)
 	{
 		constraintData = constraintDataArr[i];
 		
-		expr.or(constraintField + '= ?');
+		if (constraintData['data'] == "null"){
+			expr.or(constraintField + ' IS NULL');
+		}
+		else{
+			expr.or(constraintField + '= ?');
+		}
+
 
 		//escape string
 		var escapedConstraintData = escapeChars(constraintData['data']);
@@ -72,15 +78,17 @@ function prepareWheres(select, filter)
 	for (var index in constrainedFields)
 	{
 		var constraintField = constrainedFields[index];
-		if (!(constraintField in allowed_filters))
+		if (constraintField in allowed_filters)
 		{
-			continue;
-			// Return error? no, this skips group_by
-			// which is not in allowed filters
+			var constraintDataArr = filter.getConstraint(constraintField);
+			simple_filter(select, constraintField, constraintDataArr);
+		}
+		else if (constraintField == 'q'){
+				var constraintDataArr = filter.getConstraint(constraintField);
+				select.where("LOWER(instrument_name) like LOWER('%"+constraintDataArr[0]['data']+"%') OR LOWER(instrument_id) like LOWER('%"+constraintDataArr[0]['data']+"%')")
+			
 		}
 
-		var constraintDataArr = filter.getConstraint(constraintField);
-		simple_filter(select, constraintField, constraintDataArr);
 	}
 }
 
