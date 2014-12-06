@@ -95,6 +95,9 @@ function createTitle(filter){
 	  title+= (currency != "")?((firstInTitle=="currency")?((numberOfChosenFilters==1)? " ב" : "") : ((numberOfChosenFilters==1)? "" : " ב")) + translate(currency) + " " : "" ;
   }
 
+  title = title.replace("null","לא נמצא בקטגוריה");
+
+
   return title;  
 }
 
