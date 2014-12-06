@@ -4,11 +4,14 @@
 
 
 
-  	$(function(){
-		  drawGraph("managing-bodies","/managing_bodies_treemap.json");
-		  drawGraph("issuers","/issuers_treemap.json");
-  	});
+  //on ready, draw graphs
+	$(function(){
+	  drawGraph("managing-bodies","/managing_bodies_treemap.json");
+	  drawGraph("issuers","/issuers_treemap.json");
+	});
 
+
+  //draw graph 
   function drawGraph(elementId, jsonURL){
 
 	  var color = d3.scale.category20c();
@@ -50,18 +53,16 @@
           .call(position);
         });
 
-      //remove text content of small graph blocks where text cannot fit
-      //$("#"+ elementId +" div").each(function(i,e){ if($(e).width() < 150 ) $(e).html("") })
-
 	  });
 
   		$(".node").on("click",treemapClick);
   
    }
 
-
+   //handle click on treemap
    function treemapClick(element){
 
+        //clicked on others, open modal
         if (element.link == "others"){
             $('#myModal').modal('show');
             $.ajax($("#modal-anchor").data("remote"))
@@ -71,6 +72,7 @@
                 });
         }
         else{
+            //navigate to element link
             location.href = element.link;
         }
 
@@ -89,6 +91,10 @@ function addConstraint(key, value) {
 
     //generate filter from query string
     var filter = Filter.fromQueryString(window.location.search);
+
+    //set current year and quarter
+    filter.setConstraint('report_year', current_year);
+    filter.setConstraint('report_qurater', current_quarter);
 
     //add constraint from user
     filter.setConstraint(key, value);

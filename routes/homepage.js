@@ -241,7 +241,9 @@ exports.show = function(req, res){
         res.render('homepage',{
             market_size: DataNormalizer.convertNumberToWords(totalSum),
             title: "פנסיה פתוחה",
-            filterWithoutGroup: filterWithoutGroup
+            filterWithoutGroup: filterWithoutGroup,
+            current_year: config.current_year,
+            current_quarter: config.current_quarter
         });
 
     });
