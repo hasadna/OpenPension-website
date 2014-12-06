@@ -398,7 +398,9 @@ function groupByPortfolio(filter, callback){
 
 
 		outerSelect.join("("+joined + ") AS previousQuarters ON currentQuarter." + groupField
-			+"= previousQuarters."+groupField);	
+			+"= previousQuarters."+groupField 
+			+ " OR (currentQuarter." + groupField + " IS NULL AND"
+			+ " previousQuarters."+groupField + " IS NULL)");	
 
 		outerSelect.order("report_year",false);
 		outerSelect.order("report_qurater",false);
