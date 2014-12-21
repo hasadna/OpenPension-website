@@ -32,7 +32,9 @@ exports.query =  function(sql, callback, bypassMemcache){
               pg.connect(config.connection_string,        
                   function(err, client, done){
 
-                     client.query(sql, function(err, result) {
+                    if (err) throw err;
+
+                    client.query(sql, function(err, result) {
 
                         done();
 
