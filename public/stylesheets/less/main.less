@@ -1,4 +1,4 @@
-// out: ../style.css
+// out: ../main.css
 
 /*****************
    SOURCE FILES
@@ -22,14 +22,14 @@
 
 
 @font-face {
-  font-family:'almoni-tzar';
-  font-weight:700; /*(bold)*/
+  font-family: 'almoni-tzar';
+  font-weight: 700; /*(bold)*/
   font-style: normal;
   src: url('../fonts/almoni-tzar-aaa-700.eot');
   src: url('../fonts/almoni-tzar-aaa-700.eot?#iefix') format('embedded-opentype'),
-      url('../fonts/almoni-tzar-aaa-700.ttf') format('truetype'),
-      url('../fonts/almoni-tzar-aaa-700.woff') format('woff'),
-      url('../fonts/almoni-tzar-aaa-700.svg#almoni-tzar-bold') format('svg');
+       url('../fonts/almoni-tzar-aaa-700.ttf') format('truetype'),
+       url('../fonts/almoni-tzar-aaa-700.woff') format('woff'),
+       url('../fonts/almoni-tzar-aaa-700.svg#almoni-tzar-bold') format('svg');
 }
 
 /*****************
@@ -37,6 +37,11 @@
 ******************/
 
 @font-stack: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+@baseline-font-size:      16px;
+@baseline-line-height:    @baseline-font-size * 1.5; // 24px
+
+@footer-height: 2 * @baseline-line-height;
 
 @brand-color:     hsl(216, 53%, 49%);
 @alt-color:       hsl(38, 100%, 50%);
@@ -49,9 +54,55 @@
 ***********/
 
 .heading() {
-  font-family:'almoni-tzar';
-  font-weight:700;
-} 
+  font-family:    'almoni-tzar';
+  font-weight:    700;
+}
+
+.alt-heading() {
+  font-family:    @font-stack;
+}
+
+
+/****************
+   TYPOGRAPHY
+****************/
+
+h1 {
+  .alt-heading;
+  font-size: @baseline-font-size * 2.25; // 36px
+  line-height: 1.3333333333em; // 48px
+  margin: 0 0 0.3333333333em 0 !important; /* 12px */
+}
+
+h2 {
+  .heading;
+  font-size: 1.5em; /* 24px */
+  line-height: 1em; /* 24px */
+  color: #999999;
+  margin: 0 !important;
+  .heading;
+}
+
+h3 {
+  .heading;
+  font-size: 1.3125em; /* 21px */
+  line-height: 1.14285714285714em; /* 24px */
+  color: #999999;
+  margin: 0 0 0.571428571428571em  0 !important; /* 12px */
+}
+
+h4 {
+  .heading;
+  font-size: 1em;
+  line-height: 1.5em;
+  color: #999999;
+}
+
+h5 {
+  .alt-heading;
+  font-size: 14px;
+  line-height: 24px;
+}
 
 /*************
    THE REST
@@ -69,10 +120,11 @@ html {
 body {
   font-family: @font-stack;
   direction: rtl;
-  font-size: 16px;
-  line-height: 1.5em;
+  font-size: @baseline-font-size;
+  line-height: @baseline-line-height;
   margin: 0;
-  padding: 0 0 48px 0;
+  padding: 0;
+  padding-bottom: @footer-height; // making room for footer
   background-color: @bg-color;
   position: relative;
 }
@@ -479,52 +531,6 @@ span.change {
   border: 1px;
   border-style: solid;
   border-color: @border-color;
-}
-
-h1,
-h3,
-h5
-{
-  font-family: @font-stack;
-}
-
-h2,
-h4,
-h6 {
-  .heading;
-}
-
-h1 {
-  font-size: 2.25em; /* 36px */
-  line-height: 1.3333333333em; /* 48px */
-  font-weight: bold;
-  margin: 0 0 0.3333333333em 0 !important; /* 12px */
-}
-
-h2 {
-  font-size: 1.5em; /* 24px */
-  line-height: 1em; /* 24px */
-  color: #999999;
-  margin: 0 !important;
-  .heading;
-}
-
-h3 {
-  font-size: 1.3125em; /* 21px */
-  line-height: 1.14285714285714em; /* 24px */
-  color: #999999;
-  margin: 0 0 0.571428571428571em  0 !important; /* 12px */
-}
-
-h4 {
-  font-size: 1em;
-  line-height: 1.5em;
-  color: #999999;
-}
-
-h5 {
-  font-size: 14px;
-  line-height: 24px;
 }
 
 #link-list-title {

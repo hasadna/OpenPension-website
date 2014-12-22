@@ -8029,6 +8029,49 @@ th {
 /***********
    MIXINS
 ***********/
+/****************
+   TYPOGRAPHY
+****************/
+h1 {
+  font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 36px;
+  line-height: 1.3333333333em;
+  margin: 0 0 0.3333333333em 0 !important;
+  /* 12px */
+}
+h2 {
+  font-size: 1.5em;
+  /* 24px */
+  line-height: 1em;
+  /* 24px */
+  color: #999999;
+  margin: 0 !important;
+  font-family: 'almoni-tzar';
+  font-weight: 700;
+}
+h3 {
+  font-family: 'almoni-tzar';
+  font-weight: 700;
+  font-size: 1.3125em;
+  /* 21px */
+  line-height: 1.14285714285714em;
+  /* 24px */
+  color: #999999;
+  margin: 0 0 0.571428571428571em  0 !important;
+  /* 12px */
+}
+h4 {
+  font-family: 'almoni-tzar';
+  font-weight: 700;
+  font-size: 1em;
+  line-height: 1.5em;
+  color: #999999;
+}
+h5 {
+  font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+}
 /*************
    THE REST
 *************/
@@ -8042,9 +8085,10 @@ body {
   font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
   direction: rtl;
   font-size: 16px;
-  line-height: 1.5em;
+  line-height: 24px;
   margin: 0;
-  padding: 0 0 48px 0;
+  padding: 0;
+  padding-bottom: 48px;
   background-color: #ffffff;
   position: relative;
 }
@@ -8383,54 +8427,6 @@ span.change {
   border: 1px;
   border-style: solid;
   border-color: #dedede;
-}
-h1,
-h3,
-h5 {
-  font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-h2,
-h4,
-h6 {
-  font-family: 'almoni-tzar';
-  font-weight: 700;
-}
-h1 {
-  font-size: 2.25em;
-  /* 36px */
-  line-height: 1.3333333333em;
-  /* 48px */
-  font-weight: bold;
-  margin: 0 0 0.3333333333em 0 !important;
-  /* 12px */
-}
-h2 {
-  font-size: 1.5em;
-  /* 24px */
-  line-height: 1em;
-  /* 24px */
-  color: #999999;
-  margin: 0 !important;
-  font-family: 'almoni-tzar';
-  font-weight: 700;
-}
-h3 {
-  font-size: 1.3125em;
-  /* 21px */
-  line-height: 1.14285714285714em;
-  /* 24px */
-  color: #999999;
-  margin: 0 0 0.571428571428571em  0 !important;
-  /* 12px */
-}
-h4 {
-  font-size: 1em;
-  line-height: 1.5em;
-  color: #999999;
-}
-h5 {
-  font-size: 14px;
-  line-height: 24px;
 }
 #link-list-title {
   margin: 1.14285714285714em 0 !important;
