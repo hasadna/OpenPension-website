@@ -1,0 +1,48 @@
+* {
+  vertical-align: middle;
+}
+
+html {
+  margin: 0;
+}
+
+
+body {
+  font-family: @font-stack;
+  direction: rtl;
+  font-size: @font-size-base;
+  line-height: @baseline-line-height;
+  margin: 0;
+  padding: 0;
+  padding-bottom: @footer-height; // making room for footer
+  background-color: @bg-color;
+  position: relative;
+}
+
+.container {
+  width: 970px !important;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  color: @brand-color;
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.btn {
+  border: 1px solid @border-color;
+  border-radius: 0;
+  padding: 10px 15px;
+  font-family: @font-stack;
+  margin: 0;
+  width: 100%;
+  height: 46px; /* could not convert into ems for some reason! Should be 2ems, equivalent of 48px including borders */
+  font-size: 1em;
+}
