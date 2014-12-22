@@ -1,0 +1,58 @@
+.affix,
+.affix-top,
+.affix-bottom {
+  width: 100%;
+}
+
+.affix {
+  top: 12px;
+}
+
+#nav.affix {
+  width: 100%;
+}
+
+.affix > li,
+.affix-top > li {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.affix > li > a,
+.affix-top > li > a {
+  line-height: 20px;
+  padding-top: 0;
+  padding-bottom: 4px;
+  padding-right: 20px;
+}
+
+.affix > li.active > a,
+.affix > li > a:hover,
+.affix > li > a:focus,
+.affix-top > li.active > a,
+.affix-top > li > a:hover,
+.affix-top > li > a:focus {
+  background-color: inherit;
+}
+
+.affix > li > a:hover,
+.affix > li > a:focus,
+.affix-top > li > a:hover,
+.affix-top > li > a:focus {
+  border-right: 3px solid @brand-primary;
+  padding-right: 17px;
+}
+
+.affix > li.active > a,
+.affix-top > li.active > a {
+  font-weight: bold;
+  border-right: 5px solid @brand-primary;
+  padding-right: 15px;
+}
+
+.affix > li > a:hover,
+.affix > li > a:focus,
+.affix-top > li > a:hover,
+.affix-top > li > a:focus {
+  text-decoration: underline;
+}
