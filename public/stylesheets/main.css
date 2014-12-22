@@ -8281,6 +8281,25 @@ footer a {
 .help-spot:hover {
   color: #999;
 }
+.node:first-child {
+  background: none !important;
+  border: 0;
+}
+.node {
+  font-size: 1em;
+  color: white;
+  padding: 10px;
+  text-align: right;
+  line-height: 1.5em;
+  border: 3px solid  white;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px;
+}
+.node .title {
+  font-size: 1.3125em;
+  /** 21px **/
+}
 .table {
   border-collapse: collapse !important;
   margin-bottom: 48px;
@@ -8371,6 +8390,35 @@ span.change {
 }
 tfoot {
   border: 1px solid #dedede;
+}
+.modal-lg {
+  width: 970px;
+}
+#link-list-title {
+  margin: 1.14285714285714em 0 !important;
+  /* 24px */
+}
+#link-list {
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+  padding: 0;
+  margin-bottom: 4.5em;
+  /* 72px */
+}
+#link-list li {
+  display: inline-block;
+}
+.list-all {
+  background-color: #ffffff !important;
+}
+.list-all a,
+.list-all a:hover {
+  color: #3b70bf;
+  line-height: 2em;
+}
+li {
+  margin-bottom: 0.75em;
 }
 .affix,
 .affix-top,
@@ -8589,25 +8637,6 @@ tfoot {
 }
 #homepage-content td:nth-child(even) {
   text-align: left;
-}
-.node:first-child {
-  background: none !important;
-  border: 0;
-}
-.node {
-  font-size: 1em;
-  color: white;
-  padding: 10px;
-  text-align: right;
-  line-height: 1.5em;
-  border: 3px solid  white;
-  overflow: hidden;
-  position: absolute;
-  text-indent: 2px;
-}
-.node .title {
-  font-size: 1.3125em;
-  /** 21px **/
 }
 #privacy-body p b,
 #privacy-body p a {
