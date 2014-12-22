@@ -23,18 +23,15 @@ body {
   width: 970px !important;
 }
 
-a,
-a:hover,
-a:active,
-a:visited {
-  color: @brand-color;
-  text-decoration: none;
+a {
+  &:hover {
+    cursor: pointer;
+  }
+  &:visited {
+    color: @link-hover-color;
+  }
 }
 
-a:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
 
 .btn {
   border: 1px solid @border-color;
