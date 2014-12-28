@@ -35,8 +35,10 @@ block content
 
         each row in rows
             div(class="row")
-                div(class="col-xs-8") #{row.instrument_name}
-                div(class="col-xs-4") #{row.instrument_id}
+                div(class="col-xs-8")
+                    a(href="/portfolio?instrument_name=#{row.instrument_name}") #{row.instrument_name}
+                div(class="col-xs-4") 
+                    a(href="/portfolio?instrument_id=#{row.instrument_id}") #{row.instrument_id}
 
 
         div(class="row")
@@ -65,21 +67,11 @@ block content
 
 
                     
-    //- script() var translate = !{translate};
-
-    //- script() var debug = !{debug};
-    //- script() var dictionary = !{JSON.stringify(dictionary)};
     script() var report_type = !{JSON.stringify(report_type)};
-    //- script() var groups = !{JSON.stringify(groups)};
-
-
-    //- script() var getReportType = !{getReportType};
 
     script(type='text/javascript', src='/js/search_clientside.js')
     script(type='text/javascript', src='/js/common_clientside.js')
     script(type='text/javascript', src='/js/highcharts.js')
 
 
-    //$.getScript('/js/portfolio_clientside.js');
-    //$.getScript('/js/common_clientside.js');
     
