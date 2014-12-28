@@ -68,7 +68,7 @@ exports.query =  function(sql, callback, bypassMemcache){
  * Query DB, return results on stream
  *
  * @param sql - SQL query 
- * @param callback - callback function that with params (err, stream)
+ * @param callback - callback function with params (err, stream)
  */
 exports.streamQuery = function(sql, callback){
 
@@ -81,7 +81,8 @@ exports.streamQuery = function(sql, callback){
         var stream = client.query(query)
         
         //release the client when the stream is finished
-        stream.on('end', done)
+        stream.on('end', done);
+         
         callback(err, stream);
    
     })

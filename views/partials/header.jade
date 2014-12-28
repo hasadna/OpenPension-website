@@ -20,15 +20,19 @@ table(id="portfolio-overview" class="table")
                         h3() חשיפה
                     - }
 
-                    -var percentageOfTotalFund = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1)
+                    - if (quarters[lastQuarters[0].str] == undefined){
+                        -console.log(lastQuarters[0].str + " undefined");
+                    -}
+
+                    -var percentageOfTotalFund = (quarters[lastQuarters[0].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[0].str][0]['fair_value'] * 100).toFixed(1)
                     span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
             -}
             td()
                 h3() שינוי ב-4 רבעונים
-                -var diffQ0 = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1);
-                -var diffQ1 = (quarters[1]['fair_value'] / totalPensionFundQuarters[1]['fair_value'] * 100).toFixed(1);
-                -var diffQ2 = (quarters[2]['fair_value'] / totalPensionFundQuarters[2]['fair_value'] * 100).toFixed(1);
-                -var diffQ3 = (quarters[3]['fair_value'] / totalPensionFundQuarters[3]['fair_value'] * 100).toFixed(1);
+                -var diffQ0 = ((quarters[lastQuarters[0].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[0].str][0]['fair_value'] * 100) || 0).toFixed(1);
+                -var diffQ1 = ((quarters[lastQuarters[1].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[1].str][0]['fair_value'] * 100) || 0).toFixed(1);
+                -var diffQ2 = ((quarters[lastQuarters[2].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[2].str][0]['fair_value'] * 100) || 0).toFixed(1);
+                -var diffQ3 = ((quarters[lastQuarters[3].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[3].str][0]['fair_value'] * 100) || 0).toFixed(1);
 
                 - var diff = (diffQ0 - diffQ3).toFixed(1);
                 - var caret, colorClass;

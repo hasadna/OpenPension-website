@@ -126,10 +126,10 @@ function getLastQuarters (year, quarter, numOfQuarters){
 
 		var obj = {
 					'quarter': ''+q,
-					'year': ''+year
+					'year': ''+year,
+					'str' : ''+ year + '_' + q
 				};
 
-		obj.toString = function (){return this['year'] + '_' + this['quarter']}
 		res.push(obj);
 
 		if (q == 1){

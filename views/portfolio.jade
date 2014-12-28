@@ -27,7 +27,7 @@ block content
             div(class="col-xs-12")
                 div(id="btn-bar")
                         select(id="select-quarter")
-                            each quarter in lastQuarters
+                            each quarter in getLastQuarters(current_year, current_quarter, 4)
                                 - var select=null;
                                 - if (report_year == quarter.year && report_qurater == quarter.quarter)
                                     - select='selected';

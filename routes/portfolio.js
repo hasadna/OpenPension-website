@@ -216,12 +216,11 @@ exports.portfolio = function(req, res){
   var debug = filter.getConstraintData("debug")[0];
   filter.removeField("debug");
 
-  if (!filter.hasConstraint("report_year")){
+  if (!filter.hasConstraint("report_year") || 
+    !filter.hasConstraint("report_qurater")){  
       filter.addConstraint("report_year",config.current_year);
-  }
-
-  if (!filter.hasConstraint("report_qurater")){
       filter.addConstraint("report_qurater", config.current_quarter);
+      res.redirect("/portfolio"+filter.toQueryString());
   }
 
 
@@ -306,17 +305,29 @@ exports.portfolio = function(req, res){
         );
       });
 
+      quarters = _.groupBy(quarters,
+                function(v2,k2,l2){
+                  return v2['report_year']+"_"+v2['report_qurater'];
+                });
+          
+      totalPensionFundQuarters = _.groupBy(totalPensionFundQuarters,
+                function(v2,k2,l2){
+                  return v2['report_year']+"_"+v2['report_qurater'];
+                });
+
     //fill up missing quarters with sum 0
-    if (quarters.length < 4 || totalPensionFundQuarters.length < 4){
+    if (Object.keys(quarters).length < 4 || 
+      Object.keys(totalPensionFundQuarters).length < 4){
       for(var q = 0; q < 4; q++){
       
-        if (quarters[q] == undefined){
-          quarters[q] = {"fair_value":"0"};
+        if (quarters[lastQuarters[q].str] == undefined){
+          quarters[lastQuarters[q].str] = [{"fair_value":"0"}];
         }
-        if (totalPensionFundQuarters[q] == undefined){
-          totalPensionFundQuarters[q] = {"fair_value":"0"};
+
+        if (totalPensionFundQuarters[lastQuarters[q].str] == undefined){
+          totalPensionFundQuarters[lastQuarters[q].str] = [{"fair_value":"0"}];
         }
-      
+
       }
     }
 
@@ -325,7 +336,7 @@ exports.portfolio = function(req, res){
 
     res.render('portfolio',{
         filter: filter,
-        total_sum_words:DataNormalizer.convertNumberToWords(quarters[0]['fair_value']),      // total sum normalized (scaled)
+        total_sum_words:DataNormalizer.convertNumberToWords(quarters[lastQuarters[0].str][0]['fair_value']),      // total sum normalized (scaled)
         groups: groups,
         convertNumberToWords:DataNormalizer.convertNumberToWords,
         translate: translate,
@@ -353,8 +364,10 @@ exports.portfolio = function(req, res){
         dictionary : dictionary,
         getReportType: getReportType,
         createTitle: createTitle,
-        escapeJSLink: DataNormalizer.escapeJSLink
-
+        escapeJSLink: DataNormalizer.escapeJSLink,
+        getLastQuarters: DataNormalizer.getLastQuarters,
+        current_year: config.current_year,
+        current_quarter: config.current_quarter
       });
 
 });

@@ -38,10 +38,10 @@ each group in groups
 
             tbody()
                 each result in group.result
-                    - var lastQStr = lastQuarters[0].year +"_" + lastQuarters[0].quarter;
+                    - var lastQStr = lastQuarters[0].str;
                     - var lastQResult = result[lastQStr][0];
                     - var lastQResultWords = convertNumberToWords(lastQResult.fair_value);
-                    - var groupPercentage = (lastQResult.fair_value / quarters[0]['fair_value'] * 100 ).toFixed(2);
+                    - var groupPercentage = (lastQResult.fair_value / quarters[lastQStr][0]['fair_value'] * 100 ).toFixed(2);
                     //- var escapedVal = rfc3986EncodeURIComponent(lastQResult[group.group_field]);
                     - var groupName = removeQoutes(translate(lastQResult[group.group_field]));
                     - visiblePercentage += Number(groupPercentage);
@@ -83,14 +83,14 @@ each group in groups
                                     - sparkline.push( Number(0) );
                                     - continue;
                                 - }
-                                - if (quarters[i] == undefined){
+                                - if (quarters[qStr][0] == undefined){
                                     - if (debug){
-                                        div() quarters[i] is undefined
+                                        div() quarters[qStr][0] is undefined
                                     - }
                                     - sparkline.push( Number(0) );
                                     - continue;
                                 - }
-                                - sparkline.push( (Number(result[qStr][0]['fair_value']) / Number(quarters[i]['fair_value']) * 100).toFixed(2) );
+                                - sparkline.push( (Number(result[qStr][0]['fair_value']) / Number(quarters[qStr][0]['fair_value']) * 100).toFixed(2) );
                             - }
 
                             - var diff, caret, colorClass;

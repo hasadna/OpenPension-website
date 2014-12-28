@@ -32,7 +32,7 @@ block content
           tbody()
             each group in groups
               //- if (group[group_by] === 'NULL' ) continue;
-              - var lastQStr = lastQuarters[0].toString();
+              - var lastQStr = lastQuarters[0].str;
               - if ( group[lastQStr] == undefined )
                 - if (debug)
                   div() חסר רבעון נוכחי 
@@ -58,7 +58,7 @@ block content
                   td(class="change")
                     - var sparkline = [];
                     - for(var i = 0;i<4;i++){
-                      - var qStr = lastQuarters[i].toString();
+                      - var qStr = lastQuarters[i].str;
                       - if (group[qStr] == undefined){
                         - if (debug){
                           div() אין מידע עבור רבעון  #{qStr} 
