@@ -8,18 +8,30 @@ exports.quarters = function(req,res){
     var filter = Filter.fromGetRequest(req);
 
     DAL.groupByQuarters(filter,
-      function(err, resultQuarters, resultQuery){
+      function(err, quarters, resultQuery){
 
-        //fill up missing quarters with sum 0
-        for(var q = 0; q < 4; q++){
-        
-          if (resultQuarters[q] == undefined){
-            resultQuarters[q] = {"fair_value":"0"};
+          var report_year = filter.getConstraintData("report_year")[0];
+          var report_qurater = filter.getConstraintData("report_qurater")[0];
+
+          var lastQuarters = DataNormalizer.getLastQuarters(report_year, report_qurater, 4);
+
+          quarters = _.groupBy(quarters,
+                    function(v2,k2,l2){
+                      return v2['report_year']+"_"+v2['report_qurater'];
+                    });
+              
+
+          //fill up missing quarters with sum 0
+          if (Object.keys(quarters).length < 4 ){
+            for(var q = 0; q < 4; q++){
+            
+              if (quarters[lastQuarters[q].str] == undefined){
+                quarters[lastQuarters[q].str] = [{"fair_value":"0"}];
+              }            
+            }
           }
-        
-        }
      
-        res.json(resultQuarters);
+        res.json(quarters);
 
       });
 
