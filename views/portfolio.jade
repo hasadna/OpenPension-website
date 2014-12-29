@@ -22,7 +22,7 @@ block content
     div(class="container")
         div(class="row")
             div(class="col-xs-12")
-                div(id="btn-bar")
+                div(class="btn-toolbar")
                         select(id="select-quarter")
                             each quarter in lastQuarters
                                 - var select=null;
@@ -30,10 +30,8 @@ block content
                                     - select='selected';
                                 option(value="#{JSON.stringify(quarter)}",
                                 selected=select) רבעון #{quarter.quarter}, #{quarter.year}
-                        a(id="download" href="/csv#{filter.toQueryString()}")
-                            button(class="btn btn-default")
-                                i(class="fa fa-file-text-o")
-                                &nbspהורד נתונים גולמיים
+                        button(id="download" class="btn btn-default" onClick="location.href = '/csv#{filter.toQueryString()}'")
+                              הורד נתונים גולמיים
                 div(class="alert alert-warning" role="alert")
                     strong() שימו לב!
                     נתונים חלקיים
