@@ -243,14 +243,15 @@ $(function(){
     var instrumentNames = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('instrument_name'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      remote: 
-      { 
-        url: '/api/queryNames?q=%QUERY',
-        filter: function(response){
-            return response.instrument_name;
-        },
-        cache: false
-      }
+      local : []
+      // remote: 
+      // { 
+      //   url: '/api/queryNames?q=%QUERY',
+      //   filter: function(response){
+      //       return response.instrument_name;
+      //   },
+      //   cache: false
+      // }
     });
 
 
@@ -282,16 +283,36 @@ $(function(){
         header: '<h3 class="league-name">קופות</h3>'
       }
     }
-    // ,
-    // {
-    //   name: 'instrument_name',
-    //   displayKey: 'instrument_name',
-    //   source: instrumentNames.ttAdapter(),
-    //   templates: {
-    //     header: '<h3 class="league-name">שמות נכסים</h3>'
-    //   }
-    // }
-    );
+    ,
+    {
+      name: 'instrument_name',
+      displayKey: 'instrument_name',
+      // source: {},
+      source: instrumentNames.ttAdapter(),
+      templates: {
+        header: '<h3 class="league-name">שמות נכסים</h3>',
+        footer: Handlebars.compile('<p>{{query}}</p>')
+      }
+    },
+    {
+     name: 'instrument-search',
+     displayKey: 'name',
+     // For every dataset, typeahead expects you to provide a source property
+     // which is a function that accepts two arguments: query and cb. And you
+     // can do whatever you want in that function. In this case, what we do
+     // is that regardless of the query provided, you will always return the
+     // same result.
+     source: function(query, cb) {
+       var result = [{
+         'name': "נכסים המכילים את הטקסט '" +query +"'", 'action': 'query_instruments', 'queryText':query
+       }];
+      cb(result);
+     },
+     templates: {
+       header: '<div style="border-top: 1px solid black;"></div>'
+     }
+   }
+  );
 
     $('.typeahead').bind('typeahead:closed', function(obj, datum, name) {      
             $(".typeahead").val("")
@@ -315,7 +336,8 @@ $(function(){
             var value = datum[field];
             var year = filter.getConstraintData("report_year")[0]
             var quarter = filter.getConstraintData("report_qurater")[0]
-            
+            var action = datum['action'];
+
             $(".typeahead").val("")
 
             //get year and quarter from cookie if undefined
@@ -328,6 +350,13 @@ $(function(){
             }
             
 
+            if (action == 'query_instruments'){
+                field = 'q';
+                value = datum['queryText'];
+            }
+
+
+            //managing body shows translated value 
             if (field == "translated_managing_body"){
                 value = datum["managing_body"];
                 field = "managing_body";
