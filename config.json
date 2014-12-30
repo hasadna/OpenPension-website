@@ -4,8 +4,6 @@
     "table": "pension_data_all",
     "use_memcache" : true,
     "data_version" : "0.1",
-    "current_quarter" : "3",
-    "current_year" : "2013"
     "current_quarter" : "1",
     "current_year" : "2014"
 }
