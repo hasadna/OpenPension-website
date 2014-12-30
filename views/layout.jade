@@ -31,10 +31,15 @@ html
 	body(data-spy="scroll")    
 		nav(class="navbar navbar-default navbar-static-top" role="navigation")
 			div(class="container")
-				div(class="navbar-header navbar-right")
+				div(class="navbar-header navbar-right col-sm-3")
 					a(class="navbar-brand" href="/")
 						img(src="/img/pension-logo.png") 
 						span() פנסיה פתוחה
+				div(class="navbar-header navbar-right")
+					form.navbar-form.navbar-left(role="search")
+						div.form-group(id="rtl-support")
+								input.form-control.typeahead(id="nav-search" type="text" dir="rtl" placeholder="חיפוש")
+
 				ul(class="nav navbar-nav navbar-left")
 					li()
 						a(id="about-link" href="/about") אודות
@@ -49,6 +54,7 @@ html
 			script(type='text/javascript', src='/js/bootstrap.min.js')
 			script(type='text/javascript', src='/js/bootstrap-select.min.js')
 			script(type='text/javascript', src='/js/jquery.blockUI.min.js')
+			script(type='text/javascript', src='/js/typeahead.bundle.min.js')
 			script(type='text/javascript', src='/js/runtime.js')
 			div(class="container")
 				div(id="footer-text" class="pull-right") פנסיה פתוחה היא פרוייקט של 

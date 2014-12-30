@@ -1,6 +1,7 @@
 var DAL = require('../core/dal.js');
 var Filter = require('../core/filter.js');
 var _ = require('underscore');
+var dictionary = require('../core/dictionary.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 
 exports.quarters = function(req,res){
@@ -148,4 +149,50 @@ exports.search = function(req,res){
       res.json(result);
     });
 
+}
+
+
+
+var translatedManagingBodies=[];
+
+DAL.getManagingBodies(function(err, rows){
+  _.each(rows,function(row){
+    translatedManagingBodies.push(
+    {
+      "translated_managing_body": dictionary.translate(row.managing_body),
+      "managing_body":row.managing_body
+    });
+  })
+});
+
+function findInManagingBody(term){
+  var res = [];
+  return _.filter(translatedManagingBodies, 
+      function(managing_body){
+        return managing_body.translated_managing_body.indexOf(term) > -1;
+      });
+}
+
+exports.queryNames = function(req,res){
+
+    var term = req.query['q'];
+    var field = req.query['f'];
+    // var page = req.query['p'];
+
+    if ( term == undefined ){
+      res.json({'error':'Query is empty','return_code':'-7'})
+    }
+
+
+
+    DAL.searchInFields(term, 10, function(err, result, query){
+      var s = {'instrument_id':[], 'instrument_name':[], 'fund_name':[]};
+
+
+      result['managing_body'] = findInManagingBody(term);
+
+      res.json(result);
+    });
+
+}
 }

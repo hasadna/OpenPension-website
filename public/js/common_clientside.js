@@ -197,3 +197,121 @@ $(function(){
             drawSparklines();
        });
 });
+
+
+////// TYPE-AHEAD
+$(function(){
+
+    var fundNames = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('fund_name'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: 
+      { 
+        url: '/api/queryNames?q=%QUERY',
+        filter: function(response){
+            return response.fund_name;
+        },
+        cache: false
+      }
+    });
+     
+    var managingBodies = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('managing_body'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: 
+      { 
+        url: '/api/queryNames?q=%QUERY',
+        filter: function(response){
+            return response.managing_body;
+        },
+        cache: false
+      }
+    });
+
+    var instrumentNames = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('instrument_name'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: 
+      { 
+        url: '/api/queryNames?q=%QUERY',
+        filter: function(response){
+            return response.instrument_name;
+        },
+        cache: false
+      }
+    });
+
+
+    fundNames.initialize(); 
+    managingBodies.initialize(); 
+    instrumentNames.initialize(); 
+     
+    $('#rtl-support .typeahead').typeahead({
+      highlight: false,
+      hint: false,
+      minLength: 3
+    },
+    {
+      name: 'managing_body',
+      displayKey: 'managing_body',
+      source: managingBodies.ttAdapter(),
+      templates: {
+        header: '<h3 class="league-name">גופים מנהלים</h3>',
+        suggestion: function(data){
+          return '<p>' + data.translated_managing_body + '</p>';
+        }
+      }
+    },
+    {
+      name: 'fund_name',
+      displayKey: 'fund_name',
+      source: fundNames.ttAdapter(),
+      templates: {
+        header: '<h3 class="league-name">קופות</h3>'
+      }
+    }
+    // ,
+    // {
+    //   name: 'instrument_name',
+    //   displayKey: 'instrument_name',
+    //   source: instrumentNames.ttAdapter(),
+    //   templates: {
+    //     header: '<h3 class="league-name">שמות נכסים</h3>'
+    //   }
+    // }
+    );
+
+    $('.typeahead').bind('typeahead:closed', function(obj, datum, name) {      
+            $(".typeahead").val("")
+
+    })
+
+    $('.typeahead').bind('typeahead:selected', function(obj, datum, name) {      
+            // alert(obj); // object
+            // outputs, e.g., {"type":"typeahead:selected","timeStamp":1371822938628,"jQuery19105037956037711017":true,"isTrigger":true,"namespace":"","namespace_re":null,"target":{"jQuery19105037956037711017":46},"delegateTarget":{"jQuery19105037956037711017":46},"currentTarget":
+            // alert(datum); // contains datum value, tokens and custom fields
+            // outputs, e.g., {"redirect_url":"http://localhost/test/topic/test_topic","image_url":"http://localhost/test/upload/images/t_FWnYhhqd.jpg","description":"A test description","value":"A test value","tokens":["A","test","value"]}
+            // in this case I created custom fields called 'redirect_url', 'image_url', 'description'   
+
+            // alert(name); // contains dataset name
+            // outputs, e.g., "my_dataset"
+
+
+            var filter = Filter.fromQueryString(window.location.search)
+
+            var field = Object.keys(datum)[0];
+            var value = datum[field];
+            var year = filter.getConstraintData("report_year")[0]
+            var quarter = filter.getConstraintData("report_qurater")[0]
+            
+            $(".typeahead").val("")
+            
+
+            if (field == "translated_managing_body"){
+                value = datum["managing_body"];
+            }
+     
+            navigate('/portfolio?report_year='+year+'&report_qurater='+quarter+'&'+field+'='+value);
+    });
+
+})

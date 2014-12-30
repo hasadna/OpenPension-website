@@ -4,6 +4,7 @@ var Filter = require('./filter.js');
 var squel = require('squel');
 var config = require('../config')
 var db = require('./db.js');
+var async = require('async');
 
 var allowed_filters={ 
 	'managing_body':simple_filter, 
@@ -523,6 +524,78 @@ function getFundsByManagingBody(managing_body,callback){
 
 }
 
+function searchInFields(term, limit, callback){
+
+	async.parallel([
+	      function(callback){ 
+			searchByField(term, "instrument_name", limit, callback);
+	      },
+	      function(callback){ 
+			searchByField(term, "instrument_id", limit, callback);
+	      },
+	      function(callback){ 
+			searchByField(term, "fund_name", limit, callback);
+		  }
+	    ], 
+	    function(err,results){
+
+
+	      var s = {};
+
+	      if (err){
+	        console.log(err);
+	        res.end("Err: "+err);
+	        return;
+	      }
+
+      	  s.instrument_name = results[0][0].rows;
+      	  s.instrument_id = results[1][0].rows;      
+      	  s.fund_name = results[2][0].rows;
+
+      	  callback(err,s);
+
+      });
+
+
+  
+}
+
+
+/**
+ * Query the DB, find lines containing term in 
+ * instrument_id or instrument_name 
+ * @param term : string, name/id to look for
+ * @param callback(obj) : function to handle result rows.
+ * obj = {rows:[...], total_row_count:int, page: int, 
+ * 			results_per_page: int, total_pages: int}	
+ */
+function searchByField(term, field, limit, callback){
+	var RESULTS_PER_PAGE = 50;
+
+	if (limit == undefined)
+		limit = 10;
+
+	if (term == undefined || term == "" ) {
+		var res = {"rows":[], "total_row_count" : 0, "page":0, "results_per_page" : RESULTS_PER_PAGE, "total_pages": 0};
+		callback("term is empty", res)
+		return
+	}
+
+	//query limited & offset
+	var select = squel.select().from(config.table);
+	select.distinct();
+	select.field(field);
+	select.where("LOWER("+field+") like LOWER('%"+escapeChars(term) +"%')");
+	select.limit(limit);
+
+
+	db.query(select.toString(), function(err, rows){
+		var res = {"rows":rows};
+		callback(err, res, select.toString());
+	});
+
+}
+
 
 /**
  * Query the DB, find lines containing term in 
@@ -585,3 +658,5 @@ exports.groupByInvestments=groupByInvestments;
 exports.getManagingBodies=getManagingBodies;
 exports.search=search;
 exports.streamQuery=streamQuery;
+exports.searchInFields=searchInFields;
+exports.searchByField=searchByField;
