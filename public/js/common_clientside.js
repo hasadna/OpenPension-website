@@ -262,7 +262,7 @@ $(function(){
     $('#rtl-support .typeahead').typeahead({
       highlight: false,
       hint: false,
-      minLength: 3
+      minLength: 2
     },
     {
       name: 'managing_body',
