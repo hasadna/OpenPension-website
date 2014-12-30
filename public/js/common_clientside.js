@@ -4,6 +4,18 @@
 
 $(function () {
 
+
+    //get current year and quarter if not set in cookie
+    if ($.cookie("current_year") == undefined||
+        $.cookie("current_quarter") == undefined){
+
+                $.getJSON("/api/config", function(config){
+                    $.cookie("current_year", config.current_year);
+                    $.cookie("current_quarter", config.current_quarter);
+                });
+    }
+        
+
    
     /**
      * Create a constructor for sparklines that takes some sensible defaults and merges in the individual 

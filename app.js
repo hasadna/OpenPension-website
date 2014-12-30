@@ -85,6 +85,7 @@ app.get('/api/query',api.query);
 app.get('/api/fair_values',api.fair_values);
 app.get('/api/search',api.search);
 app.get('/api/queryNames',api.queryNames);
+app.get('/api/config',api.config);
 
 
 app.get('/csv',csv.download);

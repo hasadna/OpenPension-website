@@ -3,6 +3,7 @@ var Filter = require('../core/filter.js');
 var _ = require('underscore');
 var dictionary = require('../core/dictionary.js');
 var DataNormalizer = require('../core/data_normalizer.js');
+var config = require('../config');
 
 exports.quarters = function(req,res){
 
@@ -195,4 +196,15 @@ exports.queryNames = function(req,res){
     });
 
 }
+
+exports.config = function(req,res){
+
+  res.json(
+    {
+      "current_year":config.current_year, 
+      "current_quarter":config.current_quarter
+    }
+  );
+}
+
 }
