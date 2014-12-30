@@ -207,4 +207,3 @@ exports.config = function(req,res){
   );
 }
 
-}

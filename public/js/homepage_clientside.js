@@ -104,3 +104,6 @@ function addConstraint(key, value) {
 }
 
 
+function navigate(url){
+  window.location = url;
+}

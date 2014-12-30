@@ -317,10 +317,20 @@ $(function(){
             var quarter = filter.getConstraintData("report_qurater")[0]
             
             $(".typeahead").val("")
+
+            //get year and quarter from cookie if undefined
+            if (year == undefined){
+                year = $.cookie("current_year");
+            }
+
+            if (quarter == undefined){
+                quarter = $.cookie("current_quarter");
+            }
             
 
             if (field == "translated_managing_body"){
                 value = datum["managing_body"];
+                field = "managing_body";
             }
      
             navigate('/portfolio?report_year='+year+'&report_qurater='+quarter+'&'+field+'='+value);
