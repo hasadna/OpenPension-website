@@ -1,6 +1,7 @@
 var DAL = require('../core/dal.js');
 var Filter = require('../core/filter.js');
 var _ = require('underscore');
+var DataNormalizer = require('../core/data_normalizer.js');
 
 exports.quarters = function(req,res){
 
