@@ -1,6 +1,6 @@
 each group in groups
     - if (debug)
-        div(style="text-align:left;direction:ltr") #{group.query}
+        div() #{group.query}
     - if (group.group_field == 'fund_name' )continue;
 
     //- skip empty groups
@@ -13,28 +13,28 @@ each group in groups
         h3(class="table-title") חלוקה לפי&nbsp #{translate(group.group_field)}&nbsp
             i(class="help-spot fa fa-question-circle")
 
-        table(class="group-table table table-striped" style="text-align:right;width:100%")
+        table(class="group-table table table-striped")
             colgroup()
-                col(class="col-xs-3")
-                col(class="col-xs-3")
-                col(class="col-xs-3")
-                col(class="col-xs-3")
+                col()
+                col()
+                col()
+                col()
             thead()
                 tr()
-                    th(style="text-align: right") #{translate(group.group_field)}
-                    th(style="text-align: right") היקף ההשקעה 
-                        span(class="unit") בשקלים
+                    th() #{translate(group.group_field)}
+                    th() היקף ההשקעה 
+                        small() בשקלים
 
                     - if (report_type == "managing_body"){
-                        th(style="text-align: right") חשיפה 
-                            span(class="unit") באחוזים
+                        th() חשיפה 
+                            small() באחוזים
                     - }
                     - else if(report_type == "investment") {
-                        th(style="text-align: right") אחוז מההשקעה
+                        th() אחוז מההשקעה
                     - }
 
-                    th(style="text-align: right") שינוי חשיפה 
-                        span(class="unit") ב-4 רבעונים
+                    th() שינוי חשיפה 
+                        small() ב-4 רבעונים
 
             tbody()
                 each result in group.result
@@ -70,7 +70,7 @@ each group in groups
                             span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
                         td()
                             span(class="relative-size") #{groupPercentage}%
-                            div(id="bar" style="width:#{groupPercentage*(70/100)}%")
+                            div(class="bar graph" style="width:#{groupPercentage*(65/100)}%")
 
                         td(class="change")
                             - var sparkline = [];
@@ -114,7 +114,7 @@ each group in groups
                             span(class="quarter-diff #{colorClass}" )
                                 span(class="percentage") #{diff}%
                                 i(class="fa #{caret}")
-                            div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
+                            div(class="sparkline graph",data-sparkline="#{sparkline.reverse().join(', ')}")
 
 
                 - if(visiblePercentage < 100){

@@ -26,7 +26,7 @@ block content
             tr() 
               th(style="text-align: right") #{translate(group_by)}
               th(style="text-align: right") היקף ההשקעה 
-                span(class="unit") בשקלים
+                small() בשקלים
               th(style="text-align: right") % מההשקעה
               th(style="text-align: right") שינוי ב-4 רבעונים אחרונים
           tbody()
@@ -53,7 +53,7 @@ block content
             
                   td()
                     span(class="relative-size") #{groupPercentage}% 
-                    div(id="bar" style="width:#{groupPercentage*(70/100)}%")
+                    div(class="bar graph" style="width:#{groupPercentage*(65/100)}%")
                   
                   td(class="change")
                     - var sparkline = [];
@@ -98,4 +98,4 @@ block content
                     span(class="quarter-diff #{colorClass}" ) 
                       span(class="percentage") #{diff}% 
                       i(class="fa #{caret}")
-                    div(class="sparkline",data-sparkline="#{sparkline.reverse().join(', ')}")
+                    div(class="sparkline graph",data-sparkline="#{sparkline.reverse().join(', ')}")
