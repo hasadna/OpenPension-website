@@ -32,10 +32,16 @@
   > thead {
     > tr {
       > th {
+        line-height: 1;
         font-weight: normal;
         background-color: @th-bg-color;
+        vertical-align: top;
         > small {
           color: @gray;
+          &:before {
+            white-space:pre;
+            content: "\A"; /* line break */
+          }
         }
       }
     }  
