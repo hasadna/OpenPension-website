@@ -1,8 +1,17 @@
 .heading() {
-  font-family:    'almoni-tzar';
-  font-weight:    700;
+  font-family: 'almoni-tzar';
+  font-weight: bold;
+  .alt() {
+    font-family: @font-stack;
+    font-weight: bold;
+  }
 }
 
-.alt-heading() {
-  font-family:    @font-stack;
+.btn-icon(@unicode, @margin-left: 6px) {
+  &:before {
+    font-family: @icon-font-name;
+    font-size: inherit;
+    content: "\@{unicode}";
+    margin-left: @margin-left;
+  }
 }
