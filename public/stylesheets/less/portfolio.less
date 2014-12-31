@@ -1,69 +1,45 @@
 // Styles for the portfolio view
 
-#btn-bar {
-  width: 100%;
-  margin-bottom: 1.5em;
-}
-
-.btn-group{
-  margin: 0 !important;
-}
-
-#select-quarter + div {
-  width: 180px;
-}
-
-#quarterSelection {
-  font-size: 30px;
-  line-height: 45px;
-}
-
-#download {
-  float: left;
-}
-
-#portfolio-overview-diff {
-  display: inline-block;
+.btn-toolbar {
+  margin-bottom: @line;
+  margin-right: 0;
+  .btn-group{
+    margin: 0 !important;
+  }
+  .btn {
+    width: 180px;
+  }
+  #select-quarter + .bootstrap-select .btn .filter-option {
+    .btn-icon("f073");
+  }
+  #download {
+    float: left;
+    .btn-icon("f1c3");
+  }
 }
 
 #portfolio-overview {
   width: 100%;
   border-collapse: collapse !important;
   background-color: @bg-color;
-}
-
-#portfolio-overview td {
-  border: 1px solid @border-color;
-  border-collapse: collapse !important;
-  width: 33%;
-  padding: 0.75em 0 !important;
-  text-align: center;
-}
-
-#portfolio-overview h3 {
-  margin: 0 !important;
-}
-
-.datum {
-  font-size: 2em; /* 32px */
-  line-height: 48px; /* 48px */
-  font-family: "Alef Hebrew";
-  margin: 0 !important;
-  width: auto !important;
-}
-
-#investments-header {
-  margin-top: 1em;
-  height: 2em;
-  margin-bottom: 0.5em;
-}
-
-#investments-header-title {
-  float: right;
-}
-
-#investments-header-button {
-  font-family: FontAwesome;
-  float: left;
-      font-size: 1.5em;
+  &-diff {
+    display: inline-block;
+  }
+  h3 {
+    margin: 0 !important;
+  }
+  td {
+    border: 1px solid @border-color;
+    border-collapse: collapse !important;
+    width: 33%;
+    padding: 0.75em 0 !important;
+    text-align: center;
+    .datum {
+      font-size: 2em; /* 32px */
+      line-height: 48px; /* 48px */
+      font-family: "Alef Hebrew";
+      margin: 0 !important;
+      width: auto !important;
+    }
+  }
 }
