@@ -1,112 +1,47 @@
 // Styles for the site's header
 
 .navbar {
-  color: #FFFFFF !important;
   background-color: @brand-primary;
-  height: 48px !important;
-  min-height: 48px !important;
-  line-height: 3em;
-  direction: rtl !important;
   border: none !important;
-  border-radius: 0;
   margin-bottom: 0;
-}
-
-nav .container {
-    height: 100%;
-}
-
-.navbar .nav {
-    float: right;
-}
-
-.navbar .nav li {
-  float: right;
-  padding: 0;
-  line-height: 48px;
-  height: 100%;
+  &-btn {
+    line-height: 22px;
+    &,
+    &:hover,
+    &:focus {
+      color: white;
+      background: none;
+      border-color: white;
+    }
+  }
 }
 
 .navbar ul, .navbar-header, .navbar-brand {
   padding: 0 !important;
 }
 
-.navbar ul {
-  height: 100%;
-}
-
 .navbar-brand {
-  .heading;
-  float: right;
-  color: white !important;
   font-size:1.5em;
-  height: 48px;
-  line-height: 48px;
+  line-height: @navbar-height;
   margin-right: 0 !important;
-}
-
-.navbar-brand img {
-  height: 28px;
-  width: auto;
-  margin-left: 0.375em;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-#about-link {
-  color:#FFFFFF !important;
-  font-size:1.125em;
-}
-
-#feedback-button {
-  height: 32px;
-  color: #FFFFFF !important;
-  font-size: 1.125em;
-  border: 1px solid white;
-  background: none;
-  padding: 0 10px !important;
+  .heading;
+  img {
+    height: 28px;
+    width: auto;
+    margin-left: 0.375em;
+    vertical-align: middle;
+    display: inline-block;
+  }
 }
 
 #page-header {
-  padding: 0.75em 0 0 0; /* 12px */
-  margin-bottom: 1.5em; /* 24px */
-  border-bottom: 6px solid #333;
+  padding: @half-line;
+  margin-bottom: @line;
+  border-bottom: @quarter-line solid @gray-dark;
   background-color: @dark-bg-color;
 }
 
-
 .breadcrumb {
-  direction: ltr;
-  text-align: right;
-  padding: 0;
-  margin: 0 0 0.75em 0;
   background-color: inherit;
-}
-
-.breadcrumb a {
-  text-decoration: none;
-  color: @brand-primary;
-  vertical-align: baseline;
-}
-
-.breadcrumb li {
-  float: right;
-}
-
-.breadcrumb ol {
-  list-style-type: none;
-}
-
-.breadcrumb li+li:after {
-  font-family: "Alef Hebrew";
-  content: "/\00a0";
-  padding: 0 5px;
-  color: #CCC;
-  vertical-align: baseline;
-}
-
-
-.breadcrumb li+li:before {
-  content: none !important;
-  padding: 0 !important;
+  padding: 0;
 }
