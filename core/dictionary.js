@@ -1,4 +1,5 @@
 var metaTable = require('../common/MetaTable').getMetaTable();
+var spreadsheet = require('../core/GoogleDocSpreadsheet');
 
 var hebrewColumns = metaTable.hebrewColumns;
 var englishColumns = metaTable.englishColumns;
@@ -8,6 +9,13 @@ for(var index in englishColumns)
 {
 	dictionary[englishColumns[index]] = hebrewColumns[index];
 }
+
+//append currencies to dictionary
+spreadsheet.reader.getSpreadsheet('מטבעות',function(err, data){
+	data.forEach(function(currency){
+		dictionary[currency.currencyname.toLowerCase()] = currency.translation;
+	});
+})
 
 dictionary['activity_industry'] = 'ענף פעילות';
 dictionary['managing_body'] = 'גוף מוסדי';
@@ -31,18 +39,12 @@ dictionary['ayalon'] = 'איילון';
 dictionary['ds'] = 'דש';
 
 
-dictionary['nis'] = 'שקל ישראלי';
-dictionary['usd'] = 'דולר ארה"ב';
-dictionary['eur'] = 'אירו';
-dictionary['jpy'] = 'ין יפני';
-dictionary['gbp'] = 'ליש"ט';
-dictionary['aud'] = 'דולר אוסטרלי';
-dictionary['chf'] = 'פרנק שוויצרי';
-dictionary['nzd'] = 'דולר ניו-זילנד';
-dictionary['cny'] = 'יואן סיני';
 
 dictionary['null'] = 'לא נמצא בקטגוריה';
 dictionary['others'] = 'אחרים';
+
+
+
 
 //dictionary holds lower case keys
 var translate = function(word){

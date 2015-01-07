@@ -22,14 +22,14 @@ exports.download = function(req, res){
     	}
 
 
-	res.writeHead(200, {
-		'Content-Type': 'text/csv; charset=utf8',
-		'Content-Disposition' : 'attachment; filename="pension.csv"'
-	});
+		res.writeHead(200, {
+			'Content-Type': 'text/csv; charset=utf8',
+			'Content-Disposition' : 'attachment; filename="openpension.csv"'
+		});
 
 
-	var isFirstLine = true; 
-	stream.on('data',function(data){
+		var isFirstLine = true; 
+		stream.on('data',function(data){
 
 		if (isFirstLine){
 			isFirstLine = false;

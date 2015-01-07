@@ -6,41 +6,7 @@ var cloudflare = require('cloudflare').createClient({
     token: '93f093df1049fd91772193aff9faf618e69c3'
 });
 
-var sheetURL = 'https://docs.google.com/spreadsheets/d/1tm2xjPUYUFPk3BeHSLXec3sSckGMlFROcoH2zZYQC20/pubhtml?hl=en_US&hl=en_US';
-
-var pensionTerms;
-var monTerms;
-
-var tableTopOptions = {
-  key: sheetURL,
-  callback: onLoad,
-  simpleSheet: false
-};
-
-//callback function for tabletop initialization
-function onLoad(data, tabletop) {
-	pensionTerms = tabletop.sheets("מונחי פנסיה").all();
-	monTerms = tabletop.sheets("מונחים כלכליים").all();
-};
-
-//load google spreadsheet using tabletop
-function initTableTop(callback){
-	//override callback
-	if (callback != undefined){
-		Tabletop.init(
-			{
-				key: tableTopOptions.key, 
-				simpleSheet: tableTopOptions.simpleSheet,
-				callback: callback
-			}
-		);
-	}
-	else{
-		Tabletop.init(tableTopOptions);
-	}
-}
-
-initTableTop();
+var sheet = require('../core/GoogleDocSpreadsheet');
 
 exports.about = function(req, res)
 {
@@ -54,9 +20,11 @@ exports.privacy = function(req, res)
 
 exports.help = function(req, res)
 {
-	res.render('help',{
-			pensionTerms : pensionTerms
+	sheet.reader.getSpreadsheet("מונחי פנסיה", function(err, sheet){
+		res.render('help',{
+			pensionTerms : sheet
 		});
+	});
 }
 
 exports.refresh = function(req,res){
@@ -64,7 +32,7 @@ exports.refresh = function(req,res){
 	async.parallel([
 		function(callback){
 			//reload Google Doc
-			initTableTop();
+			sheet.reader.init();
 			callback();
 		},
 		function(callback){

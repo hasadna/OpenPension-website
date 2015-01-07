@@ -280,28 +280,21 @@ $(function(){
       displayKey: 'fund_name',
       source: fundNames.ttAdapter(),
       templates: {
-        header: '<h3 class="league-name">קופות</h3>'
+        header: '<h3>קופות</h3>'
       }
     }
     ,
     {
       name: 'instrument_name',
       displayKey: 'instrument_name',
-      // source: {},
       source: instrumentNames.ttAdapter(),
       templates: {
-        header: '<h3 class="league-name">שמות נכסים</h3>',
-        footer: Handlebars.compile('<p>{{query}}</p>')
+        header: '<h3>שמות נכסים</h3>',
       }
     },
     {
      name: 'instrument-search',
      displayKey: 'name',
-     // For every dataset, typeahead expects you to provide a source property
-     // which is a function that accepts two arguments: query and cb. And you
-     // can do whatever you want in that function. In this case, what we do
-     // is that regardless of the query provided, you will always return the
-     // same result.
      source: function(query, cb) {
        var result = [{
          'name': "נכסים המכילים את הטקסט '" +query +"'", 'action': 'query_instruments', 'queryText':query
@@ -309,7 +302,7 @@ $(function(){
       cb(result);
      },
      templates: {
-       header: '<div style="border-top: 1px solid black;"></div>'
+        header: '<h3>עוד...</h3>',
      }
    }
   );
@@ -320,15 +313,6 @@ $(function(){
     })
 
     $('.typeahead').bind('typeahead:selected', function(obj, datum, name) {      
-            // alert(obj); // object
-            // outputs, e.g., {"type":"typeahead:selected","timeStamp":1371822938628,"jQuery19105037956037711017":true,"isTrigger":true,"namespace":"","namespace_re":null,"target":{"jQuery19105037956037711017":46},"delegateTarget":{"jQuery19105037956037711017":46},"currentTarget":
-            // alert(datum); // contains datum value, tokens and custom fields
-            // outputs, e.g., {"redirect_url":"http://localhost/test/topic/test_topic","image_url":"http://localhost/test/upload/images/t_FWnYhhqd.jpg","description":"A test description","value":"A test value","tokens":["A","test","value"]}
-            // in this case I created custom fields called 'redirect_url', 'image_url', 'description'   
-
-            // alert(name); // contains dataset name
-            // outputs, e.g., "my_dataset"
-
 
             var filter = Filter.fromQueryString(window.location.search)
 
