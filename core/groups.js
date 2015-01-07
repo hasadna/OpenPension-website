@@ -31,10 +31,10 @@ Groups.getGroups = function(filter){
 
   //if managing body is not in constraints remove fund_name
   if (!filter.hasConstraint("managing_body")){
-	delete resArray[resArray.indexOf("fund_name")];
+    delete resArray[resArray.indexOf("fund_name")];
   }
   else{ //managing body is in constraint, remove from groups 
-	delete resArray[resArray.indexOf("managing_body")];
+    delete resArray[resArray.indexOf("managing_body")];
   }
 
   //filter contains reference index
@@ -55,6 +55,13 @@ Groups.getGroups = function(filter){
   if (filter.hasConstraint("issuer")){
     delete resArray[resArray.indexOf("activity_industry")];
   }
+
+  //filter contains q (query)
+  if (filter.hasConstraint("q")){
+    delete resArray[resArray.indexOf("instrument_name")];
+    resArray.unshift("instrument_name");
+  }
+
 
   //by instrument type
   if (liquidity == "מזומנים"){
