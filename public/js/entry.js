@@ -55,7 +55,6 @@ $(function () {
                 margin: "5px"
             },
             x: 150,
-            rtl: true,
             text: lastYearChangesText
 
         },
@@ -93,7 +92,6 @@ $(function () {
             min: minVal,
             max: maxVal + 0.2,
             title: {
-                //rtl: true,
                 text: '',
                 align: 'high'
             },
