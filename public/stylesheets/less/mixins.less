@@ -7,11 +7,33 @@
   }
 }
 
-.btn-icon(@unicode, @margin-left: 6px) {
+.icn() {
+  font-family: @icon-font-name;
+  font-size: inherit;
+}
+
+.btn-icn(@unicode, @margin-left: 6px) {
   &:before {
-    font-family: @icon-font-name;
-    font-size: inherit;
+    .icn;
     content: "\@{unicode}";
     margin-left: @margin-left;
+  }
+}
+
+.trend-indicator(@unicode, @margin-right: 6px) {
+  &:after {
+    .icn;
+    content: "\@{unicode}";
+    margin-right: @margin-right;
+    float: left;
+  }
+}
+
+.lrm-rlm() {
+  &:before {
+    content: "\200E"; /* left-right mark */
+  }
+  &:after {
+    content: "\200F"; /* right-left mark */
   }
 }
