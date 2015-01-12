@@ -15,7 +15,8 @@ block content
 
         div(id="investments-header")
           h3(id="investments-header-title") חלוקה לפי&nbsp #{translate(group_by)}
-          div(id="investments-header-button",onclick="$('.modal').modal('hide')" ) &#xf05c
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") ×
         table(id="investments-list" class="sortable table table-striped" style="text-align:right;width:100%")
           colgroup()
             col(class="col-xs-3")
