@@ -4,12 +4,17 @@
   background-color: @brand-primary;
   border: none !important;
   margin-bottom: 0;
+  *,
+  *:hover, 
+  *:focus {
+    color: white;
+  }
   &-btn {
     line-height: 22px;
+    text-shadow: none;
     &,
     &:hover,
     &:focus {
-      color: white;
       background: none;
       border-color: white;
     }
@@ -21,10 +26,10 @@
 }
 
 .navbar-brand {
+  .heading;
   font-size:1.5em;
   line-height: @navbar-height;
   margin-right: 0 !important;
-  .heading;
   img {
     height: 28px;
     width: auto;
