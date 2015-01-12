@@ -69,7 +69,7 @@ each group in groups
                         td()
                             span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
                         td()
-                            span(class="relative-size") #{groupPercentage}%
+                            span(class="percentage") #{groupPercentage}%
                             div(class="bar graph" style="width:#{groupPercentage*(65/100)}%")
 
                         td(class="change")
@@ -93,28 +93,24 @@ each group in groups
                                 - sparkline.push( (Number(result[qStr][0]['fair_value']) / Number(quarters[i]['fair_value']) * 100).toFixed(2) );
                             - }
 
-                            - var diff, caret, colorClass;
+                            - var diff, direction;
 
                             - diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
                             - if (diff > 0){
-                                - diff = "+" + diff;
-                                - caret = "fa-caret-up";
-                                - colorClass = "blue-text";
+                                - direction = "increase";
                             - }
                             - else if(diff==0) {
-                                - caret = "";
-                                - colorClass = "gray-text-text";
+                                - direction = "no-change";
                             - }
 
                             - else{
-                                - caret = "fa-caret-down";
-                                - colorClass = "yellow-text";
+                                - direction = "decrease";
                             - }
+                            - diff = Math.abs(diff);
 
-                            span(class="quarter-diff #{colorClass}" )
-                                span(class="percentage") #{diff}%
-                                i(class="fa #{caret}")
-                            div(class="sparkline graph",data-sparkline="#{sparkline.reverse().join(', ')}")
+                            span(class="trend #{direction}" )
+                              span(class="percentage") #{diff}%
+                            div(class="sparkline graph" data-sparkline="#{sparkline.reverse().join(', ')}")
 
 
                 - if(visiblePercentage < 100){

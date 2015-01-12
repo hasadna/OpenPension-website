@@ -11,7 +11,7 @@ block content
     
       
         - if (debug)
-          div(style="text-align:left;direction:ltr") #{query} 
+          div() #{query} 
 
         div(id="investments-header")
           h3(id="investments-header-title") חלוקה לפי&nbsp #{translate(group_by)}
@@ -52,7 +52,7 @@ block content
                     span(class="amount") #{lastQResultWords.number}  #{lastQResultWords.scale}
             
                   td()
-                    span(class="relative-size") #{groupPercentage}% 
+                    span(class="percentage") #{groupPercentage}% 
                     div(class="bar graph" style="width:#{groupPercentage*(65/100)}%")
                   
                   td(class="change")
@@ -78,24 +78,21 @@ block content
 
 
 
-                    - var diff, caret, colorClass;
+                    - var diff, direction;
 
                     - diff = (sparkline[0] - sparkline[sparkline.length - 1]).toFixed(2);
                     - if (diff > 0){
-                      - diff = "+" + diff;
-                      - caret = "fa-caret-up";
-                      - colorClass = "blue-text";
+                        - direction = "increase";
                     - }
-                    - else if (diff == 0){
-                      - caret = "";
-                      - colorClass = "gray-text";
-                    - }
-                    - else{
-                      - caret = "fa-caret-down";
-                      - colorClass = "yellow-text";
+                    - else if(diff==0) {
+                        - direction = "no-change";
                     - }
 
-                    span(class="quarter-diff #{colorClass}" ) 
+                    - else{
+                        - direction = "decrease";
+                    - }
+                    - diff = Math.abs(diff);
+
+                    span(class="trend #{direction}" ) 
                       span(class="percentage") #{diff}% 
-                      i(class="fa #{caret}")
                     div(class="sparkline graph",data-sparkline="#{sparkline.reverse().join(', ')}")
