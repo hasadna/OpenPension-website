@@ -2,53 +2,34 @@
 
 // Highcharts for tables
 
+.graph {
+  vertical-align: middle;
+}
+
 #highcharts-0 {
   overflow: visible !important;
 }
 
-.highcharts-axis {
-  display: none !important;
-}
-
-.highcharts-grid {
-  display: none !important;
+.highcharts {
+  &-axis,
+  &-grid {
+    display: none !important;
+  }  
 }
 
 .sparkline {
-  padding:10px !important;
-  float:left;
   display: inline-block;
+  float: left;
 }
 
-#portfolio-overview-diff .sparkline {
-  margin-right: 15px;
+.bar {
+  height: @half-line;
+  background-color: @graph-color;
+  display: inline-block;
+  min-width: 1px;
 }
 
-.quarter-diff, .percentage {
-  float: right;
-  direction: ltr;
-}
 
-.relative-size, .percentage {
-  width: 60px;
-  margin-left: 3px;
-}
-
-.blue-text {
-  color:#7FB2FF;
-}
-
-.yellow-text {
-  color:#FFBE4C;
-}
-
-.gray-text {
-  color:#999999;
-}
-
-.gray {
-  color: #999999;
-}
 
 .segmentation {
   margin-bottom: 3em;
@@ -59,18 +40,14 @@
   margin-right: 5px;
   color: #F0F0F0;
   font-size: 16px;
+  &:hover {
+    color: #999;
+  }
 }
 
-.help-spot:hover {
-  color: #999;
-}
+
 
 // D3 for the homepage
-
-.node:first-child {
-  background: none !important;
-  border: 0;
-}
 
 .node {
   font-size: 1em;
@@ -82,8 +59,12 @@
   overflow: hidden;
   position: absolute;
   text-indent: 2px;
+  &:first-child {
+    background: none !important;
+    border: 0;
+  }
+  .title {
+    font-size: 1.3125em; /** 21px **/
+  }
 }
 
-.node .title {
-  font-size: 1.3125em; /** 21px **/
-}
