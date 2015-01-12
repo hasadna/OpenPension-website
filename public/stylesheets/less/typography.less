@@ -25,36 +25,33 @@
 h1 {
   .heading > .alt;
   font-size: @font-size-base * 2.25; // 36px
-  line-height: 1.3333333333em; // 48px
-  margin: 0 0 0.3333333333em 0 !important; /* 12px */
+  line-height: @double-line; // 48px
+  margin: 0 0 @half-line 0; /* 12px */
 }
 
 h2 {
   .heading;
-  font-size: 1.5em; /* 24px */
-  line-height: 1em; /* 24px */
-  color: #999999;
+  font-size: 1.5 * @font-size-base; /* 24px */
+  line-height: @line; /* 24px */
   margin: 0 !important;
-  .heading;
 }
 
 h3 {
   .heading;
-  font-size: 1.3125em; /* 21px */
-  line-height: 1.14285714285714em; /* 24px */
-  color: #999999;
-  margin: 0 0 0.571428571428571em  0 !important; /* 12px */
+  font-size: 1.3125 * @font-size-base; /* 21px */
+  line-height: @line; /* 24px */
+  margin: 0 0 @half-line  0 !important; /* 12px */
 }
 
 h4 {
   .heading;
-  font-size: 1em;
-  line-height: 1.5em;
+  font-size: @font-size-base;
+  line-height: @line;
   color: #999999;
 }
 
 h5 {
   .heading > .alt;
-  font-size: 14px;
-  line-height: 24px;
+  font-size: 0.875 * @font-size-base;
+  line-height: @line;
 }
