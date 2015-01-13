@@ -1,0 +1,48 @@
+// Styles for the portfolio view
+
+.btn-toolbar {
+  margin-bottom: @line;
+  margin-right: 0;
+  .btn-group{
+    margin: 0 !important;
+  }
+  .btn {
+    width: 180px;
+  }
+  #select-quarter + .bootstrap-select .btn .filter-option {
+    .btn-icn("f073");
+  }
+  #download {
+    float: left;
+    .btn-icn("f1c3");
+  }
+}
+
+#portfolio-overview {
+  width: 100%;
+  background-color: @bg-color;
+  td {
+    border: 1px solid @border-color;
+    width: 33%;
+    text-align: center;
+    padding: @half-line;
+    h3 {
+      margin: 0 !important;
+    }
+    h3 + * {
+      font-size: 1.5 * @font-size-base; /* 32px */
+    }
+  }
+  &-diff {
+    vertical-align: middle;
+    display: inline-block;
+    width: 66%;
+    margin: 0 auto;
+    > .trend {
+      float: right;
+    }
+    > .graph {
+      padding: @quarter-line;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+.heading() {
+  font-family: 'almoni-tzar';
+  font-weight: bold;
+  color: @gray;
+  .alt() {
+    font-family: @font-stack;
+    font-weight: bold;
+  }
+}
+
+.icn() {
+  font-family: @icon-font-name;
+  font-size: inherit;
+}
+
+.btn-icn(@unicode, @margin-left: 6px) {
+  &:before {
+    .icn;
+    content: "\@{unicode}";
+    margin-left: @margin-left;
+  }
+}
+
+.trend-indicator(@unicode, @margin-right: 6px) {
+  &:after {
+    .icn;
+    content: "\@{unicode}";
+    margin-right: @margin-right;
+    float: left;
+  }
+}
+
+// For switching an element to LTR in an RTL parent
+
+.lrm-rlm() {
+  &:before {
+    content: "\200E"; /* left-right mark */
+  }
+  &:after {
+    content: "\200F"; /* right-left mark */
+  }
+}

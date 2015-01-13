@@ -1,8 +1,5 @@
 extends layout
 
-block headerbottom
-
-
 block content
 
     div(id="page-header" class="container-fluid")
@@ -12,9 +9,9 @@ block content
             div(class="row")
 
                 //- HEADER
-                div( class="col-xs-12")
+                div(class="col-xs-12")
 
-                    div(id="breadcrumbs" class="breadcrumb col-xs-12")
+                    div(id="breadcrumbs")
                         include partials/breadcrumbs.jade
 
 
@@ -22,10 +19,10 @@ block content
                         include partials/report_title.jade
                     
 
-    div(class="container")
+    main(class="container")
         div(class="row")
             div(class="col-xs-12")
-                div(id="btn-bar")
+                div(class="btn-toolbar")
                         select(id="select-quarter")
                             each quarter in getLastQuarters(current_year, current_quarter, 4)
                                 - var select=null;
@@ -33,24 +30,23 @@ block content
                                     - select='selected';
                                 option(value="#{JSON.stringify(quarter)}",
                                 selected=select) רבעון #{quarter.quarter}, #{quarter.year}
-                        a(id="download" href="/csv#{filter.toQueryString()}")
-                            button(class="btn btn-default")
-                                i(class="fa fa-file-text-o")
-                                &nbspהורד נתונים גולמיים
+                        button(id="download" class="btn btn-default" onClick="location.href = '/csv#{filter.toQueryString()}'")
+                              הורד נתונים גולמיים
                 div(class="alert alert-warning" role="alert")
                     strong() שימו לב!
                     נתונים חלקיים
                     a(href="#") קרא עוד
 
                 - if (debug)
-                    div(style="text-align:left;direction:ltr") #{totalPensionFundQuery}
-                    div(style="text-align:left;direction:ltr") #{quartersQuery}
+                    div() #{totalPensionFundQuery}
+                    div() #{quartersQuery}
 
                 div(id="header")
                     include partials/header.jade
 
-        div(id="groups")
-            include partials/groups.jade
+        div(class="row")
+          div(class="groups col-xs-12" )
+              include partials/groups.jade
 
         div(class="row")
             div(id="further-reading" class="col-xs-12")

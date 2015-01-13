@@ -1,0 +1,33 @@
+html {
+  margin: 0;
+}
+
+
+body {
+  font-family: @font-stack;
+  margin: 0;
+  padding: 0;
+  padding-bottom: @footer-height; // making room for footer
+  position: relative;
+}
+
+.container {
+  width: 970px !important;
+}
+
+main {
+  margin-bottom: @triple-line;
+}
+
+a {
+  &:hover {
+    cursor: pointer;
+  }
+  &:visited {
+    color: @link-hover-color;
+  }
+}
+
+.btn {
+  .btn-styles(@gray-lighter);
+}

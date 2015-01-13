@@ -1,0 +1,69 @@
+// Styles for charts
+
+// Highcharts for tables
+
+.graph {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+#highcharts-0 {
+  overflow: visible !important;
+}
+
+.highcharts {
+  &-axis,
+  &-grid {
+    display: none !important;
+  }  
+}
+
+.sparkline {
+  display: inline-block;
+  float: left;
+}
+
+.bar {
+  height: @half-line;
+  background-color: @graph-color;
+  display: inline-block;
+  min-width: 1px;
+}
+
+
+
+.segmentation {
+  margin-bottom: 3em;
+}
+
+.help-spot {
+  display: none;
+  margin-right: 5px;
+  color: #F0F0F0;
+  font-size: 16px;
+  &:hover {
+    color: #999;
+  }
+}
+
+// D3 for the homepage
+
+.node {
+  font-size: 1em;
+  color: white;
+  padding: 10px;
+  text-align: right;
+  line-height: 1.5em;
+  border: 3px solid  white;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px;
+  &:first-child {
+    background: none !important;
+    border: 0;
+  }
+  .title {
+    font-size: 1.3125em; /** 21px **/
+  }
+}
+

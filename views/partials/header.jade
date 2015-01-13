@@ -20,38 +20,31 @@ table(id="portfolio-overview" class="table")
                         h3() חשיפה
                     - }
 
-                    - if (quarters[lastQuarters[0].str] == undefined){
-                        -console.log(lastQuarters[0].str + " undefined");
-                    -}
-
-                    -var percentageOfTotalFund = (quarters[lastQuarters[0].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[0].str][0]['fair_value'] * 100).toFixed(1)
-                    span(class="datum" style="direction:ltr") #{percentageOfTotalFund} %
+                    -var percentageOfTotalFund = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1)
+                    span(class="datum") #{percentageOfTotalFund}%
             -}
             td()
                 h3() שינוי ב-4 רבעונים
-                -var diffQ0 = ((quarters[lastQuarters[0].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[0].str][0]['fair_value'] * 100) || 0).toFixed(1);
-                -var diffQ1 = ((quarters[lastQuarters[1].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[1].str][0]['fair_value'] * 100) || 0).toFixed(1);
-                -var diffQ2 = ((quarters[lastQuarters[2].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[2].str][0]['fair_value'] * 100) || 0).toFixed(1);
-                -var diffQ3 = ((quarters[lastQuarters[3].str][0]['fair_value'] / totalPensionFundQuarters[lastQuarters[3].str][0]['fair_value'] * 100) || 0).toFixed(1);
+                -var diffQ0 = (quarters[0]['fair_value'] / totalPensionFundQuarters[0]['fair_value'] * 100).toFixed(1);
+                -var diffQ1 = (quarters[1]['fair_value'] / totalPensionFundQuarters[1]['fair_value'] * 100).toFixed(1);
+                -var diffQ2 = (quarters[2]['fair_value'] / totalPensionFundQuarters[2]['fair_value'] * 100).toFixed(1);
+                -var diffQ3 = (quarters[3]['fair_value'] / totalPensionFundQuarters[3]['fair_value'] * 100).toFixed(1);
 
                 - var diff = (diffQ0 - diffQ3).toFixed(1);
-                - var caret, colorClass;
+                - var trend;
 
                 - if (diff > 0){
-                    - diff = "+" + diff;
-                    - caret = "fa-caret-up";
-                    - colorClass = "blue-text";
+                    - direction = "increase";
                 - }
-                - else if (diff == 0){
-                    - caret = "";
-                    - colorClass = "gray-text";
+                - else if(diff==0) {
+                    - direction = "no-change";
                 - }
+
                 - else{
-                    - caret = "fa-caret-down";
-                    - colorClass = "yellow-text";
+                    - direction = "decrease";
                 - }
+                - diff = Math.abs(diff);
                 div(id="portfolio-overview-diff")
-                    div(class="quarter-diff #{colorClass}" )
-                        span(class="datum percentage"  style="direction:ltr") #{diff}%
-                        i(class="fa #{caret}")
-                    div(class="sparkline",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")
+                    div(class="trend #{direction}" )
+                        span(class="datum percentage") #{diff}%
+                    div(class="sparkline graph",data-sparkline="#{diffQ3}, #{diffQ2}, #{diffQ1}, #{diffQ0}")

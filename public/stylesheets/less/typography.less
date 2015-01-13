@@ -1,0 +1,57 @@
+@import url(http://fonts.googleapis.com/earlyaccess/alefhebrew.css);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:700);
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/glyphicons-halflings-regular.woff') format('woff'), 
+       url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+       url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+
+@font-face {
+  font-family: 'almoni-tzar';
+  font-weight: 700; /*(bold)*/
+  font-style: normal;
+  src: url('../fonts/almoni-tzar-aaa-700.eot');
+  src: url('../fonts/almoni-tzar-aaa-700.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/almoni-tzar-aaa-700.ttf') format('truetype'),
+       url('../fonts/almoni-tzar-aaa-700.woff') format('woff'),
+       url('../fonts/almoni-tzar-aaa-700.svg#almoni-tzar-bold') format('svg');
+}
+
+h1 {
+  .heading > .alt;
+  font-size: @font-size-base * 2.25; // 36px
+  line-height: @double-line; // 48px
+  margin: 0 0 @half-line 0; /* 12px */
+}
+
+h2 {
+  .heading;
+  font-size: 1.5 * @font-size-base; /* 24px */
+  line-height: @line; /* 24px */
+  margin: 0 !important;
+}
+
+h3 {
+  .heading;
+  font-size: 1.3125 * @font-size-base; /* 21px */
+  line-height: @line; /* 24px */
+  margin: 0 0 @half-line  0 !important; /* 12px */
+}
+
+h4 {
+  .heading;
+  font-size: @font-size-base;
+  line-height: @line;
+  color: #999999;
+}
+
+h5 {
+  .heading > .alt;
+  font-size: 0.875 * @font-size-base;
+  line-height: @line;
+}
