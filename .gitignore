@@ -6,11 +6,6 @@ node_modules
 config.json
 public/js/filter.js
 public/js/categories.js
-
+public/js/portfolio_templates.js
+public/js/data_normalizer.js
 .brackets.json
-
-config.json
-
-config.json
-
-config.json
