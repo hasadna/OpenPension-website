@@ -269,7 +269,7 @@ $(function(){
       displayKey: 'managing_body',
       source: managingBodies.ttAdapter(),
       templates: {
-        header: '<h3 class="league-name">גופים מנהלים</h3>',
+        header: '<h6 class="league-name">גופים מוסדיים</h6>',
         suggestion: function(data){
           return '<p>' + data.translated_managing_body + '</p>';
         }
@@ -280,7 +280,7 @@ $(function(){
       displayKey: 'fund_name',
       source: fundNames.ttAdapter(),
       templates: {
-        header: '<h3>קופות</h3>'
+        header: '<h6>קופות</h6>'
       }
     }
     ,
@@ -289,7 +289,7 @@ $(function(){
       displayKey: 'instrument_name',
       source: instrumentNames.ttAdapter(),
       templates: {
-        header: '<h3>שמות נכסים</h3>',
+        header: '<h6>שמות נכסים</h6>',
       }
     },
     {
@@ -297,12 +297,9 @@ $(function(){
      displayKey: 'name',
      source: function(query, cb) {
        var result = [{
-         'name': "נכסים המכילים את הטקסט '" +query +"'", 'action': 'query_instruments', 'queryText':query
+         'name': "חפש '" + query + "' בנכסים", 'action': 'query_instruments', 'queryText':query
        }];
       cb(result);
-     },
-     templates: {
-        header: '<h3>עוד...</h3>',
      }
    }
   );

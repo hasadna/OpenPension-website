@@ -1,47 +1,51 @@
-#rtl-support .tt-dropdown-menu {
-  text-align: left;
+.tt-query {
+  color: red;
+  font-size: 30px;
 }
 
+.tt-hint {
+  color: red;
+  font-size: 30px;
+}
 
-.tt {
-  &-query {
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-       -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+.tt-dropdown-menu {
+  margin-top: -4px;
+  border-radius: 0;
+  padding: 0 !important;
+  h6 {
+    border-bottom: 1px solid @gray-lighter;
+    padding: 5px 10px;
+    margin-bottom: 3px;
   }
-  &-hint {
-    color: #999;
-    visibility: hidden;
+  .tt-suggestions {
+    margin-bottom: 10px;
+    .tt-suggestion {
+      color: @link-color;
+      padding: 5px 10px;
+      p {
+        line-height: @three-quarters-line;
+      }
+      &.tt-cursor {
+        color: white;
+        background-color: @brand-primary;
+      }
+    }
   }
-    &-dropdown-menu {
-    width: 422px;
-    margin-top: 4px;
-    padding: 4px 4px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-       -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-            box-shadow: 0 5px 10px rgba(0,0,0,.2);
-     color: black;
-  }
-  &-suggestion {
-    padding: 3px 20px;
-    line-height: 24px;
-    &.tt-cursor {
-      color: #fff;
-      background-color: #0097cf;
+  .tt-dataset-instrument-search {
+    font-size: 14px;
+    text-align: center;
+    border-top: 1px solid @gray-light;
+    background-color: @gray-lightest;
+    .tt-suggestions {
+      margin-bottom: 0;
+      .tt-suggestion {
+        p {
+          color: @gray-dark;
+        }
+        &.tt-cursor {
+          background-color: @gray-lighter;
+        }
+      }
     }
   }
 }
-  
-
-
-
-
-
-
-
