@@ -8,23 +8,22 @@
   }
 }
 
-.icn() {
+.icn(@unicode) {
+  content: "\@{unicode}";
   font-family: @icon-font-name;
   font-size: inherit;
 }
 
 .btn-icn(@unicode, @margin-left: 6px) {
   &:before {
-    .icn;
-    content: "\@{unicode}";
+    .icn(@unicode);
     margin-left: @margin-left;
   }
 }
 
 .trend-indicator(@unicode, @margin-right: 6px) {
   &:after {
-    .icn;
-    content: "\@{unicode}";
+    .icn(@unicode);
     margin-right: @margin-right;
     float: left;
   }
