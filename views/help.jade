@@ -6,17 +6,16 @@ block content
 		div(class="container")
 			div(class="row")
 				div(class="col-xs-12")
-					div(class="breadcrumb col-xs-12") 
-						ol()
-							li()
-								a(onclick="window.location='/'" title="דף הבית") דף הבית
-							li(class="active")הסברים
+					ol(class="breadcrumb")
+						li()
+							a(onclick="window.location='/'" title="דף הבית") דף הבית
+						li(class="active")הסברים
 					h2() 
 					h1() הסברים
 					
 	div(class="container")
 		div(class="row")
-			div(class="col-xs-4")
+			div(class="col-xs-3")
 				ul(class="nav affix-top" data-spy="affix" data-offset-top="175" data-offset-bottom="200")
 					- var index = 0;
 					each term in pensionTerms
@@ -30,7 +29,7 @@ block content
 								a(href="##{term.key}") #{term.title}
 						- }
 						
-			main(class="col-xs-8")
+			main(class="col-xs-9")
 				- var index = 0;
 				each term in pensionTerms
 					- index++;

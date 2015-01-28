@@ -6,13 +6,13 @@
   &-top,
   &-bottom,
   .nav& {
-    width: 100%;
+    width: 213px; /* 3 desktop columns */
     &,
     &-top {
       > li {
-        font-size: 0.875;
         margin-bottom: 0;
         > a {
+          font-size: 0.875 * @font-size-base;
           line-height: 20px;
           padding-top: 0;
           padding-bottom: 4px;
@@ -24,7 +24,7 @@
             text-decoration: none;
           }
         }
-        &.acttive > a {
+        &.active > a {
           font-weight: bold;
           border-right: 5px solid @brand-primary;
           padding-right: 15px;
@@ -36,5 +36,8 @@
         }
       }
     }
+  }
+  &-bottom {
+    position: relative;
   }
 }
