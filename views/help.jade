@@ -16,14 +16,12 @@ block content
 	div(class="container")
 		div(class="row")
 			main(class="col-xs-8")
-				- var index = 0;
 				each term in pensionTerms
-					- index++;
-					section(id="#{term.key}")
+					section(id="#{term.key.replace(/ /g, '_')}")
 						h3() #{term.title}
 						p() #{term.value}
 			div(class="col-xs-offset-1 col-xs-3")
 				ul(class="toc nav affix" data-spy="affix" data-offset-top="180")
 					each term in pensionTerms
 						li()
-							a(href="##{term.key}") #{term.title}
+							a(href="##{term.key.replace(/ /g, '_')}") #{term.title}
