@@ -15,25 +15,15 @@ block content
 					
 	div(class="container")
 		div(class="row")
-			div(class="col-xs-3")
-				ul(class="nav affix-top" data-spy="affix" data-offset-top="175" data-offset-bottom="200")
-					- var index = 0;
-					each term in pensionTerms
-						- index++;
-						- if (index == 1){
-							li(class="active")
-								a(href="##{term.key}") #{term.title}
-						- }
-						- else{
-							li()
-								a(href="##{term.key}") #{term.title}
-						- }
-						
-			main(class="col-xs-9")
+			main(class="col-xs-8")
 				- var index = 0;
 				each term in pensionTerms
 					- index++;
 					section(id="#{term.key}")
 						h3() #{term.title}
 						p() #{term.value}
-		
+			div(class="col-xs-offset-1 col-xs-3")
+				ul(class="toc nav affix" data-spy="affix" data-offset-top="180")
+					each term in pensionTerms
+						li()
+							a(href="##{term.key}") #{term.title}

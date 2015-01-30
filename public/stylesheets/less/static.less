@@ -1,8 +1,39 @@
 // Styles for static content pages
 
 section {
-  margin-bottom: 48px;
+  margin-bottom: @line-and-a-half;
   &:last-child {
-    margin-bottom: 72px;
+    margin-bottom: @triple-line;
+  }
+}
+
+.toc {
+  top: 20px;
+  li {
+    margin-bottom: 0;
+    > a {
+      font-size: 0.875 * @font-size-base;
+      line-height: 0.75 * @line;
+      padding-top: 0;
+      padding-bottom: 4px;
+      padding-right: 20px;
+      margin-bottom: @quarter-line;
+      &:hover,
+      &:focus {
+        border-right: 3px solid @brand-primary;
+        padding-right: 17px;
+        text-decoration: none;
+      }
+    }
+    &.active > a {
+      font-weight: bold;
+      border-right: 5px solid @brand-primary;
+      padding-right: 15px;
+    }
+    &.active > a,
+    & > a:hover,
+    & > a:focus {
+      background-color: inherit;
+    }
   }
 }
