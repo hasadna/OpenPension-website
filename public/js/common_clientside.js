@@ -211,7 +211,7 @@ $(function(){
 });
 
 
-////// TYPE-AHEAD
+////// TYPEAHEAD
 $(function(){
 
     var fundNames = new Bloodhound({
