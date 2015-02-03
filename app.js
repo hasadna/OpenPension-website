@@ -58,7 +58,6 @@ if ('development' == app.get('env')) {
 
 app.get('/managing_bodies_treemap.json', homepage.managing_body_treemap);
 app.get('/issuers_treemap.json', homepage.issuers_treemap);
-app.get('/highcharts_managing_body', homepage.highcharts_managing_body);
 app.get('/', homepage.show);
 
 app.get('/portfolio', portfolio.portfolio);

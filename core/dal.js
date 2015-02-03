@@ -99,7 +99,6 @@ function prepareWheres(select, filter)
  * if filter contains "group_by" field, then group by groups in filter.
  * else group by every field which is in allowed_filters and not in filter.
  *
- * adds sum fair_value
  * @param select: Squel select, is duplicated for each select group
  * @param filter: Filter object with constraints
  * @returns [Squel]: array of Squel select objects 
