@@ -58,15 +58,31 @@ exports.managing_body_treemap = function(req,res){
             };
         });
 
+        children = _.sortBy(children, 
+            function(child){return child.relativePart})
 
 
-        var tooSmall = children.filter(function(element){
-                return element.relativePart <= 0.07;
-            });
+        //create the OTHERS group, it is the largest sum
+        //of small groups that is not bigger than
+        //the next small group
+        var spliceIndex;
+        var othersPart = 0;
+        for (i in children){
+            i = Number(i); 
+            if ( children[i+1] != null && 
+                othersPart + children[i].relativePart < children[i+1].relativePart){
+                spliceIndex = i+1;
+                othersPart = othersPart + children[i].relativePart;
+            }
+            else{
+                break;
+            }
 
-        var largeEnough = children.filter(function(element){
-                return element.relativePart > 0.07;
-            });
+        }
+
+        var tooSmall = children.splice(0,spliceIndex);
+
+        var largeEnough = children;
 
         var others = tooSmall.reduce(
             function(previousValue, currentValue, index, array) { 
