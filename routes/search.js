@@ -162,6 +162,7 @@ exports.results = function(req, res){
         }
       ],
     issuers: [
+      /*
       {
         name: 'מגדל ביטוח הון',
         url: '#'
@@ -170,6 +171,7 @@ exports.results = function(req, res){
         name: 'מגדל בטוח',
         url: '#'
       }
+      */
     ],
     assets: [
       {

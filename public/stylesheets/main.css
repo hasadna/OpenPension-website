@@ -10378,6 +10378,9 @@ a:hover {
   background-color: #dbdbdb;
   background-image: none;
 }
+ul {
+  padding: 0;
+}
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../fonts/glyphicons-halflings-regular.eot');
@@ -10771,17 +10774,30 @@ footer a {
   font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-weight: bold;
   color: #333333;
+  font-size: 24px;
+  padding: 0;
   margin-bottom: 24px;
 }
-.search-results-section {
-  padding: 0;
+#search-results section {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-top: 1px solid #eeeeee;
 }
-.search-results-section li {
+#search-results section h4 {
+  font-size: 24px;
+  margin: 0;
+}
+#search-results section li {
   display: block;
   margin-bottom: 12px;
 }
-.search-results-section li a {
-  font-size: 16px;
+#search-results section li a,
+#search-results section .no-results {
+  font-size: 19.2px;
+  line-height: 24px;
+}
+#search-results section .no-results {
+  color: #cccccc;
 }
 #search-results-nav li.active > a,
 #search-results-nav li > a:hover,
@@ -10917,12 +10933,12 @@ footer a {
 .tab-content {
   margin-bottom: 48px;
 }
+.tab-content .tab-pane {
+  margin-bottom: 1.5em;
+}
 #homepage-content {
   padding-top: 24px;
   text-align: center;
-}
-#managing-bodies {
-  margin-bottom: 1.5em;
 }
 #homepage-links {
   font-size: 1.3125em;
@@ -10932,10 +10948,10 @@ footer a {
   color: #cccccc;
   padding: 0 5px;
 }
-section {
+.static section {
   margin-bottom: 36px;
 }
-section:last-child {
+.static section:last-child {
   margin-bottom: 72px;
 }
 .toc li {
