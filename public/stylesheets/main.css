@@ -10329,6 +10329,11 @@ fieldset[disabled] .twitter-typeahead .tt-input {
 .tt-dropdown-menu .tt-suggestion p {
   margin: 0;
 }
+.no-nav-bg.active > a,
+.no-nav-bg > a:hover,
+.no-nav-bg > a:focus {
+  background-color: inherit;
+}
 html {
   margin: 0;
 }
@@ -10390,6 +10395,7 @@ a:hover {
 h1 {
   font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-weight: bold;
+  color: #333333;
   font-size: 36px;
   line-height: 48px;
   margin: 0 0 12px 0;
@@ -10403,7 +10409,7 @@ h2 {
   /* 24px */
   line-height: 24px;
   /* 24px */
-  margin: 0 !important;
+  margin: 0;
 }
 h3 {
   font-family: 'almoni-tzar';
@@ -10413,7 +10419,7 @@ h3 {
   /* 21px */
   line-height: 24px;
   /* 24px */
-  margin: 0 0 12px 0 !important;
+  margin: 0 0 12px 0;
   /* 12px */
 }
 h4 {
@@ -10426,6 +10432,7 @@ h4 {
 h5 {
   font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-weight: bold;
+  color: #333333;
   font-size: 14px;
   line-height: 24px;
 }
@@ -10689,6 +10696,9 @@ footer a {
   float: left;
   font-size: 1.5em;
 }
+.affix {
+  top: 20px;
+}
 .affix,
 .affix-top,
 .affix-bottom,
@@ -10757,12 +10767,35 @@ footer a {
 .tt-dropdown-menu .tt-dataset-instrument-search .tt-suggestions .tt-suggestion.tt-cursor {
   background-color: #eeeeee;
 }
-.link-list {
+#search-results-title {
+  font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 24px;
+}
+.search-results-section {
   padding: 0;
 }
-.link-list li {
+.search-results-section li {
   display: block;
   margin-bottom: 12px;
+}
+.search-results-section li a {
+  font-size: 16px;
+}
+#search-results-nav li.active > a,
+#search-results-nav li > a:hover,
+#search-results-nav li > a:focus {
+  background-color: inherit;
+}
+#search-results-nav li a {
+  padding-right: 10px;
+}
+#search-results-nav li a:hover,
+#search-results-nav li a:focus {
+  border-right: 2px solid #3b70bf;
+  padding-right: 8px;
+  text-decoration: none;
 }
 .btn-toolbar {
   margin-bottom: 24px;
@@ -10905,22 +10938,24 @@ section {
 section:last-child {
   margin-bottom: 72px;
 }
-.toc {
-  top: 20px;
-}
 .toc li {
   margin-bottom: 0;
 }
-.toc li > a {
+.toc li.active > a,
+.toc li > a:hover,
+.toc li > a:focus {
+  background-color: inherit;
+}
+.toc li a {
   font-size: 14px;
   line-height: 18px;
   padding-top: 0;
   padding-bottom: 4px;
-  padding-right: 20px;
   margin-bottom: 6px;
+  padding-right: 20px;
 }
-.toc li > a:hover,
-.toc li > a:focus {
+.toc li a:hover,
+.toc li a:focus {
   border-right: 3px solid #3b70bf;
   padding-right: 17px;
   text-decoration: none;
@@ -10929,9 +10964,4 @@ section:last-child {
   font-weight: bold;
   border-right: 5px solid #3b70bf;
   padding-right: 15px;
-}
-.toc li.active > a,
-.toc li > a:hover,
-.toc li > a:focus {
-  background-color: inherit;
 }

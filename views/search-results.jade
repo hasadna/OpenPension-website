@@ -1,0 +1,64 @@
+extends layout
+
+block content
+
+  div(id="page-header" class="container-fluid")
+    div(class="container")
+      div(class="row")
+
+        //- HEADER
+        div(class="col-xs-12")
+          div(id="breadcrumbs")
+            ol(class="breadcrumb")
+              li()
+                a() דף הבית
+              li() תוצאות חיפוש: 'מגדל'
+          div(id="page-title" )
+            h2() תוצאות חיפוש
+            h1() 'מגדל'
+
+  main(class="container")
+    div(class="row")
+
+      div(class="col-xs-9")
+        - var numResults = managingBodies.length + funds.length + issuers.length + assets.length;
+        h3(id="search-results-title") מצאנו #{numResults} תוצאות
+        section(id="managing-bodies")
+          h4()גופים מוסדיים
+          ul(class="search-results-section")
+            each item in managingBodies
+              li()
+                a(href="#{item.url}") #{item.name}
+        section(id="funds")
+          h4()קופות
+          ul(class="search-results-section")
+            each item in funds
+              li()
+                a(href="#{item.url}") #{item.name}
+        section(id="issuers")
+          h4()מנפיקים
+          ul(class="search-results-section")
+            each item in issuers
+                li()
+                  a(href="#{item.url}") #{item.name}
+        section(id="assets")
+          h4()נכסים
+          ul(class="search-results-section")
+            each item in assets
+              li()
+                a(href="#{item.url}") #{item.name}
+
+      div(class="col-xs-3")
+        ul(id="search-results-nav" class="nav affix" data-spy="affix" data-offset-top="180")
+          li()
+            a(href="#managing-bodies")
+              גופים מוסדיים (#{managingBodies.length})
+          li()
+            a(href="#funds")
+              קופות (#{funds.length})
+          li()
+            a(href="#issuers")
+              מנפיקים (#{issuers.length})
+          li()
+            a(href="#assets")
+              נכסים (#{assets.length})

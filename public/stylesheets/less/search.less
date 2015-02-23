@@ -1,3 +1,5 @@
+// Search field
+
 #nav-search {
   .form-control-focus(white);
 }
@@ -44,3 +46,34 @@
     }
   }
 }
+
+
+// Search results
+
+#search-results-title {
+  .heading > .alt;
+  margin-bottom: @line;
+}
+
+.search-results-section {
+  padding: 0;
+  li {
+    display: block;
+    margin-bottom: @half-line;
+    // border-bottom: 1px solid @gray-lighter;
+    a {
+      font-size: @font-size-base;
+    }
+  }
+}
+
+#search-results-nav {
+  li {
+    .no-nav-bg;
+    a {
+      .indicator(10px, 2px);
+    }
+  }
+}
+
+
