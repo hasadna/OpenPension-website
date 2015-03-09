@@ -63,6 +63,7 @@ app.get('/', homepage.show);
 app.get('/portfolio', portfolio.portfolio);
 app.get('/investments', portfolio.investments);
 app.get('/search', search.show)
+app.get('/search-results', search.results)
 
 app.get('/about', staticpages.about);
 app.get('/privacy', staticpages.privacy);

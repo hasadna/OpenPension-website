@@ -1,3 +1,5 @@
+// Search field
+
 #nav-search {
   .form-control-focus(white);
 }
@@ -41,6 +43,40 @@
           background-color: @gray-lighter;
         }
       }
+    }
+  }
+}
+
+
+// Search results
+
+#search-results-title {
+  .heading > .alt;
+  font-size: 1.5 * @font-size-base;
+  padding: 0;
+  margin-bottom: @line;
+}
+
+#search-results {
+  section {
+    padding-top: @line;
+    padding-bottom: @line;
+    border-top: 1px solid @gray-lighter;
+    h4 {
+      font-size: @font-size-base * 1.5;
+      margin: 0;
+    }
+    li {
+      display: block;
+      margin-bottom: @half-line;
+    }
+    li a,
+    .no-results {
+      font-size: @font-size-base * 1.2;
+      line-height: @line;
+    }
+    .no-results {
+      color: @gray-light;
     }
   }
 }

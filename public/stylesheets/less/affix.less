@@ -1,40 +1,11 @@
 // Styles for the affix element in static pages
 
 .affix {
-  top: @half-line;
+  top: 20px;
   &,
   &-top,
   &-bottom,
   .nav& {
-    width: 100%;
-    &,
-    &-top {
-      > li {
-        font-size: 0.875;
-        margin-bottom: 0;
-        > a {
-          line-height: 20px;
-          padding-top: 0;
-          padding-bottom: 4px;
-          padding-right: 20px;
-          &:hover,
-          &:focus {
-            border-right: 3px solid @brand-primary;
-            padding-right: 17px;
-            text-decoration: none;
-          }
-        }
-        &.acttive > a {
-          font-weight: bold;
-          border-right: 5px solid @brand-primary;
-          padding-right: 15px;
-        }
-        &.active > a,
-        & > a:hover,
-        & > a:focus {
-          background-color: inherit;
-        }
-      }
-    }
+    width: 213px; /* 3 desktop columns */
   }
-}
+} 

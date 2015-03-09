@@ -1,0 +1,76 @@
+extends layout
+
+block content
+
+  div(id="page-header" class="container-fluid")
+    div(class="container")
+      div(class="row")
+
+        //- HEADER
+        div(class="col-xs-12")
+          div(id="breadcrumbs")
+            ol(class="breadcrumb")
+              li()
+                a() דף הבית
+              li() תוצאות חיפוש: 'מגדל'
+          div(id="page-title" )
+            h2() תוצאות חיפוש
+            h1() 'מגדל'
+
+  main(id="search-results" class="container")
+    div(class="row")
+
+      div(class="col-xs-12")
+        - var numResults = managingBodies.length + funds.length + issuers.length + assets.length;
+        if numResults > 0
+          h3(id="search-results-title") מצאנו #{numResults} תוצאות
+          section(id="managing-bodies")
+            div(class="row")
+              div(class="col-xs-3")
+                h4()גופים מוסדיים
+              div(class="col-xs-9")
+                if managingBodies.length > 0
+                  ul()
+                    each item in managingBodies
+                      li()
+                        a(href="#{item.url}") #{item.name}
+                else
+                  p(class="no-results") לא נמצאו גופים מוסדיים
+          section(id="funds")
+            div(class="row")
+              div(class="col-xs-3")
+                h4()קופות
+              div(class="col-xs-9")
+                if funds.length > 0
+                  ul()
+                    each item in funds
+                      li()
+                        a(href="#{item.url}") #{item.name}
+                else
+                  p(class="no-results") לא נמצאו קופות
+          section(id="issuers")
+            div(class="row")
+              div(class="col-xs-3")
+                h4()מנפיקים
+              div(class="col-xs-9")
+                if issuers.length > 0
+                  ul()
+                    each item in issuers
+                      li()
+                        a(href="#{item.url}") #{item.name}
+                else
+                  p(class="no-results") לא נמצאו מנפיקים
+          section(id="assets")
+            div(class="row")
+              div(class="col-xs-3")
+                h4()נכסים
+              div(class="col-xs-9")
+                if assets.length > 0
+                  ul()
+                    each item in assets
+                      li()
+                        a(href="#{item.url}") #{item.name}
+                else
+                  p(class="no-results") לא נמצאו נכסים
+        else
+          h3(id="search-results-title") לא נמצאו תוצאות

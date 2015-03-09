@@ -1,66 +1,66 @@
 doctype html
 html
-	head
-		title= title
-		script(type='text/javascript', src='/js/jquery-1.11.0.min.js')
+  head
+    title= title
+    script(type='text/javascript', src='/js/jquery-1.11.0.min.js')
 
-		link(rel='icon', type='image/x-icon', href='/img/pension-logo.ico' )
-		link(rel='stylesheet', href='/stylesheets/bootstrap-select.rtl.min.css')
-		link(rel='stylesheet', href='/stylesheets/main.css')
-		script(type='text/javascript', src='/js/filter.js')
-		script(type='text/javascript', src='/js/data_normalizer.js')
-		// Le HTML5 shim, for IE6-8 support of HTML5 elements 
-		!= "<!--[if lt IE 9]>"
-			script(src='/js/html5.js')
-			script(src='/js/respond.min.js')
-		!= "<![endif]-->"
-		script.
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    link(rel='icon', type='image/x-icon', href='/img/pension-logo.ico' )
+    link(rel='stylesheet', href='/stylesheets/bootstrap-select.rtl.min.css')
+    link(rel='stylesheet', href='/stylesheets/main.css')
+    script(type='text/javascript', src='/js/filter.js')
+    script(type='text/javascript', src='/js/data_normalizer.js')
+    // Le HTML5 shim, for IE6-8 support of HTML5 elements 
+    != "<!--[if lt IE 9]>"
+      script(src='/js/html5.js')
+      script(src='/js/respond.min.js')
+    != "<![endif]-->"
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-			ga('create', 'UA-55681114-1', 'auto');
-			ga('send', 'pageview');
+      ga('create', 'UA-55681114-1', 'auto');
+      ga('send', 'pageview');
 
-		
-	body(data-spy="scroll")    
-		nav(class="navbar navbar-default navbar-static-top" role="navigation")
-			div(class="container")
-				div(class="navbar-header navbar-right col-sm-3")
-					a(class="navbar-brand" href="/")
-						img(src="/img/pension-logo.png") 
-						span() פנסיה פתוחה
-				div(class="navbar-header navbar-right")
-					form.navbar-form.navbar-left(role="search")
-						div.form-group(id="rtl-support")
-								input.form-control.typeahead(id="nav-search" type="text" autocomplete="off" dir="rtl" placeholder="חיפוש")
+    
+  body(data-spy="scroll")    
+    nav(class="navbar navbar-default navbar-static-top" role="navigation")
+      div(class="container")
+        div(class="navbar-header navbar-right col-sm-3")
+          a(class="navbar-brand" href="/")
+            img(src="/img/pension-logo.png") 
+            span() פנסיה פתוחה
+        div(class="navbar-header navbar-right")
+          form.navbar-form.navbar-left(role="search")
+            div.form-group(id="rtl-support")
+                input.form-control.typeahead(id="nav-search" type="text" autocomplete="off" dir="rtl" placeholder="חיפוש")
 
-				ul(class="nav navbar-nav navbar-left")
-					li()
-						a(href="/about") אודות
-					li()
-						button(class="btn btn-default navbar-btn" onClick="location.href='mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה'" type="button") שלח פידבק	
+        ul(class="nav navbar-nav navbar-left")
+          li()
+            a(href="/about") אודות
+          li()
+            button(class="btn btn-default navbar-btn" onClick="location.href='mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה'" type="button") שלח פידבק  
 
-		block content
+    block content
 
-		footer()
-			// Le fav and touch icons
-			script(type='text/javascript', src='/js/jquery.cookie.js')
-			script(type='text/javascript', src='/js/handlebars-v2.0.0.js')
-			script(type='text/javascript', src='/js/bootstrap.min.js')
-			script(type='text/javascript', src='/js/bootstrap-select.min.js')
-			script(type='text/javascript', src='/js/jquery.blockUI.min.js')
-			script(type='text/javascript', src='/js/typeahead.bundle.min.js')
-			script(type='text/javascript', src='/js/runtime.js')
-			div(class="container")
-				div(id="footer-text" class="pull-right") פנסיה פתוחה היא פרוייקט של 
-					a(href="http://www.hasadna.org.il/") הסדנא לידע ציבורי
-				ul(id="footer-links" class="pull-left") 
-					li()
-						a(href="/about") אודות
-					li()
-						a(href="mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה") שלחו פידבק
-					li()
-						a(href="/privacy") מדיניות פרטיות
-								
+    footer()
+      // Le fav and touch icons
+      script(type='text/javascript', src='/js/jquery.cookie.js')
+      script(type='text/javascript', src='/js/handlebars-v2.0.0.js')
+      script(type='text/javascript', src='http://www.openpension.org.il/js/bootstrap.min.js')
+      script(type='text/javascript', src='/js/bootstrap-select.min.js')
+      script(type='text/javascript', src='/js/jquery.blockUI.min.js')
+      script(type='text/javascript', src='/js/typeahead.bundle.min.js')
+      script(type='text/javascript', src='/js/runtime.js')
+      div(class="container")
+        div(id="footer-text" class="pull-right") פנסיה פתוחה היא פרוייקט של 
+          a(href="http://www.hasadna.org.il/") הסדנא לידע ציבורי
+        ul(id="footer-links" class="pull-left") 
+          li()
+            a(href="/about") אודות
+          li()
+            a(href="mailto:openpension@googlegroups.com?subject=פידבק על פנסיה פתוחה") שלחו פידבק
+          li()
+            a(href="/privacy") מדיניות פרטיות
+                
