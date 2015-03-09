@@ -10799,20 +10799,6 @@ footer a {
 #search-results section .no-results {
   color: #cccccc;
 }
-#search-results-nav li.active > a,
-#search-results-nav li > a:hover,
-#search-results-nav li > a:focus {
-  background-color: inherit;
-}
-#search-results-nav li a {
-  padding-right: 10px;
-}
-#search-results-nav li a:hover,
-#search-results-nav li a:focus {
-  border-right: 2px solid #3b70bf;
-  padding-right: 8px;
-  text-decoration: none;
-}
 .btn-toolbar {
   margin-bottom: 24px;
   margin-right: 0;
