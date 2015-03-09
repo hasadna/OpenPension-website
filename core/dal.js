@@ -561,7 +561,11 @@ function searchInFields(term, limit, callback){
 	      },
 	      function(callback){ 
 			searchByField(term, "fund_name", limit, callback);
+		  },
+	      function(callback){ 
+			searchByField(term, "issuer", limit, callback);
 		  }
+
 	    ], 
 	    function(err,results){
 
@@ -574,9 +578,10 @@ function searchInFields(term, limit, callback){
 	        return;
 	      }
 
-      	  s.instrument_name = results[0][0].rows;
-      	  s.instrument_id = results[1][0].rows;      
-      	  s.fund_name = results[2][0].rows;
+      	  s.assets = results[0][0].rows;
+      	  s.instruments = results[1][0].rows;      
+      	  s.funds = results[2][0].rows;
+      	  s.issuers = results[3][0].rows;
 
       	  callback(err,s);
 

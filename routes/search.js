@@ -5,6 +5,7 @@ var DataNormalizer = require('../core/data_normalizer.js');
 var metaTable = require('../common/MetaTable').getMetaTable();
 var translate = require('../core/dictionary.js').translate;
 var config = require('../config')
+var api = require('./api.js');
 
 exports.show = function(req, res){
 
@@ -15,15 +16,11 @@ exports.show = function(req, res){
         searchTerm = "";
     }
 
-    DAL.search(searchTerm, page, function(err, result, query){
+    api.querySearchTerm(searchTerm, function(results){
 
-      console.log('TEST');
-        res.render('search-results',{
-          test: ["hello", "world"],
-
-        });
-
-    });
+        // res.json(results);
+        res.render('search-results',results);
+    })
 
 };
 

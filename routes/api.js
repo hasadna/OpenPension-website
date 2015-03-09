@@ -184,17 +184,17 @@ exports.queryNames = function(req,res){
       res.json({'error':'Query is empty','return_code':'-7'})
     }
 
+    exports.querySearchTerm(term, res.json);
+}
 
+exports.querySearchTerm = function(term, callback){
 
     DAL.searchInFields(term, 10, function(err, result, query){
-      var s = {'instrument_id':[], 'instrument_name':[], 'fund_name':[]};
 
+      result['managingBodies'] = findInManagingBody(term);
 
-      result['managing_body'] = findInManagingBody(term);
-
-      res.json(result);
+      callback(result);
     });
-
 }
 
 exports.config = function(req,res){
