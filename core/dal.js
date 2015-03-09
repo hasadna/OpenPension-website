@@ -328,6 +328,33 @@ function addLastQuartersToQuery(query, year, quarter, numOfQuarters){
  * get 5 top most rows, ordered by fair_value 
  * joined with last four quarters.
  * Query structure generated is : outerSelect FROM ( innerSelect JOIN joined)
+
+	query example:
+
+     	SELECT * FROM 
+     	(
+	     	SELECT ROW_NUMBER() OVER (ORDER BY sum(fair_value) DESC) 
+	     	AS rownumber, managing_body 
+	     	FROM pension_data_all 
+	     	WHERE (report_year= '2014') AND (report_qurater= '3') 
+	     	GROUP BY managing_body
+     	) AS currentQuarter 
+     	INNER JOIN (
+     		SELECT report_year, report_qurater, managing_body, sum(fair_value) AS "fair_value" 
+     		FROM pension_data_all 
+     		WHERE (
+     			(report_year = 2014 AND report_qurater = 3) OR 
+     			(report_year = 2014 AND report_qurater = 2) OR 
+     			(report_year = 2014 AND report_qurater = 1) OR 
+     			(report_year = 2013 AND report_qurater = 4)
+ 			) 
+			GROUP BY report_year, report_qurater, managing_body) AS previousQuarters 
+		ON currentQuarter.managing_body= previousQuarters.managing_body 
+			OR (currentQuarter.managing_body IS NULL AND previousQuarters.managing_body IS NULL) 
+		WHERE (rownumber <= 5) 
+		ORDER BY report_year DESC, report_qurater DESC, fair_value DESC
+
+
  * @param filter : Filter object 
  * @param callback : function to handle result rows
  */
