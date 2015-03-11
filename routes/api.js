@@ -4,6 +4,7 @@ var _ = require('underscore');
 var dictionary = require('../core/dictionary.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 var config = require('../config');
+var Promise = require('bluebird');
 
 exports.quarters = function(req,res){
 
@@ -154,6 +155,24 @@ exports.search = function(req,res){
 
 
 
+exports.queryNames = function(req, res, next){
+
+    var term = req.query['q'];
+    var field = req.query['f'];
+    // var page = req.query['p'];
+
+    if ( term == undefined ){
+      res.json({'error':'Query is empty','return_code':'-7'})
+    }
+
+    exports.querySearchTerm(term)
+    .then(function(result){
+      res.json(result);
+    })
+    .catch(res.error);
+}
+
+
 var translatedManagingBodies=[];
 
 DAL.getManagingBodies(function(err, rows){
@@ -167,6 +186,10 @@ DAL.getManagingBodies(function(err, rows){
 });
 
 function findInManagingBody(term){
+  if (term == undefined || term == ''){
+    return [];
+  }
+
   var res = [];
   return _.filter(translatedManagingBodies, 
       function(managing_body){
@@ -174,29 +197,25 @@ function findInManagingBody(term){
       });
 }
 
-exports.queryNames = function(req,res){
+exports.querySearchTerm = function(term, rowLimit){
 
-    var term = req.query['q'];
-    var field = req.query['f'];
-    // var page = req.query['p'];
+  return new Promise(function(resolve, reject){
+      DAL.searchInFields(term, rowLimit, function(err, result, query){
+        if (err){
+          reject(err);
+        }
 
-    if ( term == undefined ){
-      res.json({'error':'Query is empty','return_code':'-7'})
-    }
+        result['managingBodies'] = findInManagingBody(term);
 
-    exports.querySearchTerm(term, res.json);
+        resolve(result);
+      });
+
+  });
 }
 
-exports.querySearchTerm = function(term, callback){
 
-    DAL.searchInFields(term, 10, function(err, result, query){
 
-      result['managingBodies'] = findInManagingBody(term);
-
-      callback(result);
-    });
-}
-
+//get current system configuration
 exports.config = function(req,res){
 
   res.json(

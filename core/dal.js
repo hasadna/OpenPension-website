@@ -573,7 +573,7 @@ function searchInFields(term, limit, callback){
 	      var s = {};
 
 	      if (err){
-	        console.log(err);
+	        console.log("Error:"+err);
 	        res.end("Err: "+err);
 	        return;
 	      }
@@ -586,9 +586,6 @@ function searchInFields(term, limit, callback){
       	  callback(err,s);
 
       });
-
-
-  
 }
 
 
@@ -603,12 +600,11 @@ function searchInFields(term, limit, callback){
 function searchByField(term, field, limit, callback){
 	var RESULTS_PER_PAGE = 50;
 
-	if (limit == undefined)
-		limit = 10;
 
 	if (term == undefined || term == "" ) {
-		var res = {"rows":[], "total_row_count" : 0, "page":0, "results_per_page" : RESULTS_PER_PAGE, "total_pages": 0};
-		callback("term is empty", res)
+		var res = [{"rows":[], "total_row_count" : 0, "page":0, "results_per_page" : RESULTS_PER_PAGE, "total_pages": 0}];
+		// callback("term is empty", res)
+		callback(undefined, res)
 		return
 	}
 
@@ -617,7 +613,9 @@ function searchByField(term, field, limit, callback){
 	select.distinct();
 	select.field(field);
 	select.where("LOWER("+field+") like LOWER('%"+escapeChars(term) +"%')");
-	select.limit(limit);
+
+	if (limit != undefined && limit != -1)
+		select.limit(limit);
 
 
 	db.query(select.toString(), function(err, rows){

@@ -221,27 +221,28 @@ $(function(){
       { 
         url: '/api/queryNames?q=%QUERY',
         filter: function(response){
-            return response.fund_name;
+            return response.funds;
         },
         cache: false
       }
     });
      
+
     var managingBodies = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('managing_body'),
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('managingBodies'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: 
       { 
         url: '/api/queryNames?q=%QUERY',
         filter: function(response){
-            return response.managing_body;
+            return response.managingBodies;
         },
         cache: false
       }
     });
 
     var instrumentNames = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('instrument_name'),
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('instruments'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       local : []
       // remote: 
@@ -346,4 +347,13 @@ $(function(){
             navigate('/portfolio?report_year='+year+'&report_qurater='+quarter+'&'+field+'='+value);
     });
 
+
+    $(".typeahead").keydown(function(event){
+        
+        if(event.keyCode == 13){
+            event.preventDefault();
+            window.location ='/search-results?q=' + $(".typeahead").val();        
+            return false;
+        }
+    });
 })
