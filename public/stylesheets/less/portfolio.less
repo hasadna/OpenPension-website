@@ -57,3 +57,27 @@
     margin-bottom: @half-line;
   } 
 }
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: @modal-backdrop-bg;
+  opacity: 0.9;
+  z-index: @zindex-overlay;
+  text-align: center;
+  #loading-message {
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    font-size: @font-size-large;
+    &:before {
+      .icn("f1ce");
+      .fa-spin;
+      display: block;
+      margin-bottom: @half-line;
+    }
+  }
+}
