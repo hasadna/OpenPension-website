@@ -298,7 +298,7 @@ $(function(){
      displayKey: 'name',
      source: function(query, cb) {
        var result = [{
-         'name': "חפש '" + query + "' בנכסים", 'action': 'query_instruments', 'queryText':query
+         'name': "לכל התוצאות", 'action': 'query_instruments', 'queryText':query
        }];
       cb(result);
      }
@@ -320,31 +320,38 @@ $(function(){
             var quarter = filter.getConstraintData("report_qurater")[0]
             var action = datum['action'];
 
-            $(".typeahead").val("")
+            $(".typeahead").val("");
 
-            //get year and quarter from cookie if undefined
-            if (year == undefined){
-                year = $.cookie("current_year");
-            }
-
-            if (quarter == undefined){
-                quarter = $.cookie("current_quarter");
-            }
-            
 
             if (action == 'query_instruments'){
                 field = 'q';
                 value = datum['queryText'];
+                navigate('/search-results?'+field+'='+value);
+                return;
+            }
+            else{
+    
+                //get year and quarter from cookie if undefined
+                if (year == undefined){
+                    year = $.cookie("current_year");
+                }
+
+                if (quarter == undefined){
+                    quarter = $.cookie("current_quarter");
+                }
+                
+
+                //managing body shows translated value 
+                if (field == "translated_managing_body"){
+                    value = datum["managing_body"];
+                    field = "managing_body";
+                }
+         
+                navigate('/portfolio?report_year='+year+'&report_qurater='+quarter+'&'+field+'='+value);
+
             }
 
 
-            //managing body shows translated value 
-            if (field == "translated_managing_body"){
-                value = datum["managing_body"];
-                field = "managing_body";
-            }
-     
-            navigate('/portfolio?report_year='+year+'&report_qurater='+quarter+'&'+field+'='+value);
     });
 
 

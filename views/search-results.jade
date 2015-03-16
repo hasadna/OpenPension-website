@@ -33,7 +33,7 @@ block content
                   ul()
                     each item in managingBodies
                       li()
-                        a(href="#{item.url}") #{item.translated_managing_body}
+                        a(href="/portfolio?managing_body=#{item.managing_body}") #{item.translated_managing_body}
                 else
                   p(class="no-results") לא נמצאו גופים מוסדיים
           section(id="funds")
@@ -45,7 +45,7 @@ block content
                   ul()
                     each item in funds
                       li()
-                        a(href="#{item.url}") #{item.fund_name}
+                        a(href="/portfolio?fund_name=#{item.fund_name}") #{item.fund_name}
                 else
                   p(class="no-results") לא נמצאו קופות
           section(id="issuers")
@@ -57,7 +57,7 @@ block content
                   ul()
                     each item in issuers
                       li()
-                        a(href="#{item.url}") #{item.issuer}
+                        a(href="#") #{item.issuer}
                 else
                   p(class="no-results") לא נמצאו מנפיקים
           section(id="assets")
@@ -69,7 +69,7 @@ block content
                   ul()
                     each item in assets
                       li()
-                        a(href="#{item.url}") #{item.instrument_name}
+                        a(href="#") #{item.instrument_name}
                 else
                   p(class="no-results") לא נמצאו נכסים
         else
