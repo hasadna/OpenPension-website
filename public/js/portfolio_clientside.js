@@ -116,17 +116,18 @@ function groupByManagingBody(filter){
 
 //load templates by filter
 function loadTemplates(filter){
-
-    //show message on data table
-    $('#portfolio-overview').block({ 
-        message: '<h1>טוען נתונים...</h1>', 
-        css: { border: '2px solid #3B70BF' } 
-    }); 
+    
+    //toggle overlay
+    var overlay = '<div id="overlay"><div id="loading-message">טוען נתונים...<div></div>';
+    $('body').append(overlay);
 
     //scroll window to top position
     window.scrollTo(0,0);
-
+  
+    //change page header instantly
     var filter = Filter.fromQueryString();
+    $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
+    $("#page-title").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter), filter : filter } ) );
  
     var managingBodyFilter = groupByManagingBody(filter);
 
@@ -141,8 +142,7 @@ function loadTemplates(filter){
         var lastQuarters = getLastQuarters(report_year, report_qurater, 4);
 
         //render templates and inject output to view 
-        $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
-        $("#page-title").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter), filter : filter } ) );
+        
         $("#header").html( templatizer.header( { lastQuarters:lastQuarters, report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[lastQuarters[0].str][0]['fair_value']), filter : filter} ) );
         $("#groups").html(templatizer.groups({ debug: debug, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter, lastQuarters: lastQuarters} ))
         $("#more").html(templatizer.more({ debug: debug, funds:funds, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, filter : filter} ))
@@ -151,7 +151,7 @@ function loadTemplates(filter){
         drawSparklines();
 
         //remove loading message
-        $('#portfolio-overview').unblock(); 
+        $('#overlay').remove(); 
 
     }
 

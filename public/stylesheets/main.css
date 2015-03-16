@@ -5777,7 +5777,7 @@ button.close {
   top: 0;
   right: 0;
   left: 0;
-  background-color: #000000;
+  background-color: white;
 }
 .modal-backdrop.fade {
   opacity: 0;
@@ -10336,6 +10336,7 @@ fieldset[disabled] .twitter-typeahead .tt-input {
 }
 html {
   margin: 0;
+  position: relative;
 }
 body {
   font-family: Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -10348,6 +10349,7 @@ body {
   width: 970px !important;
 }
 main {
+  position: relative;
   margin-bottom: 72px;
 }
 a:hover {
@@ -10861,6 +10863,32 @@ footer a {
 }
 #more .link-list li {
   display: inline-block;
+  margin-bottom: 12px;
+}
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 0.9;
+  z-index: 900;
+  text-align: center;
+}
+#overlay #loading-message {
+  position: fixed;
+  top: 50%;
+  width: 100%;
+  font-size: 20px;
+}
+#overlay #loading-message:before {
+  content: "\f1ce";
+  font-family: "FontAwesome";
+  font-size: inherit;
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+  display: block;
   margin-bottom: 12px;
 }
 #homepage-header {
