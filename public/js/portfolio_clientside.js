@@ -34,7 +34,7 @@ $(function () {
 //change url either by history & ajax or by setting new location 
 function navigate(url){
 
-    if (history.pushState != null){
+    if (history.pushState != null && url.indexOf("/portfolio") > -1 ){
         history.pushState("", "", url);
 
         //convert filter back to query string, and apply location
@@ -128,6 +128,52 @@ function loadTemplates(filter){
     var filter = Filter.fromQueryString();
     
     loadPortfolio(filter);
+
+}
+
+function loadPortfolio(filter){
+
+    $("#breadcrumbs").html(templatizer.breadcrumbs({drillDown: filter.getDrillDown(), filter: filter}))
+    $("#page-title").html(templatizer.report_title( { report_type: getReportType(filter), report_title : createTitle(filter), filter : filter } ) );
+ 
+    var managingBodyFilter = groupByManagingBody(filter);
+
+    function success(a1, a2, a3, a4){
+
+        var quarters = a1[0];
+        var totalPensionFundQuarters = a2[0];
+        var data = a3[0];
+        var funds = a4[0];
+        var report_year = filter.getConstraintData("report_year")[0];
+        var report_qurater = filter.getConstraintData("report_qurater")[0];
+        var lastQuarters = getLastQuarters(report_year, report_qurater, 4);
+
+        //render templates and inject output to view 
+        
+        $("#header").html( templatizer.header( { lastQuarters:lastQuarters, report_type: getReportType(filter), report_title : createTitle(filter),totalPensionFundQuarters: totalPensionFundQuarters, quarters: quarters , total_sum_words: convertNumberToWords(quarters[lastQuarters[0].str][0]['fair_value']), filter : filter} ) );
+        $("#groups").html(templatizer.groups({ debug: debug, groups:data, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, quarters: quarters, filter: filter, lastQuarters: lastQuarters} ))
+        $("#more").html(templatizer.more({ debug: debug, funds:funds, rfc3986EncodeURIComponent:rfc3986EncodeURIComponent, filter : filter} ))
+
+        //draw sparklines over quarter data
+        drawSparklines();
+
+        //remove loading message
+        $('#overlay').remove(); 
+
+    }
+
+    function failed(msg){
+        $('#portfolio-overview').unblock(); 
+        console.error(msg);
+    }
+
+    
+    var deferred = [ $.ajax( "/api/quarters" + filter.toQueryString()), 
+            $.ajax( "/api/quarters" + managingBodyFilter.toQueryString()),
+            $.ajax( "/api/portfolio" + filter.toQueryString()),
+            $.ajax( "/api/funds" + filter.toQueryString()) ];
+
+    $.when.apply($, deferred).then( success , failed);
 
 }
 
