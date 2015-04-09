@@ -34,7 +34,7 @@ $(function () {
 //change url either by history & ajax or by setting new location 
 function navigate(url){
 
-    if (history.pushState != null){
+    if (history.pushState != null && url.indexOf("/portfolio") > -1 ){
         history.pushState("", "", url);
 
         //convert filter back to query string, and apply location
