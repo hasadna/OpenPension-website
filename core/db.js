@@ -2,9 +2,7 @@ var pg = require('pg');
 var memjs = require('memjs') 
 var config = require('../config')
 var md5 = require('MD5');
-var QueryStream = require('pg-query-stream')
-var JSONStream = require('JSONStream')
-
+var QueryStream = require('pg-query-stream');
 
 
 if (config.use_memcache === false){
@@ -85,7 +83,7 @@ exports.streamQuery = function(sql, callback){
          
         callback(err, stream);
    
-    })
+    });
 }
 
 
