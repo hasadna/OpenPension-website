@@ -20,12 +20,10 @@ function (Backbone, Marionette, homepage, PortfolioHeaderView, PortfolioContentV
   		footer: 'footer'
   	},
   	onBeforeShow: function() {
-
     		this.showChildView('portfolio_header', new PortfolioHeaderView(this.options));
     		this.showChildView('content', new PortfolioContentView(this.options));
   	},
     onAttach: function(){
-      alert("done");
     }
   });
 

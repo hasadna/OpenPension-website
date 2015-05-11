@@ -1,0 +1,47 @@
+{{#each groups}}
+<div class="segmentation">
+   <h3 class="table-title">חלוקה לפי {{this.group_field_heb}}<i class="help-spot fa fa-question-circle"></i></h3>
+   <table class="group-table table table-striped">
+      <colgroup>
+         <col>
+         <col>
+         <col>
+         <col>
+      </colgroup>
+      <thead>
+         <tr>
+            <th>שם נכס</th>
+            <th>היקף ההשקעה <small>בשקלים</small></th>
+            <th>חשיפה <small>באחוזים</small></th>
+            <th>שינוי חשיפה <small>4 רבעונים אחרונים</small></th>
+         </tr>
+      </thead>
+      <tbody>
+      	{{#result}}
+         <tr>
+            <td>
+               <a onclick="addConstraint('instrument_name','חשב כללי א')" title="חשב כללי א" class="table-link">חשב כללי א</a>
+            </td>
+            <td><span class="amount">3.2 מיליארד</span></td>
+            <td>
+               <span class="percentage">3.48%</span>
+               <div style="width:2.262%" class="bar graph"></div>
+            </td>
+            <td class="change">
+               <span class="trend decrease"><span class="percentage">0.46%</span></span>
+               <div data-sparkline="3.94, 3.74, 3.62, 3.48" class="sparkline graph" data-highcharts-chart="85">
+                  <div class="highcharts-container" id="highcharts-170" style="position: relative; overflow: visible; width: 80px; height: 20px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                  </div>
+               </div>
+            </td>
+         </tr>
+         {{/result}}
+      </tbody>
+      <tfoot>
+         <tr>
+            <td colspan="4" class="list-all"><a data-target="#myModal" data-toggle="modal" data-remote="/investments?managing_body=Menora&amp;report_year=2014&amp;report_qurater=3&amp;group_by=instrument_name">כל {{this.plural}}...</a></td>
+         </tr>
+      </tfoot>
+   </table>
+</div>
+{{/each}}

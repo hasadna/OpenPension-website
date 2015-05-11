@@ -1,6 +1,6 @@
-// Funds.js
+// Quarters.js
 // -------------
-define(["jquery","backbone","models/Quarter"],
+define(["jquery","backbone","/models/Quarter.js"],
 
   function($, Backbone, Quarter) {
 

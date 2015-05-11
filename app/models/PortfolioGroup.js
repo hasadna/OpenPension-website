@@ -1,11 +1,11 @@
-// Quarter.js
+// PortfolioGroup.js
 // --------
 define(["jquery", "backbone"],
 
     function($, Backbone) {
 
         // Creates a new Backbone Model class object
-        var Quarter = Backbone.Model.extend({
+        var PortfolioGroup = Backbone.Model.extend({
 
             // Model Constructor
             initialize: function() {
@@ -14,9 +14,8 @@ define(["jquery", "backbone"],
 
             // Default values for all of the Model attributes
             defaults: {
-                report_year: 'undefined',
-                report_qurater: 'undefined',
-                fair_value: 'undefined'                                
+                group_field: 'undefined',
+                result: 'undefined'                              
             },
 
             // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)
@@ -27,7 +26,7 @@ define(["jquery", "backbone"],
         });
 
         // Returns the Model class
-        return Quarter;
+        return PortfolioGroup;
 
     }
 

@@ -5,10 +5,15 @@ define([
   'hbs!/templates/portfolio-content',
   '../../views/portfolio/PortfolioHeaderView',
   '../../views/portfolio/PortfolioContentMoreView',
- '/collections/Funds.js'
+  '../../views/portfolio/PortfolioContentGroupsView',
+  '/collections/Funds.js',
+  '/collections/PortfolioGroups.js',
+  'Dictionary'
 ],
 
-function (Backbone, Marionette, Filter, portfolio_content_hbs, PortfolioHeaderView, PortfolioContentMoreView, Funds) {
+function (Backbone, Marionette, Filter, portfolio_content_hbs, PortfolioHeaderView, 
+  PortfolioContentMoreView, PortfolioContentGroupsView, Funds, PortfolioGroups,
+  Dictionary) {
   'use strict';
 
   return Backbone.Marionette.LayoutView.extend({
@@ -19,14 +24,11 @@ function (Backbone, Marionette, Filter, portfolio_content_hbs, PortfolioHeaderVi
     template: portfolio_content_hbs,
     regions: {
       portfolio_content_header: '#portfolio-content-header',
-      portfolio_content: '#portfolio-content',
+      portfolio_content_groups: '#portfolio-content-groups',
       portfolio_content_more: '#portfolio-content-more'
     },
     onBeforeShow: function() {
-
-        // this.showChildView('portfolio_header', new PortfolioHeaderView(this.options));
-        // this.showChildView('content', new HomepageContentView());
-        // this.showChildView('portfolio_content_more', new PortfolioContentMoreView());   
+  
     },
     onRender: function(){
 
@@ -34,17 +36,42 @@ function (Backbone, Marionette, Filter, portfolio_content_hbs, PortfolioHeaderVi
         var self = this;
         var fundsList = new Funds();
 
-        fundsList.fetch({ data: $.param({ managing_body: managing_body}) })
-        .then(function(funds){
+        
+        var portfolioGroups = new PortfolioGroups();
+
+
+        $.when(
+          fundsList.fetch({ data: $.param({ managing_body: managing_body}) }),
+          portfolioGroups.fetch({ data: this.options.queryString })
+        )
+        .then(function(fundsRes, groupsRes){
+            var funds = fundsRes[0];
+            var groups = groupsRes[0];
+
+            _.map(groups, function(group){
+                group.group_field_heb = Dictionary.translate(group.group_field);
+                group.plural = Dictionary.plurals[group.group_field];
+
+            });
+
             self.showChildView('portfolio_content_more', 
               new PortfolioContentMoreView(
                 {
                   funds: funds,
                   queryString : self.options.queryString
                 }
-              ))   
-        });
+            ));
 
+            self.showChildView('portfolio_content_groups', 
+              new PortfolioContentGroupsView(
+                {
+                  groups: groups,
+                  queryString : self.options.queryString
+                }
+            ));
+
+        });
+        
     }
 
   });
