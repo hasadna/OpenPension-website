@@ -6,6 +6,7 @@
     "async": "~0.2.8",
     "bluebird": "^2.9.25",
     "cloudflare": "0.0.8",
+    "coffee-script": "^1.9.2",
     "express": "3.3.3",
     "express-hbs": "~0.2.0",
     "memjs": "^0.8.5",
