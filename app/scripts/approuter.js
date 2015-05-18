@@ -11,7 +11,8 @@ function(Backbone, Marionette) {
 	    "home": "home",
 	    "about": "about",
 	    "privacy": "privacy",
-	    "portfolio?*queryString": "portfolio"
+	    "portfolio?*queryString": "portfolio",
+			"issuer?*queryString": "issuer"
 	  }
 	});
   return Router;

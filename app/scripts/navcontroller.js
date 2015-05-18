@@ -4,10 +4,11 @@ define([
   '../views/homepage/HomepageView',
   '../views/about/AboutView',
   '../views/privacy/PrivacyView',
-  '../views/portfolio/PortfolioView'
+  '../views/portfolio/PortfolioView',
+  '../views/issuer/IssuerView'
 ],
 
-function (Backbone, Marionette, HomepageView, AboutView, PrivacyView, PortfolioView) {
+function (Backbone, Marionette, HomepageView, AboutView, PrivacyView, PortfolioView, IssuerView) {
   'use strict';
 
   var Controller = Backbone.Marionette.Controller.extend({
@@ -16,15 +17,15 @@ function (Backbone, Marionette, HomepageView, AboutView, PrivacyView, PortfolioV
 
         initialize : function(options) {
         	console.log("init");
-			
+
           this.region = options.region;
        	},
-        
+
         start: function() {
         	console.log("start");
             //TODO: code to start
         },
- 
+
         /**
          * Initialized on start, without hash
          * @method
@@ -45,9 +46,15 @@ function (Backbone, Marionette, HomepageView, AboutView, PrivacyView, PortfolioV
           var obj = {};
           obj.queryString = queryString;
           this.region.show(new PortfolioView(obj));
-        }
+        },
 
+        issuer: function(queryString) {
+          var obj = {
+            queryString: queryString
+          };
+          this.region.show(new IssuerView(obj));
+        }
     });
- 
+
     return Controller;
 });
