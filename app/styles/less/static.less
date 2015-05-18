@@ -1,0 +1,29 @@
+// Styles for static content pages
+
+
+  .static section {
+    margin-bottom: @line-and-a-half;
+    &:last-child {
+      margin-bottom: @triple-line;
+    }
+  }
+
+.toc {
+  li {
+    margin-bottom: 0;
+    .no-nav-bg;
+    a {
+      font-size: 0.875 * @font-size-base;
+      line-height: 0.75 * @line;
+      padding-top: 0;
+      padding-bottom: 4px;
+      margin-bottom: @quarter-line;
+      .indicator(20px, 3px);
+    }
+    &.active > a {
+      font-weight: bold;
+      border-right: 5px solid @brand-primary;
+      padding-right: 15px;
+    }
+  }
+}

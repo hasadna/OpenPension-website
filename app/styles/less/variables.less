@@ -1,0 +1,105 @@
+// NOTE: All variables are Bootstrap overrides unless noted otherwise
+
+
+// Fonts
+
+@font-stack:              Alef Hebrew, Helvetica Neue, Helvetica, Arial, sans-serif; // Original variable
+@icon-font-name:          "FontAwesome";
+
+
+// Typography
+
+@font-size-base:          16px;
+@line-height-base:        1.5; // 24px
+
+
+// Spacing
+
+@line:                    @line-height-computed; // Original variable
+@half-line:               @line * 0.5; // Original variable
+@quarter-line:            @line * 0.25; // Original variable
+@three-quarters-line:     @line * 0.75; // Original variable
+@line-and-a-half:         @line * 1.5; // Original variable
+@double-line:             @line * 2; // Original variable
+@triple-line:             @line * 3; // Original variable
+
+
+// Padding
+
+@padding-base-vertical:     @quarter-line;
+@padding-base-horizontal:   @half-line;
+
+@padding-large-vertical:    @half-line;
+@padding-large-horizontal:  @three-quarters-line;
+
+@padding-small-vertical:    @quarter-line;
+@padding-small-horizontal:  @half-line;
+
+@padding-xs-vertical:       2px;
+@padding-xs-horizontal:     @quarter-line;
+
+
+// Colors
+
+@brand-primary:           hsl(216, 53%, 49%);
+@brand-secondary:         hsl(38, 100%, 50%); // Original variable
+@brand-success:           #5cb85c;
+@brand-info:              #5bc0de;
+@brand-warning:           #f0ad4e;
+@brand-danger:            #d9534f;
+
+@gray-base:               #000;
+@gray-darker:             lighten(@gray-base, 20%); // #333 
+@gray-dark:               lighten(@gray-base, 40%); // #666
+@gray:                    lighten(@gray-base, 60%); // #999
+@gray-light:              lighten(@gray-base, 80%); // #ccc
+@gray-lighter:            lighten(@gray-base, 93.5%); // #eee
+@gray-lightest:           lighten(@gray-base, 98%); // #f7f7f7 // Original variable
+
+@text-color:              @gray-darker;
+
+@border-color:            hsl(0, 0%, 87%);
+
+@bg-color:                white;
+@dark-bg-color:           @gray-lighter;
+
+@table-border-color:      hsl(0, 0%, 89%); // #d9d9d9
+@table-bg-accent:         @gray-lightest;
+
+@th-bg-color:             hsl(0, 0%, 95%); //#f2f2f2
+
+@graph-color:             lighten(@brand-primary, 20%);
+@graph-alt-color:         lighten(@brand-secondary, 20%);
+
+@modal-backdrop-bg:       white;
+
+
+// Navbar
+
+@navbar-height:           @line-height-computed * 2;
+@navbar-default-color:    white;
+@navbar-default-bg:       @brand-primary;
+
+
+// Navbar links
+
+@navbar-default-link-color:                white;
+@navbar-default-link-hover-color:          white;
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         white;
+@navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
+
+
+// Footer
+
+@footer-height:           2 * @line-height-computed; // Original variable
+
+// Z-index
+
+@zindex-navbar:            1000;
+@zindex-dropdown:          1000;
+@zindex-popover:           1060;
+@zindex-tooltip:           1070;
+@zindex-navbar-fixed:      1030;
+@zindex-modal:             1040;
+@zindex-overlay:           900;

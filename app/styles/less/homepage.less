@@ -1,0 +1,80 @@
+// Styles for the homepage view
+
+// Note: all chart styles are in charts.less
+
+#homepage-header {
+  background-color: @dark-bg-color;
+  border-bottom: @quarter-line solid @brand-primary;
+  .jumbotron {
+    background-color: inherit;
+    text-align: center;
+    margin-bottom: 0;
+    p {
+      font-size: 2.25em; /** 36px **/
+      line-height: 1.3333333333em; /** 48px **/
+      #market-size {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+#content-types {
+  text-align: center;
+  height: 50px;
+  .nav-tabs {
+    margin: 0 auto;
+    display: inline-block;
+    border: none;
+    li {
+      color: @gray-dark;
+      font-size: 1.3125em; /** 21px **/
+      width: 220px;
+      text-align: center;
+      border-radius: none;
+      border: none;
+      &:hover {
+        background-color: none;
+      }
+      a {
+        border: none;
+        border-radius: 0;
+      }
+      span {
+        color: @gray-light;
+      }
+      &.disabled {
+        a {
+          color: @gray;
+        }
+      }
+      &.active {
+        a {
+          background-color: @brand-primary;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.tab-content {
+  margin-bottom: @double-line;
+  .tab-pane {
+    margin-bottom: 1.5em;
+  }
+}
+
+#homepage-content {
+  padding-top: @line;
+  text-align: center;
+}
+
+#homepage-links {
+  font-size: 1.3125em;
+  line-height: @line;
+  .seperator {
+    color: @gray-light;
+    padding: 0 5px;
+  }
+}

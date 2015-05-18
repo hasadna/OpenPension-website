@@ -1,0 +1,35 @@
+html {
+  margin: 0;
+  position: relative; 
+}
+
+body {
+  font-family: @font-stack;
+  margin: 0;
+  padding: 0;
+  padding-bottom: @footer-height; // making room for footer
+  position: relative;
+}
+
+.container {
+  width: 970px !important;
+}
+
+main {
+  position: relative;
+  margin-bottom: @triple-line;
+}
+
+a {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn {
+  .btn-styles(@gray-lightest);
+}
+
+ul {
+  padding: 0;
+}
