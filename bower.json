@@ -2,7 +2,6 @@
   "name": "webapptest",
   "version": "0.0.1",
   "dependencies": {
-    "sass-bootstrap": "~2.3.0",
     "jquery": "~1.9.0",
     "requirejs": "~2.1.5",
     "requirejs-text": "~2.0.5",
@@ -12,9 +11,12 @@
     "require-handlebars-plugin": "~0.4.0",
     "mocha": "~1.12.0",
     "chai": "~1.7.2",
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "bootstrap": "~3.3.4",
+    "fontawesome": "~4.3.0",
+    "typeahead.js": "~0.11.1",
+    "bootstrap-rtl": "~3.3.2"
   },
-  "devDependencies": {},
   "directory": "bower_components",
   "resolutions": {
     "backbone.babysitter": "^0.1.0",
