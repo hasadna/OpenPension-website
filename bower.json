@@ -12,7 +12,8 @@
     "mocha": "~1.12.0",
     "chai": "~1.7.2",
     "sinon": "~1.7.3",
-    "bootstrap": "~3.3.4"
+    "bootstrap": "~3.3.4",
+    "fontawesome": "~4.3.0"
   },
   "directory": "bower_components",
   "resolutions": {
