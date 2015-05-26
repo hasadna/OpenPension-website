@@ -50,6 +50,7 @@ var portfolio = require('./routes/portfolio')
   , FSUtil = require('./util/FSUtil')
   , csv = require('./routes/csv')
   , api = require('./routes/api')
+  , issuer = require('./routes/issuer')
   , test = require('./routes/test');
 
 app.get('/treemap/managing_bodies', homepage.managing_body_treemap);
@@ -58,6 +59,7 @@ app.get('/api/portfolio',api.portfolio);
 app.get('/api/funds',api.funds);
 app.get('/api/quarters',api.quarters);
 app.get('/api/managing_bodies',api.managing_bodies);
+app.get('/api/issuer',issuer.fetch);
 app.get('/api/query',api.query);
 app.get('/api/fair_values',api.fair_values);
 app.get('/api/search',api.search);

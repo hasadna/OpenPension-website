@@ -23,18 +23,18 @@ exports.quarters = function(req,res){
                     function(v2,k2,l2){
                       return v2['report_year']+"_"+v2['report_qurater'];
                     });
-              
+
 
           //fill up missing quarters with sum 0
           if (Object.keys(quarters).length < 4 ){
             for(var q = 0; q < 4; q++){
-            
+
               if (quarters[lastQuarters[q].str] == undefined){
                 quarters[lastQuarters[q].str] = [{"fair_value":"0"}];
-              }            
+              }
             }
           }
-     
+
         res.json(quarters);
 
       });
@@ -45,7 +45,7 @@ exports.quarters = function(req,res){
 
 exports.managing_bodies = function(req,res){
     DAL.getManagingBodies(function(err, bodies, bodiesQuery){
-     
+
           res.json(bodies);
 
     });
@@ -56,11 +56,11 @@ exports.funds = function(req,res){
 		//create filter from request (search string)
 		var filter = Filter.fromGetRequest(req);
 
-		var managing_body = filter.getConstraintData('managing_body')[0];  
+		var managing_body = filter.getConstraintData('managing_body')[0];
 
     DAL.getFundsByManagingBody(managing_body,
       function(err, funds, fundsQuery){
-   
+
   			res.json(funds);
 
 		});
@@ -77,9 +77,9 @@ exports.portfolio = function(req, res){
                 function(err, groups){
 
         //group results by group_field (e.g. issuer)
-        _.each(groups, 
+        _.each(groups,
             function(value,key,list){
-                value['result'] = 
+                value['result'] =
                     _.groupBy(value['result'],value['group_field']);
                 delete value['query'];
             }
@@ -90,7 +90,7 @@ exports.portfolio = function(req, res){
         _.each(groups,
           function(v,k,l){
           _.each(v['result'],
-            function(v1,k1,l1){ 
+            function(v1,k1,l1){
               l1[k1] = _.groupBy(l1[k1],
                   function(v2,k2,l2){
                     return v2['report_year']+"_"+v2['report_qurater'];
@@ -191,7 +191,7 @@ function findInManagingBody(term){
   }
 
   var res = [];
-  return _.filter(translatedManagingBodies, 
+  return _.filter(translatedManagingBodies,
       function(managing_body){
         return managing_body.translated_managing_body.indexOf(term) > -1;
       });
@@ -220,9 +220,8 @@ exports.config = function(req,res){
 
   res.json(
     {
-      "current_year":config.current_year, 
+      "current_year":config.current_year,
       "current_quarter":config.current_quarter
     }
   );
 }
-

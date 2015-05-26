@@ -6,12 +6,12 @@ var config = require('../config')
 var db = require('./db.js');
 var async = require('async');
 
-var allowed_filters={ 
-	'managing_body':simple_filter, 
-	'currency' : simple_filter, 
-	'rating':simple_filter, 
-	'report_year':simple_filter, 
-	'report_qurater':simple_filter, 
+var allowed_filters={
+	'managing_body':simple_filter,
+	'currency' : simple_filter,
+	'rating':simple_filter,
+	'report_year':simple_filter,
+	'report_qurater':simple_filter,
 	'instrument_id':simple_filter,
 	'issuer':simple_filter,
 	'instrument_name':simple_filter,
@@ -28,7 +28,7 @@ var allowed_filters={
  * @param str: String to be escaped
  */
 function escapeChars(str){
-    return String(str).replace(/'/g, '\'\'');  
+    return String(str).replace(/'/g, '\'\'');
 }
 
 /**
@@ -39,7 +39,7 @@ function escapeChars(str){
  * @param constraintField: a field in filter, 'managing_body'
  * @param constraintDataArr: the filter of constraintField,
  *         [ { data: 'migdal' }, { data: 'harel' } ]
- * 
+ *
  */
 function simple_filter(select, constraintField, constraintDataArr)
 {
@@ -50,7 +50,7 @@ function simple_filter(select, constraintField, constraintDataArr)
 	for (var i in constraintDataArr)
 	{
 		constraintData = constraintDataArr[i];
-		
+
 		if (constraintData['data'] == "null"){
 			expr.or(constraintField + ' IS NULL');
 		}
@@ -87,7 +87,7 @@ function prepareWheres(select, filter)
 		else if (constraintField == 'q'){
 				var constraintDataArr = filter.getConstraint(constraintField);
 				select.where("LOWER(instrument_name) like LOWER('%"+constraintDataArr[0]['data']+"%') OR LOWER(instrument_id) like LOWER('%"+constraintDataArr[0]['data']+"%')")
-			
+
 		}
 
 	}
@@ -101,7 +101,7 @@ function prepareWheres(select, filter)
  *
  * @param select: Squel select, is duplicated for each select group
  * @param filter: Filter object with constraints
- * @returns [Squel]: array of Squel select objects 
+ * @returns [Squel]: array of Squel select objects
  */
 function prepareGroupBy(select, filter)
 {
@@ -125,7 +125,7 @@ function prepareGroupBy(select, filter)
 		if (all_groups[group_index] in filter.constraints)
 			continue;
 		var new_select=select.clone(); //Deep copy
-		
+
 		new_select.group(all_groups[group_index]);
 		new_select.field(all_groups[group_index]);
 
@@ -204,7 +204,7 @@ function groupBySummaries(filter, callback)
 	for (var index in groups)
 	{
 		var group=groups[index];
-		
+
 		//add sum(fair_value) AS fair_value
 		group.query.field('sum(fair_value)', 'fair_value' );
 
@@ -228,16 +228,16 @@ function groupBySummaries(filter, callback)
 /**
  * Group by managing body, if managing body is in the filter
  * and by last four quarters
- * @param filter : Filter object 
+ * @param filter : Filter object
  * @param callback : function to handle result rows
  */
 function groupByManagingBody(filter, callback){
-	
+
   var mFilter = new Filter();
 
   if (filter.hasConstraint("managing_body")) {
 	mFilter.addConstraint("managing_body", filter.getConstraintData("managing_body"));
-  } 
+  }
 
   //add year and quarter to new fiter
   mFilter.addConstraint("report_year", filter.getConstraintData("report_year"));
@@ -251,7 +251,7 @@ function groupByManagingBody(filter, callback){
 /**
  * Query by filter constraint, group by last four quarters
  * pass result rows to callback function
- * @param filter : Filter object 
+ * @param filter : Filter object
  * @param callback : function to handle result rows
  */
 function groupByQuarters(filter, callback){
@@ -265,14 +265,14 @@ function groupByQuarters(filter, callback){
 	mFilter.removeField("group_by");
 	mFilter.removeField("report_year");
 	mFilter.removeField("report_qurater");
-	
+
 	var select = squel.select().from(config.table);
 	prepareWheres(select, mFilter);
 
 
 	select.field("report_year");
 	select.field("report_qurater");
-	
+
 	//group by year & quarter
 	select.group("report_year");
 	select.group("report_qurater");
@@ -299,10 +299,10 @@ function groupByQuarters(filter, callback){
 
 /**
  * Add previous quarters to Squel query
- * @param query    : Squel select 
- * @param year     : starting year 
+ * @param query    : Squel select
+ * @param year     : starting year
  * @param quarter  : starting quarter
- * @param numOfQuarters : number of previous quarters to add to query 
+ * @param numOfQuarters : number of previous quarters to add to query
  * @param callback : function to handle result rows
  */
 function addLastQuartersToQuery(query, year, quarter, numOfQuarters){
@@ -314,7 +314,7 @@ function addLastQuartersToQuery(query, year, quarter, numOfQuarters){
 	 		.and("report_year = "+ quarters[i]['year'])
 	 		.and("report_qurater = " + quarters[i]['quarter'])
 	 	.end();
-	}	
+	}
 
 	query.where(expr);
 
@@ -325,37 +325,37 @@ function addLastQuartersToQuery(query, year, quarter, numOfQuarters){
 /**
  * Query DB, get info needed for portfolio view.
  * For each group in allowed_filters which is not in filter constraints,
- * get 5 top most rows, ordered by fair_value 
+ * get 5 top most rows, ordered by fair_value
  * joined with last four quarters.
  * Query structure generated is : outerSelect FROM ( innerSelect JOIN joined)
 
 	query example:
 
-     	SELECT * FROM 
+     	SELECT * FROM
      	(
-	     	SELECT ROW_NUMBER() OVER (ORDER BY sum(fair_value) DESC) 
-	     	AS rownumber, managing_body 
-	     	FROM pension_data_all 
-	     	WHERE (report_year= '2014') AND (report_qurater= '3') 
+	     	SELECT ROW_NUMBER() OVER (ORDER BY sum(fair_value) DESC)
+	     	AS rownumber, managing_body
+	     	FROM pension_data_all
+	     	WHERE (report_year= '2014') AND (report_qurater= '3')
 	     	GROUP BY managing_body
-     	) AS currentQuarter 
+     	) AS currentQuarter
      	INNER JOIN (
-     		SELECT report_year, report_qurater, managing_body, sum(fair_value) AS "fair_value" 
-     		FROM pension_data_all 
+     		SELECT report_year, report_qurater, managing_body, sum(fair_value) AS "fair_value"
+     		FROM pension_data_all
      		WHERE (
-     			(report_year = 2014 AND report_qurater = 3) OR 
-     			(report_year = 2014 AND report_qurater = 2) OR 
-     			(report_year = 2014 AND report_qurater = 1) OR 
+     			(report_year = 2014 AND report_qurater = 3) OR
+     			(report_year = 2014 AND report_qurater = 2) OR
+     			(report_year = 2014 AND report_qurater = 1) OR
      			(report_year = 2013 AND report_qurater = 4)
- 			) 
-			GROUP BY report_year, report_qurater, managing_body) AS previousQuarters 
-		ON currentQuarter.managing_body= previousQuarters.managing_body 
-			OR (currentQuarter.managing_body IS NULL AND previousQuarters.managing_body IS NULL) 
-		WHERE (rownumber <= 5) 
+ 			)
+			GROUP BY report_year, report_qurater, managing_body) AS previousQuarters
+		ON currentQuarter.managing_body= previousQuarters.managing_body
+			OR (currentQuarter.managing_body IS NULL AND previousQuarters.managing_body IS NULL)
+		WHERE (rownumber <= 5)
 		ORDER BY report_year DESC, report_qurater DESC, fair_value DESC
 
 
- * @param filter : Filter object 
+ * @param filter : Filter object
  * @param callback : function to handle result rows
  */
 function groupByPortfolio(filter, callback){
@@ -368,16 +368,16 @@ function groupByPortfolio(filter, callback){
 
 	//remove group_by if present
 	mFilter.removeField("group_by");
-		
+
 	var outerSelect;
 
 	//inner select, with applied filter, for current quarter
 	var innerSelect = squel.select().from(config.table);
 	prepareWheres(innerSelect, mFilter);
 
-	//add row_number to inner select, for getting top 5 
+	//add row_number to inner select, for getting top 5
 	innerSelect.field("ROW_NUMBER() OVER (ORDER BY sum(fair_value) DESC) AS rownumber");
-	
+
     //add group by fields for display
     var group_by_fields = Groups.getGroups(mFilter);
 
@@ -395,9 +395,9 @@ function groupByPortfolio(filter, callback){
 	for (var index in groups)
 	{
 		var group=groups[index];
-		var groupField = group['group_field'];		
+		var groupField = group['group_field'];
 		group.query=group.query.toString();
-		
+
 		//joined select, for last four quarters
 		var joined = squel.select().from(config.table);
 
@@ -412,7 +412,7 @@ function groupByPortfolio(filter, callback){
 		//apply filter to joined WHERE clause
 		prepareWheres(joined, mFilter);
 
-		//add last quarters to joined 
+		//add last quarters to joined
 		addLastQuartersToQuery(joined, report_year, report_quarter, 4);
 
 		joined.group("report_year");
@@ -425,9 +425,9 @@ function groupByPortfolio(filter, callback){
 
 
 		outerSelect.join("("+joined + ") AS previousQuarters ON currentQuarter." + groupField
-			+"= previousQuarters."+groupField 
+			+"= previousQuarters."+groupField
 			+ " OR (currentQuarter." + groupField + " IS NULL AND"
-			+ " previousQuarters."+groupField + " IS NULL)");	
+			+ " previousQuarters."+groupField + " IS NULL)");
 
 		outerSelect.order("report_year",false);
 		outerSelect.order("report_qurater",false);
@@ -451,16 +451,16 @@ function groupByPortfolio(filter, callback){
 
 /**
  * Query DB, get info needed for investments view.
- * Creates an SQL query of the following template: 
+ * Creates an SQL query of the following template:
  *
- *   SELECT report_year, report_qurater, %GROUP_BY_FIELD%, 
- *   sum(fair_value) AS fair_value 
+ *   SELECT report_year, report_qurater, %GROUP_BY_FIELD%,
+ *   sum(fair_value) AS fair_value
  *   FROM pension_data_all WHERE %FILTER_CONSTRAINTS%
  *   AND %LAST_4_QUARTERS%
- *   GROUP BY report_year, report_qurater, %GROUP_BY_FIELD% 
+ *   GROUP BY report_year, report_qurater, %GROUP_BY_FIELD%
  *   ORDER BY report_year DESC, report_qurater DESC, fair_value DESC
  *
- * @param filter : Filter object 
+ * @param filter : Filter object
  * @param callback : function to handle result rows
  */
 function groupByInvestments(filter, callback){
@@ -474,7 +474,7 @@ function groupByInvestments(filter, callback){
 
 
 	var select = squel.select().from(config.table);
-		
+
 	select.field("report_year");
 	select.field("report_qurater");
 	select.field(groupBy);
@@ -484,11 +484,11 @@ function groupByInvestments(filter, callback){
 	//dont need year and quarter in where's, add last 4 q's later
 	mFilter.removeField("report_year");
 	mFilter.removeField("report_qurater");
-	
+
 	//apply filter constraints to WHERE clause
 	prepareWheres(select, mFilter);
 
-	//add last quarters to constraints 
+	//add last quarters to constraints
 	addLastQuartersToQuery(select, report_year, report_quarter, 4);
 
 	select.group("report_year");
@@ -513,7 +513,7 @@ function groupByInvestments(filter, callback){
 function getManagingBodies(callback){
 
 	var select = squel.select().from(config.table);
-	
+
 	select.field("managing_body").distinct();
 
 	var sqlQuery = select.toString();
@@ -553,20 +553,20 @@ function getFundsByManagingBody(managing_body,callback){
 function searchInFields(term, limit, callback){
 
 	async.parallel([
-	      function(callback){ 
+	      function(callback){
 			searchByField(term, "instrument_name", limit, callback);
 	      },
-	      function(callback){ 
+	      function(callback){
 			searchByField(term, "instrument_id", limit, callback);
 	      },
-	      function(callback){ 
+	      function(callback){
 			searchByField(term, "fund_name", limit, callback);
 		  },
-	      function(callback){ 
+	      function(callback){
 			searchByField(term, "issuer", limit, callback);
 		  }
 
-	    ], 
+	    ],
 	    function(err,results){
 
 
@@ -579,7 +579,7 @@ function searchInFields(term, limit, callback){
 	      }
 
       	  s.assets = results[0][0].rows;
-      	  s.instruments = results[1][0].rows;      
+      	  s.instruments = results[1][0].rows;
       	  s.funds = results[2][0].rows;
       	  s.issuers = results[3][0].rows;
 
@@ -590,12 +590,12 @@ function searchInFields(term, limit, callback){
 
 
 /**
- * Query the DB, find lines containing term in 
- * instrument_id or instrument_name 
+ * Query the DB, find lines containing term in
+ * instrument_id or instrument_name
  * @param term : string, name/id to look for
  * @param callback(obj) : function to handle result rows.
- * obj = {rows:[...], total_row_count:int, page: int, 
- * 			results_per_page: int, total_pages: int}	
+ * obj = {rows:[...], total_row_count:int, page: int,
+ * 			results_per_page: int, total_pages: int}
  */
 function searchByField(term, field, limit, callback){
 	var RESULTS_PER_PAGE = 50;
@@ -627,12 +627,12 @@ function searchByField(term, field, limit, callback){
 
 
 /**
- * Query the DB, find lines containing term in 
- * instrument_id or instrument_name 
+ * Query the DB, find lines containing term in
+ * instrument_id or instrument_name
  * @param term : string, name/id to look for
  * @param callback(obj) : function to handle result rows.
- * obj = {rows:[...], total_row_count:int, page: int, 
- * 			results_per_page: int, total_pages: int}	
+ * obj = {rows:[...], total_row_count:int, page: int,
+ * 			results_per_page: int, total_pages: int}
  */
 function search(term, pageNum, callback){
 	var RESULTS_PER_PAGE = 50;
@@ -657,12 +657,12 @@ function search(term, pageNum, callback){
 	select.offset( RESULTS_PER_PAGE * (pageNum - 1));
 
 
-	var countSelect = 
-		"select count(count_a) from (" 
+	var countSelect =
+		"select count(count_a) from ("
 			+"SELECT count(*) as count_a,instrument_name, instrument_id FROM pension_data_all WHERE (LOWER(instrument_name) like LOWER('%"+escapeChars(term)+"%') OR LOWER(instrument_id) like LOWER('%"+escapeChars(term)+"%')) group by instrument_name, instrument_id"
 		+")  as c";
 
-	
+
 	//console.log(select.toString())
 
 	db.query(select.toString(), function(err, rows){
@@ -689,3 +689,4 @@ exports.search=search;
 exports.streamQuery=streamQuery;
 exports.searchInFields=searchInFields;
 exports.searchByField=searchByField;
+exports.addLastQuartersToQuery=addLastQuartersToQuery;
