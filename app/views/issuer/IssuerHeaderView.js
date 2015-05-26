@@ -7,7 +7,7 @@ define([
   'Dictionary'
 ],
 
-function (Backbone, Marionette, header, Filter, TitleGenerator, Dictionary) {
+function (Backbone, Marionette, template, Filter, TitleGenerator, Dictionary) {
   'use strict';
 
   function getBreadcrumbs(filter){
@@ -36,7 +36,7 @@ function (Backbone, Marionette, header, Filter, TitleGenerator, Dictionary) {
         last_crumb: lastCrumb
     	};
     },
-    template: header,
+    template: template,
   	templateHelpers: {
         title: function (name) {
             return Filter;
