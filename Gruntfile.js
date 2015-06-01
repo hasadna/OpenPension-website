@@ -131,15 +131,12 @@ module.exports = function (grunt) {
         
         // Less
         less: {
-          options: {
-            paths: ["app/styles/less"],
-            plugins: [
-              new require('less-plugin-autoprefix')({browsers: ["last 2 versions"]}),
-              new require('less-plugin-clean-css')
-            ],
-          },
-          files: {
-            "app/styles/main.css": "app/styles/main.less"
+          development: {
+            options: {
+              relativeUrls: true
+            },
+            src: '<%= yeoman.app %>/styles/less/main.less',
+            dest: '<%= yeoman.app %>/styles/main.css'
           }
         },
         
