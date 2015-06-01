@@ -29,9 +29,9 @@ module.exports = function (grunt) {
         // watch list
         watch: {
             
-            compass: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass']
+            less: {
+                files: ['<%= yeoman.app %>/styles/{,*/}*.{less}'],
+                tasks: ['less']
             },
             
             livereload: {
@@ -129,23 +129,18 @@ module.exports = function (grunt) {
         },
 
         
-        // compass
-        compass: {
-            options: {
-                sassDir: '<%= yeoman.app %>/styles',
-                cssDir: '.tmp/styles',
-                imagesDir: '<%= yeoman.app %>/images',
-                javascriptsDir: '<%= yeoman.app %>/scripts',
-                fontsDir: '<%= yeoman.app %>/styles/fonts',
-                importPath: 'app/bower_components',
-                relativeAssets: true
-            },
-            dist: {},
-            server: {
-                options: {
-                    debugInfo: true
-                }
-            }
+        // Less
+        less: {
+          options: {
+            paths: ["app/styles/less"],
+            plugins: [
+              new require('less-plugin-autoprefix')({browsers: ["last 2 versions"]}),
+              new require('less-plugin-clean-css')
+            ],
+          },
+          files: {
+            "app/styles/main.css": "app/styles/main.less"
+          }
         },
         
 
@@ -294,7 +289,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
-            'compass:server',
+            'less',
             'connect:testserver',
             'express:dev',
             'exec',
@@ -308,7 +303,7 @@ module.exports = function (grunt) {
         'clean:server',
         'createDefaultTemplate',
         'handlebars',
-        'compass',
+        'less',
         'connect:testserver',
         'exec:mocha'
     ]);
@@ -316,7 +311,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'createDefaultTemplate',
         'handlebars',
-        'compass:dist',
+        'less',
         'useminPrepare',
         'requirejs',
         'imagemin',
