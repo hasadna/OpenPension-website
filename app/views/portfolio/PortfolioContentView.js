@@ -1,27 +1,24 @@
-define([
-  'backbone',
-  'backbone.marionette',
-  'Filter',
-  'hbs!/templates/portfolio-content',
-  '../../views/portfolio/PortfolioHeaderView',
-  '../../views/portfolio/PortfolioContentMoreView',
-  '../../views/portfolio/PortfolioContentGroupsView',
-  '/collections/Funds.js',
-  '/collections/PortfolioGroups.js',
-  'Dictionary'
-],
-
-function (Backbone, Marionette, Filter, portfolio_content_hbs, PortfolioHeaderView, 
-  PortfolioContentMoreView, PortfolioContentGroupsView, Funds, PortfolioGroups,
-  Dictionary) {
+define(function(require) {
   'use strict';
+
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
+  var template = require('hbs!/templates/portfolio-content');
+  var PortfolioHeaderView = require('../../views/portfolio/PortfolioHeaderView');
+  var PortfolioContentMoreView = require('../../views/portfolio/PortfolioContentMoreView');
+  var PortfolioContentGroupsView = require('../../views/portfolio/PortfolioContentGroupsView');
+  var CommonContentHeaderView = require('../../views/common/ContentHeaderView');
+  var Funds = require('/collections/Funds.js');
+  var PortfolioGroups = require('/collections/PortfolioGroups.js');
+  var Dictionary = require('Dictionary');
+  var Filter = require('Filter');
 
   return Backbone.Marionette.LayoutView.extend({
     initialize : function (options){
         this.options = options;
         this.filter = Filter.fromQueryString(this.options.queryString);
     },
-    template: portfolio_content_hbs,
+    template: template,
     regions: {
       portfolio_content_header: '#portfolio-content-header',
       portfolio_content_groups: '#portfolio-content-groups',
@@ -70,10 +67,14 @@ function (Backbone, Marionette, Filter, portfolio_content_hbs, PortfolioHeaderVi
                 }
             ));
 
-        });
-        
+            self.showChildView('portfolio_content_header',
+                new CommonContentHeaderView(
+                {
+                }
+            ));
+
+        });   
     }
 
   });
-
 });
