@@ -1,18 +1,15 @@
-// PortfolioGroups.js
-// -------------
-define(["jquery","backbone","/models/PortfolioGroup.js"],
+define(function(require) {
+  'use strict';
+  var Backbone = require('backbone');
+  var PortfolioGroup = require('/models/PortfolioGroup.js');
 
-  function($, Backbone, PortfolioGroup) {
+	var PortfolioGroups = Backbone.Collection.extend({
 
-    var PortfolioGroups = Backbone.Collection.extend({
+	  model: PortfolioGroup,
+	  url : '/api/portfolio'
 
-      model: PortfolioGroup,
-      url : '/api/portfolio'
+	});
 
-    });
+	return PortfolioGroups;
 
-    return PortfolioGroups;
-
-  }
-
-);
+});
