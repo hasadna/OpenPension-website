@@ -1,12 +1,11 @@
 <div class="col-xs-12">
   <div class="btn-toolbar">
     <select id="select-quarter">
-      <option value="{&quot;quarter&quot;:&quot;1&quot;,&quot;year&quot;:&quot;2014&quot;,&quot;str&quot;:&quot;2014_1&quot;}" selected="selected">רבעון 1, 2014</option>
-      <option value="{&quot;quarter&quot;:&quot;4&quot;,&quot;year&quot;:&quot;2013&quot;,&quot;str&quot;:&quot;2013_4&quot;}">רבעון 4, 2013</option>
-      <option value="{&quot;quarter&quot;:&quot;3&quot;,&quot;year&quot;:&quot;2013&quot;,&quot;str&quot;:&quot;2013_3&quot;}">רבעון 3, 2013</option>
-      <option value="{&quot;quarter&quot;:&quot;2&quot;,&quot;year&quot;:&quot;2013&quot;,&quot;str&quot;:&quot;2013_2&quot;}">רבעון 2, 2013</option>
+      {{#each months}}
+      <option value="{{this.str}}" selected="selected">רבעון {{this.quarter}}, {{this.year}}</option>
+      {{/each}}
     </select>
-    <button id="download" class="btn btn-default" onClick="location.href = '/csv#{filter.toQueryString()}'">
+    <button id="download" class="btn btn-default" onClick="location.href = '/csv?{{queryString}}'">
     הורד נתונים גולמיים
     </button>
   </div>
@@ -15,20 +14,22 @@
       <tbody>
         <tr>
           <td>
-            <h3> גודל התיק </h3>
-            <span class="datum">93.3 מיליארד שקל</span>
+            <h3>{{amountTitle}}</h3>
+            <span class="datum">{{totalAmountWords}} שקל</span>
           </td>
-          <td>
-            <h3> חלק משוק הפנסיה </h3>
-            <span class="datum percentage">10.9%</span>
-          </td>
+          {{#if shouldShowPercentage}}
+            <td>
+              <h3>{{percentageTitle}}</h3>
+              <span class="datum percentage">{{percentageOfTotalFund}}%</span>
+            </td>
+          {{/if}}  
           <td>
             <h3> שינוי ב-4 רבעונים </h3>
             <div id="portfolio-overview-diff">
-              <div class="trend increase">
-                <span class="datum percentage">0.3%</span>
+              <div class="trend {{trend}}">
+                <span class="datum percentage">{{diff}}%</span>
               </div>
-              <div class="sparkline graph" data-sparkline="1, 1, 1, 1">
+              <div class="sparkline graph" data-sparkline="{{sparklineData}}">
               </div>
             </div>
           </td>
