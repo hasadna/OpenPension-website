@@ -25,7 +25,16 @@ function (Backbone, Marionette, Filter, Dictionary, portfolio_groups_hbs, Funds)
     onRender : function(){
 
     },
-    template: portfolio_groups_hbs
+    template: portfolio_groups_hbs,
+    events:{
+      "click .table-link": function(){
+        var value = $(event.target).data("value");
+        var group = $(event.target).data("group");
+        this.filter.setConstraint(group, value);
+        location.href = "/#portfolio" + this.filter.toQueryString();
+          
+       }
+    }
   });
 
 });

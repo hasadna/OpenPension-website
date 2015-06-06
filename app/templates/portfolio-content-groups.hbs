@@ -21,7 +21,7 @@
          	{{#each this.results}}
             <tr>
                <td>
-                  <a onclick="addConstraint('{{../this.group_field}}','{{this.name}}')" title="{{this.name}}" class="table-link">{{this.name}}</a>
+                  <a data-group="{{../this.group_field}}" data-value="{{this.name}}" title="{{this.name}}" class="table-link">{{this.name}}</a>
                </td>
                <td><span class="amount">{{amountWords}}</span></td>
                <td>
