@@ -3,7 +3,7 @@ require.config({
     baseUrl: "/scripts",
 
     /* starting point for application */
-    deps: ['backbone.marionette', 'bootstrap', 'main', 'bootstrap-select'],
+    deps: ['jquery', 'backbone.marionette', 'bootstrap', 'main', 'bootstrap-select', 'highcharts'],
 
 
     shim: {
@@ -44,6 +44,9 @@ require.config({
         i18nprecompile: '../bower_components/require-handlebars-plugin/hbs/i18nprecompile',
         json2: '../bower_components/require-handlebars-plugin/hbs/json2',
         hbs: '../bower_components/require-handlebars-plugin/hbs',
+
+
+        highcharts: '../bower_components/highcharts/highcharts',
 
         /* Our libraries */
         Filter: "libs/filter",
