@@ -65,4 +65,6 @@ app.get('/api/fair_values',api.fair_values);
 app.get('/api/search',api.search);
 app.get('/api/queryNames',api.queryNames);
 app.get('/api/config',api.config);
+app.get('/api/contentHeader',api.contentHeader);
+
 app.get('/csv',csv.download);
