@@ -3,13 +3,13 @@ define(function(require) {
   var Backbone = require('backbone');
   var PortfolioGroup = require('/models/PortfolioGroup.js');
 
-	var PortfolioGroups = Backbone.Collection.extend({
+  var PortfolioGroups = Backbone.Collection.extend({
 
-	  model: PortfolioGroup,
-	  url : '/api/portfolio'
+    model: PortfolioGroup,
+    url : '/api/portfolio'
 
-	});
+  });
 
-	return PortfolioGroups;
+  return PortfolioGroups;
 
 });
