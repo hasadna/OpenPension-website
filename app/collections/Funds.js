@@ -1,18 +1,14 @@
-// Funds.js
-// -------------
-define(["jquery","backbone","/models/Fund.js"],
+define(function(require) {
+  'use strict';
+  var Backbone = require('backbone');
+  var Fund = require('/models/Fund.js');
+  var Funds = Backbone.Collection.extend({
 
-  function($, Backbone, Fund) {
+    model: Fund,
+    url : '/api/funds'
 
-    var Funds = Backbone.Collection.extend({
+  });
 
-      model: Fund,
-      url : '/api/funds'
+  return Funds;
 
-    });
-
-    return Funds;
-
-  }
-
-);
+});
