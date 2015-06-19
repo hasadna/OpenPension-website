@@ -69,8 +69,8 @@ define(function(require) {
                   el['sparklineData'] = percentages.reverse().join(", ");
                   el['diff'] = Math.abs(diff);
                   el['trend'] = trend;
-                  el['percentage'] = percentages[0];
-                  el['barWidth'] = percentages[0] * 0.65;
+                  el['percentage'] = percentages[3];
+                  el['barWidth'] = percentages[3] * 0.65;
                   el['amountWords'] = amountWords.number + ' ' + amountWords.scale;
 
                 }, this);

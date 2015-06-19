@@ -99,7 +99,7 @@ define(function(require) {
         sparklineData: sparklineData,
         diff: Math.abs(diff),
         direction: this.options.data.direction,
-        percentageOfTotalFund: percentages[0],
+        percentageOfTotalFund: percentages[3],
         trend: trend,
         totalAmountWords: amountWords.number + ' ' + amountWords.scale,
         amountTitle: ContentHeaderView.getAmountTitle(reportType),
