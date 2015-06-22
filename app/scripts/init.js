@@ -17,6 +17,10 @@ require.config({
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
+        },
+        highcharts: {
+          exports: "Highcharts",
+          deps: ["jquery"]
         }
     },
 
@@ -40,6 +44,9 @@ require.config({
         /* handlebars from the require handlerbars plugin below */
         handlebars: '../bower_components/require-handlebars-plugin/Handlebars',
 
+        /* Highcharts */
+        highcharts: '../bower_components/highcharts/highcharts',
+
         /* require handlebars plugin - Alex Sexton */
         i18nprecompile: '../bower_components/require-handlebars-plugin/hbs/i18nprecompile',
         json2: '../bower_components/require-handlebars-plugin/hbs/json2',
@@ -48,7 +55,7 @@ require.config({
         /* Our libraries */
         Filter: "libs/filter",
         DataNormalizer: "libs/data_normalizer",
-        TitleGenerator : "libs/title_generator", 
+        TitleGenerator : "libs/title_generator",
         Dictionary: "libs/dictionary",
         Tabletop: "libs/tabletop",
         GoogleDoc: "libs/GoogleDocSpreadsheet",
