@@ -16,7 +16,10 @@
     "bootstrap": "~3.3.4",
     "fontawesome": "~4.3.0",
     "typeahead.js": "~0.11.1",
-    "bootstrap-rtl": "~3.3.2"
+    "bootstrap-rtl": "~3.3.2",
+    "typeahead.js-bootstrap3.less": "~0.2.3",
+    "bootstrap-select": "~1.7.2",
+    "highcharts": "4.0.1"
   },
   "directory": "bower_components",
   "resolutions": {

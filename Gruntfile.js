@@ -29,9 +29,9 @@ module.exports = function (grunt) {
         // watch list
         watch: {
             
-            compass: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass']
+            less: {
+                files: ['<%= yeoman.app %>/styles/{,*/}*.{less}'],
+                tasks: ['less']
             },
             
             livereload: {
@@ -129,23 +129,15 @@ module.exports = function (grunt) {
         },
 
         
-        // compass
-        compass: {
+        // Less
+        less: {
+          development: {
             options: {
-                sassDir: '<%= yeoman.app %>/styles',
-                cssDir: '.tmp/styles',
-                imagesDir: '<%= yeoman.app %>/images',
-                javascriptsDir: '<%= yeoman.app %>/scripts',
-                fontsDir: '<%= yeoman.app %>/styles/fonts',
-                importPath: 'app/bower_components',
-                relativeAssets: true
+              relativeUrls: true
             },
-            dist: {},
-            server: {
-                options: {
-                    debugInfo: true
-                }
-            }
+            src: '<%= yeoman.app %>/styles/less/main.less',
+            dest: '<%= yeoman.app %>/styles/main.css'
+          }
         },
         
 
@@ -294,7 +286,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
-            'compass:server',
+            'less',
             'connect:testserver',
             'express:dev',
             'exec',
@@ -308,7 +300,7 @@ module.exports = function (grunt) {
         'clean:server',
         'createDefaultTemplate',
         'handlebars',
-        'compass',
+        'less',
         'connect:testserver',
         'exec:mocha'
     ]);
@@ -316,7 +308,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'createDefaultTemplate',
         'handlebars',
-        'compass:dist',
+        'less',
         'useminPrepare',
         'requirejs',
         'imagemin',

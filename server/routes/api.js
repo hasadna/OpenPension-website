@@ -5,6 +5,111 @@ var dictionary = require('../core/dictionary.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 var config = require('../config');
 var Promise = require('bluebird');
+var async = require('async');
+
+function groupByManagingBody(filter){
+    
+  var mFilter = new Filter();
+
+  if (filter.hasConstraint("managing_body") 
+            &&  filter.getDrillDownDepth() > 1){
+        mFilter.addConstraint("managing_body", filter.getConstraintData("managing_body"));
+  }
+
+  //add year and quarter to new fiter
+  mFilter.addConstraint("report_year", filter.getConstraintData("report_year"));
+  mFilter.addConstraint("report_qurater", filter.getConstraintData("report_qurater"));
+
+  return mFilter; 
+}
+
+
+exports.contentHeader = function(req,res){
+
+    //create filter from request (search string)
+    var filter = Filter.fromGetRequest(req);
+    var managingBodyFilter = groupByManagingBody(filter);
+
+    async.parallel([
+      function(callback){ 
+          //relative to total fund or current managing_body
+          DAL.groupByQuarters(managingBodyFilter, callback);
+      },
+      function(callback){ 
+          //group filter by quarters
+          DAL.groupByQuarters(filter, callback);
+      }
+    ], 
+    function(err,results){
+    
+        if (err){
+          console.log(err);
+          res.end("Err: "+err);
+          return;
+        }
+    
+
+        var totalPensionFundQuarters = results[0][0];
+        var totalPensionFundQuery = results[0][1];
+
+        var quarters = results[1][0];
+        var quartersQuery = results[1][1];
+
+        var report_year = filter.getConstraintData("report_year")[0];
+        var report_qurater = filter.getConstraintData("report_qurater")[0];
+        var lastQuarters = DataNormalizer.getLastQuarters(report_year, report_qurater, 4);
+
+        quarters = _.groupBy(quarters,
+                  function(v2,k2,l2){
+                    return v2['report_year']+"_"+v2['report_qurater'];
+                  });
+            
+        totalPensionFundQuarters = _.groupBy(totalPensionFundQuarters,
+                  function(v2,k2,l2){
+                    return v2['report_year']+"_"+v2['report_qurater'];
+                  });
+
+        //fill up missing quarters with sum 0
+        if (Object.keys(quarters).length < 4 || 
+          Object.keys(totalPensionFundQuarters).length < 4){
+          for(var q = 0; q < 4; q++){
+          
+            if (quarters[lastQuarters[q].str] == undefined){
+              quarters[lastQuarters[q].str] = [{"fair_value":"0"}];
+            }
+
+            if (totalPensionFundQuarters[lastQuarters[q].str] == undefined){
+              totalPensionFundQuarters[lastQuarters[q].str] = [{"fair_value":"0"}];
+            }
+
+          }
+        }
+
+        var result = {
+          totalFilteredValues: [
+                quarters[lastQuarters[0].str][0]['fair_value'], 
+                quarters[lastQuarters[1].str][0]['fair_value'], 
+                quarters[lastQuarters[2].str][0]['fair_value'], 
+                quarters[lastQuarters[3].str][0]['fair_value'] 
+              ],
+          totalPensionFundValues: [
+                totalPensionFundQuarters[lastQuarters[0].str][0]['fair_value'], 
+                totalPensionFundQuarters[lastQuarters[1].str][0]['fair_value'], 
+                totalPensionFundQuarters[lastQuarters[2].str][0]['fair_value'], 
+                totalPensionFundQuarters[lastQuarters[3].str][0]['fair_value']
+              ],
+        }
+
+
+        res.json(result);
+
+
+      });
+
+
+
+
+};
 
 exports.quarters = function(req,res){
 
@@ -53,25 +158,25 @@ exports.managing_bodies = function(req,res){
 
 exports.funds = function(req,res){
 
-		//create filter from request (search string)
-		var filter = Filter.fromGetRequest(req);
+    //create filter from request (search string)
+    var filter = Filter.fromGetRequest(req);
 
-		var managing_body = filter.getConstraintData('managing_body')[0];
+    var managing_body = filter.getConstraintData('managing_body')[0];
 
     DAL.getFundsByManagingBody(managing_body,
       function(err, funds, fundsQuery){
 
-  			res.json(funds);
+        res.json(funds);
 
-		});
+    });
 
 };
 
 exports.portfolio = function(req, res){
 
 
-		  //create filter from request (search string)
-		  var filter = Filter.fromGetRequest(req);
+      //create filter from request (search string)
+      var filter = Filter.fromGetRequest(req);
 
       DAL.groupByPortfolio(filter,
                 function(err, groups){
@@ -79,27 +184,21 @@ exports.portfolio = function(req, res){
         //group results by group_field (e.g. issuer)
         _.each(groups,
             function(value,key,list){
-                value['result'] =
-                    _.groupBy(value['result'],value['group_field']);
+                var groupedResults = _.chain(value['result']).groupBy(value['group_field']).values().value();
+                // a[0].results[0][0][a[0].group_field];
+
+                value['results'] = _.map(groupedResults, function(el,ind){
+
+                  return {
+                    name: el[0][this['group_field']],
+                    fair_values : _.pluck(el, 'fair_value')
+                  };
+                }, value);
+
                 delete value['query'];
+                delete value['result'];
             }
         );
-
-
-        //group result items by year and quarter
-        _.each(groups,
-          function(v,k,l){
-          _.each(v['result'],
-            function(v1,k1,l1){
-              l1[k1] = _.groupBy(l1[k1],
-                  function(v2,k2,l2){
-                    return v2['report_year']+"_"+v2['report_qurater'];
-                  }
-              );
-            }
-          );
-        });
-
 
         res.json(groups);
 

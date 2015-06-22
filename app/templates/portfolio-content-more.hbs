@@ -4,7 +4,7 @@
 		<h4>קופות של {{managing_body}}</h4>
 		<ul class="link-list">
 		{{#each funds}}
-			<li><a class="table-link">{{this.fund_name}}</a></li><br>
+			<li><a class="table-link" data-group="fund_name" data-value="{{this.fund_name}}">{{this.fund_name}}</a></li><br>
 		{{/each}}
 		</ul>
 	</div>

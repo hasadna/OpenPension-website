@@ -46,7 +46,7 @@ function (Backbone, Marionette, homepage, HomepageHeaderView, HomepageContentVie
       TreeMap.drawGraph("issuers","/treemap/issuers");
     },
     events: {
-      "click .node": treemapClick //is the same as "click .dog":
+      "click .node": treemapClick 
     }
   
   });
