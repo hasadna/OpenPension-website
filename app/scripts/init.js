@@ -62,7 +62,8 @@ require.config({
         Dictionary: "libs/dictionary",
         Tabletop: "libs/tabletop",
         GoogleDoc: "libs/GoogleDocSpreadsheet",
-        TreeMap: "libs/treemap"
+        TreeMap: "libs/treemap",
+        Sparkline: "libs/sparkline"
 
     },
 

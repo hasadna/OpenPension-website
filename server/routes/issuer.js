@@ -126,7 +126,8 @@ function createTableResponse(results) {
     totalFairValue += Number(row['total_fair_value']);
   });
 
-  return _.map(quartersGroupedByManagingBody, function(dataPerQuarter, managingBody) {
+  // Map to table rows.
+  var rows =  _.map(quartersGroupedByManagingBody, function(dataPerQuarter, managingBody) {
     var fairValue = 0;
     if (!_.isUndefined(fairValueByManagingBody[managingBody])) {
      fairValue =
@@ -143,6 +144,11 @@ function createTableResponse(results) {
         fairValue
       ]
     };
+  });
+
+  // Sort rows by the first column in descending order.
+  return _.sortBy(rows, function(row) {
+    return -row.values[0];
   });
 }
 

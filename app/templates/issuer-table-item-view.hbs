@@ -1,4 +1,19 @@
-<td>{{this.key}}</td>
-{{#each this.values}}
-  <td>{{this}}</td>
-{{/each}}
+<td>
+   <a onclick="addConstraint('instrument_name','{{this.key}}')" title="{{this.key}}" class="table-link">{{this.key}}</a>
+</td>
+<td>
+   <span class="percentage">{{this.percentOfIssued}}%</span>
+   <div style="width:{{this.percentOfIssued}}%" class="bar graph"></div>
+</td>
+<td class="change">
+  <span class="trend {{this.sparklineDirection}}" >
+    <span class="percentage">{{this.sparklineDiff}}%</span>
+  </span>
+  <div class="sparkline graph" data-sparkline="{{this.sparklineData}}"></div>
+</td>
+<td>
+  <span class="percentage">{{this.exposure}}%</span>
+</td>
+<td>
+  {{this.totalFairValue}}
+</td>
