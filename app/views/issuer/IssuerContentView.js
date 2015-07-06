@@ -20,15 +20,12 @@ define(function(require) {
       this.filter = Filter.fromQueryString(this.options.queryString);
     },
     onRender: function() {
-      var issuer = this.filter.getConstraintData('issuer')[0];
       var issuerTable = new IssuerTable();
-      var data = $.param({ issuer: issuer});
-      $.when(issuerTable.fetch({data: data}))
+      $.when(issuerTable.fetch({data: this.options.queryString}))
           .then(_.bind(this.onResponse, this));
     },
     onResponse: function(res) {
       console.log('IssuerContentView.onResponse');
-      console.log(JSON.stringify(res));
       // Render TableView using the response collection.
       this.showChildView('table', new TableView({
         collection: new IssuerTable(res)

@@ -1,6 +1,8 @@
 define(function(require) {
   'use strict';
   var Backbone = require('backbone');
+  var Dictionary = require('Dictionary');
+  var DataNormalizer = require('DataNormalizer');
 
   var IssuerTableRow = Backbone.Model.extend({
     defaults: {
@@ -8,6 +10,7 @@ define(function(require) {
       values: []
     },
     initialize: function() {
+      this.set('translatedKey', Dictionary.translate(this.get('key')));
       this.set('percentOfIssued', this.getPercentOfIssued());
       this.set('exposure', this.getExposure());
       this.set('totalFairValue', this.getTotalFairValue());
@@ -17,14 +20,14 @@ define(function(require) {
       this.set('sparklineDirection', sparkline.direction);
     },
     getPercentOfIssued: function() {
-      return (this.get('values')[0] * 100 ).toFixed(2);
+      return (this.get('values')[0] * 100).toFixed(2);
     },
     getSparkline: function() {
       var sparkline = [
-        (this.get('values')[0] * 100 ).toFixed(2),
-        (this.get('values')[1] * 100 ).toFixed(2),
-        (this.get('values')[2] * 100 ).toFixed(2),
-        (this.get('values')[3] * 100 ).toFixed(2)
+        (this.get('values')[0] * 100).toFixed(2),
+        (this.get('values')[1] * 100).toFixed(2),
+        (this.get('values')[2] * 100).toFixed(2),
+        (this.get('values')[3] * 100).toFixed(2)
       ];
 
       var diff, direction;
@@ -47,7 +50,9 @@ define(function(require) {
       return (this.get('values')[4] * 100 ).toFixed(2);
     },
     getTotalFairValue: function() {
-      return (this.get('values')[5] * 100 ).toFixed(2);
+      var normalizedValue =
+          DataNormalizer.convertNumberToWords(this.get('values')[5]);
+      return normalizedValue.number + ' ' + normalizedValue.scale;
     }
   });
   return IssuerTableRow;

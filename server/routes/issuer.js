@@ -8,8 +8,8 @@ var db = require('../core/db.js');
 
 exports.fetch = function(req, res) {
   log('issuer.fetch');
-  var filter = Filter.fromGetRequest(req);
   getIssuerDataTable(
+      Filter.fromGetRequest(req),
       function(rows) {
         res.json(rows);
       },
@@ -23,19 +23,15 @@ exports.fetch = function(req, res) {
  * Gets the data table for the rate of IPO page and calls the success or error
  * handler.
  */
-function getIssuerDataTable(success, error) {
-  // select report_year, report_qurater, managing_body,
-  // sum(par_value) as total_par_value
-  // from pension_data_all
-  // where issuer='פועלים'
-  //   and report_year = 2013
-  //   and report_qurater in (1,2,3,4)
-  //   and rate_of_ipo IS NOT NULL
-  // group by managing_body, report_year, report_qurater
-  var issuer = 'פועלים';
-  var currentYear = 2014;
-  var currentQuarter = 2;
+function getIssuerDataTable(filter, success, error) {
+  log('filter: ' + JSON.stringify(filter));
+  var issuer = filter.getConstraintData("issuer")[0];
+  var currentYear = filter.getConstraintData("report_year")[0];
+  var currentQuarter = filter.getConstraintData("report_qurater")[0];
 
+  log('issuer: ' + issuer);
+  log('currentYear: ' + currentYear);
+  log('currentQuarter: ' + currentQuarter);
   // Build queries.
 
   // Sum of par value, grouped by managing body over the last 4 quarters.
