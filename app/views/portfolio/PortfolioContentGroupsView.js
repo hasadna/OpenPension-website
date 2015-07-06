@@ -1,15 +1,13 @@
-define([
-  'backbone',
-  'backbone.marionette',
-  'Filter',
-  'Dictionary',
-  'hbs!/templates/portfolio-content-groups',
-  'collections/Funds.js'
-  ],
-
-function (Backbone, Marionette, Filter, Dictionary, portfolio_groups_hbs, Funds) {
+define(function(require) {
   'use strict';
-
+  
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
+  var Filter = require('Filter');
+  var Dictionary = require('Dictionary');
+  var portfolio_groups_hbs = require('hbs!/templates/portfolio-content-groups');
+  var Funds = require('collections/Funds.js');
+  var Sparkline = require('Sparkline');
 
   return Backbone.Marionette.ItemView.extend({
     initialize : function (options){
@@ -24,6 +22,9 @@ function (Backbone, Marionette, Filter, Dictionary, portfolio_groups_hbs, Funds)
     },
     onRender : function(){
 
+    },
+    onShow: function(){
+      Sparkline.draw();
     },
     template: portfolio_groups_hbs,
     events:{

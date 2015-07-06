@@ -1,14 +1,12 @@
-define([
-  'backbone',
-  'backbone.marionette',
-  'Filter',
-  'Dictionary',
-  'hbs!/templates/portfolio-content-more',
-  'collections/Funds.js'
-  ],
-
-function (Backbone, Marionette, Filter, Dictionary, portfolio_more_hbs, Funds) {
+define(function(require) {
   'use strict';
+  
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
+  var Filter = require('Filter');
+  var Dictionary = require('Dictionary');
+  var portfolio_more_hbs = require('hbs!/templates/portfolio-content-more');
+  var Funds = require('collections/Funds.js');
 
   return Backbone.Marionette.LayoutView.extend({
     initialize : function (options){

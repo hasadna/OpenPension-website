@@ -1,13 +1,12 @@
-define([
-  'backbone',
-  'backbone.marionette',
-  'hbs!/templates/portfolio',
-  '../../views/portfolio/PortfolioHeaderView',
-  '../../views/portfolio/PortfolioContentView'
-],
-
-function (Backbone, Marionette, homepage, PortfolioHeaderView, PortfolioContentView) {
+define(function(require) {
   'use strict';
+  
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
+  var homepage = require('hbs!/templates/portfolio');
+  var PortfolioHeaderView = require('../../views/portfolio/PortfolioHeaderView');
+  var PortfolioContentView = require('../../views/portfolio/PortfolioContentView');
+  var Sparkline = require('Sparkline');
 
   return Backbone.Marionette.LayoutView.extend({
     initialize : function (options){

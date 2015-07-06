@@ -14,6 +14,7 @@ define(function(require) {
   var Dictionary = require('Dictionary');
   var Filter = require('Filter');
   var DataNormalizer = require('DataNormalizer');
+  var Sparkline = require('Sparkline');
 
   return Backbone.Marionette.LayoutView.extend({
     initialize : function (options){
@@ -105,8 +106,7 @@ define(function(require) {
         });   
     },
     onShow: function(){
-
-  
+      Sparkline.draw();
     }
 
   });

@@ -1,14 +1,12 @@
-define([
-  'backbone',
-  'backbone.marionette',
-  'hbs!/templates/portfolio-header',
-  'Filter',
-  'TitleGenerator',
-  'Dictionary'
-],
-
-function (Backbone, Marionette, header, Filter, TitleGenerator, Dictionary) {
+define(function(require) {
   'use strict';
+  
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
+  var header = require('hbs!/templates/portfolio-header');
+  var Filter = require('Filter');
+  var Dictionary = require('Dictionary');
+  var TitleGenerator = require('TitleGenerator');
 
   function getBreadcrumbs(filter){
     var drillDown = filter.getDrillDown();
