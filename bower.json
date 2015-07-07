@@ -2,13 +2,13 @@
   "name": "webapptest",
   "version": "0.0.1",
   "dependencies": {
-    "jquery": "~1.9.0",
+    "jquery": "~1.11.0",
     "requirejs": "~2.1.5",
     "requirejs-text": "~2.0.5",
     "backbone-amd": "~1.0.0",
     "underscore-amd": "~1.4.4",
     "modernizr": "~2.6.2",
-    "highcharts": "~4.1.5",
+    "highcharts": "4.0.1",
     "require-handlebars-plugin": "~0.4.0",
     "mocha": "~1.12.0",
     "chai": "~1.7.2",
@@ -17,9 +17,9 @@
     "fontawesome": "~4.3.0",
     "typeahead.js": "~0.11.1",
     "bootstrap-rtl": "~3.3.2",
-    "typeahead.js-bootstrap3.less": "~0.2.3",
     "bootstrap-select": "~1.7.2",
-    "highcharts": "4.0.1"
+    "marionette": "~2.4.2",
+    "underscore": "~1.8.3"
   },
   "directory": "bower_components",
   "resolutions": {
