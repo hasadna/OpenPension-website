@@ -147,7 +147,7 @@ exports.quarters = function(req,res){
 
 };
 
-
+//Get list of Managing Bodies 
 exports.managing_bodies = function(req,res){
     DAL.getManagingBodies(function(err, bodies, bodiesQuery){
 
@@ -156,6 +156,7 @@ exports.managing_bodies = function(req,res){
     });
 }
 
+//Get Funds for managing Body - ?managing_body=xxxxx
 exports.funds = function(req,res){
 
     //create filter from request (search string)
@@ -185,7 +186,6 @@ exports.portfolio = function(req, res){
         _.each(groups,
             function(value,key,list){
                 var groupedResults = _.chain(value['result']).groupBy(value['group_field']).values().value();
-                // a[0].results[0][0][a[0].group_field];
 
                 value['results'] = _.map(groupedResults, function(el,ind){
 

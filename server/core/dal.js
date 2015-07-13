@@ -366,9 +366,6 @@ function groupByPortfolio(filter, callback){
 	var report_year = mFilter.getConstraintData("report_year")[0];
 	var report_quarter = mFilter.getConstraintData("report_qurater")[0];
 
-	//remove group_by if present
-	mFilter.removeField("group_by");
-
 	var outerSelect;
 
 	//inner select, with applied filter, for current quarter
@@ -378,8 +375,19 @@ function groupByPortfolio(filter, callback){
 	//add row_number to inner select, for getting top 5
 	innerSelect.field("ROW_NUMBER() OVER (ORDER BY sum(fair_value) DESC) AS rownumber");
 
-    //add group by fields for display
-    var group_by_fields = Groups.getGroups(mFilter);
+	var group_by_fields;
+
+	var groupByData = mFilter.getConstraintData("group_by");
+	mFilter.removeField("group_by");
+
+	if (groupByData.length > 0){
+		//got group by fields from user
+		group_by_fields = groupByData;
+	}
+	else{
+	    //add group by fields for display
+		group_by_fields = Groups.getGroups(mFilter);
+	}
 
     for( i in group_by_fields){
       mFilter.addConstraint("group_by",group_by_fields[i]);
