@@ -485,7 +485,7 @@ function groupByInvestments(filter, callback){
 
 	select.field("report_year");
 	select.field("report_qurater");
-	select.field(groupBy);
+	select.field(groupBy +" AS name");
 	select.field('sum(fair_value)', 'fair_value');
 
 

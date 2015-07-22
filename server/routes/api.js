@@ -206,6 +206,50 @@ exports.portfolio = function(req, res){
 
 };
 
+
+exports.investments = function(req, res){
+
+
+      //create filter from request (search string)
+      var filter = Filter.fromGetRequest(req);
+      var groupBy = filter.getConstraintData('group_by')[0];
+      var report_qurater = filter.getConstraintData('report_qurater')[0];
+      var report_year = filter.getConstraintData('report_year')[0];
+      var lastQuarters = DataNormalizer.getLastQuarters(report_year, report_qurater, 4);
+
+      DAL.groupByInvestments(filter,
+        function(err, group){
+
+          var groupData = {};
+
+          groupData['group_field'] = groupBy;
+
+          var groupedResults = _.groupBy(group, 'name');
+          groupData['results'] = _.map(groupedResults, function(el,ind){
+
+            var fairValues = _.map(lastQuarters, function(quarter){
+
+              var qData = _.where(el, {'report_qurater': quarter.quarter, 'report_year': quarter.year});
+
+              if (qData == null || qData.length == 0) return 0;
+
+              return qData[0].fair_value || 0;
+
+            });
+
+            return {
+              name: el[0].name,
+              fair_values : fairValues
+            };
+
+          });
+
+        res.json(groupData);
+
+      });
+
+};
+
 exports.query = function(req,res){
 
     //create filter from request (search string)

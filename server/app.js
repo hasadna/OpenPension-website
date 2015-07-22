@@ -56,6 +56,7 @@ var portfolio = require('./routes/portfolio')
 app.get('/treemap/managing_bodies', homepage.managing_body_treemap);
 app.get('/treemap/issuers', homepage.issuers_treemap);
 app.get('/api/portfolio',api.portfolio);
+app.get('/api/investments',api.investments);
 app.get('/api/funds',api.funds);
 app.get('/api/quarters',api.quarters);
 app.get('/api/managing_bodies',api.managing_bodies);
