@@ -1,14 +1,17 @@
-define([
-  'backbone',
-  'backbone.marionette',
-  '../views/homepage/HomepageView',
-  '../views/about/AboutView',
-  '../views/privacy/PrivacyView',
-  '../views/portfolio/PortfolioView',
-  '../views/issuer/IssuerView'
-],
+define(function(require) {
 
-function (Backbone, Marionette, HomepageView, AboutView, PrivacyView, PortfolioView, IssuerView) {
+  'use strict';
+
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
+  var HomepageView = require('../views/homepage/HomepageView');
+  var AboutView = require('../views/about/AboutView');
+  var PrivacyView = require('../views/privacy/PrivacyView');
+  var PortfolioView = require('../views/portfolio/PortfolioView');
+  var IssuerView = require('../views/issuer/IssuerView');
+  var InvestmentView = require('../views/investment/InvestmentView');
+  var SearchView = require('../views/search/SearchView');
+
   'use strict';
 
   var Controller = Backbone.Marionette.Controller.extend({
@@ -53,6 +56,20 @@ function (Backbone, Marionette, HomepageView, AboutView, PrivacyView, PortfolioV
             queryString: queryString
           };
           this.region.show(new IssuerView(obj));
+        },
+
+        investment: function(queryString) {
+          var obj = {
+            queryString: queryString
+          };
+          this.region.show(new InvestmentView(obj));
+        },
+
+        search: function(queryString) {
+          var obj = {
+            queryString: queryString
+          };
+          this.region.show(new SearchView(obj));
         }
     });
 

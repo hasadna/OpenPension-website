@@ -12,7 +12,9 @@ function(Backbone, Marionette) {
 	    "about": "about",
 	    "privacy": "privacy",
 	    "portfolio?*queryString": "portfolio",
-			"issuer?*queryString": "issuer"
+		"issuer?*queryString": "issuer",
+		"investment?*queryString": "investment",
+		"search?*queryString": "search"
 	  }
 	});
   return Router;

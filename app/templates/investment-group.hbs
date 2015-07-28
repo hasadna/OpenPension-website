@@ -1,0 +1,44 @@
+<div id="groups" class="groups col-xs-12">
+   <div class="segmentation">
+      <h3 class="table-title">חלוקה לפי {{group.group_field_heb}}<i class="help-spot fa fa-question-circle"></i></h3>
+      <table class="group-table table table-striped">
+         <colgroup>
+            <col>
+            <col>
+            <col>
+            <col>
+         </colgroup>
+         <thead>
+            <tr>
+               <th>שם נכס</th>
+               <th>היקף ההשקעה <small>בשקלים</small></th>
+               <th>חשיפה <small>באחוזים</small></th>
+               <th>שינוי חשיפה <small>4 רבעונים אחרונים</small></th>
+            </tr>
+         </thead>
+         <tbody>
+         	{{#each group.results}}
+            <tr>
+               <td>
+                  <a data-group="{{group.group_field}}" data-value="{{group.name}}" title="{{this.name}}" class="table-link">{{this.name}}</a>
+               </td>
+               <td><span class="amount">{{amountWords}}</span></td>
+               <td>
+                  <span class="percentage">{{percentage}}%</span>
+                  <div style="width:{{barWidth}}%" class="bar graph"></div>
+               </td>
+               <td class="change">
+                  <span class="trend {{trend}}"><span class="percentage">{{diff}}%</span></span>
+                  <div data-sparkline="{{sparklineData}}" class="sparkline graph">
+                     <div class="highcharts-container" id="highcharts-170" style="position: relative; overflow: visible; width: 80px; height: 20px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     </div>
+                  </div>
+               </td>
+            </tr>
+            {{/each}}
+         </tbody>
+         <tfoot>
+         </tfoot>
+      </table>
+   </div>
+</div>

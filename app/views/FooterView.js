@@ -1,14 +1,16 @@
-define([
-  'backbone',
-  'backbone.marionette',
-  'hbs!../templates/footer'
-],
-
-function (Backbone, Marionette, footer) {
+define(function(require) {
   'use strict';
 
-  return Marionette.ItemView.extend({
-    template: footer
+  var $ = require('jquery');
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
+  var footer = require('hbs!../templates/footer');
 
+  return Marionette.ItemView.extend({
+    template: footer,
+    onShow: function(){
+    }
   });
 });
+
+

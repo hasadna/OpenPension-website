@@ -6,10 +6,10 @@ define(function(require) {
   var template = require('hbs!/templates/portfolio-content');
   var PortfolioHeaderView = require('../../views/portfolio/PortfolioHeaderView');
   var PortfolioContentMoreView = require('../../views/portfolio/PortfolioContentMoreView');
-  var PortfolioContentGroupsView = require('../../views/portfolio/PortfolioContentGroupsView');
+  var InvestmentContentGroupsView = require('../../views/investment/InvestmentContentGroupsView');
   var CommonContentHeaderView = require('../../views/common/ContentHeaderView');
   var Funds = require('/collections/Funds.js');
-  var PortfolioGroups = require('/collections/PortfolioGroups.js');
+  var Investment = require('/models/Investment.js');
   var ContentHeader = require('/models/ContentHeader.js');
   var Dictionary = require('Dictionary');
   var Filter = require('Filter');
@@ -35,25 +35,24 @@ define(function(require) {
         var managing_body = this.filter.getConstraintData('managing_body')[0];
         var self = this;
         var fundsList = new Funds();
-        var portfolioGroups = new PortfolioGroups();
+        var investment = new Investment();
         var contentHeader = new ContentHeader();
 
 
         $.when(
           fundsList.fetch({ data: $.param({ managing_body: managing_body}) }),
-          portfolioGroups.fetch({ data: this.options.queryString }),
+          investment.fetch({ data: this.options.queryString }),
           contentHeader.fetch({data: this.options.queryString})
         )
         .then(function(fundsRes, groupsRes, contentHeaderRes){
             var funds = fundsRes[0];
-            var groups = groupsRes[0];
+            var group = groupsRes[0];
 
-            _.map(groups, function(group){
                 group.group_field_heb = Dictionary.translate(group.group_field);
                 group.plural = Dictionary.plurals[group.group_field];
 
                 _.map(group['results'], function(el,index){
-                  var percentages = CommonContentHeaderView.calculatePercentages(el.fair_values, this.totalFilteredValues);
+                  var percentages = CommonContentHeaderView.calculatePercentages(el.fair_values, contentHeaderRes[0].totalFilteredValues);
                   var diff = (percentages[0] - percentages[3]).toFixed(2);
                   var trend = CommonContentHeaderView.getTrend(diff);
                   var fairValue = el.fair_values[0];
@@ -69,7 +68,6 @@ define(function(require) {
 
                 }, this);
 
-            }, contentHeaderRes[0]);
 
 
             self.showChildView('portfolio_content_header',
@@ -81,9 +79,9 @@ define(function(require) {
             ));
 
             self.showChildView('portfolio_content_groups', 
-              new PortfolioContentGroupsView(
+              new InvestmentContentGroupsView(
                 {
-                  groups: groups,
+                  group: group,
                   queryString : self.options.queryString
                 }
             ));

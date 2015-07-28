@@ -5,7 +5,7 @@ define(function(require) {
   var Marionette = require('backbone.marionette');
   var template = require('hbs!/templates/portfolio');
   var PortfolioHeaderView = require('../../views/portfolio/PortfolioHeaderView');
-  var PortfolioContentView = require('../../views/portfolio/PortfolioContentView');
+  var PortfolioContentView = require('../../views/investment/InvestmentContentView');
   var Sparkline = require('Sparkline');
 
   return Backbone.Marionette.LayoutView.extend({

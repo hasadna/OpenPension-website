@@ -1,0 +1,99 @@
+<main id="search-results" class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      {{#if totalResults}}
+      <h3 id="search-results-title">מצאנו {{totalResults}} תוצאות</h3>
+      <section id="managing-bodies">
+        <div class="row">
+          <div class="col-xs-3">
+            <h4>גופים מוסדיים</h4>
+          </div>
+          {{#if data.managingBodies.length}}
+          <div class="col-xs-9">
+            <ul>
+              {{#each data.managingBodies}}
+                <li>
+                  <a href="#">{{this.translated_managing_body}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{else}}
+          <div class="col-xs-9">
+            <p class="no-results">לא נמצאו גופים מוסדיים</p>
+          </div>
+          {{/if}}
+        </div>
+      </section>
+      <section id="funds">
+        <div class="row">
+          <div class="col-xs-3">
+            <h4>קופות</h4>
+          </div>
+          {{#if data.funds.length}}
+          <div class="col-xs-9">
+            <ul>
+              {{#each data.funds}}
+                <li>
+                  <a href="#">{{this.fund_name}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{else}}
+          <div class="col-xs-9">
+            <p class="no-results">לא נמצאו קופות</p>
+          </div>
+          {{/if}}
+        </div>
+      </section>
+      <section id="issuers">
+        <div class="row">
+          <div class="col-xs-3">
+            <h4>מנפיקים</h4>
+          </div>
+          {{#if data.issuers.length}}
+          <div class="col-xs-9">
+            <ul>
+              {{#each data.issuers}}
+                <li>
+                  <a href="#">{{this.issuer}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{else}}
+          <div class="col-xs-9">
+            <p class="no-results">לא נמצאו מנפיקים</p>
+          </div>
+          {{/if}}
+        </div>
+      </section>
+      <section id="assets">
+        <div class="row">
+          <div class="col-xs-3">
+            <h4>נכסים</h4>
+          </div>
+          {{#if data.assets.length}}
+          <div class="col-xs-9">
+            <ul>
+              {{#each data.assets}}
+                <li>
+                  <a href="#">{{this.instrument_name}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{else}}
+          <div class="col-xs-9">
+            <p class="no-results">לא נמצאו נכסים</p>
+          </div>
+          {{/if}}
+        </div>
+      </section>
+      {{else}}
+        <h3 id="search-results-title">לא נמצאו תוצאות</h3>
+      {{/if}}
+    </div>
+  </div>
+</main>

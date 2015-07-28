@@ -5,7 +5,7 @@ define(function(require) {
   var Marionette = require('backbone.marionette');
   var Filter = require('Filter');
   var Dictionary = require('Dictionary');
-  var portfolio_groups_hbs = require('hbs!/templates/portfolio-content-groups');
+  var investments = require('hbs!/templates/investment-group');
   var Sparkline = require('Sparkline');
 
   return Backbone.Marionette.ItemView.extend({
@@ -16,7 +16,7 @@ define(function(require) {
     serializeData: function(){
       return {
         managing_body : Dictionary.translate(this.filter.getConstraintData('managing_body')[0]),
-        groups: this.options.groups
+        group: this.options.group
       }      
     },
     onRender : function(){
@@ -25,7 +25,7 @@ define(function(require) {
     onShow: function(){
       Sparkline.draw();
     },
-    template: portfolio_groups_hbs,
+    template: investments,
     events:{
       "click .table-link": function(){
         var value = $(event.target).data("value");
