@@ -244,6 +244,9 @@ define(function() {
 		if ( query == undefined ){
 			query = window.location.search;
 		}
+		if ( query == undefined || query.length == 0){
+			query = window.location.hash;
+		}
 
 		var parsed = parseQueryString(query);
 		return Filter.fromParsedQueryString(parsed);

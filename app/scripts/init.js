@@ -3,7 +3,7 @@ require.config({
     baseUrl: "/scripts",
 
     /* starting point for application */
-    deps: ['jquery', 'backbone.marionette', 'bootstrap', 'main', 'bootstrap-select', 'highcharts'],
+    deps: ['jquery', 'backbone.marionette', 'bootstrap', 'main', 'bootstrap-select', 'highcharts', 'typeahead'],
 
 
     shim: {
@@ -21,11 +21,14 @@ require.config({
         highcharts: {
           exports: "Highcharts",
           deps: ["jquery"]
+        },
+        typeahead: {
+            deps: ["jquery"]
         }
     },
 
     paths: {
-        jquery: '../bower_components/jquery/dist/jquery',
+        jquery: '../bower_components/jquery/dist/jquery.min',
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/underscore/underscore',
 
@@ -46,14 +49,12 @@ require.config({
 
         /* Highcharts */
         highcharts: '../bower_components/highcharts/highcharts',
+        typeahead: '../bower_components/typeahead.js/dist/typeahead.bundle.min',
 
         /* require handlebars plugin - Alex Sexton */
         i18nprecompile: '../bower_components/require-handlebars-plugin/hbs/i18nprecompile',
         json2: '../bower_components/require-handlebars-plugin/hbs/json2',
         hbs: '../bower_components/require-handlebars-plugin/hbs',
-
-
-        highcharts: '../bower_components/highcharts/highcharts',
 
         /* Our libraries */
         Filter: "libs/filter",
@@ -63,7 +64,8 @@ require.config({
         Tabletop: "libs/tabletop",
         GoogleDoc: "libs/GoogleDocSpreadsheet",
         TreeMap: "libs/treemap",
-        Sparkline: "libs/sparkline"
+        Sparkline: "libs/sparkline",
+        search: "lib/search"
 
     },
 
