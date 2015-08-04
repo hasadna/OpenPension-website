@@ -151,12 +151,12 @@ define(function(require) {
         });
 
         /*
-        $(".typeahead").keydown(function(event){
+        $("#nav-search").keydown(function(event){
             
             if(event.keyCode == 13){
                 event.preventDefault();
 
-                window.location.hash ='#/search?q=' + $(".typeahead").val();        
+                window.location.hash ='#/search?q=' + $("#nav-search").val();        
                 return false;
             }
         });

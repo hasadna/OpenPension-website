@@ -8,6 +8,7 @@ define(function(require) {
   var Dictionary = require('Dictionary');
   var DataNormalizer = require('DataNormalizer');
   var Sparkline = require('Sparkline');
+  var config = require('json!config');
 
   var ContentHeaderView = Backbone.Marionette.LayoutView.extend({
     template: template,
@@ -26,7 +27,7 @@ define(function(require) {
       var trend = ContentHeaderView.getTrend(diff);
 
       return {
-      	months: DataNormalizer.getLastQuarters(2014,3,4),
+      	months: DataNormalizer.getLastQuarters(config.current_year, config.current_quarter, 4),
         funds: this.options.funds,
         queryString: this.options.queryString,
         sparklineData: sparklineData,
@@ -53,14 +54,14 @@ define(function(require) {
 	        //generate filter from query string
 	        var filter = Filter.fromQueryString(window.location.search);
 
-	        var quarterData = JSON.parse(this.value);
+	        var quarterData = this.value.split('_');
 
 	        //add constraint from user
-	        filter.setConstraint("report_year", quarterData.year);
-	        filter.setConstraint("report_qurater", quarterData.quarter);
+	        filter.setConstraint("report_year", quarterData[0]);
+	        filter.setConstraint("report_qurater", quarterData[1]);
 
 
-	        navigate(filter.toQueryString());
+	        location.href = "#/portfolio"+filter.toQueryString();
 	    
 	    });
 

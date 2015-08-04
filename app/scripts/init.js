@@ -42,6 +42,7 @@ require.config({
 
         /* Alias text.js for template loading and shortcut the templates dir to tmpl */
         text: '../bower_components/requirejs-text/text',
+        json: '../bower_components/requirejs-plugins/src/json',
         tmpl: "../templates",
 
         /* handlebars from the require handlerbars plugin below */
@@ -65,7 +66,8 @@ require.config({
         GoogleDoc: "libs/GoogleDocSpreadsheet",
         TreeMap: "libs/treemap",
         Sparkline: "libs/sparkline",
-        search: "lib/search"
+        search: "lib/search",
+        config: "/api/config?"
 
     },
 
