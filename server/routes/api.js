@@ -363,8 +363,8 @@ exports.config = function(req,res){
 
   res.json(
     {
-      "current_year":config.current_year,
-      "current_quarter":config.current_quarter
+      current_year:config.current_year,
+      current_quarter:config.current_quarter
     }
   );
 }
