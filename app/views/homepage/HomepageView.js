@@ -1,17 +1,13 @@
-define([
-  'backbone',
-  'backbone.marionette',
-  'hbs!/templates/homepage',
-  '../../views/homepage/HomepageHeaderView',
-  '../../views/homepage/HomepageContentView',
-  'TreeMap'
-],
-
-function (Backbone, Marionette, homepage, HomepageHeaderView, HomepageContentView,
-  TreeMap) {
+define(function(require) {
   'use strict';
-
-
+  
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
+  var homepage = require('hbs!/templates/homepage');
+  var HomepageHeaderView = require('../../views/homepage/HomepageHeaderView');
+  var HomepageContentView = require('../../views/homepage/HomepageContentView');
+  var TreeMap = require('TreeMap');
+  
   function treemapClick(event){
       var link = $(event.target).data("link");
 
