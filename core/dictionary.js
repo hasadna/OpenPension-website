@@ -37,7 +37,7 @@ dictionary['fenix'] = 'פניקס';
 dictionary['psagot'] = 'פסגות';
 dictionary['ayalon'] = 'איילון';
 dictionary['ds'] = 'דש';
-dictionary['yl'] = 'ירין לפידות';
+dictionary['yl'] = 'ילין לפידות';
 dictionary['as'] = 'אלטשולר שחם';
 
 

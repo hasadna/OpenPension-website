@@ -80,7 +80,9 @@ exports.managing_body_treemap = function(req,res){
 
         }
 
-        var tooSmall = children.splice(0,spliceIndex);
+//        var tooSmall = children.splice(0,spliceIndex);
+        //workaround for 2015 - 1 with yl, as
+        var tooSmall = children.splice(0, 5);
 
         var largeEnough = children;
 
