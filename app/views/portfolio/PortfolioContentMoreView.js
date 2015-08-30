@@ -23,10 +23,11 @@ define(function(require) {
 
     },
     template: portfolio_more_hbs,
+
     events:{
-      "click .table-link": function(){
-        var value = $(event.target).data("value");
-        var group = $(event.target).data("group");
+      "click .table-link": function(ev){
+        var value = ev.currentTarget.dataset.value;
+        var group = ev.currentTarget.dataset.group;
 
         var fundFilter = new Filter();
 

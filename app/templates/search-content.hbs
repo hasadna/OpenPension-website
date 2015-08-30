@@ -13,7 +13,7 @@
             <ul>
               {{#each data.managingBodies}}
                 <li>
-                  <a href="#">{{this.translated_managing_body}}</a>
+                  <a class="table-link" data-group="managing_body" data-value="{{this.managing_body}}" href="#">{{this.translated_managing_body}}</a>
                 </li>
               {{/each}}
             </ul>
@@ -35,7 +35,7 @@
             <ul>
               {{#each data.funds}}
                 <li>
-                  <a href="#">{{this.fund_name}}</a>
+                  <a class="table-link" data-group="fund" data-value="{{this.fund_name}}">{{this.fund_name}}</a>
                 </li>
               {{/each}}
             </ul>
@@ -57,7 +57,7 @@
             <ul>
               {{#each data.issuers}}
                 <li>
-                  <a href="#">{{this.issuer}}</a>
+                  <a class="table-link" data-group="issuer" data-value="{{this.issuer}}">{{this.issuer}}</a>
                 </li>
               {{/each}}
             </ul>
@@ -79,7 +79,7 @@
             <ul>
               {{#each data.assets}}
                 <li>
-                  <a href="#">{{this.instrument_name}}</a>
+                  <a class="table-link" data-group="instrument_name" data-value="{{this.instrument_name}}">{{this.instrument_name}}</a>
                 </li>
               {{/each}}
             </ul>

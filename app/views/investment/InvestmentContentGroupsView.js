@@ -27,13 +27,13 @@ define(function(require) {
     },
     template: investments,
     events:{
-      "click .table-link": function(){
-        var value = $(event.target).data("value");
-        var group = $(event.target).data("group");
+      "click .table-link": function(ev){
+        var value = ev.currentTarget.dataset.value;
+        var group = ev.currentTarget.dataset.group;
         this.filter.setConstraint(group, value);
-        location.href = "/#portfolio" + this.filter.toQueryString();
-          
-       }
+        this.filter.removeField('group_by');
+        location.href = "#/portfolio" + this.filter.toQueryString();
+      },
     }
   });
 

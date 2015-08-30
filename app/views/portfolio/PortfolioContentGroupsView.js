@@ -27,13 +27,17 @@ define(function(require) {
     },
     template: portfolio_groups_hbs,
     events:{
-      "click .table-link": function(){
-        var value = $(event.target).data("value");
-        var group = $(event.target).data("group");
+      "click .table-link": function(ev){
+        var value = ev.currentTarget.dataset.value;
+        var group = ev.currentTarget.dataset.group;
         this.filter.setConstraint(group, value);
-        location.href = "/#portfolio" + this.filter.toQueryString();
-          
-       }
+        location.href = "#/portfolio" + this.filter.toQueryString();
+      },
+      "click .list-all" : function(ev){
+        var group = ev.currentTarget.dataset.group;
+        this.filter.setConstraint("group_by", group);
+        location.href = "#/investment" + this.filter.toQueryString();
+      }
     }
   });
 
