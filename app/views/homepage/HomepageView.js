@@ -9,7 +9,7 @@ define(function(require) {
   var TreeMap = require('TreeMap');
   
   function treemapClick(event){
-      var link = $(event.target).data("link");
+      var link = $(event.target).closest(".node").data("link");
 
       //clicked on others, open modal
       if (link == "others"){
