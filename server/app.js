@@ -27,8 +27,6 @@ app.use(function(req, res, next){
 
 // mount static
 app.use(express.static( path.join( __dirname, '../app') ));
-app.use(express.static( path.join( __dirname, '../.tmp') ));
-
 
 // route index.html
 app.get('/', function(req, res){
@@ -41,17 +39,11 @@ http.createServer(app).listen(app.get('port'), function(){
 });
 
 
-var portfolio = require('./routes/portfolio')
-  , staticpages = require('./routes/staticpages')
-  , homepage = require('./routes/homepage')
+var homepage = require('./routes/homepage')
   , search = require('./routes/search')
-  , http = require('http')
-  , path = require('path')
-  , FSUtil = require('./util/FSUtil')
   , csv = require('./routes/csv')
   , api = require('./routes/api')
-  , issuer = require('./routes/issuer')
-  , test = require('./routes/test');
+  , issuer = require('./routes/issuer');
 
 app.get('/treemap/managing_bodies', homepage.managing_body_treemap);
 app.get('/treemap/issuers', homepage.issuers_treemap);
