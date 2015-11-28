@@ -15,8 +15,7 @@ define(function(require) {
     template: template,
     regions: {
   		portfolio_header: '#page-header',
-  		content: '#portfolio-content',
-  		footer: 'footer'
+  		content: '#portfolio-content'
   	},
   	onBeforeShow: function() {
     		this.showChildView('portfolio_header', new PortfolioHeaderView(this.options));
