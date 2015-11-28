@@ -19,15 +19,24 @@ define(function(require) {
     },
     serializeData: function(){
       
+      var self = this;
       var amountWords = DataNormalizer.convertNumberToWords(this.options.data.totalFilteredValues[0]);
       var reportType = DataNormalizer.getReportType(this.filter);
       var percentages = ContentHeaderView.calculatePercentages(this.options.data.totalFilteredValues, this.options.data.totalPensionFundValues);
       var sparklineData = percentages.reverse().join(', ');
       var diff = (percentages[3] - percentages[0]).toFixed(1);
       var trend = ContentHeaderView.getTrend(diff);
+      var months = DataNormalizer.getLastQuarters(config.current_year, config.current_quarter, 4);
+      var selectedMonth = _.filter(months,
+                            function(month){
+                              return month.quarter == self.filter.getConstraintData("report_qurater")[0] &&
+                                  month.year == self.filter.getConstraintData("report_year")[0]
+                            }
+                          );
+      selectedMonth[0].selected = true;
 
       return {
-      	months: DataNormalizer.getLastQuarters(config.current_year, config.current_quarter, 4),
+      	months: months,
         funds: this.options.funds,
         queryString: this.options.queryString,
         sparklineData: sparklineData,

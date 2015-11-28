@@ -2,7 +2,11 @@
   <div class="btn-toolbar">
     <select id="select-quarter">
       {{#each months}}
-      <option value="{{this.str}}" selected="selected">רבעון {{this.quarter}}, {{this.year}}</option>
+        <option value="{{this.str}}" 
+        {{#if this.selected}}
+          selected="selected"
+        {{/if}}
+        >רבעון {{this.quarter}}, {{this.year}}</option>
       {{/each}}
     </select>
     <button id="download" class="btn btn-default" onClick="location.href = '/csv?{{queryString}}'">
