@@ -545,10 +545,12 @@ function getFundsByManagingBody(managing_body,callback){
 	}
 
 	var select = squel.select().from(config.table);
+	select.field("fund");
 	select.field("fund_name");
 	select.where("managing_body = '"+escapeChars(managing_body) +"'")
 	select.group("fund_name");
-	select.order("fund_name",true);
+	select.group("fund");
+	select.order("fund",true);
 
 	var sqlQuery = select.toString();
 
