@@ -16,7 +16,8 @@ define(function(require) {
     serializeData: function(){
       return {
         managing_body : Dictionary.translate(this.filter.getConstraintData('managing_body')[0]),
-        funds: this.options.funds
+        funds: this.options.funds,
+        showFunds: this.options.funds.length > 0
       }      
     },
     onRender : function(){
