@@ -58,6 +58,10 @@ define(function(require) {
                   var fairValue = el.fair_values[0];
                   var amountWords = DataNormalizer.convertNumberToWords(el.fair_values[0]);
 
+                  //TODO: get default null value
+                  if (el.name == null){
+                    el.name = 'asdsads';
+                  }
 
                   el['sparklineData'] = percentages.reverse().join(", ");
                   el['diff'] = Math.abs(diff);

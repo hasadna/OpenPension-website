@@ -14,7 +14,8 @@ function(Backbone, Marionette) {
 	    "portfolio?*queryString": "portfolio",
 		"issuer?*queryString": "issuer",
 		"investment?*queryString": "investment",
-		"search?*queryString": "search"
+		"search?*queryString": "search",
+		"terms": "terms"
 	  }
 	});
   return Router;

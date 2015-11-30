@@ -16,6 +16,16 @@ define(function(require) {
   var DataNormalizer = require('DataNormalizer');
   var Sparkline = require('Sparkline');
 
+  var nullValues = {
+    'issuer' : 'ללא מנפיק*',
+    'activity_industry' : 'ללא שום דבר'
+  };
+
+  var nullComments = {
+    'issuer' : 'issuer comment',
+    'activity_industry' : 'ללא שום דבר'
+  };
+
   return Backbone.Marionette.LayoutView.extend({
     initialize : function (options){
       this.options = options;
@@ -48,26 +58,38 @@ define(function(require) {
             var funds = fundsRes[0];
             var groups = groupsRes[0];
 
+            //handle result groups 
             _.map(groups, function(group){
                 group.group_field_heb = Dictionary.translate(group.group_field);
                 group.plural = Dictionary.plurals[group.group_field];
 
                 _.map(group['results'], function(el,index){
+                  //fill with specific null values
+                  if (el.name == null){
+                    el.name = nullValues[group.group_field];
+                    el.comment = nullComments[group.group_field];
+                  }
+                  else{
+                    el.name = Dictionary.translate(el.name);
+                  }
+
+                  //add sparkline graph data
                   var percentages = CommonContentHeaderView.calculatePercentages(el.fair_values, this.totalFilteredValues);
                   var diff = (percentages[0] - percentages[3]).toFixed(2);
                   var trend = CommonContentHeaderView.getTrend(diff);
                   var fairValue = el.fair_values[0];
-                  var amountWords = DataNormalizer.convertNumberToWords(el.fair_values[0]);
-
 
                   el['sparklineData'] = percentages.reverse().join(", ");
                   el['diff'] = Math.abs(diff);
                   el['trend'] = trend;
                   el['percentage'] = percentages[3];
                   el['barWidth'] = percentages[3] * 0.65;
+
+                  //translate amount
+                  var amountWords = DataNormalizer.convertNumberToWords(el.fair_values[0]);
                   el['amountWords'] = amountWords.number + ' ' + amountWords.scale;
 
-                }, this);
+                }, this); //this is contentHeaderRes[0]
 
             }, contentHeaderRes[0]);
 

@@ -7,7 +7,8 @@ define(function(require) {
   var HomepageHeaderView = require('../../views/homepage/HomepageHeaderView');
   var HomepageContentView = require('../../views/homepage/HomepageContentView');
   var TreeMap = require('TreeMap');
-  
+  var Sparkline = require('Sparkline');
+
   function treemapClick(event){
       var link = $(event.target).closest(".node").data("link");
 
@@ -17,7 +18,7 @@ define(function(require) {
           $.ajax($("#modal-anchor").data("remote"))
               .success(function(res){
                   $(".modal-content").html(res);
-                  drawSparklines();
+                  Sparkline.draw();
               });
       }
       else{

@@ -1,4 +1,7 @@
 define(['Tabletop'],function(Tabletop) {
+//TODO: use google spreadsheet service?
+//or use direct csv link
+//https://docs.google.com/spreadsheets/d/1tm2xjPUYUFPk3BeHSLXec3sSckGMlFROcoH2zZYQC20/export?format=json&id=1tm2xjPUYUFPk3BeHSLXec3sSckGMlFROcoH2zZYQC20&gid=596794202
 
 
 	var GoogleDoc =  function(){};
@@ -37,6 +40,13 @@ define(['Tabletop'],function(Tabletop) {
 				}
 			}
 	};
+
+	//Help terms
+	// GoogleDoc.getHelp('מטבעות',function(err, data){
+	// 	data.forEach(function(currency){
+	// 		dictionary[currency.currencyname.toLowerCase()] = currency.translation;
+	// 	});
+	// })
 
 	GoogleDoc.init();
 
