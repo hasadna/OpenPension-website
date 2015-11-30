@@ -14,65 +14,52 @@ exports.quarters = function(req,res){
     DAL.groupByQuarters(filter,
       function(err, quarters, resultQuery){
 
-          var report_year = filter.getConstraintData("report_year")[0];
-          var report_qurater = filter.getConstraintData("report_qurater")[0];
-
-          var lastQuarters = DataNormalizer.getLastQuarters(report_year, report_qurater, 4);
-
-          quarters = _.groupBy(quarters,
-                    function(v2,k2,l2){
-                      return v2['report_year']+"_"+v2['report_qurater'];
-                    });
-              
-
-          //fill up missing quarters with sum 0
-          if (Object.keys(quarters).length < 4 ){
-            for(var q = 0; q < 4; q++){
-            
-              if (quarters[lastQuarters[q].str] == undefined){
-                quarters[lastQuarters[q].str] = [{"fair_value":"0"}];
-              }            
-            }
-          }
-     
         res.json(quarters);
-
+      
       });
-
-
 };
 
-//Get list of Managing Bodies 
+
 exports.managing_bodies = function(req,res){
     DAL.getManagingBodies(function(err, bodies, bodiesQuery){
-
+     
           res.json(bodies);
 
     });
 }
 
-//Get Funds for managing Body - ?managing_body=xxxxx
+exports.getDistinctValues = function(req,res){
+
+    var field = req.query['q'];
+    DAL.getDistinctValues(field,
+      function(err, data){
+
+          res.json(data);
+
+    });
+}
+
 exports.funds = function(req,res){
 
-    //create filter from request (search string)
-    var filter = Filter.fromGetRequest(req);
+		//create filter from request (search string)
+		var filter = Filter.fromGetRequest(req);
 
-    var managing_body = filter.getConstraintData('managing_body')[0];
+		var managing_body = filter.getConstraintData('managing_body')[0];  
 
     DAL.getFundsByManagingBody(managing_body,
       function(err, funds, fundsQuery){
+   
+  			res.json(funds);
 
-        res.json(funds);
-
-    });
+		});
 
 };
 
 exports.portfolio = function(req, res){
 
 
-      //create filter from request (search string)
-      var filter = Filter.fromGetRequest(req);
+		  //create filter from request (search string)
+		  var filter = Filter.fromGetRequest(req);
 
       DAL.groupByPortfolio(filter,
                 function(err, groups){
@@ -226,3 +213,4 @@ exports.config = function(req,res){
     }
   );
 }
+

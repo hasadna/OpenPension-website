@@ -1,9 +1,9 @@
 {
     "db_mode": "pg",
-    "connection_string": "tcp://[USER]:[PASS]@199.223.234.81:5432/op",
+    "connection_string": "tcp://op:a0e620de1473fc97c7f410e1dc65f2a3@199.223.234.81:5432/op",
     "table": "pension_data_all",
     "use_memcache" : true,
     "data_version" : "0.1",
     "current_quarter" : "1",
-    "current_year" : "2014"
+    "current_year" : "2015"
 }

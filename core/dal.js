@@ -526,6 +526,25 @@ function getManagingBodies(callback){
 
 
 /**
+ * Query the DB, get list of managing bodies
+ */
+function getDistinctValues(field, callback){
+
+	var select = squel.select().from(config.table);
+	field = String(field).replace(/[^\w]/gi, '');
+
+	select.field(field).distinct();
+
+	var sqlQuery = select.toString();
+
+	db.query(sqlQuery, function(err, rows){
+			callback(err, rows, sqlQuery);
+	});
+
+}
+
+
+/**
  * Query the DB, get funds by managing_body
  * @param managing_body : string, name of managing body
  * @param callback : function to handle result rows.
@@ -537,10 +556,12 @@ function getFundsByManagingBody(managing_body,callback){
 	}
 
 	var select = squel.select().from(config.table);
+	select.field("fund");
 	select.field("fund_name");
 	select.where("managing_body = '"+escapeChars(managing_body) +"'")
 	select.group("fund_name");
-	select.order("fund_name",true);
+	select.group("fund");
+	select.order("fund",true);
 
 	var sqlQuery = select.toString();
 
@@ -689,3 +710,4 @@ exports.search=search;
 exports.streamQuery=streamQuery;
 exports.searchInFields=searchInFields;
 exports.searchByField=searchByField;
+exports.getDistinctValues = getDistinctValues;
