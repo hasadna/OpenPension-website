@@ -20,7 +20,10 @@
     "bootstrap-select": "~1.7.2",
     "marionette": "~2.4.2",
     "underscore": "~1.8.3",
-    "requirejs-plugins": "~1.0.3"
+    "requirejs-plugins": "~1.0.3",
+    "moment": "~2.10.6",
+    "bootstrap-table": "~1.8.1",
+    "q": "1.0.1"
   },
   "directory": "bower_components",
   "resolutions": {

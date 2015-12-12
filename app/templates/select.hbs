@@ -1,0 +1,10 @@
+{{#if addFirst}}
+  <option>{{firstTitle}}</option>
+{{/if}}
+{{#each options}}
+  {{#if this.selected}}
+    <option value="{{this.value}}" selected="selected">{{this.text}}</option>
+  {{else}}
+  	<option value="{{this.value}}">{{this.text}}</option>
+  {{/if}}
+{{/each}}

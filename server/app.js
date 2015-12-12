@@ -5,9 +5,7 @@ var http = require('http');
 var path = require('path');
 var async = require('async');
 var hbs = require('express-hbs');
-
-
-
+var proxy = require('express-http-proxy');
 
 // init express
 var app = express();
@@ -59,5 +57,11 @@ app.get('/api/search',api.search);
 app.get('/api/queryNames',api.queryNames);
 app.get('/api/config',api.config);
 app.get('/api/contentHeader',api.contentHeader);
+
+app.use('/api/reports', proxy('localhost:5000', {
+  forwardPath: function(req, res) {
+    return '/api/reports'+require('url').parse(req.url).path;
+  }
+}));
 
 app.get('/csv',csv.download);

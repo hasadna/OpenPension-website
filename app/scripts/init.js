@@ -56,6 +56,8 @@ require.config({
         i18nprecompile: '../bower_components/require-handlebars-plugin/hbs/i18nprecompile',
         json2: '../bower_components/require-handlebars-plugin/hbs/json2',
         hbs: '../bower_components/require-handlebars-plugin/hbs',
+        moment: '../bower_components/moment/min/moment.min',
+        q: '../bower_components/q/q',
 
         /* Our libraries */
         Filter: "libs/filter",

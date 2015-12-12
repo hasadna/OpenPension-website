@@ -11,8 +11,9 @@ define(function(require) {
   var IssuerView = require('../views/issuer/IssuerView');
   var InvestmentView = require('../views/investment/InvestmentView');
   var SearchView = require('../views/search/SearchView');
+  var ReportsView = require('../views/reports/ReportsView');
+  var EditReportsView = require('../views/edit_reports/EditReportsView');
 
-  'use strict';
 
   var Controller = Backbone.Marionette.Controller.extend({
 
@@ -70,6 +71,13 @@ define(function(require) {
             queryString: queryString
           };
           this.region.show(new SearchView(obj));
+        },
+        reports: function(){
+          this.region.show(new ReportsView());
+        },
+        
+        editReports: function(){
+          this.region.show(new EditReportsView());
         }
     });
 

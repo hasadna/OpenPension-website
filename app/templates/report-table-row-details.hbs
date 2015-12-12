@@ -1,0 +1,37 @@
+<td colspan="6">
+	<div class="form-group" style="display:block">
+		<label for="">URL</label>
+  	<input class="url" type='text' value='{{this.url}}'/>
+    <div>
+      Excel File: 
+      {{#if this.excel_file}}
+        <a class="download-excel" href='#'>{{this.excel_file}}</a>
+      {{else}}
+        Not found
+      {{/if}}
+      <button id="refresh-excel-file">Refresh</button>
+      <button id="upload-report">Upload</button>
+      <button data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="download-excel">Download</button>
+    </div>
+    <div>
+      CSV File:
+      {{#if this.csv_file}}
+        <a class="download-csv" href='#'>{{this.csv_file}}</a>
+      {{else}}
+        Not found
+      {{/if}}
+      Total Sum In CSV: {{this.sum_in_data_file}} 
+      <button id="refresh-csv-sum">Refresh</button>
+      <button class="download-csv">Download</button>
+    </div>
+		<div>
+      Total Sum In DB: {{this.sum_in_db}} 
+      <button id="refresh-db-sum">Refresh</button>
+    </div>
+		<div>Created At: {{this.createdAt}}</div>
+		<div>Updated At: {{this.updatedAt}}</div>
+		<button id="update-url">Update URL</button>
+		<button id="upload-to-db">Upload to DB</button>
+		<button id="delete-from-db">Delete from DB</button>
+  <div>
+</td>

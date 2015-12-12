@@ -1,0 +1,40 @@
+#reports-table-filter div{
+	padding-left: 0.5em;
+}
+
+#reports-table-filter{
+	padding-top: 2em;
+	padding-bottom: 1em;
+}
+
+#reports-table .checkbox-cell-header{
+	width: 2em;
+}
+
+.report-row.selected,
+.report-row.selected:hover{
+	background-color: rgba(101, 195, 239, 0.37)
+}
+.report-details>td>div{
+	background-color:rgba(75, 124, 197, 0.16);
+	display: block;
+	text-align: left;
+	float: left;
+	width: 100%;
+	direction:ltr;
+}
+
+.report-details .checkbox-cell{
+	width: 2em;
+}
+.report-details>td>div>input{
+	width: 100%;
+}
+
+.report-details .form-group{
+	padding: 5px;
+}
+
+table div{
+	display:table-row;
+}

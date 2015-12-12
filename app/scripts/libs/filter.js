@@ -218,9 +218,12 @@ define(function() {
 	    for (var i = 0; i < sURLVariables.length; i++)
 	    {    	
 	        var sParameterName = sURLVariables[i].split('=');
-	        if ( result[sParameterName[0]] == undefined){
+	        if (sParameterName[1] == undefined){ //don't store empty values
+	        	continue;
+	        }
+	        if ( result[sParameterName[0]] == undefined){ // create new array for values
 	        	result[sParameterName[0]] = [];
-	        }      
+	        }
 	        result[sParameterName[0]].push(  sParameterName[1]  );
 	    }
 	    return result;
