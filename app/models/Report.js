@@ -51,10 +51,10 @@ define(function(require) {
 
         downloadCsv: function(){
 
-            return Q($.get(host+'/reports/csvFile?id=' + this.id))
-                .then(function(data){
-                    window.location = data.url;
-                });
+            window.location = host+'/reports/downloadCsvFile?id=' + this.id;
+//                .then(function(data){
+//                    window.location = data.url;
+//                });
         },
 
         downloadExcel: function(){
@@ -108,6 +108,14 @@ define(function(require) {
             
         },
 
+        countRows: function(){
+
+            return Q($.get(host+'/reports/countRows?report_year=' + this.attributes.report_year +
+                '&report_quarter=' + this.attributes.report_quarter +
+                '&managing_body=' + this.attributes.managing_body +
+                '&fund=' + this.attributes.fund));
+
+        }
         // getCsvFileFullPath: function(){
         //     var fullFilename = Utils.filename('../tmp', fund, '.csv');
         //     var baseFilename = path.basename(fullFilename);

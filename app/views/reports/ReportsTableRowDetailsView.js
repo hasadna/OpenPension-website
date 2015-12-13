@@ -14,6 +14,7 @@ define(function(require) {
     initialize : function (options){
       this.csvFile = options.csvFile;
       this.excelFile = options.excelFile;
+      this.rowCount = options.rowCount;
     },
     className:'report-details',
     template: template,
@@ -125,10 +126,12 @@ define(function(require) {
 
       var csv_file = this.csvFile ? this.csvFile.file : "";
       var excel_file = this.excelFile ? this.excelFile.file : "";
+      var row_count = this.rowCount ? this.rowCount: "";
 
       var extData =  {
         excel_file: excel_file,
         csv_file: csv_file,
+        row_count: row_count
       };
       
       var res = {}

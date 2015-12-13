@@ -27,7 +27,7 @@ define(function(require) {
     className:'report-row',
     template: template,
     events: {
-      "click .checkbox-cell input" : function(event){ //show details   
+      "click .checkbox-cell input" : function(event){ //toggle select row 
 
         var selected = $(event.currentTarget).prop('checked');
 
@@ -79,9 +79,14 @@ define(function(require) {
             $(row).addClass('selected'); //mark row selected
             $(row).find('input[type="checkbox"]').prop('checked', true);
 
-            Q.all([model.checkCsv(), model.checkExcel()])
+            Q.all([model.checkCsv(), model.checkExcel(), model.countRows()])
               .then(function(values){
-                var detailRow = new ReportsTableRowDetailsView({model:model, csvFile: values[0], excelFile: values[1]});
+                var detailRow = new ReportsTableRowDetailsView({
+                  model:model, 
+                  csvFile: values[0], 
+                  excelFile: values[1],
+                  rowCount: values[2].count
+                });
                 detailRow.render();
               });
 
