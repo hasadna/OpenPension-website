@@ -2,6 +2,7 @@ define(function(require) {
   'use strict';
   var $ = require('jquery');
   var Filter = require('Filter');
+  var config = require('json!config');
 
   // Static wrapper for typeahead plugin.
   var Search = {
@@ -112,8 +113,8 @@ define(function(require) {
 
                 var field = Object.keys(datum)[0];
                 var value = datum[field];
-                var year = filter.getConstraintData("report_year")[0]
-                var quarter = filter.getConstraintData("report_qurater")[0]
+                var year = config.current_year;
+                var quarter = config.current_quarter;
                 var action = datum['action'];
 
                 $("#nav-search").val("");
@@ -127,16 +128,6 @@ define(function(require) {
                 }
                 else{
         
-                    //get year and quarter from cookie if undefined
-                    if (year == undefined){
-                        year = $.cookie("current_year");
-                    }
-
-                    if (quarter == undefined){
-                        quarter = $.cookie("current_quarter");
-                    }
-                    
-
                     //managing body shows translated value 
                     if (field == "translated_managing_body"){
                         value = datum["managing_body"];
