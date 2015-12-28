@@ -17,7 +17,7 @@ Our stack
 
 Also used
 ===============  
-[Tabletop] [7]
+[Tabletop] [8]
 
 Getting Started
 ===============
@@ -41,9 +41,10 @@ Getting Started
   [2]: http://expressjs.com/  "ExpressJS"
   [3]: http://marionettejs.com/    "Marionette"
   [4]: http://handlebarsjs.com/ "Handlebars"
-  [5]: http://www.postgresql.org/download/ "PostgreSQL"
-  [6]: https://github.com/jsoma/tabletop "Tabletop"
+  [5]: https://hiddentao.github.io/squel/ "Squel"
+  [6]: http://www.postgresql.org/download/ "PostgreSQL"
   [7]: http://memcached.org/ "Memcached"
+  [8]: https://github.com/jsoma/tabletop "Tabletop"
 
 Additional Requirements
 ===========
