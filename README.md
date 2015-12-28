@@ -10,7 +10,7 @@ Our stack
 [NodeJS] [1]  
 [ExpressJS] [2]  
 [Marionette] [3]  
-[Handlebars] [4]
+[Handlebars] [4]  
 [Squel] [5]  
 [PostgreSQL] [6]  
 [Memcached] [7]
