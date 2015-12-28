@@ -1,15 +1,13 @@
-require([
-	'backbone',
-	'application',
-	'communicator',
-	'approuter',
-	'navcontroller',
-	'../views/SiteView'
+define(function(require) {
+  'use strict';
+  
+  var Backbone = require('backbone');
+  var App = require('application');
+  var Communicator = require('communicator');
+  var Router = require('approuter');
+  var NavController = require('navcontroller');
+  var SiteView = require('../views/SiteView');
 
-],
-function ( Backbone, App, Communicator, Router, NavController, SiteView ) {
-    'use strict';
- 
     // initialize the app controller
 
 	

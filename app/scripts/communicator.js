@@ -1,9 +1,8 @@
-define([
-	'backbone',
-	'backbone.marionette'
-],
-function( Backbone ) {
-    'use strict';
+define(function(require) {
+  'use strict';
+  
+  var Backbone = require('backbone');
+  var Marionette = require('backbone.marionette');
 
 	var Communicator = Backbone.Marionette.Controller.extend({
 		initialize: function( options ) {

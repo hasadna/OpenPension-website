@@ -1,19 +1,14 @@
-define([
-	'backbone',
-	'communicator',
-	'hbs!../templates/site'
+define(function(require) {
+  'use strict';
+  
+  var Backbone = require('backbone');
+  var Communicator = require('communicator');
+  var App = new Backbone.Marionette.Application();
 
-],
+  App.addRegions({
+      body: 'body'
+  });
 
-function( Backbone, Communicator, site) {
-    'use strict';
-
-	var App = new Backbone.Marionette.Application();
-
-	App.addRegions({
-		body: 'body'
-	})
-
-	
-	return App;
+  
+  return App;
 });
