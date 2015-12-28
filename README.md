@@ -51,14 +51,14 @@ Additional Requirements
 
 For compiling the packages on windows  
 you might need to install Microsoft Visual Studio  
-You can get the Express version which is free to download [here] [8]
+You can get the Express version which is free to download [here] [9]
 
 
-  [8]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "Squel"
+  [9]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "VS Express"
 
 
 Online version
 ===========
-Visit: [http://www.openpension.org.il] [9]
+Visit: [http://www.openpension.org.il] [10]
 
-  [9]: http://www.openpension.org.il
+  [10]: http://www.openpension.org.il
