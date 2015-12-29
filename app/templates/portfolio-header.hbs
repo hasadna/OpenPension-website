@@ -6,7 +6,7 @@
               <li><a onclick="window.location='/'" title="דף הבית">דף הבית</a></li>
               {{#each breadcrumbs}}
                   <li title="{{this.field}}">
-                    <a onclick="">{{this.value}}</a>
+                    <a class="breadcrumb" data-value="{{this.value_eng}}" onclick="">{{this.value}}</a>
                   </li>
               {{/each}}
               <li>{{last_crumb.value}}</li>
