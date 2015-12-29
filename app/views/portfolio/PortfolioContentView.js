@@ -47,10 +47,15 @@ define(function(require) {
         .then(function(fundsRes, groupsRes, contentHeaderRes){
             var funds = fundsRes[0];
             var groups = groupsRes[0];
+            var contentHeader = contentHeaderRes[0];
+            var totalFunds = parseInt(contentHeader.totalFilteredValues[0]);
 
             _.map(groups, function(group){
                 group.group_field_heb = Dictionary.translate(group.group_field);
                 group.plural = Dictionary.plurals[group.group_field];
+
+                var totalInGroupResults = parseInt(_.reduce(group.results, function(mem, result){return Number(result.fair_values[0])+mem },0));
+                group.hasMoreResults = totalInGroupResults != totalFunds;
 
                 _.map(group['results'], function(el,index){
                   var percentages = CommonContentHeaderView.calculatePercentages(el.fair_values, this.totalFilteredValues);
@@ -69,7 +74,7 @@ define(function(require) {
 
                 }, this);
 
-            }, contentHeaderRes[0]);
+            }, contentHeader);
 
 
             self.showChildView('portfolio_content_header',
