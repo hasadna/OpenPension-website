@@ -1,5 +1,6 @@
 define('TreeMap',function(){
    
+  var d3 = require('d3');
   var TreeMap = function(){};
   
 

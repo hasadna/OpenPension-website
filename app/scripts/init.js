@@ -3,7 +3,7 @@ require.config({
     baseUrl: "/scripts",
 
     /* starting point for application */
-    deps: ['jquery', 'backbone.marionette', 'bootstrap', 'main', 'bootstrap-select', 'highcharts', 'typeahead'],
+    deps: ['jquery', 'backbone.marionette', 'bootstrap', 'bootstrap-select', 'd3', 'highcharts', 'typeahead', 'main'],
 
 
     shim: {
@@ -28,6 +28,7 @@ require.config({
     },
 
     paths: {
+        d3: '../bower_components/d3/d3.min',
         jquery: '../bower_components/jquery/dist/jquery.min',
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/underscore/underscore',
