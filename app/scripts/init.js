@@ -38,7 +38,7 @@ require.config({
         'backbone.wreqr': '../bower_components/backbone.wreqr/lib/backbone.wreqr',
         'backbone.babysitter': '../bower_components/backbone.babysitter/lib/backbone.babysitter',
         /* alias the bootstrap js lib */
-        bootstrap: 'vendor/bootstrap',
+        bootstrap: '../bower_components/bootstrap/dist/js/bootstrap.min',
         'bootstrap-select': '../bower_components/bootstrap-select/dist/js/bootstrap-select',
 
         /* Alias text.js for template loading and shortcut the templates dir to tmpl */
