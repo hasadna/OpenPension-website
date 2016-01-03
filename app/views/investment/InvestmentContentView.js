@@ -28,7 +28,7 @@ define(function(require) {
       portfolio_content_more: '#portfolio-content-more'
     },
     onBeforeShow: function() {
-  
+
     },
     onRender: function(){
 
@@ -48,7 +48,7 @@ define(function(require) {
             var funds = fundsRes[0];
             var group = groupsRes[0];
 
-                group.group_field_heb = Dictionary.translate(group.group_field);
+                group.group_field_translated = Dictionary.translate(group.group_field);
                 group.plural = Dictionary.plurals[group.group_field];
 
                 _.map(group['results'], function(el,index){
@@ -58,6 +58,13 @@ define(function(require) {
                   var fairValue = el.fair_values[0];
                   var amountWords = DataNormalizer.convertNumberToWords(el.fair_values[0]);
 
+  				  if (_.isEmpty(el['name'])){ //result name is null
+					el['name_translated'] = "לא נמצא בקטגוריה";
+					el['name'] = 'null';
+				  }
+				  else{
+					el['name_translated'] = Dictionary.translate(el['name']);
+				  }
 
                   el['sparklineData'] = percentages.reverse().join(", ");
                   el['diff'] = Math.abs(diff);
@@ -78,7 +85,7 @@ define(function(require) {
                 }
             ));
 
-            self.showChildView('portfolio_content_groups', 
+            self.showChildView('portfolio_content_groups',
               new InvestmentContentGroupsView(
                 {
                   group: group,
@@ -86,7 +93,7 @@ define(function(require) {
                 }
             ));
 
-            self.showChildView('portfolio_content_more', 
+            self.showChildView('portfolio_content_more',
               new PortfolioContentMoreView(
                 {
                   funds: funds,
@@ -94,7 +101,7 @@ define(function(require) {
                 }
             ));
 
-        });   
+        });
     },
     onShow: function(){
       Sparkline.draw();

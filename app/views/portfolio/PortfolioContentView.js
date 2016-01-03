@@ -28,7 +28,7 @@ define(function(require) {
       portfolio_content_more: '#portfolio-content-more'
     },
     onBeforeShow: function() {
-  
+
     },
     onRender: function(){
 
@@ -45,16 +45,17 @@ define(function(require) {
           contentHeader.fetch({data: this.options.queryString})
         )
         .then(function(fundsRes, groupsRes, contentHeaderRes){
-            var funds = fundsRes[0];
-            var groups = groupsRes[0];
-            var contentHeader = contentHeaderRes[0];
+            var funds = fundsRes[0];	//the funds for current managing body
+            var groups = groupsRes[0];	//result groups for view
+            var contentHeader = contentHeaderRes[0]; //header information
             var totalFunds = parseInt(contentHeader.totalFilteredValues[0]);
 
             _.map(groups, function(group){
-                group.group_field_heb = Dictionary.translate(group.group_field);
-                group.plural = Dictionary.plurals[group.group_field];
+                group.group_field_translated = Dictionary.translate(group.group_field);  //grouping name
+                group.plural = Dictionary.plurals[group.group_field]; //plural name for full list
 
-                var totalInGroupResults = parseInt(_.reduce(group.results, function(mem, result){return Number(result.fair_values[0])+mem },0));
+				//check if all group results are showing
+				var totalInGroupResults = parseInt(_.reduce(group.results, function(mem, result){return Number(result.fair_values[0])+mem },0));
                 group.hasMoreResults = totalInGroupResults != totalFunds;
 
                 _.map(group['results'], function(el,index){
@@ -64,11 +65,18 @@ define(function(require) {
                   var fairValue = el.fair_values[0];
                   var amountWords = DataNormalizer.convertNumberToWords(el.fair_values[0]);
 
+				  if (_.isEmpty(el['name'])){ //result name is null
+					  el['name_translated'] = "לא נמצא בקטגוריה";
+					  el['name'] = 'null';
+				  }
+				  else{
+					  el['name_translated'] = Dictionary.translate(el['name']);
+				  }
 
-                  el['sparklineData'] = percentages.reverse().join(", ");
+				  el['sparklineData'] = percentages.reverse().join(", ");
                   el['diff'] = Math.abs(diff);
                   el['trend'] = trend;
-                  el['percentage'] = percentages[3];
+                  el['percentage'] = percentages[3]; //last quarter percentage
                   el['barWidth'] = percentages[3] * 0.65;
                   el['amountWords'] = amountWords.number + ' ' + amountWords.scale;
 
@@ -85,7 +93,7 @@ define(function(require) {
                 }
             ));
 
-            self.showChildView('portfolio_content_groups', 
+            self.showChildView('portfolio_content_groups',
               new PortfolioContentGroupsView(
                 {
                   groups: groups,
@@ -93,7 +101,7 @@ define(function(require) {
                 }
             ));
 
-            self.showChildView('portfolio_content_more', 
+            self.showChildView('portfolio_content_more',
               new PortfolioContentMoreView(
                 {
                   funds: funds,
@@ -101,7 +109,7 @@ define(function(require) {
                 }
             ));
 
-        });   
+        });
     },
     onShow: function(){
       Sparkline.draw();
