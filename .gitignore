@@ -9,3 +9,4 @@ public/js/portfolio_templates.js
 public/js/data_normalizer.js
 .brackets.json
 app/bower_components
+.idea
