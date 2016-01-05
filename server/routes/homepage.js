@@ -58,7 +58,7 @@ exports.managing_body_treemap = function(req,res){
             };
         });
 
-        children = _.sortBy(children, 
+        children = _.sortBy(children,
             function(child){return child.relativePart})
 
 
@@ -68,8 +68,8 @@ exports.managing_body_treemap = function(req,res){
         var spliceIndex;
         var othersPart = 0;
         for (i in children){
-            i = Number(i); 
-            if ( children[i+1] != null && 
+            i = Number(i);
+            if ( children[i+1] != null &&
                 othersPart + children[i].relativePart < children[i+1].relativePart){
                 spliceIndex = i+1;
                 othersPart = othersPart + children[i].relativePart;
@@ -87,7 +87,7 @@ exports.managing_body_treemap = function(req,res){
         var largeEnough = children;
 
         var others = tooSmall.reduce(
-            function(previousValue, currentValue, index, array) { 
+            function(previousValue, currentValue, index, array) {
                 return {
 	                "translatedName":translate("others"),
                     "size":Number(currentValue.size) + Number(previousValue.size),
@@ -112,8 +112,8 @@ exports.managing_body_treemap = function(req,res){
 
         //let browser cache content for 1 week
         var oneWeek = 604800000;
-        res.setHeader('Cache-Control', 'public, max-age='+oneWeek);        
-        
+        res.setHeader('Cache-Control', 'public, max-age='+oneWeek);
+
         res.json(asTreemapData('managing_bodies', largeEnough));
     });
 
@@ -156,7 +156,7 @@ exports.issuers_treemap = function(req,res){
 
         //let browser cache content for 1 week
         var oneWeek = 604800000;
-        res.setHeader('Cache-Control', 'public, max-age='+oneWeek);        
+        res.setHeader('Cache-Control', 'public, max-age='+oneWeek);
 
         res.json(asTreemapData('issuers', children));
     });
