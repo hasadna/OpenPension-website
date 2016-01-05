@@ -18,7 +18,7 @@ define(function(require) {
         this.filter = Filter.fromQueryString(this.options.queryString);
     },
     serializeData: function(){
-      
+
       var self = this;
       var amountWords = DataNormalizer.convertNumberToWords(this.options.data.totalFilteredValues[0]);
       var reportType = DataNormalizer.getReportType(this.filter);
@@ -48,7 +48,7 @@ define(function(require) {
         amountTitle: ContentHeaderView.getAmountTitle(reportType),
         percentageTitle: ContentHeaderView.getPercentageTitle(reportType),
         shouldShowPercentage: ContentHeaderView.shouldShowPercentage(this.filter)
-      }      
+      }
     },
     onRender: function() {
     },
@@ -59,7 +59,7 @@ define(function(require) {
 
 	    //handle quarter change
 	    $('#select-quarter').on('change', function () {
-	        
+
 	        //generate filter from query string
 	        var filter = Filter.fromQueryString(window.location.search);
 
@@ -71,7 +71,7 @@ define(function(require) {
 
 
 	        location.href = "#/portfolio"+filter.toQueryString();
-	    
+
 	    });
 
         Sparkline.draw();
