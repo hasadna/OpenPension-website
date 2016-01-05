@@ -3,7 +3,7 @@ var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 
-//Queries DB by filter and 
+//Queries DB by filter and
 //returns filtered rows as csv file
 exports.download = function(req, res){
 
@@ -16,9 +16,9 @@ exports.download = function(req, res){
 
   DAL.streamQuery(filter,
     function(err, stream){
-		
+
     	if (err != undefined || !_.isObject(stream)){
-			res.end(); 
+			res.end();
     	}
 
 
@@ -28,14 +28,14 @@ exports.download = function(req, res){
 		});
 
 
-		var isFirstLine = true; 
+		var isFirstLine = true;
 		stream.on('data',function(data){
 
 		if (isFirstLine){
 			isFirstLine = false;
 
 			//write column headers csv
-			var cols = Object.keys(data); 
+			var cols = Object.keys(data);
 			var line = cols.join(",") + "\n";
 			res.write(line);
 		}
@@ -49,8 +49,8 @@ exports.download = function(req, res){
 		res.end();
 	});
 
-	
+
 	}
-	
+
   );
 };
