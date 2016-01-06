@@ -22,6 +22,9 @@ Also used
 Getting Started
 ===============
 1.  Clone the repo
+
+        >git clone ...
+        >git checkout marionette
 2.  Update submodules               
         
         >git submodule init 
@@ -30,12 +33,24 @@ Getting Started
 4.  Install packages
         
         >npm install
-5.  Install node-dev (globally)
+        >npm install bower -g
+        >bower install
+        >npm install grunt -g
+        >grunt
+5.  Update db connection string in server/config.json (ask somebody if you dont have it) 
+
+6.  Run the server (default port is 3000)
+
+        >node server/app.js 
+
+7.  To run the server in dev mode:
+
+	Install node-dev (globally)
 
         >npm install node-dev -g
-6.  Run the server 
+    Run the server
 
-        >node-dev app.js
+        >node-dev server/app.js
 
   [1]: http://nodejs.org/        "NodeJS"
   [2]: http://expressjs.com/  "ExpressJS"
@@ -55,7 +70,6 @@ You can get the Express version which is free to download [here] [9]
 
 
   [9]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "VS Express"
-
 
 Online version
 ===========
