@@ -36,8 +36,6 @@ exports.managing_body_treemap = function(req,res){
 
     DAL.groupBySummaries(filter,function(err, groups, select){
 
-        console.log(select);
-
         var managing_bodies = groups[0].result;
 
         var totalSum = sum(managing_bodies);
