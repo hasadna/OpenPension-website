@@ -9,14 +9,15 @@ Our stack
 =========
 [NodeJS] [1]  
 [ExpressJS] [2]  
-[Jade] [3]  
-[Squel] [4]  
-[PostgreSQL] [5]  
+[Marionette] [3]  
+[Handlebars] [4]  
+[Squel] [5]  
+[PostgreSQL] [6]  
+[Memcached] [7]
 
 Also used
-===============
-[Templatizer] [6]  
-[Tabletop] [7]  
+===============  
+[Tabletop] [8]
 
 Getting Started
 ===============
@@ -37,34 +38,39 @@ Getting Started
         >npm install grunt -g
         >grunt
 
-5.  Install node-dev (globally)
+5.  Run the server (default port is 3000)
+
+        >node server/app.js 
+
+6.  To run the server in dev mode:
+	Install node-dev (globally)
 
         >npm install node-dev -g
-6.  Run the server 
+    Run the server
 
-        >node-dev app.js
+        >node-dev server/app.js
 
   [1]: http://nodejs.org/        "NodeJS"
   [2]: http://expressjs.com/  "ExpressJS"
-  [3]: http://jade-lang.com/    "Jade"
-  [4]: http://hiddentao.github.io/squel/ "Squel"
-  [5]: http://www.postgresql.org/download/ "PostgreSQL"
-  [6]: https://github.com/HenrikJoreteg/templatizer "Templatizer"
-  [7]: https://github.com/jsoma/tabletop "Tabletop"
+  [3]: http://marionettejs.com/    "Marionette"
+  [4]: http://handlebarsjs.com/ "Handlebars"
+  [5]: https://hiddentao.github.io/squel/ "Squel"
+  [6]: http://www.postgresql.org/download/ "PostgreSQL"
+  [7]: http://memcached.org/ "Memcached"
+  [8]: https://github.com/jsoma/tabletop "Tabletop"
 
 Additional Requirements
 ===========
 
 For compiling the packages on windows  
 you might need to install Microsoft Visual Studio  
-You can get the Express version which is free to download [here] [8]
+You can get the Express version which is free to download [here] [9]
 
 
-  [8]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "Squel"
-
+  [9]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "VS Express"
 
 Online version
 ===========
-Visit: [http://www.openpension.org.il] [9]
+Visit: [http://www.openpension.org.il] [10]
 
-  [9]: http://www.openpension.org.il
+  [10]: http://www.openpension.org.il
