@@ -43,6 +43,7 @@ Getting Started
         >node server/app.js 
 
 6.  To run the server in dev mode:
+
 	Install node-dev (globally)
 
         >npm install node-dev -g
