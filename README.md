@@ -37,12 +37,13 @@ Getting Started
         >bower install
         >npm install grunt -g
         >grunt
+5.  Update db connection string in server/config.json (ask somebody if you dont have it) 
 
-5.  Run the server (default port is 3000)
+6.  Run the server (default port is 3000)
 
         >node server/app.js 
 
-6.  To run the server in dev mode:
+7.  To run the server in dev mode:
 
 	Install node-dev (globally)
 
