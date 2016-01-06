@@ -21,6 +21,9 @@ Also used
 Getting Started
 ===============
 1.  Clone the repo
+
+        >git clone ...
+        >git checkout marionette
 2.  Update submodules               
         
         >git submodule init 
@@ -29,6 +32,11 @@ Getting Started
 4.  Install packages
         
         >npm install
+        >npm install bower -g
+        >bower install
+        >npm install grunt -g
+        >grunt
+
 5.  Install node-dev (globally)
 
         >npm install node-dev -g
