@@ -9,19 +9,21 @@ Our stack
 =========
 [NodeJS] [1]  
 [ExpressJS] [2]  
-[Marionette] [3]  
-[Handlebars] [4]  
-[Squel] [5]  
-[PostgreSQL] [6]  
-[Memcached] [7]
+[Jade] [3]  
+[Squel] [4]  
+[PostgreSQL] [5]  
 
 Also used
-===============  
-[Tabletop] [8]
+===============
+[Templatizer] [6]  
+[Tabletop] [7]  
 
 Getting Started
 ===============
 1.  Clone the repo
+
+        >git clone ...
+        >git checkout marionette
 2.  Update submodules               
         
         >git submodule init 
@@ -30,6 +32,11 @@ Getting Started
 4.  Install packages
         
         >npm install
+        >npm install bower -g
+        >bower install
+        >npm install grunt -g
+        >grunt
+
 5.  Install node-dev (globally)
 
         >npm install node-dev -g
@@ -39,26 +46,25 @@ Getting Started
 
   [1]: http://nodejs.org/        "NodeJS"
   [2]: http://expressjs.com/  "ExpressJS"
-  [3]: http://marionettejs.com/    "Marionette"
-  [4]: http://handlebarsjs.com/ "Handlebars"
-  [5]: https://hiddentao.github.io/squel/ "Squel"
-  [6]: http://www.postgresql.org/download/ "PostgreSQL"
-  [7]: http://memcached.org/ "Memcached"
-  [8]: https://github.com/jsoma/tabletop "Tabletop"
+  [3]: http://jade-lang.com/    "Jade"
+  [4]: http://hiddentao.github.io/squel/ "Squel"
+  [5]: http://www.postgresql.org/download/ "PostgreSQL"
+  [6]: https://github.com/HenrikJoreteg/templatizer "Templatizer"
+  [7]: https://github.com/jsoma/tabletop "Tabletop"
 
 Additional Requirements
 ===========
 
 For compiling the packages on windows  
 you might need to install Microsoft Visual Studio  
-You can get the Express version which is free to download [here] [9]
+You can get the Express version which is free to download [here] [8]
 
 
-  [9]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "VS Express"
+  [8]: http://www.microsoft.com/visualstudio/eng/downloads#d-cpp-2010-express "Squel"
 
 
 Online version
 ===========
-Visit: [http://www.openpension.org.il] [10]
+Visit: [http://www.openpension.org.il] [9]
 
-  [10]: http://www.openpension.org.il
+  [9]: http://www.openpension.org.il
