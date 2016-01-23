@@ -3,9 +3,9 @@
 
 npm-debug.log
 node_modules
-public/js/filter.js
-public/js/categories.js
-public/js/portfolio_templates.js
-public/js/data_normalizer.js
+
 .brackets.json
 app/bower_components
+app/scripts/libs/dictionary.js
+app/styles/main.css
+.idea

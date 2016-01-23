@@ -1,7 +1,7 @@
 <div id="groups" class="groups col-xs-12">
    {{#each groups}}
    <div class="segmentation">
-      <h3 class="table-title">חלוקה לפי {{this.group_field_heb}}<i class="help-spot fa fa-question-circle"></i></h3>
+      <h3 class="table-title">חלוקה לפי {{this.group_field_translated}}<i class="help-spot fa fa-question-circle"></i></h3>
       <table class="group-table table table-striped">
          <colgroup>
             <col>
@@ -11,7 +11,7 @@
          </colgroup>
          <thead>
             <tr>
-               <th>שם נכס</th>
+               <th>{{this.group_field_translated}}</th>
                <th>היקף ההשקעה <small>בשקלים</small></th>
                <th>חשיפה <small>באחוזים</small></th>
                <th>שינוי חשיפה <small>4 רבעונים אחרונים</small></th>
@@ -21,7 +21,7 @@
          	{{#each this.results}}
             <tr>
                <td>
-                  <a data-group="{{../this.group_field}}" data-value="{{this.name}}" title="{{this.name}}" class="table-link">{{this.name}}</a>
+                  <a data-group="{{../this.group_field}}" data-value="{{this.name}}" title="{{this.name_translated}}" class="table-link">{{this.name_translated}}</a>
                </td>
                <td><span class="amount">{{amountWords}}</span></td>
                <td>
@@ -38,11 +38,13 @@
             </tr>
             {{/each}}
          </tbody>
+         {{#if this.hasMoreResults}}
          <tfoot>
             <tr>
                <td colspan="4"><a  class="list-all" data-group="{{this.group_field}}">כל {{this.plural}}...</a></td>
             </tr>
          </tfoot>
+         {{/if}}
       </table>
    </div>
    {{/each}}

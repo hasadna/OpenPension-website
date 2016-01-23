@@ -8,10 +8,10 @@ var Promise = require('bluebird');
 var async = require('async');
 
 function groupByManagingBody(filter){
-    
+
   var mFilter = new Filter();
 
-  if (filter.hasConstraint("managing_body") 
+  if (filter.hasConstraint("managing_body")
             &&  filter.getDrillDownDepth() > 1){
         mFilter.addConstraint("managing_body", filter.getConstraintData("managing_body"));
   }
@@ -20,7 +20,7 @@ function groupByManagingBody(filter){
   mFilter.addConstraint("report_year", filter.getConstraintData("report_year"));
   mFilter.addConstraint("report_qurater", filter.getConstraintData("report_qurater"));
 
-  return mFilter; 
+  return mFilter;
 }
 
 
@@ -31,23 +31,23 @@ exports.contentHeader = function(req,res){
     var managingBodyFilter = groupByManagingBody(filter);
 
     async.parallel([
-      function(callback){ 
+      function(callback){
           //relative to total fund or current managing_body
           DAL.groupByQuarters(managingBodyFilter, callback);
       },
-      function(callback){ 
+      function(callback){
           //group filter by quarters
           DAL.groupByQuarters(filter, callback);
       }
-    ], 
+    ],
     function(err,results){
-    
+
         if (err){
           console.log(err);
           res.end("Err: "+err);
           return;
         }
-    
+
 
         var totalPensionFundQuarters = results[0][0];
         var totalPensionFundQuery = results[0][1];
@@ -63,17 +63,17 @@ exports.contentHeader = function(req,res){
                   function(v2,k2,l2){
                     return v2['report_year']+"_"+v2['report_qurater'];
                   });
-            
+
         totalPensionFundQuarters = _.groupBy(totalPensionFundQuarters,
                   function(v2,k2,l2){
                     return v2['report_year']+"_"+v2['report_qurater'];
                   });
 
         //fill up missing quarters with sum 0
-        if (Object.keys(quarters).length < 4 || 
+        if (Object.keys(quarters).length < 4 ||
           Object.keys(totalPensionFundQuarters).length < 4){
           for(var q = 0; q < 4; q++){
-          
+
             if (quarters[lastQuarters[q].str] == undefined){
               quarters[lastQuarters[q].str] = [{"fair_value":"0"}];
             }
@@ -87,15 +87,15 @@ exports.contentHeader = function(req,res){
 
         var result = {
           totalFilteredValues: [
-                quarters[lastQuarters[0].str][0]['fair_value'], 
-                quarters[lastQuarters[1].str][0]['fair_value'], 
-                quarters[lastQuarters[2].str][0]['fair_value'], 
-                quarters[lastQuarters[3].str][0]['fair_value'] 
+                quarters[lastQuarters[0].str][0]['fair_value'],
+                quarters[lastQuarters[1].str][0]['fair_value'],
+                quarters[lastQuarters[2].str][0]['fair_value'],
+                quarters[lastQuarters[3].str][0]['fair_value']
               ],
           totalPensionFundValues: [
-                totalPensionFundQuarters[lastQuarters[0].str][0]['fair_value'], 
-                totalPensionFundQuarters[lastQuarters[1].str][0]['fair_value'], 
-                totalPensionFundQuarters[lastQuarters[2].str][0]['fair_value'], 
+                totalPensionFundQuarters[lastQuarters[0].str][0]['fair_value'],
+                totalPensionFundQuarters[lastQuarters[1].str][0]['fair_value'],
+                totalPensionFundQuarters[lastQuarters[2].str][0]['fair_value'],
                 totalPensionFundQuarters[lastQuarters[3].str][0]['fair_value']
               ],
         }
@@ -147,7 +147,7 @@ exports.quarters = function(req,res){
 
 };
 
-//Get list of Managing Bodies 
+//Get list of Managing Bodies
 exports.managing_bodies = function(req,res){
     DAL.getManagingBodies(function(err, bodies, bodiesQuery){
 

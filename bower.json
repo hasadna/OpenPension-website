@@ -16,15 +16,15 @@
     "bootstrap": "~3.3.4",
     "fontawesome": "~4.3.0",
     "typeahead.js": "0.10.5",
-    "bootstrap-rtl": "~3.3.2",
+    "bootstrap-rtl": "~3.3.4",
     "bootstrap-select": "~1.7.2",
     "marionette": "~2.4.2",
     "underscore": "~1.8.3",
-    "requirejs-plugins": "~1.0.3"
+    "requirejs-plugins": "~1.0.3",
+    "d3": "~3.5.12"
   },
   "directory": "bower_components",
   "resolutions": {
-    "backbone.babysitter": "^0.1.0",
-    "backbone.wreqr": "^1.0.0"
+    "bootstrap": "3.3.4"
   }
 }
