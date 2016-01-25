@@ -13,6 +13,8 @@ define(function(require) {
     var DataNormalizer = require('DataNormalizer');
     var investment = new Investment();
     var config = require('json!config');
+	var CommonContentHeaderView = require('../../views/common/ContentHeaderView');
+	var contentHeader = new ContentHeader();
 
     //manually render InvestmentContentGroupsView to overlay, ugly :(
     function showOverlay(){
