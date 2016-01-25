@@ -1,6 +1,6 @@
 define(function(require) {
   'use strict';
-  
+
   var Backbone = require('backbone');
   var Marionette = require('backbone.marionette');
   var header = require('hbs!/templates/portfolio-header');
@@ -22,10 +22,10 @@ define(function(require) {
   function breadCrumbsClick(event) {
 
     var value = $(event.target).data('value');
-    
+
     //generate filter from query string
     var filter = Filter.fromQueryString(window.location.search);
-    
+
     var constraintFields = filter.getConstrainedFields();
 
     for ( var index = constraintFields.length - 1; index >= 0; index-- ) {
@@ -36,9 +36,9 @@ define(function(require) {
         if (value == filter.getConstraintData(field)) {
             break;
         }
-        
+
         //remove all fields other than quarter, year and group_by
-        if (field == 'report_qurater' || 
+        if (field == 'report_qurater' ||
             field == 'report_year' ){
             continue;
         }
@@ -60,31 +60,31 @@ define(function(require) {
       var groupByField = this.filter.getConstraintData('group_by')[0];
 
       var lastCrumb;
-      if (groupByField){ //add group by to bread crumbs
+      if (groupByField){ //add 'group by' to bread crumbs
         lastCrumb = {
           value: 'כל ' + Dictionary.plurals[groupByField],
           field: ''
-        }  
+        }
       }
       else{
         lastCrumb = breadcrumbs.pop();
       }
 
-    	return {
-  			report_type: TitleGenerator.getReportTypeHeb(this.filter),
-  			report_title: TitleGenerator.createTitle(this.filter),
-        breadcrumbs: breadcrumbs,
-        last_crumb: lastCrumb
-    	};
+	  return {
+		report_type: TitleGenerator.getReportTypeHeb(this.filter),
+		report_title: TitleGenerator.createTitle(this.filter),
+		breadcrumbs: breadcrumbs,
+		last_crumb: lastCrumb
+	  };
     },
     template: header,
-  	templateHelpers: {
+    templateHelpers: {
         title: function (name) {
             return Filter;
         }
     },
     events: {
-      "click .breadcrumb": breadCrumbsClick 
+      "click a.breadcrumb": breadCrumbsClick
     }
   });
 });
