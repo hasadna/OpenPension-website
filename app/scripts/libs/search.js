@@ -9,13 +9,13 @@ define(function(require) {
 
     init: function(){
         console.log('init search');
-    
+
 
         var fundNames = new Bloodhound({
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('fund_name'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: 
-          { 
+          remote:
+          {
             url: '/api/queryNames?q=%QUERY',
             filter: function(response){
                 return response.funds;
@@ -23,13 +23,13 @@ define(function(require) {
             cache: false
           }
         });
-         
+
 
         var managingBodies = new Bloodhound({
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('managingBodies'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: 
-          { 
+          remote:
+          {
             url: '/api/queryNames?q=%QUERY',
             filter: function(response){
                 return response.managingBodies;
@@ -42,8 +42,8 @@ define(function(require) {
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('instruments'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
           local : []
-          // remote: 
-          // { 
+          // remote:
+          // {
           //   url: '/api/queryNames?q=%QUERY',
           //   filter: function(response){
           //       return response.instrument_name;
@@ -53,10 +53,10 @@ define(function(require) {
         });
 
 
-        fundNames.initialize(); 
-        managingBodies.initialize(); 
-        instrumentNames.initialize(); 
-         
+        fundNames.initialize();
+        managingBodies.initialize();
+        instrumentNames.initialize();
+
         $('#nav-search').typeahead({
           highlight: false,
           hint: false,
@@ -103,11 +103,11 @@ define(function(require) {
 
 
 
-        $('#nav-search').bind('typeahead:closed', function(obj, datum, name) {      
-                $(".typeahead").val("")
+        $('#nav-search').bind('typeahead:closed', function(obj, datum, name) {
+			$("#nav-search").val("");
         })
 
-        $('#nav-search').bind('typeahead:selected', function(obj, datum, name) {      
+        $('#nav-search').bind('typeahead:selected', function(obj, datum, name) {
 
                 var filter = Filter.fromQueryString(window.location.hash)
 
@@ -118,7 +118,7 @@ define(function(require) {
                 var action = datum['action'];
 
                 $("#nav-search").val("");
-
+				$("#nav-search").blur();
 
                 if (action == 'query_instruments'){
                     field = 'q';
@@ -127,13 +127,13 @@ define(function(require) {
                     return;
                 }
                 else{
-        
-                    //managing body shows translated value 
+
+                    //managing body shows translated value
                     if (field == "translated_managing_body"){
                         value = datum["managing_body"];
                         field = "managing_body";
                     }
-             
+
                     window.location.hash = '#/portfolio?report_year='+year+'&report_qurater='+quarter+'&'+field+'='+value;
 
                 }
@@ -141,17 +141,17 @@ define(function(require) {
 
         });
 
-        /*
         $("#nav-search").keydown(function(event){
-            
+
             if(event.keyCode == 13){
                 event.preventDefault();
 
-                window.location.hash ='#/search?q=' + $("#nav-search").val();        
-                return false;
+                window.location.hash ='#/search?q=' + $("#nav-search").val();
+				$("#nav-search").val("");
+				$("#nav-search").blur();
+				return false;
             }
         });
-        */
     }
   }
 
