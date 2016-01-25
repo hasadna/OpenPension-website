@@ -2,6 +2,7 @@ define(function(require) {
   'use strict';
   var $ = require('jquery');
   var Filter = require('Filter');
+  var _ = require('underscore');
   var config = require('json!config');
 
   // Static wrapper for typeahead plugin.
@@ -109,8 +110,6 @@ define(function(require) {
 
         $('#nav-search').bind('typeahead:selected', function(obj, datum, name) {
 
-                var filter = Filter.fromQueryString(window.location.hash)
-
                 var field = Object.keys(datum)[0];
                 var value = datum[field];
                 var year = config.current_year;
@@ -135,15 +134,13 @@ define(function(require) {
                     }
 
                     window.location.hash = '#/portfolio?report_year='+year+'&report_qurater='+quarter+'&'+field+'='+value;
-
+					return;
                 }
-
-
         });
 
         $("#nav-search").keydown(function(event){
 
-            if(event.keyCode == 13){
+            if(event.keyCode == 13 && !_.isEmpty($("#nav-search").val())){
                 event.preventDefault();
 
                 window.location.hash ='#/search?q=' + $("#nav-search").val();
