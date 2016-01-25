@@ -12,7 +12,7 @@ define(function(require) {
 
   return Backbone.Marionette.LayoutView.extend({
     template: template,
-   
+
     initialize : function (options){
         this.options = options;
         this.filter = Filter.fromQueryString(this.options.queryString);
@@ -28,19 +28,19 @@ define(function(require) {
         var self = this;
         var queryNames = new QueryNames();
 
-        $.when(
+		self.showChildView('search_header',
+			new SearchHeaderView(
+				{
+					queryString : self.options.queryString,
+					searchTerm: self.filter.getConstraintData('q')[0]
+				}
+			));
+
+		$.when(
           queryNames.fetch({ data: this.options.queryString })
         )
         .then(function(queryRes){
 
-            self.showChildView('search_header',
-                new SearchHeaderView(
-                {
-                  queryString : self.options.queryString,
-                  data: queryRes,
-                  searchTerm: self.filter.getConstraintData('q')[0]
-                }
-            ));
 
             self.showChildView('content',
                 new SearchContentView(
