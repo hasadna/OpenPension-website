@@ -1,6 +1,6 @@
 define(function(require) {
   'use strict';
-  
+
   var Backbone = require('backbone');
   var Marionette = require('backbone.marionette');
   var Filter = require('Filter');
@@ -17,7 +17,7 @@ define(function(require) {
       return {
         managing_body : Dictionary.translate(this.filter.getConstraintData('managing_body')[0]),
         group: this.options.group
-      }      
+      }
     },
     onRender : function(){
 
@@ -28,6 +28,7 @@ define(function(require) {
     template: investments,
     events:{
       "click .table-link": function(ev){
+		$('#myModal').modal('hide');
         var value = ev.currentTarget.dataset.value;
         var group = ev.currentTarget.dataset.group;
         this.filter.setConstraint(group, value);

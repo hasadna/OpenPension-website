@@ -23,6 +23,8 @@ dictionary['fenix'] = 'פניקס';
 dictionary['psagot'] = 'פסגות';
 dictionary['ayalon'] = 'איילון';
 dictionary['ds'] = 'דש';
+dictionary['as'] = 'אלטשולר שחם';
+dictionary['yl'] = 'ילין לפידות';
 dictionary['currency'] = 'מטבע';
 
 

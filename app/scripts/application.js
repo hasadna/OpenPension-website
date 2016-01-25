@@ -9,6 +9,14 @@ define(function(require) {
       body: 'body'
   });
 
-  
+
+  //vent events on ajax start/stop
+  $( document ).ajaxStart(function() {
+ 	App.vent.trigger("ajax:start");
+  })
+  .ajaxStop(function() {
+	App.vent.trigger("ajax:stop");
+  });
+
   return App;
 });
