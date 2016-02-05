@@ -5,6 +5,8 @@ var squel = require('squel');
 var config = require('../config')
 var db = require('./db.js');
 var async = require('async');
+var Promise = require('bluebird');
+var es = require('./elasticClient.js')
 
 var allowed_filters={
 	'managing_body':simple_filter,
@@ -599,10 +601,35 @@ function searchInFields(term, limit, callback){
 }
 
 
+function searchInFieldsEs(term){
+
+	return Promise.all(
+		[
+			es.searchInIndex('instrument_name', term),
+			es.searchInIndex('instrument_id', term),
+			es.searchInIndex('fund_name', term)
+
+		]
+	)
+		.then(function(results){
+
+			var res = {};
+			 	  res.assets = results[0]  ? results[0]: [];
+			 	  res.instruments = results[1] ? results[1] : [];
+			 	  res.funds = results[2] ? results[2] : [];
+			 	  res.issuers = results[3] ? results[3]: [];
+
+			return res;
+
+		});
+
+}
+
+
 /**
- * Query the DB, find lines containing term in
- * instrument_id or instrument_name
+ * Query the DB, find lines containing term in field
  * @param term : string, name/id to look for
+ * @param field : string, field to look in
  * @param callback(obj) : function to handle result rows.
  * obj = {rows:[...], total_row_count:int, page: int,
  * 			results_per_page: int, total_pages: int}
@@ -698,5 +725,6 @@ exports.getManagingBodies=getManagingBodies;
 exports.search=search;
 exports.streamQuery=streamQuery;
 exports.searchInFields=searchInFields;
+exports.searchInFieldsEs=searchInFieldsEs;
 exports.searchByField=searchByField;
 exports.addLastQuartersToQuery=addLastQuartersToQuery;

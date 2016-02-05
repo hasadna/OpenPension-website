@@ -40,23 +40,35 @@ define(function(require) {
         });
 
         var instrumentNames = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('instruments'),
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('assets'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
-          local : []
-          // remote:
-          // {
-          //   url: '/api/queryNames?q=%QUERY',
-          //   filter: function(response){
-          //       return response.instrument_name;
-          //   },
-          //   cache: false
-          // }
+           remote:
+           {
+             url: '/api/queryNames?q=%QUERY',
+             filter: function(response){
+                 return response.assets;
+             },
+             cache: false
+           }
         });
 
+		var instrumentIds = new Bloodhound({
+			datumTokenizer: Bloodhound.tokenizers.obj.whitespace('instruments'),
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote:
+			{
+				url: '/api/queryNames?q=%QUERY',
+				filter: function(response){
+					return response.instruments;
+				},
+				cache: false
+			}
+		});
 
         fundNames.initialize();
         managingBodies.initialize();
         instrumentNames.initialize();
+		instrumentIds.initialize();
 
         $('#nav-search').typeahead({
           highlight: false,
@@ -91,6 +103,14 @@ define(function(require) {
             header: '<h6>שמות נכסים</h6>',
           }
         },
+		{
+			name: 'instrument_id',
+			displayKey: 'instrument_id',
+			source: instrumentIds.ttAdapter(),
+			templates: {
+				header: '<h6>מספרי נכסים</h6>',
+			}
+		},
         {
          name: 'instrument-search',
          displayKey: 'name',
