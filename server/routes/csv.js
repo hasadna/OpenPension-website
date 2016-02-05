@@ -14,8 +14,8 @@ exports.download = function(req, res){
   filter.removeField("report_qurater");
   filter.removeField("report_year");
 
-  DAL.streamQuery(filter,
-    function(err, stream){
+  DAL.streamQuery(filter)
+  .then(function(stream){
 
     	if (err != undefined || !_.isObject(stream)){
 			res.end();
@@ -31,26 +31,24 @@ exports.download = function(req, res){
 		var isFirstLine = true;
 		stream.on('data',function(data){
 
-		if (isFirstLine){
-			isFirstLine = false;
+			if (isFirstLine){
+				isFirstLine = false;
 
-			//write column headers csv
-			var cols = Object.keys(data);
-			var line = cols.join(",") + "\n";
-			res.write(line);
-		}
+				//write column headers csv
+				var cols = Object.keys(data);
+				var line = cols.join(",") + "\n";
+				res.write(line);
+			}
 
-		//write data as csv line
-		res.write(_.values(data).join(",")+"\n")
-	});
+			//write data as csv line
+			res.write(_.values(data).join(",")+"\n")
+		});
 
-	stream.on('end',function(){
-		//close response
-		res.end();
-	});
+		stream.on('end',function(){
+			//close response
+			res.end();
+		});
 
 
-	}
-
-  );
+  });
 };

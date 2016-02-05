@@ -2,8 +2,6 @@ var _ = require('underscore');
 var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
 var DataNormalizer = require('../core/data_normalizer.js');
-var Groups = require('../core/groups.js');
-var removeQoutes = DataNormalizer.removeQoutes;
 var config = require('../config')
 var fs = require('fs');
 var async = require('async');
@@ -187,9 +185,9 @@ exports.investments = function(req, res){
             query:select,
             translate: translate,
             convertNumberToWords:DataNormalizer.convertNumberToWords,
-            escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
+            escapeSpecialChars: DataNormalizer.escapeSpecialChars,
             escapeJSLink: DataNormalizer.escapeJSLink,
-            rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,  
+            rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,
             removeQoutes: DataNormalizer.removeQoutes,
             debug: debug == 'true',
             req: req,
@@ -339,8 +337,8 @@ exports.portfolio = function(req, res){
         groups: groups,
         convertNumberToWords:DataNormalizer.convertNumberToWords,
         translate: translate,
-        escapeSpecialChars: DataNormalizer.escapeSpecialChars,  
-        rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,  
+        escapeSpecialChars: DataNormalizer.escapeSpecialChars,
+        rfc3986EncodeURIComponent: DataNormalizer.rfc3986EncodeURIComponent,
         removeQoutes: DataNormalizer.removeQoutes,
         debug: debug == 'true',
         req: req,

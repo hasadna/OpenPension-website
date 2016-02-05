@@ -333,7 +333,6 @@ function findInManagingBody(term){
     return [];
   }
 
-  var res = [];
   return _.filter(translatedManagingBodies,
       function(managing_body){
         return managing_body.translated_managing_body.indexOf(term) > -1;
@@ -343,14 +342,12 @@ function findInManagingBody(term){
 exports.querySearchTerm = function(term, rowLimit){
 
   return new Promise(function(resolve, reject){
-      DAL.searchInFields(term, rowLimit, function(err, result, query){
-        if (err){
-          reject(err);
-        }
+      DAL.searchInFieldsEs(term)
+		  .then(function(result){
 
-        result['managingBodies'] = findInManagingBody(term);
+	        result['managingBodies'] = findInManagingBody(term);
 
-        resolve(result);
+    	    resolve(result);
       });
 
   });
