@@ -17,7 +17,7 @@ define(function(require) {
           queryTokenizer: Bloodhound.tokenizers.whitespace,
           remote:
           {
-            url: '/api/queryNames?q=%QUERY',
+            url: '/api/queryNames?q=%QUERY&s=5',
             filter: function(response){
                 return response.funds;
             },
@@ -31,7 +31,7 @@ define(function(require) {
           queryTokenizer: Bloodhound.tokenizers.whitespace,
           remote:
           {
-            url: '/api/queryNames?q=%QUERY',
+            url: '/api/queryNames?q=%QUERY&s=5',
             filter: function(response){
                 return response.managingBodies;
             },
@@ -44,7 +44,7 @@ define(function(require) {
           queryTokenizer: Bloodhound.tokenizers.whitespace,
            remote:
            {
-             url: '/api/queryNames?q=%QUERY',
+             url: '/api/queryNames?q=%QUERY&s=5',
              filter: function(response){
                  return response.assets;
              },
@@ -57,7 +57,7 @@ define(function(require) {
 			queryTokenizer: Bloodhound.tokenizers.whitespace,
 			remote:
 			{
-				url: '/api/queryNames?q=%QUERY',
+				url: '/api/queryNames?q=%QUERY&s=5',
 				filter: function(response){
 					return response.instruments;
 				},

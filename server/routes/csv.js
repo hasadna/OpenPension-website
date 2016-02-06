@@ -17,11 +17,6 @@ exports.download = function(req, res){
   DAL.streamQuery(filter)
   .then(function(stream){
 
-    	if (err != undefined || !_.isObject(stream)){
-			res.end();
-    	}
-
-
 		res.writeHead(200, {
 			'Content-Type': 'text/csv; charset=utf8',
 			'Content-Disposition' : 'attachment; filename="openpension.csv"'

@@ -11,6 +11,7 @@
     "express": "3.3.3",
     "memjs": "^0.8.5",
     "pg": "^4.3.0",
+    "pg-promise": "^3.1.6",
     "pg-query-stream": "^0.7.0",
     "request": "~2.21.0",
     "squel": "1.1.3",
