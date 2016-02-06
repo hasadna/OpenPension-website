@@ -10,13 +10,18 @@ define(function(require) {
 
   function getBreadcrumbs(filter){
     var drillDown = filter.getDrillDown();
-    return _.map(drillDown, function(field){
-        return {
-           value_eng: filter.getConstraintData(field)[0],
-           value: Dictionary.translate(filter.getConstraintData(field)[0]),
-           field: Dictionary.translate(field)
-        }
-    })
+    if(_.isEmpty(drillDown)){
+		return [{value:"שוק הפנסיה"}]
+	}
+    return _.map(drillDown,
+		function(field){
+			return {
+			   value_eng: filter.getConstraintData(field)[0],
+			   value: Dictionary.translate(filter.getConstraintData(field)[0]),
+			   field: Dictionary.translate(field)
+			}
+    	}
+	)
   }
 
   function breadCrumbsClick(event) {
