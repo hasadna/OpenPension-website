@@ -14,7 +14,7 @@ Our stack
 [Squel] [5]  
 [PostgreSQL] [6]  
 [Memcached] [7]   
-[Elastic]  [9]   
+[Elastic]  [11]   
 
 Also used
 ===============  
@@ -61,7 +61,7 @@ Getting Started
   [6]: http://www.postgresql.org/download/ "PostgreSQL"
   [7]: http://memcached.org/ "Memcached"
   [8]: https://github.com/jsoma/tabletop "Tabletop"
-  [9]: https://www.elastic.co/products/elasticsearch "Elastic"
+  [11]: https://www.elastic.co/products/elasticsearch "Elastic"
 
 Additional Requirements
 ===========
