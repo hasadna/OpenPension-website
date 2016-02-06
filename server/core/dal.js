@@ -173,7 +173,7 @@ function singleQuery(filter, callback)
  * Perform stream query and pass stream
  * to callback function
  * @param filter: Filter object with constraints
- * @param callback : function to handle stream
+ * @returns Promise that resolves to stream
  */
 function streamQuery(filter, callback)
 {
@@ -181,9 +181,7 @@ function streamQuery(filter, callback)
 	var sqlQuery = parseFilter(filter);
 
 	//perform query
-	db.streamQuery(sqlQuery, function(err, rows){
-			callback(err, rows);
-	});
+	return db.streamQuery(sqlQuery);
 }
 
 /**
@@ -601,13 +599,13 @@ function searchInFields(term, limit, callback){
 }
 
 
-function searchInFieldsEs(term){
+function searchInFieldsEs(term, size){
 
 	return Promise.all(
 		[
-			es.searchInIndex('instrument_name', term),
-			es.searchInIndex('instrument_id', term),
-			es.searchInIndex('fund_name', term)
+			es.searchInIndex('instrument_name', term, size),
+			es.searchInIndex('instrument_id', term, size),
+			es.searchInIndex('fund_name', term, size)
 
 		]
 	)

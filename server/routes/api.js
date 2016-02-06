@@ -302,13 +302,15 @@ exports.queryNames = function(req, res, next){
 
     var term = req.query['q'];
     var field = req.query['f'];
+	var size = req.query['s'];
+
     // var page = req.query['p'];
 
     if ( term == undefined ){
       res.json({'error':'Query is empty','return_code':'-7'})
     }
 
-    exports.querySearchTerm(term)
+    exports.querySearchTerm(term, size)
     .then(function(result){
       res.json(result);
     })
@@ -339,10 +341,10 @@ function findInManagingBody(term){
       });
 }
 
-exports.querySearchTerm = function(term, rowLimit){
+exports.querySearchTerm = function(term, size){
 
   return new Promise(function(resolve, reject){
-      DAL.searchInFieldsEs(term)
+      DAL.searchInFieldsEs(term, size)
 		  .then(function(result){
 
 	        result['managingBodies'] = findInManagingBody(term);

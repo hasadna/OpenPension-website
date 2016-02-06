@@ -1,10 +1,11 @@
 var pg = require('pg');
-var memjs = require('memjs') 
+var memjs = require('memjs')
 var config = require('../config')
 var md5 = require('MD5');
 var QueryStream = require('pg-query-stream')
-
-
+var pgpa = require('pg-promise')({});
+var pgp = pgpa(config.connection_string);
+var Promise = require('bluebird');
 
 if (config.use_memcache === false){
   mc = require('./MemcacheDummy');
@@ -14,11 +15,11 @@ else{
 }
 
 /**
- * Query DB, or get from memcache if already present  
+ * Query DB, or get from memcache if already present
  *
- * @param sql - SQL query 
+ * @param sql - SQL query
  * @param callback - callback function that with params (err, rows)
- * @param bypassMemcache - boolean, if true, ignore memcache 
+ * @param bypassMemcache - boolean, if true, ignore memcache
  */
 
 exports.query =  function(sql, callback, bypassMemcache){
@@ -28,7 +29,7 @@ exports.query =  function(sql, callback, bypassMemcache){
 
           if (val == undefined || bypassMemcache === true ){ // query not found in cache
 
-              pg.connect(config.connection_string,        
+              pg.connect(config.connection_string,
                   function(err, client, done){
 
                     if (err) throw err;
@@ -64,27 +65,67 @@ exports.query =  function(sql, callback, bypassMemcache){
   };
 
 /**
+ * Query DB, or get from memcache if already present
+ *
+ * @param sql - SQL query
+ * @param callback - callback function that with params (err, rows)
+ * @param bypassMemcache - boolean, if true, ignore memcache
+ */
+
+exports.queryp =  function(sql, bypassMemcache){
+
+	//look for query result in cache
+	mc.get(md5(sql), function(err,val) {
+
+		if (val == undefined || bypassMemcache === true ){ // query not found in cache
+
+			return pgp.query(sql).
+				then(function(result){
+					if (bypassMemcache !== true){
+						mc.set(md5(sql),JSON.stringify(result.rows));
+					}
+
+					return result.rows;
+				})
+				.catch(function(err){
+					console.log(err);
+				})
+		}
+		else {//query found in cache
+			val = JSON.parse(val.toString());
+			return val;
+		}
+	});
+};
+
+
+
+/**
  * Query DB, return results on stream
  *
- * @param sql - SQL query 
- * @param callback - callback function with params (err, stream)
+ * @param sql - SQL query
+ * @return Promise that resolves to stream
  */
-exports.streamQuery = function(sql, callback){
+exports.streamQuery = function(sql){
 
-    pg.connect(config.connection_string,
-      function(err, client, done) {
-  
-        if(err) throw err;
-    
-        var query = new QueryStream(sql)
-        var stream = client.query(query)
-        
-        //release the client when the stream is finished
-        stream.on('end', done);
-         
-        callback(err, stream);
-   
-    });
+	return new Promise(function(resolve,reject){
+		pg.connect(config.connection_string,
+			function(err, client, done) {
+
+				if(err){
+					return reject(err);
+				}
+
+				var query = new QueryStream(sql)
+				var stream = client.query(query)
+
+				//release the client when the stream is finished
+				stream.on('end', done);
+
+				return resolve(stream);
+
+			});
+	});
 }
 
 

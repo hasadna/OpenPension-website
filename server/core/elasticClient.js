@@ -6,9 +6,12 @@ var client = new elasticsearch.Client({
 	apiVersion: '2.1'
 });
 
-module.exports.searchInIndex = function(type, term){
+module.exports.searchInIndex = function(type, term, size){
+
+	size = size ? size : 1000;
 
 	return client.search({
+			size: size,
 			index: 'production',
 			type: type,
 			body:
@@ -23,7 +26,6 @@ module.exports.searchInIndex = function(type, term){
 		.then(function(result){
 			var result = result.hits.hits;
 			result = _.map(result, function(r){return r._source});
-			//console.log(result);
 			return result;
 		});
 
