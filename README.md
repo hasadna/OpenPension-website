@@ -1,7 +1,7 @@
-OpenPension-client
+OpenPension-website
 ==================
 
-OpenPension Client is the Web interface for the OpenPension Project  
+OpenPension Website is the Web interface for the OpenPension Project  
 aimed at revealing the secrets behind the pension market.
 
 
@@ -13,7 +13,8 @@ Our stack
 [Handlebars] [4]  
 [Squel] [5]  
 [PostgreSQL] [6]  
-[Memcached] [7]
+[Memcached] [7]   
+[Elastic]  [11]   
 
 Also used
 ===============  
@@ -60,6 +61,7 @@ Getting Started
   [6]: http://www.postgresql.org/download/ "PostgreSQL"
   [7]: http://memcached.org/ "Memcached"
   [8]: https://github.com/jsoma/tabletop "Tabletop"
+  [11]: https://www.elastic.co/products/elasticsearch "Elastic"
 
 Additional Requirements
 ===========
