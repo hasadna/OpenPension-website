@@ -1,20 +1,20 @@
 var pg = require('pg');
-var memjs = require('memjs')
+var Promise = require('bluebird');
+var qMemcached = Promise.promisifyAll(require('memcache-promise'));
 var config = require('../config')
 var md5 = require('MD5');
 var QueryStream = require('pg-query-stream')
-var Promise = require('bluebird');
 
 var pgp = require('pg-promise')({
     promiseLib: Promise
 });
-var db = pgp(config.connection_string);
+var dbp = pgp(config.connection_string);
 
 if (config.use_memcache === false) {
-    mc = require('./MemcacheDummy');
+    mc = Promise.promisifyAll(require('./MemcacheDummy'));
 }
 else {
-    mc = memjs.Client.create()
+    mc = new qMemcached("localhost:11211");
 }
 
 /**
@@ -30,7 +30,7 @@ exports.query = function (sql, callback, bypassMemcache) {
     //look for query result in cache
     mc.get(md5(sql), function (err, val) {
         if (val == undefined || bypassMemcache === true) { // query not found in cache
-            db.query(sql)
+            dbp.query(sql)
                 .then(function (data) {
                     if (bypassMemcache !== true) {
                         mc.set(md5(sql), JSON.stringify(data));
@@ -55,24 +55,24 @@ exports.query = function (sql, callback, bypassMemcache) {
 };
 
 /**
- * Query DB, or get from memcache if already present
+ * Promise for Query DB, or get from memcache if already present
  *
  * @param sql - SQL query
- * @param callback - callback function that with params (err, rows)
  * @param bypassMemcache - boolean, if true, ignore memcache
+ * @return Promise - resolves to query result
  */
 
 exports.queryp = function (sql, bypassMemcache) {
 
     //look for query result in cache
-    mc.get(md5(sql), function (err, val) {
-
+    return mc.get(md5(sql))
+	.then(function(val) {
         if (val == undefined || bypassMemcache === true) { // query not found in cache
-
-            return db.query(sql)
-                .then(function (data) {
+            return dbp.query(sql).then(
+				function (data) {
+					//console.log(bypassMemcache)
                     if (bypassMemcache !== true) {
-                        mc.set(md5(sql), JSON.stringify(data));
+                        mc.set(md5(sql), JSON.stringify(data), 60 * 24 * 365);
                     }
                     return data;
                 })

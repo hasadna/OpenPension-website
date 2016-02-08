@@ -151,31 +151,29 @@ function parseFilter(filter)
 }
 
 /**
- * Perform query and pass result rows
- * to callback function
+ * Perform query and resolve to result rows
  * @param filter: Filter object with constraints
- * @param callback : function to handle result rows
+ * @return Promise: resolves to result rows
  */
-function singleQuery(filter, callback)
+function singleQuery(filter)
 {
 	//add wheres to query
 	var sqlQuery = parseFilter(filter);
 
+	console.log(sqlQuery);
 	//perform query
-	db.query(sqlQuery, function(err, rows){
-			callback(err, rows);
-	});
+	return db.queryp(sqlQuery);
 }
 
 
 
 /**
- * Perform stream query and pass stream
- * to callback function
+ * Perform stream query and resolve stream
+ * to promise
  * @param filter: Filter object with constraints
  * @returns Promise that resolves to stream
  */
-function streamQuery(filter, callback)
+function streamQuery(filter)
 {
 	//add wheres to query
 	var sqlQuery = parseFilter(filter);
@@ -186,9 +184,9 @@ function streamQuery(filter, callback)
 
 /**
  * @param filter : Filter object
- * @param callback : function to handle result rows
+ * @return Promise : resolves to result rows
  */
-function groupBySummaries(filter, callback)
+function groupBySummaries(filter)
 {
 	var select = squel.select().from(config.table);
 
@@ -196,14 +194,9 @@ function groupBySummaries(filter, callback)
 	prepareWheres(select, filter);
 
 	//create multiple queries for each group
-	var groups=prepareGroupBy(select, filter);
-	var wait=groups.length;
-	if (wait == 0)
-		return;
+	var groups = prepareGroupBy(select, filter);
 
-	for (var index in groups)
-	{
-		var group=groups[index];
+	return Promise.map(groups, function(group){
 
 		//add sum(fair_value) AS fair_value
 		group.query.field('sum(fair_value)', 'fair_value' );
@@ -214,47 +207,24 @@ function groupBySummaries(filter, callback)
 		group.query=group.query.toString();
 
 		//perform multiple queries
-		db.query(group.query, function(group, err,rows){
-			group.result=rows;
-			if(--wait<=0)
-			{
-				callback(err, groups,group.query);
-			}
-		}.bind(this, group));
-	}
+
+		return db.queryp(group.query)
+			.then(function(rows){
+				group.result = rows;
+				return group;
+			})
+	});
 }
 
-
-/**
- * Group by managing body, if managing body is in the filter
- * and by last four quarters
- * @param filter : Filter object
- * @param callback : function to handle result rows
- */
-function groupByManagingBody(filter, callback){
-
-  var mFilter = new Filter();
-
-  if (filter.hasConstraint("managing_body")) {
-	mFilter.addConstraint("managing_body", filter.getConstraintData("managing_body"));
-  }
-
-  //add year and quarter to new fiter
-  mFilter.addConstraint("report_year", filter.getConstraintData("report_year"));
-  mFilter.addConstraint("report_qurater", filter.getConstraintData("report_qurater"));
-
-  groupByQuarters(mFilter, callback);
-
-}
 
 
 /**
  * Query by filter constraint, group by last four quarters
- * pass result rows to callback function
+ * resolves to result rows
  * @param filter : Filter object
- * @param callback : function to handle result rows
+ * @return Promise: resolves to result rows
  */
-function groupByQuarters(filter, callback){
+function groupByQuarters(filter){
 
 	var mFilter = filter.clone();
 
@@ -291,9 +261,7 @@ function groupByQuarters(filter, callback){
 
 	select=select.toString();
 
-	db.query(select, function(err, rows){
-			callback(err, rows,select);
-	});
+	return db.queryp(select);
 
 }
 
@@ -303,7 +271,6 @@ function groupByQuarters(filter, callback){
  * @param year     : starting year
  * @param quarter  : starting quarter
  * @param numOfQuarters : number of previous quarters to add to query
- * @param callback : function to handle result rows
  */
 function addLastQuartersToQuery(query, year, quarter, numOfQuarters){
 
@@ -356,9 +323,9 @@ function addLastQuartersToQuery(query, year, quarter, numOfQuarters){
 
 
  * @param filter : Filter object
- * @param callback : function to handle result rows
+ * @return  Promise: resolves to result rows
  */
-function groupByPortfolio(filter, callback){
+function groupByPortfolio(filter){
 
 	var mFilter = filter.clone();
 
@@ -394,15 +361,11 @@ function groupByPortfolio(filter, callback){
     }
 
 	//create multiple queries, one for each group
-	var groups=prepareGroupBy(innerSelect, mFilter);
+	var groups = prepareGroupBy(innerSelect, mFilter);
 
-	var wait=groups.length;
-	if (wait == 0)
-		return;
 
-	for (var index in groups)
-	{
-		var group=groups[index];
+	return Promise.map(groups, function(group){
+
 		var groupField = group['group_field'];
 		group.query=group.query.toString();
 
@@ -445,15 +408,13 @@ function groupByPortfolio(filter, callback){
 	 	group.query = outerSelect.toString();
 
 	 	//run query for group in groups
-		db.query(group.query, function(group, err,rows){
-			group.result=rows; //put result in group (groups[index])
-			if(--wait<=0)
-			{
-				callback(err, groups);
-			}
-		}.bind(this, group));
+		return db.queryp(group.query)
+			.then(function(rows){
+				group.result = rows;
+				return group;
+			});
 
-	}
+	});
 }
 
 
@@ -469,9 +430,9 @@ function groupByPortfolio(filter, callback){
  *   ORDER BY report_year DESC, report_qurater DESC, fair_value DESC
  *
  * @param filter : Filter object
- * @param callback : function to handle result rows
+ * @return Promise : resolves to result rows
  */
-function groupByInvestments(filter, callback){
+function groupByInvestments(filter){
 
 	//remove group_by if present
 	var mFilter = filter.clone();
@@ -509,16 +470,15 @@ function groupByInvestments(filter, callback){
 
 	select = select.toString();
 
-	db.query(select, function(err, rows){
-		callback(err, rows, select);
-	});
+	return db.queryp(select);
 
 }
 
 /**
  * Query the DB, get list of managing bodies
+ * @return Promise - resolves to managing bodies
  */
-function getManagingBodies(callback){
+function getManagingBodies(){
 
 	var select = squel.select().from(config.table);
 
@@ -526,9 +486,7 @@ function getManagingBodies(callback){
 
 	var sqlQuery = select.toString();
 
-	db.query(sqlQuery, function(err, rows){
-			callback(err, rows, sqlQuery);
-	});
+	return db.queryp(sqlQuery);
 
 }
 
@@ -536,12 +494,11 @@ function getManagingBodies(callback){
 /**
  * Query the DB, get funds by managing_body
  * @param managing_body : string, name of managing body
- * @param callback : function to handle result rows.
+ * @return Promise : resolves to result rows.
  */
-function getFundsByManagingBody(managing_body,callback){
+function getFundsByManagingBody(managing_body){
 	if (managing_body == undefined || managing_body == ""){
-			callback(null,[]);
-			return;
+			return new Promise.resolve("Error : Missing managing_body");
 	}
 
 	var select = squel.select().from(config.table);
@@ -554,30 +511,19 @@ function getFundsByManagingBody(managing_body,callback){
 
 	var sqlQuery = select.toString();
 
-	db.query(sqlQuery, function(err, rows){
-			callback(err, rows, sqlQuery);
-	});
+	return db.queryp(sqlQuery);
 
 }
 
-function searchInFields(term, limit, callback){
+function searchInFields(term, limit){
 
-	async.parallel([
-	      function(callback){
-			searchByField(term, "instrument_name", limit, callback);
-	      },
-	      function(callback){
-			searchByField(term, "instrument_id", limit, callback);
-	      },
-	      function(callback){
-			searchByField(term, "fund_name", limit, callback);
-		  },
-	      function(callback){
-			searchByField(term, "issuer", limit, callback);
-		  }
-
-	    ],
-	    function(err,results){
+	Promise.all([
+		searchByField(term, "instrument_name", limit),
+		searchByField(term, "instrument_id", limit),
+		searchByField(term, "fund_name", limit),
+		searchByField(term, "issuer", limit)
+	])
+	.then(function(results){
 
 
 	      var s = {};
@@ -588,12 +534,12 @@ function searchInFields(term, limit, callback){
 	        return;
 	      }
 
-      	  s.assets = results[0][0].rows;
-      	  s.instruments = results[1][0].rows;
-      	  s.funds = results[2][0].rows;
-      	  s.issuers = results[3][0].rows;
+      	  s.assets = results[0].rows;
+      	  s.instruments = results[1].rows;
+      	  s.funds = results[2].rows;
+      	  s.issuers = results[3].rows;
 
-      	  callback(err,s);
+		  return s;
 
       });
 }
@@ -609,17 +555,17 @@ function searchInFieldsEs(term, size){
 
 		]
 	)
-		.then(function(results){
+	.then(function(results){
 
-			var res = {};
-			 	  res.assets = results[0]  ? results[0]: [];
-			 	  res.instruments = results[1] ? results[1] : [];
-			 	  res.funds = results[2] ? results[2] : [];
-			 	  res.issuers = results[3] ? results[3]: [];
+		var res = {};
+			  res.assets = results[0]  ? results[0]: [];
+			  res.instruments = results[1] ? results[1] : [];
+			  res.funds = results[2] ? results[2] : [];
+			  res.issuers = results[3] ? results[3]: [];
 
-			return res;
+		return res;
 
-		});
+	});
 
 }
 
@@ -628,19 +574,15 @@ function searchInFieldsEs(term, size){
  * Query the DB, find lines containing term in field
  * @param term : string, name/id to look for
  * @param field : string, field to look in
- * @param callback(obj) : function to handle result rows.
- * obj = {rows:[...], total_row_count:int, page: int,
- * 			results_per_page: int, total_pages: int}
+ * @return Promise: resolves to rows
  */
-function searchByField(term, field, limit, callback){
+function searchByField(term, field, limit){
 	var RESULTS_PER_PAGE = 50;
 
 
 	if (term == undefined || term == "" ) {
 		var res = [{"rows":[], "total_row_count" : 0, "page":0, "results_per_page" : RESULTS_PER_PAGE, "total_pages": 0}];
-		// callback("term is empty", res)
-		callback(undefined, res)
-		return
+		return new Promise.resolve(res);
 	}
 
 	//query limited & offset
@@ -653,61 +595,15 @@ function searchByField(term, field, limit, callback){
 		select.limit(limit);
 
 
-	db.query(select.toString(), function(err, rows){
+	db.queryp(select.toString())
+		.then(function(rows){
 		var res = {"rows":rows};
-		callback(err, res, select.toString());
+		return res;
 	});
 
 }
 
 
-/**
- * Query the DB, find lines containing term in
- * instrument_id or instrument_name
- * @param term : string, name/id to look for
- * @param callback(obj) : function to handle result rows.
- * obj = {rows:[...], total_row_count:int, page: int,
- * 			results_per_page: int, total_pages: int}
- */
-function search(term, pageNum, callback){
-	var RESULTS_PER_PAGE = 50;
-
-	if (pageNum == undefined)
-		pageNum = 1;
-
-	if (term == undefined || term == "" ) {
-		var res = {"rows":[], "total_row_count" : 0, "page":0, "results_per_page" : RESULTS_PER_PAGE, "total_pages": 0};
-		callback("term is empty", res)
-		return
-	}
-
-	//query limited & offset
-	var select = squel.select().from(config.table);
-	select.distinct();
-	select.field("instrument_name");
-	select.field("instrument_id");
-	select.where("LOWER(instrument_name) like LOWER('%"+escapeChars(term) +"%')" +
-		" OR LOWER(instrument_id) like LOWER('%"+escapeChars(term) +"%')");
-	select.limit(RESULTS_PER_PAGE);
-	select.offset( RESULTS_PER_PAGE * (pageNum - 1));
-
-
-	var countSelect =
-		"select count(count_a) from ("
-			+"SELECT count(*) as count_a,instrument_name, instrument_id FROM pension_data_all WHERE (LOWER(instrument_name) like LOWER('%"+escapeChars(term)+"%') OR LOWER(instrument_id) like LOWER('%"+escapeChars(term)+"%')) group by instrument_name, instrument_id"
-		+")  as c";
-
-
-	//console.log(select.toString())
-
-	db.query(select.toString(), function(err, rows){
-		db.query(countSelect, function(err, count){
-				var res = {"rows":rows, "total_row_count" : count[0].count, "page":pageNum, "results_per_page" : RESULTS_PER_PAGE, "total_pages": Math.ceil(count[0].count/RESULTS_PER_PAGE)};
-				callback(err, res, select.toString());
-		});
-	});
-
-}
 
 //exports
 exports.groupBySummaries=groupBySummaries;
@@ -715,12 +611,10 @@ exports.parseFilter=parseFilter;
 exports.allowed_filters=Object.keys(allowed_filters);
 exports.singleQuery=singleQuery;
 exports.groupByQuarters=groupByQuarters;
-exports.groupByManagingBody=groupByManagingBody;
 exports.groupByPortfolio=groupByPortfolio;
 exports.getFundsByManagingBody=getFundsByManagingBody;
 exports.groupByInvestments=groupByInvestments;
 exports.getManagingBodies=getManagingBodies;
-exports.search=search;
 exports.streamQuery=streamQuery;
 exports.searchInFields=searchInFields;
 exports.searchInFieldsEs=searchInFieldsEs;

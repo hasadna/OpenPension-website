@@ -1,7 +1,6 @@
 var _ = require('underscore');
 var Filter = require('../core/filter.js');
 var DAL = require('../core/dal.js');
-var DataNormalizer = require('../core/data_normalizer.js');
 
 //Queries DB by filter and
 //returns filtered rows as csv file

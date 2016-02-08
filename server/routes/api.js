@@ -5,7 +5,6 @@ var dictionary = require('../core/dictionary.js');
 var DataNormalizer = require('../core/data_normalizer.js');
 var config = require('../config');
 var Promise = require('bluebird');
-var async = require('async');
 
 function groupByManagingBody(filter){
 
@@ -30,30 +29,16 @@ exports.contentHeader = function(req,res){
     var filter = Filter.fromGetRequest(req);
     var managingBodyFilter = groupByManagingBody(filter);
 
-    async.parallel([
-      function(callback){
-          //relative to total fund or current managing_body
-          DAL.groupByQuarters(managingBodyFilter, callback);
-      },
-      function(callback){
-          //group filter by quarters
-          DAL.groupByQuarters(filter, callback);
-      }
-    ],
-    function(err,results){
 
-        if (err){
-          console.log(err);
-          res.end("Err: "+err);
-          return;
-        }
+	return Promise.all([
+		DAL.groupByQuarters(managingBodyFilter),
+		DAL.groupByQuarters(filter)
+	])
+	.then(function(results){
 
 
-        var totalPensionFundQuarters = results[0][0];
-        var totalPensionFundQuery = results[0][1];
-
-        var quarters = results[1][0];
-        var quartersQuery = results[1][1];
+        var totalPensionFundQuarters = results[0];
+        var quarters = results[1];
 
         var report_year = filter.getConstraintData("report_year")[0];
         var report_qurater = filter.getConstraintData("report_qurater")[0];
@@ -116,8 +101,8 @@ exports.quarters = function(req,res){
     //create filter from request (search string)
     var filter = Filter.fromGetRequest(req);
 
-    DAL.groupByQuarters(filter,
-      function(err, quarters, resultQuery){
+    DAL.groupByQuarters(filter)
+	.then(function(quarters){
 
           var report_year = filter.getConstraintData("report_year")[0];
           var report_qurater = filter.getConstraintData("report_qurater")[0];
@@ -149,10 +134,9 @@ exports.quarters = function(req,res){
 
 //Get list of Managing Bodies
 exports.managing_bodies = function(req,res){
-    DAL.getManagingBodies(function(err, bodies, bodiesQuery){
-
+    DAL.getManagingBodies()
+	.then(function(bodies){
           res.json(bodies);
-
     });
 }
 
@@ -164,11 +148,9 @@ exports.funds = function(req,res){
 
     var managing_body = filter.getConstraintData('managing_body')[0];
 
-    DAL.getFundsByManagingBody(managing_body,
-      function(err, funds, fundsQuery){
-
+    return DAL.getFundsByManagingBody(managing_body)
+	.then(function(funds){
         res.json(funds);
-
     });
 
 };
@@ -179,8 +161,8 @@ exports.portfolio = function(req, res){
       //create filter from request (search string)
       var filter = Filter.fromGetRequest(req);
 
-      DAL.groupByPortfolio(filter,
-                function(err, groups){
+      DAL.groupByPortfolio(filter)
+	  .then(function(groups){
 
         //group results by group_field (e.g. issuer)
         _.each(groups,
@@ -217,8 +199,8 @@ exports.investments = function(req, res){
       var report_year = filter.getConstraintData('report_year')[0];
       var lastQuarters = DataNormalizer.getLastQuarters(report_year, report_qurater, 4);
 
-      DAL.groupByInvestments(filter,
-        function(err, group){
+      DAL.groupByInvestments(filter)
+	  .then(function(group){
 
           var groupData = {};
 
@@ -250,20 +232,6 @@ exports.investments = function(req, res){
 
 };
 
-exports.query = function(req,res){
-
-    //create filter from request (search string)
-    var filter = Filter.fromGetRequest(req);
-
-    if ( filter.getConstrainedFields().length == 0 ){
-      res.json({'error':'Query is empty','return_code':'-7'})
-    }
-
-    DAL.singleQuery(filter, function(err, result){
-      res.json(result);
-    });
-
-};
 
 exports.fair_values = function(req,res){
 
@@ -274,24 +242,9 @@ exports.fair_values = function(req,res){
       res.json({'error':'Query is empty','return_code':'-7'})
     }
 
-    DAL.groupBySummaries(filter, function(err, result, query){
-      res.json(result);
-    });
-
-}
-
-
-exports.search = function(req,res){
-
-    var searchTerm = req.query['q'];
-    var page = req.query['p'];
-
-    if ( searchTerm == undefined ){
-      res.json({'error':'Query is empty','return_code':'-7'})
-    }
-
-    DAL.search(searchTerm, page, function(err, result, query){
-      res.json(result);
+	DAL.groupBySummaries(filter)
+	.then(function(result){
+			res.json(result);
     });
 
 }
@@ -343,16 +296,13 @@ function findInManagingBody(term){
 
 exports.querySearchTerm = function(term, size){
 
-  return new Promise(function(resolve, reject){
-      DAL.searchInFieldsEs(term, size)
-		  .then(function(result){
+      return DAL.searchInFieldsEs(term, size)
+	  .then(function(result){
 
 	        result['managingBodies'] = findInManagingBody(term);
 
-    	    resolve(result);
+    	    return result;
       });
-
-  });
 }
 
 

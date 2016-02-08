@@ -34,7 +34,8 @@ exports.managing_body_treemap = function(req,res){
     filter.addConstraint("report_qurater", config.current_quarter);
 
 
-    DAL.groupBySummaries(filter,function(err, groups, select){
+    DAL.groupBySummaries(filter)
+	.then(function(groups){
 
         var managing_bodies = groups[0].result;
 
@@ -128,7 +129,8 @@ exports.issuers_treemap = function(req,res){
     filter.addConstraint("report_qurater", config.current_quarter);
 
 
-    DAL.groupBySummaries(filter,function(err, groups, select){
+    DAL.groupBySummaries(filter)
+	.then(function(groups){
 
         var issuers = groups[0].result;
 
@@ -160,34 +162,3 @@ exports.issuers_treemap = function(req,res){
     });
 
 }
-
-
-exports.show = function(req, res){
-
-    //create query by managing bodies
-    var filter = new Filter();
-    filter.addConstraint("group_by","managing_body");
-    filter.addConstraint("report_year", config.current_year);
-    filter.addConstraint("report_qurater", config.current_quarter);
-
-    //perform query
-    DAL.groupBySummaries(filter,function(err, groups, select){
-
-        var managing_bodies = groups[0].result;
-
-        var filterWithoutGroup = filter.clone();
-        filterWithoutGroup.removeField("group_by");
-
-        var totalSum = sum(managing_bodies);
-
-        res.render('homepage',{
-            market_size: DataNormalizer.convertNumberToWords(totalSum),
-            title: "פנסיה פתוחה",
-            filterWithoutGroup: filterWithoutGroup,
-            current_year: config.current_year,
-            current_quarter: config.current_quarter
-        });
-
-    });
-
-};
