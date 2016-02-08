@@ -160,7 +160,6 @@ function singleQuery(filter)
 	//add wheres to query
 	var sqlQuery = parseFilter(filter);
 
-	console.log(sqlQuery);
 	//perform query
 	return db.queryp(sqlQuery);
 }
