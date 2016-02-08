@@ -1,6 +1,6 @@
 var pg = require('pg');
 var Promise = require('bluebird');
-var qMemcached = Promise.promisifyAll(require('memcache-promise'));
+var qMemcached = require('memcache-promise');
 var config = require('../config')
 var md5 = require('MD5');
 var QueryStream = require('pg-query-stream')
