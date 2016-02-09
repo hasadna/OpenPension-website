@@ -81,7 +81,7 @@ exports.managing_body_treemap = function(req,res){
 
 		//var tooSmall = children.splice(0,spliceIndex);
         //workaround
-        var tooSmall = children.splice(0, 5);
+        var tooSmall = children.splice(0, 4);
 
         var largeEnough = children;
 
