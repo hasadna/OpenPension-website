@@ -1,9 +1,0 @@
-{
-    "db_mode": "pg",
-    "connection_string": "",
-    "table": "pension_data_all",
-    "use_memcache" : false,
-    "data_version" : "0.1",
-    "current_quarter" : "3",
-    "current_year" : "2015"
-}
